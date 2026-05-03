@@ -419,6 +419,160 @@ nav {
 .pb-kci  { background: #f0f0f0; color: #555; border: 1px solid #d4d4d4; }
 .pb-new  { background: var(--red); color: #fff; }
 
+/* NEW badge on title-left (auto-applied within 3 months of pubDate) */
+.pr-new-badge {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 0.18rem 0.5rem;
+  margin-right: 0.55rem;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  animation: newPulse 2.2s ease-in-out infinite;
+}
+@keyframes newPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+/* Highlight PI's own name in author list */
+.pi-self {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* ── PI PORTRAIT (Hero) ── */
+.hero-pi-with-photo {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.8rem;
+  align-items: start;
+}
+.pi-portrait {
+  width: 140px;
+  height: 180px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  position: relative;
+  flex-shrink: 0;
+}
+.pi-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  filter: grayscale(15%) contrast(1.02);
+  transition: filter 0.4s ease;
+}
+.pi-portrait:hover img {
+  filter: grayscale(0%) contrast(1.05);
+}
+.pi-portrait::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 30px; height: 2px;
+  background: var(--red);
+}
+
+/* ── LAB LIFE SECTION ── */
+.lab-life-grid {
+  display: grid;
+  grid-template-columns: 13rem 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+.lab-life-content {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2.5rem;
+  align-items: stretch;
+}
+.lab-photo-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: var(--off);
+}
+.lab-photo-frame img {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  max-height: 380px;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(8%) contrast(1.02);
+  transition: filter 0.4s ease, transform 0.6s ease;
+  display: block;
+}
+.lab-photo-frame:hover img {
+  filter: grayscale(0%) contrast(1.05);
+  transform: scale(1.015);
+}
+.lab-photo-corner {
+  position: absolute;
+  top: 0; left: 0;
+  display: flex;
+}
+.lab-photo-corner span {
+  display: block;
+  width: 24px;
+  height: 3px;
+}
+.lab-photo-corner .c1 { background: var(--navy); }
+.lab-photo-corner .c2 { background: var(--red); }
+.lab-photo-caption-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 0.5rem;
+}
+.lab-caption-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+}
+.lab-caption-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--black);
+  margin-bottom: 0.9rem;
+  letter-spacing: 0.01em;
+}
+.lab-caption-meta {
+  font-size: 0.74rem;
+  color: var(--mid);
+  line-height: 1.7;
+  font-weight: 300;
+  border-top: 1px solid var(--rule);
+  padding-top: 0.9rem;
+}
+.lab-caption-meta strong {
+  color: var(--black);
+  font-weight: 500;
+}
+.lab-caption-meta .lab-meta-date {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--xlight);
+  margin-bottom: 0.5rem;
+}
+
 /* Detail panel */
 .pr-detail { display: none; padding: 0 0.6rem 1.8rem; padding-left: calc(13rem + 4rem + 0.6rem); }
 .pr-detail.open { display: block; animation: expandIn 0.18s ease; }
@@ -591,6 +745,12 @@ footer {
   footer { grid-template-columns: 1fr; }
   .f-center, .f-right { text-align: left; }
   .f-center { align-items: flex-start; }
+  /* Photo responsive */
+  .hero-pi-with-photo { grid-template-columns: 110px 1fr; gap: 1.3rem; }
+  .pi-portrait { width: 110px; height: 145px; }
+  .lab-life-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .lab-life-content { grid-template-columns: 1fr; gap: 1.5rem; }
+  .lab-photo-frame img { min-height: 220px; max-height: 320px; }
 }
 </style>
 </head>
@@ -606,6 +766,7 @@ footer {
     </a>
     <ul class="nav-links">
       <li><a href="#news">News</a></li>
+      <li><a href="#lab-life">Lab Life</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#publications">Publications</a></li>
       <li><a href="#experience">Experience</a></li>
@@ -654,10 +815,15 @@ footer {
   <!-- PI + Research -->
   <div class="hero-content">
     <div class="hero-pi">
-      <div>
-        <div class="pi-name">Kim, Joonbeom</div>
-        <div class="pi-name-ko">김준범</div>
-        <div class="pi-role">Assistant Professor</div>
+      <div class="hero-pi-with-photo">
+        <div class="pi-portrait">
+          <img src="images/pi_portrait.jpg" alt="Kim, Joonbeom — Principal Investigator, Chungbuk National University">
+        </div>
+        <div>
+          <div class="pi-name">Kim, Joonbeom</div>
+          <div class="pi-name-ko">김준범</div>
+          <div class="pi-role">Principal Investigator</div>
+        </div>
       </div>
       <div class="contacts">
         <div class="cr"><span class="lbl">Email</span><a href="mailto:jayb.kim@cbnu.ac.kr">jayb.kim@cbnu.ac.kr</a></div>
@@ -694,9 +860,28 @@ footer {
   <div class="news-cards" id="newsCards"></div>
 </div>
 
+<!-- LAB LIFE -->
+<div id="lab-life" class="sw">
+  <div class="sh"><div class="sn">02 · Lab Life</div><h2 class="st">In the Field</h2></div>
+  <div class="lab-life-content">
+    <div class="lab-photo-frame">
+      <div class="lab-photo-corner"><span class="c1"></span><span class="c2"></span></div>
+      <img src="images/lab_knpa2026.jpg" alt="AIR Lab members at the 2026 Korean NeuroPsychiatric Association Spring Conference E-Poster session">
+    </div>
+    <div class="lab-photo-caption-block">
+      <div class="lab-caption-eyebrow">Conference · 2026</div>
+      <div class="lab-caption-title">E-Poster Session at the 2026 KNPA Spring Conference</div>
+      <div class="lab-caption-meta">
+        <span class="lab-meta-date">Apr. 2026 · Seoul, Korea</span>
+        AIR Lab members presenting <strong>"Sex-Specific Latent Typologies of Self-Harm Behaviors and Their Differential Associations with Suicidality in a National Sample"</strong> at the 69th Annual Spring Meeting of the Korean NeuroPsychiatric Association — recognized with an <strong>Outstanding Poster Award</strong>.
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ABOUT -->
 <div id="about" class="sw">
-  <div class="sh"><div class="sn">02 · About</div><h2 class="st">Research Focus</h2></div>
+  <div class="sh"><div class="sn">03 · About</div><h2 class="st">Research Focus</h2></div>
   <div class="about-grid">
     <div></div>
     <div class="about-body">
@@ -710,7 +895,7 @@ footer {
 
 <!-- PUBLICATIONS -->
 <div id="publications" class="sw">
-  <div class="sh"><div class="sn">03 · Publications</div><h2 class="st">Selected Works</h2></div>
+  <div class="sh"><div class="sn">04 · Publications</div><h2 class="st">Selected Works</h2></div>
   <div class="pub-ctrl">
     <div></div>
     <div style="display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap;">
@@ -728,7 +913,7 @@ footer {
 
 <!-- EXPERIENCE -->
 <div id="experience" class="sw">
-  <div class="sh"><div class="sn">04 · Experience</div><h2 class="st">Professional</h2></div>
+  <div class="sh"><div class="sn">05 · Experience</div><h2 class="st">Professional</h2></div>
   <div class="tl">
     <div class="tr"><div class="tr-period">March 2025 – Present</div><div><div class="tr-role">Assistant Professor</div><div class="tr-org">Department of Child Welfare, Chungbuk National University</div><div class="tr-desc">Specialization in Youth Welfare and Mental Health</div></div></div>
     <div class="tr"><div class="tr-period">Nov 2021 – Feb 2025</div><div><div class="tr-role">Postdoctoral Researcher</div><div class="tr-org">Institute of Behavioral Science in Medicine, Yonsei University College of Medicine</div><div class="tr-desc">OJU Lab, Gangnam Severance Hospital — geriatric psychiatry, delirium in ICU, panic disorder, DTx, HRV</div></div></div>
@@ -740,7 +925,7 @@ footer {
 
 <!-- EDUCATION -->
 <div id="education" class="sw">
-  <div class="sh"><div class="sn">05 · Education</div><h2 class="st">Academic Training</h2></div>
+  <div class="sh"><div class="sn">06 · Education</div><h2 class="st">Academic Training</h2></div>
   <div class="tl">
     <div class="tr"><div class="tr-period">Mar 2018 – Aug 2024</div><div><div class="tr-role">Ph.D. in Social Welfare — Family and Youth Welfare</div><div class="tr-org">Interdisciplinary Program in Social Welfare Policy, Yonsei University</div><div class="tr-desc">"Effectiveness of an individual TSL treatment program to improve family functioning and mental health in runaway youth: Focusing on the recovery process after running away"</div></div></div>
   </div>
@@ -748,14 +933,14 @@ footer {
 
 <!-- AWARDS & PROJECTS -->
 <div id="awards" class="sw">
-  <div class="sh"><div class="sn">06 · Awards &amp; Projects</div><h2 class="st">Recognition &amp; Research</h2></div>
+  <div class="sh"><div class="sn">07 · Awards &amp; Projects</div><h2 class="st">Recognition &amp; Research</h2></div>
 
   <div class="subsection-label">🏅 Awards</div>
   <div>
     <div class="award-item">
       <div class="award-date">Apr. 2026</div>
       <div class="award-body">
-        <div class="award-title">🏆 우수포스터상 — 2026년 대한신경정신의학회(KNPA) 춘계학술대회 </div>
+        <div class="award-title">🏆 우수포스터상 — 2026년 춘계 대한신경정신의학회 (KSBP)</div>
         <div class="award-org">Sex-Specific Latent Typologies of Self-Harm Behaviors and Their Differential Associations with Suicidality in a National Sample</div>
       </div>
     </div>
@@ -854,23 +1039,26 @@ footer {
 const NEWS_DATA = [
   { date:"2026-1 신규", type:"member", title:"🎉 신규 멤버 환영", body:"26-1학기 신규 멤버: 권영희(박사과정), 정화영(석사과정), 조현진(석사과정) 선생님이 AIR Lab에 함께하기로 했습니다. 환영합니다! 🎊", sub:"기존 멤버: 신해순(석사과정), 이승연(석사과정)" },
   { date:"2026.04.20", type:"award",   title:"🏆 우수포스터상 수상", body:"2026년 춘계 대한신경정신의학회 우수포스터상 수상", sub:"Sex-Specific Latent Typologies of Self-Harm Behaviors and Their Differential Associations with Suicidality in a National Sample" },
+  { date:"2026.04.30", type:"paper",   title:"New Publication (KCI)", body:"가정 밖 청소년의 안정적 가정복귀를 위한 청소년쉼터 종사자 인식 및 지원요구에 대한 질적 연구: 포커스그룹인터뷰(FGI)를 중심으로", sub:"생활과학연구논총, 30(1), 77-100." },
+  { date:"2026.04.30", type:"paper",   title:"New Publication (KCI)", body:"강제된 돌봄을 넘어 회복으로: 가족돌봄청소년 및 청년의 돌봄 경험 과정과 유형에 대한 질적 연구", sub:"한국가족관계학회지, 31(1), 283-319." },
   { date:"2026.03.04", type:"award",   title:"🏆 우수논문 선정", body:"청소년상담연구 (한국청소년상담복지개발원) 2025년 게재 논문 중 우수논문 선정", sub:"가정 밖 청소년의 가족관계 변화와 회복 과정에 대한 질적 연구: 상담 개입 경험을 중심으로" },
-  { date:"2026.04.02", type:"paper",   title:"New Publication (SSCI)", body:"Patterns of Intimate Partner Sexual Violence: Latent Classes and Sex-Specific Associations with Suicidal Ideation", sub:"Journal of Family Violence" },
-  { date:"2026.03.19", type:"paper",   title:"New Publication (SSCI)", body:"Mapping the Structures of Adverse Childhood Experiences: A Network Analysis and a Sex-Differentiated Structural Framework for Prevention and Intervention", sub:"Journal of Interpersonal Violence" },
-  { date:"2026.04.", type:"paper",   title:"New Publication (SSCI)", body:"Do Adverse Childhood Experiences Intensify the Impact of Hazardous Drinking on Depression? Application of Quantile Regression Analysis", sub:"Child Abuse & Neglect" },
+  { date:"2026",       type:"paper",   title:"New Publication (SSCI)", body:"Mapping the Structures of Adverse Childhood Experiences: A Network Analysis and a Sex-Differentiated Structural Framework for Prevention and Intervention", sub:"Journal of Interpersonal Violence" },
+  { date:"2026",       type:"paper",   title:"New Publication (SSCI)", body:"Do Adverse Childhood Experiences Intensify the Impact of Hazardous Drinking on Depression? Application of Quantile Regression Analysis", sub:"Child Abuse & Neglect" },
   { date:"상시",       type:"recruit", title:"Recruiting", body:"아동청소년복지 및 정신건강, 지역사회 기반 실천 연구에 관심 있는 대학원생·학부생을 상시 모집합니다.", sub:"문의: jayb.kim@cbnu.ac.kr" },
-  { date:"2026.04~12", type:"project",  title:"New Research", body:"한국생명존중희망재단 — 청소년 심리부검 운영방안 및 면담 도구 개발 연구 공동연구 참여", sub:"한림대학교 정신건강의학과 홍현주 교수님과 함께하게 되었습니다." },
-  { date:"2026.04~06", type:"project",  title:"New Research", body:"대전광역시 — 2026 청소년지도자 처우개선 기본계획(2026-2030) 수립 연구 공동연구 참여", sub:"목원대학교 사회복지상담학부 이현 교수님과 함께하게 되었습니다. " },
+  { date:"2026.04~12", type:"project",  title:"New Research", body:"한국생명존중희망재단 — 청소년 심리부검 운영방안 및 면담 도구 개발 연구 공동연구 참여", sub:"한림대학교 정신건강의학과 홍현주 교수님과 함께" },
+  { date:"2026.04~06", type:"project",  title:"New Research", body:"대전광역시 — 2026 청소년지도자 처우개선 기본계획(2026-2030) 수립 연구 공동연구 참여", sub:"목원대학교 사회복지상담학과 이현 교수님과 함께" },
   { date:"2026.03~11", type:"project",  title:"New Research", body:"청주복지재단 — 청주시 위기아동 보호체계 진단 및 개선방안 연구", sub:"2026. 3. ~ 2026. 11." },
   { date:"2026.03~06", type:"project",  title:"New Research", body:"충청북도사회서비스원 — 청소년 온라인 도박 문제 예방 연구", sub:"2026. 3. ~ 2026. 6." }
 ];
 
 const PUB_DATA = [
   // ── 2026 ──
-  { no:71, year:2026, type:"KCI",  isNew:true,  status:"published", title:"ADHD는 학교적응력을 떨어뜨리는가?: 청소년 ADHD 증상 정도와 학교적응의 관계에서 제곱항을 이용한 비선형관계 검증", journal:"미래청소년학회지", authors:"전진호, 김나영, 강주연, 김준범, 한승희", citation:"전진호, 김나영, 강주연, 김준범, 한승희. (2026). ADHD는 학교적응력을 떨어뜨리는가?: 청소년 ADHD 증상 정도와 학교적응의 관계에서 제곱항을 이용한 비선형관계 검증. 미래청소년학회지, 23(1), 91-116.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003317209" },
-  { no:70, year:2026, type:"SSCI", isNew:true,  status:"published", title:"Patterns of Intimate Partner Sexual Violence: Latent Classes and Sex-Specific Associations with Suicidal Ideation", journal:"Journal of Family Violence", authors:"Im, J., & Kim, J.", citation:"Im, J., & Kim, J. (2026). Patterns of Intimate Partner Sexual Violence: Latent Classes and Sex-Specific Associations with Suicidal Ideation. Journal of Family Violence, 1-16.", doi:"https://link.springer.com/article/10.1007/s10896-026-01099-w" },
-  { no:69, year:2026, type:"SSCI", isNew:true,  status:"published", title:"Do Adverse Childhood Experiences Intensify the Impact of Hazardous Drinking on Depression? Application of Quantile Regression Analysis", journal:"Child Abuse & Neglect", authors:"Lee, M. S., & Kim, J.", citation:"Lee, M. S., & Kim, J. (2026). Do adverse childhood experiences intensify the impact of hazardous drinking on depression? Child Abuse & Neglect, 174, 107976.", doi:"https://www.sciencedirect.com/science/article/pii/S0145213426000955" },
-  { no:68, year:2026, type:"SSCI", isNew:true,  status:"published", title:"Mapping the Structures of Adverse Childhood Experiences: A Network Analysis and a Sex-Differentiated Structural Framework for Prevention and Intervention", journal:"Journal of Interpersonal Violence", authors:"Kim, J., & Son, S.", citation:"Kim, J., & Son, S. Mapping the Structures of Adverse Childhood Experiences: A Network Analysis and a Sex-Differentiated Structural Framework for Prevention and Intervention. Journal of Interpersonal Violence, 08862605261426592.", doi:"https://journals.sagepub.com/doi/10.1177/08862605261426592" },
+  { no:73, year:2026, month:4, pubDate:"2026-04-30", type:"KCI",  status:"published", title:"가정 밖 청소년의 안정적 가정복귀를 위한 청소년쉼터 종사자 인식 및 지원요구에 대한 질적 연구: 포커스그룹인터뷰(FGI)를 중심으로", journal:"생활과학연구논총", authors:"김동현, 김준범, 이재은", citation:"김동현, 김준범, 이재은. (2026). 가정 밖 청소년의 안정적 가정복귀를 위한 청소년쉼터 종사자 인식 및 지원요구에 대한 질적 연구: 포커스그룹인터뷰(FGI)를 중심으로. 생활과학연구논총, 30(1), 77-100.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003332899" },
+  { no:72, year:2026, month:4, pubDate:"2026-04-30", type:"KCI",  status:"published", title:"강제된 돌봄을 넘어 회복으로: 가족돌봄청소년 및 청년의 돌봄 경험 과정과 유형에 대한 질적 연구", journal:"한국가족관계학회지", authors:"임소진, 김준범, 이재은", citation:"임소진, 김준범, 이재은. (2026). 강제된 돌봄을 넘어 회복으로: 가족돌봄청소년 및 청년의 돌봄 경험 과정과 유형에 대한 질적 연구. 한국가족관계학회지, 31(1), 283-319.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003332114" },
+  { no:71, year:2026, month:1, type:"KCI",  status:"published", title:"ADHD는 학교적응력을 떨어뜨리는가?: 청소년 ADHD 증상 정도와 학교적응의 관계에서 제곱항을 이용한 비선형관계 검증", journal:"미래청소년학회지", authors:"전진호, 김나영, 강주연, 김준범, 한승희", citation:"전진호, 김나영, 강주연, 김준범, 한승희. (2026). ADHD는 학교적응력을 떨어뜨리는가?: 청소년 ADHD 증상 정도와 학교적응의 관계에서 제곱항을 이용한 비선형관계 검증. 미래청소년학회지, 23(1), 91-116.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003317209" },
+  { no:70, year:2026, month:4, pubDate:"2026-04-02", type:"SSCI", status:"published", title:"Patterns of Intimate Partner Sexual Violence: Latent Classes and Sex-Specific Associations with Suicidal Ideation", journal:"Journal of Family Violence", authors:"Im, J., & Kim, J.", citation:"Im, J., & Kim, J. (2026). Patterns of Intimate Partner Sexual Violence: Latent Classes and Sex-Specific Associations with Suicidal Ideation. Journal of Family Violence, 1-16.", doi:"https://link.springer.com/article/10.1007/s10896-026-01099-w" },
+  { no:69, year:2026, month:4, pubDate:"2026-04-01", type:"SSCI", status:"published", title:"Do Adverse Childhood Experiences Intensify the Impact of Hazardous Drinking on Depression? Application of Quantile Regression Analysis", journal:"Child Abuse & Neglect", authors:"Lee, M. S., & Kim, J.", citation:"Lee, M. S., & Kim, J. (2026). Do adverse childhood experiences intensify the impact of hazardous drinking on depression? Child Abuse & Neglect, 174, 107976.", doi:"https://www.sciencedirect.com/science/article/pii/S0145213426000955" },
+  { no:68, year:2026, month:3, pubDate:"2026-03-19", type:"SSCI", status:"published", title:"Mapping the Structures of Adverse Childhood Experiences: A Network Analysis and a Sex-Differentiated Structural Framework for Prevention and Intervention", journal:"Journal of Interpersonal Violence", authors:"Kim, J., & Son, S.", citation:"Kim, J., & Son, S. (2026). Mapping the Structures of Adverse Childhood Experiences: A Network Analysis and a Sex-Differentiated Structural Framework for Prevention and Intervention. Journal of Interpersonal Violence, 08862605261426592.", doi:"https://journals.sagepub.com/doi/10.1177/08862605261426592" },
   // ── 2025 ──
   { no:67, year:2025, type:"KCI",  isNew:false, status:"published", title:"초등학교 고학년 아동의 ADHD 증상과 정신건강 서비스 인식에 따른 자살 위험의 비교 연구", journal:"학교사회복지", authors:"이재은, 김준범, 박연주", citation:"이재은, 김준범, 박연주. (2025). 초등학교 고학년 아동의 ADHD 증상과 정신건강 서비스 인식에 따른 자살 위험의 비교 연구. 학교사회복지, (72), 1-25.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003281759" },
   { no:66, year:2025, type:"KCI",  isNew:false, status:"published", title:"사회복지사의 일·생활 균형 인식과 조직 분위기의 잠재유형별 이직의도 차이", journal:"한국사회복지행정학", authors:"장은주, 김준범, 신우철", citation:"장은주, 김준범, 신우철. (2025). 사회복지사의 일·생활 균형 인식과 조직 분위기의 잠재유형별 이직의도 차이. 한국사회복지행정학, 27(4), 111-142.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003267939" },
@@ -951,8 +1139,6 @@ const PUB_DATA = [
   { no:1,  year:2015, type:"KCI",  isNew:false, status:"published", title:"학교폭력 가해-피해 중복경험 청소년의 우울, 공격성, 자기통제력과 가정폭력 경험에 관한 연구", journal:"학교사회복지", authors:"김재엽, 성신명, 김준범", citation:"김재엽, 성신명, 김준범. (2015). 학교폭력 가해-피해 중복경험 청소년의 우울, 공격성, 자기통제력과 가정폭력 경험에 관한 연구. 학교사회복지, 31, 83-109.", doi:"" },
 
   // ── UNDER REVIEW ──
-  { no:null, year:2026, type:"KCI",  isNew:false, status:"review", reviewStage:"게재 예정 (4월)", title:"가출청소년 FGI", journal:"생활과학연구논총", authors:"김동현, 김준범, 이재은", citation:"김동현, 김준범, 이재은. (2026). 가출청소년 FGI. 생활과학연구논총.", doi:"" },
-  { no:null, year:2026, type:"KCI",  isNew:false, status:"review", reviewStage:"게재 예정 (4월)", title:"강제된 돌봄을 넘어 회복으로: 가족돌봄청소년·청년의 돌봄 경험 과정과 유형에 대한 질적 연구", journal:"한국가족관계학회", authors:"김준범, 이재은, 임소진", citation:"김준범, 이재은, 임소진. (2026). 강제된 돌봄을 넘어 회복으로. 한국가족관계학회.", doi:"" },
   { no:null, year:2025, type:"SSCI", isNew:false, status:"review", reviewStage:"2nd Revision", title:"Exploring the Symptom Comorbidity Structure of PTSD, Depression, and Anxiety in North Korean Refugees: A Network Analysis Approach", journal:"Transcultural Psychiatry", authors:"Kim, J., & Son, S.", citation:"Kim, J., & Son, S. (under review). Exploring the Symptom Comorbidity Structure of PTSD, Depression, and Anxiety in North Korean Refugees. Transcultural Psychiatry.", doi:"" },
   { no:null, year:2025, type:"SSCI", isNew:false, status:"review", reviewStage:"1st Round", title:"Assessing the Link between Attention Deficit Hyperactivity Disorder, Self-Harm and Suicidality in Adolescents: A Propensity Score Matching Analysis", journal:"Child and Adolescent Social Work Journal", authors:"Jang, D., Kim, J., & Sung, S.", citation:"Jang, D., Kim, J., & Sung, S. (under review). Assessing the Link between ADHD, Self-Harm and Suicidality in Adolescents. Child and Adolescent Social Work Journal.", doi:"" },
   { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"Under Review", title:"Sex-Specific Latent Typologies of Self-Harm Behaviors and Their Differential Associations with Suicidality in a National Sample", journal:"Child Psychiatry & Human Development", authors:"Kim, J., Lee, M. S., & Jung, Y.", citation:"Kim, J., Lee, M. S., & Jung, Y. (under review). Sex-Specific Latent Typologies of Self-Harm Behaviors. Child Psychiatry & Human Development.", doi:"" },
@@ -963,6 +1149,35 @@ const PUB_DATA = [
 ];
 
 function isIntl(t) { return t === 'SSCI' || t === 'SCIE'; }
+
+// Auto-detect NEW status: published within last 3 months from pubDate
+function isWithin3Months(pubDate) {
+  if (!pubDate) return false;
+  const pub = new Date(pubDate);
+  const now = new Date();
+  const diffMonths = (now.getFullYear() - pub.getFullYear()) * 12 + (now.getMonth() - pub.getMonth());
+  return diffMonths >= 0 && diffMonths < 3;
+}
+
+// Format year + month display
+function fmtYearMonth(p) {
+  if (p.month) {
+    const m = String(p.month).padStart(2, '0');
+    return `${p.year}.${m}`;
+  }
+  return `${p.year}`;
+}
+
+// Highlight PI's own name in author/citation strings
+function highlightPI(text) {
+  if (!text) return '';
+  // Match Korean name "김준범" and English variants "Kim, J.", "Kim, Joonbeom", "Kim, J. B."
+  return text
+    .replace(/김준범/g, '<span class="pi-self">김준범</span>')
+    .replace(/Kim, Joonbeom/g, '<span class="pi-self">Kim, Joonbeom</span>')
+    .replace(/Kim, J\. B\./g, '<span class="pi-self">Kim, J. B.</span>')
+    .replace(/Kim, J\.(?!\s*[A-Za-z])/g, '<span class="pi-self">Kim, J.</span>');
+}
 
 function renderTicker() {
   const items = NEWS_DATA.map(n =>
@@ -1011,33 +1226,38 @@ function renderPubs(filter) {
   const rows = filtered.map(p => {
     const cls  = isIntl(p.type) ? 'pb-intl' : 'pb-kci';
     const lbl  = isIntl(p.type) ? p.type : 'KCI';
-    const newB = p.isNew ? `<span class="pb pb-new">New</span>` : '';
+    // Auto-determine NEW: prioritize pubDate-based 3-month window; fallback to manual isNew flag
+    const showNew = isWithin3Months(p.pubDate) || p.isNew === true;
+    const newTitleBadge = (showNew && !isReviewMode) ? `<span class="pr-new-badge">NEW</span>` : '';
     const stageB = isReviewMode && p.reviewStage
       ? `<span class="pb pb-stage">${p.reviewStage}</span>` : '';
     const doiB = p.doi
       ? `<a class="detail-link" href="${p.doi}" target="_blank" onclick="event.stopPropagation()">View Paper ↗</a>`
       : `<span class="detail-link disabled">No link</span>`;
     const noLabel = p.no ? `<span class="pr-no">#${p.no}</span>` : '';
+    const yrDisplay = fmtYearMonth(p);
+    const authorsHi = highlightPI(p.authors);
+    const citationHi = highlightPI(p.citation);
     return `
       <div class="pr ${isReviewMode ? 'pr-review' : ''}" onclick="toggleDetail(this)">
         <div class="pr-head">
-          <div class="pr-yr">${p.year}${noLabel}</div>
+          <div class="pr-yr">${yrDisplay}${noLabel}</div>
           <div>
-            <div class="pr-title-text">${p.title}</div>
-            <div class="pr-authors-preview">${p.authors} · <em>${p.journal}</em></div>
+            <div class="pr-title-text">${newTitleBadge}${p.title}</div>
+            <div class="pr-authors-preview">${authorsHi} · <em>${p.journal}</em></div>
           </div>
-          <div class="pr-badges">${newB}${stageB}<span class="pb ${cls}">${lbl}</span></div>
+          <div class="pr-badges">${stageB}<span class="pb ${cls}">${lbl}</span></div>
         </div>
         <div class="pr-detail">
           <div class="detail-inner">
             <div class="detail-block">
               <div class="detail-row">
                 <div class="detail-key">Authors</div>
-                <div class="detail-val authors">${p.authors}</div>
+                <div class="detail-val authors">${authorsHi}</div>
               </div>
               <div class="detail-row">
                 <div class="detail-key">Citation (APA)</div>
-                <div class="detail-val citation">${p.citation}</div>
+                <div class="detail-val citation">${citationHi}</div>
               </div>
               ${isReviewMode && p.reviewStage ? `<div class="detail-row"><div class="detail-key">Status</div><div class="detail-val" style="color:var(--red);font-weight:500;">${p.reviewStage}</div></div>` : ''}
             </div>
