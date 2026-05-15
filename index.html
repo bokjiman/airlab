@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIR Lab — ACEs-Informed Recovery Lab @ CBNU</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400&family=Barlow+Condensed:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400&display=swap');
+
+:root {
+  --white:    #ffffff;
+  --off:      #f7f6f3;
+  --black:    #0e0e0e;
+  --mid:      #4a4a4a;
+  --light:    #999999;
+  --xlight:   #cccccc;
+  --rule:     #dedede;
+  --red:      #b52b1e;
+  --navy:     #162038;
+  --hover-bg: #f4f3f0;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: 'Barlow', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── STRIPE ── */
+.stripe { display: flex; height: 4px; width: 100%; }
+.stripe span { flex: 1; }
+.stripe .s1 { background: var(--navy); }
+.stripe .s2 { background: var(--red); }
+.stripe .s3 { background: #ddd; }
+.stripe .s4 { background: var(--red); }
+.stripe .s5 { background: var(--navy); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: var(--white); border-bottom: 1px solid var(--rule);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3.5rem; height: 56px;
+  max-width: 1400px; margin: 0 auto;
+}
+.nav-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 500; font-size: 0.95rem;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--black); text-decoration: none;
+  display: flex; align-items: center; gap: 0.9rem;
+}
+.nav-logo-dot {
+  display: flex; gap: 2px; align-items: center;
+}
+.nav-logo-dot span {
+  display: block; width: 5px; height: 5px; border-radius: 50%;
+}
+.nav-logo-dot .d1 { background: var(--navy); }
+.nav-logo-dot .d2 { background: var(--red); }
+.nav-logo-dot .d3 { background: var(--navy); }
+
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.67rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--light); text-decoration: none; font-weight: 400;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--black); }
+
+/* ── TICKER ── */
+.ticker-wrap {
+  margin-top: 60px; background: var(--navy);
+  display: flex; align-items: stretch; overflow: hidden;
+}
+.ticker-label {
+  background: var(--red); padding: 0 1.6rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase;
+  font-weight: 600; color: #fff;
+  display: flex; align-items: center; flex-shrink: 0;
+}
+.ticker-scroll { overflow: hidden; flex: 1; display: flex; align-items: center; }
+.ticker-track { display: flex; animation: ticker 55s linear infinite; white-space: nowrap; }
+.ticker-track:hover { animation-play-state: paused; }
+.ticker-item {
+  padding: 0.75rem 3rem; font-size: 0.72rem; letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.72); border-right: 1px solid rgba(255,255,255,0.08);
+}
+.ticker-item strong { color: #fff; font-weight: 500; }
+@keyframes ticker { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
+
+/* ── HERO ── */
+#hero {
+  max-width: 1400px; margin: 0 auto;
+  padding: 0 3.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Identity block — full-width top */
+.hero-identity {
+  padding: 3.5rem 0 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero-identity-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 1.6rem;
+}
+
+.hero-title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Main wordmark: AIR LAB full width, no letter separation */
+.hero-wordmark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: clamp(5.5rem, 11vw, 13rem);
+  line-height: 0.87;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--black);
+  display: flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.hero-wordmark .wm-air { color: var(--navy); }
+.hero-wordmark .wm-sep {
+  font-weight: 200;
+  color: var(--red);
+  padding: 0 0.12em;
+  font-style: italic;
+}
+.hero-wordmark .wm-lab {
+  color: var(--black);
+  font-weight: 200;
+  letter-spacing: 0.05em;
+}
+
+/* Fullname as subtitle strip */
+.hero-fullname-strip {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+}
+
+.hero-fullname-strip .fn-part {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 300;
+  color: var(--light);
+}
+.hero-fullname-strip .fn-part.bold {
+  font-weight: 600;
+  color: var(--black);
+}
+.hero-fullname-strip .fn-dot {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: var(--red);
+  margin: 0 0.8em;
+  flex-shrink: 0;
+}
+
+.hero-right-block {
+  text-align: right;
+  flex-shrink: 0;
+  padding-bottom: 0.5rem;
+}
+
+.hero-institution {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--light);
+  line-height: 2.1;
+}
+
+.hero-institution strong {
+  color: var(--mid);
+  font-weight: 500;
+}
+
+.hero-institution-big {
+  text-align: right;
+}
+.inst-univ {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(1rem, 1.8vw, 1.4rem);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+  line-height: 1.2;
+  margin-bottom: 0.3rem;
+}
+.inst-dept {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 0.2rem;
+}
+.inst-loc {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--xlight);
+}
+
+/* Award shimmer */
+.badge-award {
+  position: relative;
+  overflow: hidden;
+}
+.badge-award::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  animation: shimmer 2.5s infinite;
+}
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* Two-col content below identity */
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  padding: 3.5rem 0;
+}
+
+.hero-pi {
+  padding-right: 5rem;
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2.5rem;
+}
+
+.pi-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(2.2rem, 3.5vw, 3.4rem); font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--black); line-height: 1;
+  margin-bottom: 0.35rem;
+}
+.pi-name-ko {
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.82rem; color: var(--light);
+  letter-spacing: 0.08em; margin-bottom: 0.8rem;
+  font-weight: 300;
+}
+.pi-role {
+  font-size: 0.67rem; color: var(--red);
+  letter-spacing: 0.18em; text-transform: uppercase;
+  font-weight: 600; margin-bottom: 0;
+  display: flex; align-items: center; gap: 0.7rem;
+}
+.pi-role::before {
+  content: '';
+  display: block; width: 1.8rem; height: 1.5px;
+  background: var(--red);
+}
+
+.contacts { display: flex; flex-direction: column; gap: 0.42rem; }
+.cr { display: flex; gap: 0.8rem; font-size: 0.77rem; color: var(--mid); align-items: baseline; }
+.cr .lbl {
+  font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--xlight); width: 3.5rem; flex-shrink: 0; font-weight: 400;
+}
+.cr a { color: var(--mid); text-decoration: none; transition: color 0.15s; }
+.cr a:hover { color: var(--black); }
+
+.hero-research {
+  padding-left: 5rem;
+  display: flex; flex-direction: column; gap: 2.5rem;
+}
+
+.hero-desc {
+  font-size: 0.92rem; color: var(--mid); line-height: 1.85;
+  max-width: 46ch; font-weight: 300;
+  border-left: 2px solid var(--rule);
+  padding-left: 1.5rem;
+}
+
+.blk-lbl {
+  font-size: 0.58rem; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--light); margin-bottom: 0.9rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.blk-lbl::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 0.38rem; }
+.tag {
+  font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.3rem 0.8rem; border: 1px solid var(--rule); color: var(--light);
+  transition: all 0.15s; cursor: default;
+}
+.tag:hover { border-color: var(--navy); color: var(--navy); }
+
+/* ── SECTION ── */
+.sw { max-width: 1400px; margin: 0 auto; padding: 5rem 3.5rem; border-bottom: 1px solid var(--rule); }
+
+.sh {
+  display: grid; grid-template-columns: 13rem 1fr;
+  gap: 4rem; margin-bottom: 3.5rem; align-items: baseline;
+}
+.sn { font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--xlight); }
+.st {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem); font-weight: 400;
+  text-transform: uppercase; letter-spacing: 0.05em; line-height: 1;
+  color: var(--black);
+}
+
+/* ── NEWS ── */
+.news-cards { display: flex; flex-direction: column; }
+.nc {
+  display: grid; grid-template-columns: 13rem 1fr auto;
+  gap: 4rem; padding: 1.7rem 0;
+  border-bottom: 1px solid var(--rule); align-items: start;
+}
+.nc:first-child { border-top: 1px solid var(--rule); }
+.nc-date {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem; letter-spacing: 0.1em; color: var(--xlight);
+  text-transform: uppercase; padding-top: 0.1rem;
+}
+.nc-text { font-size: 0.88rem; color: var(--black); line-height: 1.7; font-weight: 300; }
+.nc-text strong { font-weight: 500; }
+.nc-text em { font-style: normal; color: var(--light); font-size: 0.8rem; display: block; margin-top: 0.3rem; }
+.badge { font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase; padding: 0.26rem 0.65rem; font-weight: 600; align-self: start; }
+.badge-award  { background: #fdf3e3; color: #9a5c10; border: 1px solid #e8c880; }
+.badge-recruit{ background: #eaf0fa; color: #1a3a7a; border: 1px solid #a0bbdf; }
+.badge-paper  { background: #f0f0f0; color: #444; border: 1px solid #d4d4d4; }
+.badge-project{ background: #eef4f0; color: #2a6040; border: 1px solid #a0ccb0; }
+.badge-member { background: #f0eefa; color: #5a2d9a; border: 1px solid #c0a0e8; }
+
+/* ── ABOUT ── */
+.about-grid { display: grid; grid-template-columns: 13rem 1fr; gap: 4rem; }
+.about-body p { font-size: 0.91rem; color: var(--mid); line-height: 1.9; max-width: 64ch; margin-bottom: 1.5rem; font-weight: 300; }
+.about-body p:last-child { margin-bottom: 0; }
+
+/* ── PUBLICATIONS ── */
+.pub-ctrl {
+  display: grid; grid-template-columns: 13rem 1fr;
+  gap: 4rem; margin-bottom: 0; align-items: center;
+}
+.pfilt { display: flex; }
+.pfilt button {
+  padding: 0.5rem 1.4rem; font-size: 0.62rem; letter-spacing: 0.18em;
+  text-transform: uppercase; border: 1px solid var(--rule); border-right: none;
+  background: transparent; color: var(--light); cursor: pointer;
+  font-family: 'Barlow', sans-serif; font-weight: 400; transition: all 0.15s;
+}
+.pfilt button:last-child { border-right: 1px solid var(--rule); }
+.pfilt button.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+.pfilt button:hover:not(.active) { color: var(--black); border-color: #999; }
+
+.pub-list { margin-top: 2rem; }
+
+/* Pub Row */
+.pr { border-bottom: 1px solid var(--rule); cursor: pointer; transition: background 0.12s; }
+.pr:first-child { border-top: 1px solid var(--rule); }
+.pr:hover { background: var(--hover-bg); }
+
+.pr-head {
+  display: grid; grid-template-columns: 13rem 1fr 6rem;
+  gap: 4rem; padding: 1.5rem 0.6rem; align-items: start;
+}
+
+.pr-yr {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem; letter-spacing: 0.08em; color: var(--xlight); padding-top: 0.1rem;
+}
+
+.pr-title-text {
+  font-size: 0.89rem; color: var(--black); line-height: 1.55;
+  font-weight: 400; margin-bottom: 0.35rem;
+}
+.pr-authors-preview {
+  font-size: 0.74rem; color: var(--light); font-weight: 300;
+}
+.pr-authors-preview em { font-style: italic; }
+
+.pr-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem; }
+.pb {
+  font-size: 0.57rem; letter-spacing: 0.13em; text-transform: uppercase;
+  padding: 0.27rem 0.65rem; font-weight: 600; text-align: center;
+}
+.pb-intl { background: var(--navy); color: #fff; }
+.pb-kci  { background: #f0f0f0; color: #555; border: 1px solid #d4d4d4; }
+.pb-new  { background: var(--red); color: #fff; }
+
+/* NEW badge on title-left (auto-applied within 3 months of pubDate) */
+.pr-new-badge {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 0.18rem 0.5rem;
+  margin-right: 0.55rem;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  animation: newPulse 2.2s ease-in-out infinite;
+}
+@keyframes newPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+/* Highlight PI's own name in author list */
+.pi-self {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* ── PI PORTRAIT (Hero) ── */
+.hero-pi-with-photo {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.8rem;
+  align-items: start;
+}
+.pi-portrait {
+  width: 140px;
+  height: 180px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  position: relative;
+  flex-shrink: 0;
+}
+.pi-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  filter: grayscale(15%) contrast(1.02);
+  transition: filter 0.4s ease;
+}
+.pi-portrait:hover img {
+  filter: grayscale(0%) contrast(1.05);
+}
+.pi-portrait::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 30px; height: 2px;
+  background: var(--red);
+}
+
+/* ── LAB LIFE SECTION ── */
+.lab-life-grid {
+  display: grid;
+  grid-template-columns: 13rem 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+.lab-life-content {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2.5rem;
+  align-items: stretch;
+}
+
+/* ── FIELD GALLERY SLIDER ── */
+.field-gallery {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+.field-slider {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: var(--off);
+  width: 100%;
+}
+.field-slides {
+  display: flex;
+  width: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.field-slide {
+  min-width: 100%;
+  width: 100%;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.field-slide img {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(8%) contrast(1.02);
+  transition: filter 0.4s ease;
+  display: block;
+}
+.field-slide:hover img {
+  filter: grayscale(0%) contrast(1.05);
+}
+.field-photo-corner {
+  position: absolute;
+  top: 0; left: 0;
+  display: flex;
+  z-index: 2;
+}
+.field-photo-corner span {
+  display: block;
+  width: 24px;
+  height: 3px;
+}
+.field-photo-corner .c1 { background: var(--navy); }
+.field-photo-corner .c2 { background: var(--red); }
+
+/* Slide nav arrows */
+.field-nav {
+  position: absolute;
+  bottom: 0.8rem;
+  right: 0.8rem;
+  display: flex;
+  gap: 2px;
+  z-index: 10;
+}
+.field-nav button {
+  width: 28px; height: 28px;
+  background: rgba(255,255,255,0.88);
+  border: 1px solid var(--rule);
+  color: var(--mid);
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  font-family: 'Barlow', sans-serif;
+}
+.field-nav button:hover {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+
+/* Slide dots */
+.field-dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 10;
+}
+.field-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.field-dot.active {
+  background: #fff;
+  transform: scale(1.3);
+}
+
+/* Slide counter */
+.field-counter {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.85);
+  background: rgba(0,0,0,0.32);
+  padding: 0.22rem 0.55rem;
+  z-index: 10;
+}
+
+/* Caption panel — all slides share one panel, JS swaps content */
+.field-caption-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-left: 0.5rem;
+  min-height: 340px;
+}
+.field-caption-inner {
+  animation: captionFade 0.35s ease;
+}
+@keyframes captionFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.lab-photo-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: var(--off);
+}
+.lab-photo-frame img {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  max-height: 380px;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(8%) contrast(1.02);
+  transition: filter 0.4s ease, transform 0.6s ease;
+  display: block;
+}
+.lab-photo-frame:hover img {
+  filter: grayscale(0%) contrast(1.05);
+  transform: scale(1.015);
+}
+.lab-photo-corner {
+  position: absolute;
+  top: 0; left: 0;
+  display: flex;
+}
+.lab-photo-corner span {
+  display: block;
+  width: 24px;
+  height: 3px;
+}
+.lab-photo-corner .c1 { background: var(--navy); }
+.lab-photo-corner .c2 { background: var(--red); }
+.lab-photo-caption-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 0.5rem;
+}
+.lab-caption-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+}
+.lab-caption-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--black);
+  margin-bottom: 0.9rem;
+  letter-spacing: 0.01em;
+}
+.lab-caption-meta {
+  font-size: 0.74rem;
+  color: var(--mid);
+  line-height: 1.7;
+  font-weight: 300;
+  border-top: 1px solid var(--rule);
+  padding-top: 0.9rem;
+}
+.lab-caption-meta strong {
+  color: var(--black);
+  font-weight: 500;
+}
+.lab-caption-meta .lab-meta-date {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--xlight);
+  margin-bottom: 0.5rem;
+}
+
+/* Thumbnail strip */
+.field-thumbs {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--rule);
+}
+.field-thumb {
+  width: 52px; height: 40px;
+  overflow: hidden;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.18s, opacity 0.18s;
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+.field-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.field-thumb.active {
+  border-color: var(--navy);
+  opacity: 1;
+}
+.field-thumb:hover { opacity: 0.85; }
+
+/* Detail panel */
+.pr-detail { display: none; padding: 0 0.6rem 1.8rem; padding-left: calc(13rem + 4rem + 0.6rem); }
+.pr-detail.open { display: block; animation: expandIn 0.18s ease; }
+@keyframes expandIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+
+.detail-inner {
+  border-top: 1px solid var(--rule); padding-top: 1.3rem;
+  display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start;
+}
+.detail-block { display: flex; flex-direction: column; gap: 0.9rem; }
+.detail-row {}
+.detail-key {
+  font-size: 0.56rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--xlight); margin-bottom: 0.3rem; font-weight: 400;
+}
+.detail-val {
+  font-size: 0.8rem; color: var(--mid); line-height: 1.75; font-weight: 300;
+}
+.detail-val.citation { font-style: italic; }
+.detail-val.authors { font-style: normal; color: var(--black); font-weight: 400; }
+
+.detail-link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--navy); text-decoration: none;
+  border: 1.5px solid var(--navy); padding: 0.5rem 1.1rem;
+  transition: all 0.15s; white-space: nowrap; font-weight: 500; align-self: end;
+}
+.detail-link:hover { background: var(--navy); color: #fff; }
+.detail-link.disabled { color: var(--xlight); border-color: var(--rule); pointer-events: none; }
+
+.see-more {
+  display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 2rem;
+  font-size: 0.67rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--mid); text-decoration: none;
+  padding: 0 0.6rem; transition: gap 0.2s, color 0.15s;
+}
+.see-more:hover { color: var(--black); gap: 1.1rem; }
+
+/* Under review row */
+.pr-review { background: #fffdf9; }
+.pr-review:hover { background: #fdf8f0; }
+.pr-review .pr-title-text { color: var(--mid); }
+
+/* Stage badge */
+.pb-stage {
+  font-size: 0.57rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.26rem 0.65rem; font-weight: 500; text-align: center;
+  background: #fff7ed; color: #c05800; border: 1px solid #f5c080;
+}
+
+/* Paper number label */
+.pr-no {
+  display: block; font-size: 0.58rem; letter-spacing: 0.1em;
+  color: var(--xlight); margin-top: 0.25rem; font-weight: 300;
+}
+
+/* Award shimmer in news */
+.nc-award-shimmer {
+  position: relative; overflow: hidden;
+}
+
+/* ── TIMELINE ── */
+.tl { display: flex; flex-direction: column; }
+.tr {
+  display: grid; grid-template-columns: 13rem 1fr;
+  gap: 4rem; padding: 1.9rem 0; border-bottom: 1px solid var(--rule);
+}
+.tr:first-child { border-top: 1px solid var(--rule); }
+.tr-period {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem; letter-spacing: 0.08em; color: var(--xlight);
+  line-height: 1.5; padding-top: 0.1rem; font-weight: 300;
+}
+.tr-role { font-size: 0.91rem; font-weight: 500; color: var(--black); margin-bottom: 0.2rem; }
+.tr-org { font-size: 0.77rem; color: var(--red); margin-bottom: 0.45rem; font-weight: 300; }
+.tr-desc { font-size: 0.77rem; color: var(--light); line-height: 1.65; font-weight: 300; }
+
+/* ── AWARDS & PROJECTS ── */
+.award-item {
+  display: grid; grid-template-columns: 13rem 1fr;
+  gap: 4rem; padding: 1.6rem 0; border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+.award-item:first-child { border-top: 1px solid var(--rule); }
+.award-date {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem; letter-spacing: 0.08em; color: var(--xlight);
+  padding-top: 0.1rem; line-height: 1.5;
+}
+.award-body {}
+.award-title {
+  font-size: 0.9rem; font-weight: 500; color: var(--black);
+  margin-bottom: 0.25rem; line-height: 1.45;
+}
+.award-org {
+  font-size: 0.76rem; color: var(--mid); font-weight: 300; line-height: 1.5;
+}
+
+.project-item {
+  display: grid; grid-template-columns: 13rem 1fr;
+  gap: 4rem; padding: 1.6rem 0; border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+.project-item:first-child { border-top: 1px solid var(--rule); }
+.project-year {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem; letter-spacing: 0.08em; color: var(--xlight);
+  padding-top: 0.1rem;
+}
+.project-body {}
+.project-title {
+  font-size: 0.88rem; font-weight: 400; color: var(--black);
+  margin-bottom: 0.25rem; line-height: 1.5;
+}
+.project-funder {
+  font-size: 0.76rem; color: var(--red); font-weight: 300;
+}
+
+.subsection-label {
+  font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--light); margin-bottom: 1.5rem; margin-top: 3rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.subsection-label:first-child { margin-top: 0; }
+.subsection-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+/* Research participation news */
+.nc-research { border-left: 2px solid var(--navy); padding-left: 1rem; }
+
+/* ── FOOTER ── */
+.footer-wrap { border-top: 1px solid var(--rule); background: var(--off); }
+footer {
+  max-width: 1400px; margin: 0 auto; padding: 2.5rem 3.5rem;
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: center;
+}
+.f-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.9rem; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 500;
+  display: flex; align-items: center; gap: 0.7rem;
+}
+.f-center { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+.f-stripe { display: flex; gap: 3px; }
+.f-stripe span { display: block; width: 16px; height: 2.5px; }
+.f-stripe .fs1,.f-stripe .fs5 { background: var(--navy); }
+.f-stripe .fs2,.f-stripe .fs4 { background: var(--red); }
+.f-stripe .fs3 { background: #ccc; }
+.f-copy { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light); }
+.f-right { text-align: right; font-size: 0.71rem; color: var(--light); line-height: 1.9; }
+
+/* ── ANIMATE ── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+.hero-identity { animation: fadeUp 0.6s ease 0.05s both; }
+.hero-content  { animation: fadeUp 0.6s ease 0.2s both; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .nav-inner { padding: 0 2rem; }
+  .nav-links { gap: 1.8rem; }
+  #hero { padding: 0 2rem; }
+  .sw { padding: 4rem 2rem; }
+  .hero-identity { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  .hero-right-block { text-align: left; }
+  .hero-content { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-pi { padding-right: 0; border-right: none; border-bottom: 1px solid var(--rule); padding-bottom: 3rem; }
+  .hero-research { padding-left: 0; }
+  .sh, .about-grid, .pub-ctrl, .nc, .pr-head, .tr { grid-template-columns: 1fr; gap: 1rem; }
+  .pr-detail { padding-left: 0.6rem; }
+  .detail-inner { grid-template-columns: 1fr; }
+  footer { grid-template-columns: 1fr; }
+  .f-center, .f-right { text-align: left; }
+  .f-center { align-items: flex-start; }
+  /* Photo responsive */
+  .hero-pi-with-photo { grid-template-columns: 110px 1fr; gap: 1.3rem; }
+  .pi-portrait { width: 110px; height: 145px; }
+  .lab-life-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .lab-life-content { grid-template-columns: 1fr; gap: 1.5rem; }
+  .lab-photo-frame img { min-height: 220px; max-height: 320px; }
+  .field-gallery { grid-template-columns: 1fr; gap: 1.5rem; }
+  .field-slide img { height: 260px; }
+  .field-caption-panel { min-height: auto; padding-left: 0; padding-top: 1rem; }
+  .field-thumbs { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#hero">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab
+    </a>
+    <ul class="nav-links">
+      <li><a href="#news">News</a></li>
+      <li><a href="#lab-life">Lab Life</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#awards">Recognition</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-label">Latest</div>
+  <div class="ticker-scroll">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div id="hero">
+
+  <!-- Identity: AIR LAB big -->
+  <div class="hero-identity">
+    <div class="hero-identity-top">
+      <div class="hero-title-block">
+        <div class="hero-wordmark">
+          <span class="wm-air">AIR</span><span class="wm-sep">/</span><span class="wm-lab">Lab</span>
+        </div>
+        <div class="hero-fullname-strip">
+          <span class="fn-part bold">ACEs-Informed</span>
+          <span class="fn-dot"></span>
+          <span class="fn-part">Recovery Lab</span>
+          <span class="fn-dot"></span>
+          <span class="fn-part">Est. 2025</span>
+        </div>
+      </div>
+      <div class="hero-right-block">
+        <div class="hero-institution-big">
+          <div class="inst-univ">Chungbuk National University</div>
+          <div class="inst-dept">Department of Child Welfare</div>
+          <div class="inst-loc">Cheongju, Republic of Korea</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PI + Research -->
+  <div class="hero-content">
+    <div class="hero-pi">
+      <div class="hero-pi-with-photo">
+        <div class="pi-portrait">
+          <img src="images/pi_portrait.jpg" alt="Kim, Joonbeom — Assistant Professor, Chungbuk National University">
+        </div>
+        <div>
+          <div class="pi-name">Kim, Joonbeom</div>
+          <div class="pi-name-ko">김준범</div>
+          <div class="pi-role">Assistant Professor</div>
+        </div>
+      </div>
+      <div class="contacts">
+        <div class="cr"><span class="lbl">Email</span><a href="mailto:jayb.kim@cbnu.ac.kr">jayb.kim@cbnu.ac.kr</a></div>
+        <div class="cr"><span class="lbl">Tel</span><span>+82 10-9539-1025</span></div>
+        <div class="cr"><span class="lbl">Office</span><span>CBNU N20-1, Rm. 104</span></div>
+      </div>
+    </div>
+
+    <div class="hero-research">
+      <div class="hero-desc">
+        I am an assistant professor in the Department of Child Welfare at Chungbuk National University. My research advances empirical understanding of adverse childhood experiences (ACEs), trauma, and youth mental health through rigorous quantitative and mixed-method designs — examining family violence, school violence, ADHD, depression, suicide risk, and post-traumatic recovery. I am committed to integrating clinical and psychiatric perspectives into evidence-based social work policy and practice, and as an educator I prioritize relationship-based teaching that centers students' growth and active engagement.
+      </div>
+      <div>
+        <div class="blk-lbl">Research Interests</div>
+        <div class="tags">
+          <span class="tag">Adverse Childhood Experiences</span>
+          <span class="tag">Trauma &amp; Recovery</span>
+          <span class="tag">Youth Mental Health</span>
+          <span class="tag">Suicide / PTSD</span>
+          <span class="tag">Vulnerable Youth</span>
+          <span class="tag">Family Violence</span>
+          <span class="tag">ADHD</span>
+          <span class="tag">Social Work Practice</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWS -->
+<div id="news" class="sw">
+  <div class="sh"><div class="sn">01 · News &amp; Notice</div><h2 class="st">Latest Updates</h2></div>
+  <div class="news-cards" id="newsCards"></div>
+</div>
+
+<!-- LAB LIFE -->
+<div id="lab-life" class="sw">
+  <div class="sh"><div class="sn">02 · Lab Life</div><h2 class="st">In the Field</h2></div>
+
+  <div class="field-gallery">
+    <!-- Slider -->
+    <div class="field-slider" id="fieldSlider">
+      <div class="field-photo-corner"><span class="c1"></span><span class="c2"></span></div>
+      <div class="field-counter" id="fieldCounter">1 / 6</div>
+      <div class="field-slides" id="fieldSlides">
+
+        <!-- Slide 1 — Teachers_day.jpg (AIR Lab grads) -->
+        <div class="field-slide">
+          <img src="images/lab_teachers_day_2026.jpg" alt="My graduate advisees celebrating Teachers' Day with me">
+        </div>
+
+        <!-- Slide 2 — DCW_mens.jpg (undergrads) -->
+        <div class="field-slide">
+          <img src="images/lab_dcw_mens_2026.jpg" alt="With my undergraduate students from the Department of Child Welfare at a photo booth">
+        </div>
+
+        <!-- Slide 3 — KNPA 2026 Core Members -->
+        <div class="field-slide">
+          <img src="images/lab_knpa2026.jpg" alt="AIR Lab members at the 2026 KNPA Spring Conference">
+        </div>
+
+        <!-- Slide 4 — KNPA 2026 Affiliated -->
+        <div class="field-slide">
+          <img src="images/lab_knpa2026_02.jpg" alt="AIR Lab E-Poster presentation at KNPA 2026">
+        </div>
+
+        <!-- Slide 5 — CBNU Internal Grant -->
+        <div class="field-slide">
+          <img src="images/lab_knpa2026_03.jpg" alt="AIR Lab E-Poster session KNPA 2026">
+        </div>
+
+        <!-- Slide 6 — Young Mind 3rd Cohort -->
+        <div class="field-slide">
+          <img src="images/lab_knpa2026_04.jpg" alt="AIR Lab members with E-Poster at KNPA 2026">
+        </div>
+
+      </div>
+      <!-- Dots -->
+      <div class="field-dots" id="fieldDots">
+        <div class="field-dot active" onclick="goSlide(0)"></div>
+        <div class="field-dot" onclick="goSlide(1)"></div>
+        <div class="field-dot" onclick="goSlide(2)"></div>
+        <div class="field-dot" onclick="goSlide(3)"></div>
+        <div class="field-dot" onclick="goSlide(4)"></div>
+        <div class="field-dot" onclick="goSlide(5)"></div>
+      </div>
+      <!-- Arrow nav -->
+      <div class="field-nav">
+        <button onclick="moveSlide(-1)" aria-label="Previous">&#8592;</button>
+        <button onclick="moveSlide(1)" aria-label="Next">&#8594;</button>
+      </div>
+    </div>
+
+    <!-- Caption panel -->
+    <div class="field-caption-panel">
+      <div class="field-caption-inner" id="fieldCaption">
+        <div class="lab-caption-eyebrow" id="fcEyebrow">Teachers' Day · May 2026</div>
+        <div class="lab-caption-title" id="fcTitle">Grateful for my students on Teachers' Day</div>
+        <div class="lab-caption-meta" id="fcMeta">
+          <span class="lab-meta-date">May 2026 · Cheongju, Korea</span>
+          My graduate advisees surprised me on Teachers' Day (스승의 날). I am so deeply grateful for these precious students who walk this journey with me — they are truly a gift.
+        </div>
+      </div>
+      <!-- Thumbnail strip -->
+      <div class="field-thumbs" id="fieldThumbs">
+        <div class="field-thumb active" onclick="goSlide(0)"><img src="images/lab_teachers_day_2026.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(1)"><img src="images/lab_dcw_mens_2026.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(2)"><img src="images/lab_knpa2026.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(3)"><img src="images/lab_knpa2026_02.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(4)"><img src="images/lab_knpa2026_03.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(5)"><img src="images/lab_knpa2026_04.jpg" alt=""></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PUBLICATIONS -->
+<div id="publications" class="sw">
+  <div class="sh"><div class="sn">03 · Publications</div><h2 class="st">Selected Works</h2></div>
+  <div class="pub-ctrl">
+    <div></div>
+    <div style="display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap;">
+      <div class="pfilt">
+        <button class="active" onclick="fp('all',this)">All</button>
+        <button onclick="fp('intl',this)">SSCI / SCIE</button>
+        <button onclick="fp('kci',this)">KCI</button>
+        <button onclick="fp('review',this)">Under Review</button>
+      </div>
+      <span style="font-size:0.63rem;letter-spacing:0.14em;color:var(--xlight);" id="pubCount"></span>
+    </div>
+  </div>
+  <div class="pub-list" id="pubList"></div>
+</div>
+
+<!-- EXPERIENCE -->
+<div id="experience" class="sw">
+  <div class="sh"><div class="sn">04 · Experience</div><h2 class="st">Professional</h2></div>
+  <div class="tl">
+    <div class="tr"><div class="tr-period">March 2025 – Present</div><div><div class="tr-role">Assistant Professor</div><div class="tr-org">Department of Child Welfare, Chungbuk National University</div><div class="tr-desc">Specialization in Youth Welfare and Mental Health</div></div></div>
+    <div class="tr"><div class="tr-period">Nov 2021 – Feb 2025</div><div><div class="tr-role">Postdoctoral Researcher</div><div class="tr-org">Institute of Behavioral Science in Medicine, Yonsei University College of Medicine</div><div class="tr-desc">OJU Lab, Gangnam Severance Hospital — geriatric psychiatry, delirium in ICU, panic disorder, DTx, HRV</div></div></div>
+    <div class="tr"><div class="tr-period">Jan 2019 – Oct 2021</div><div><div class="tr-role">Researcher</div><div class="tr-org">Suicide and School Mental Health Research Institute, Hallym University College of Medicine</div><div class="tr-desc">Policy Research Team — Ministry of Education Designated Policy Research Institute</div></div></div>
+    <div class="tr"><div class="tr-period">Feb 2017 – Dec 2017</div><div><div class="tr-role">Research Intern</div><div class="tr-org">Korean Institute of Criminology and Justice (KICJ)</div><div class="tr-desc">General Crime Research Division</div></div></div>
+    <div class="tr"><div class="tr-period">Additional</div><div><div class="tr-role">Clinical &amp; Counseling Practice</div><div class="tr-org">Gwangjin-gu Youth Counseling Center · Siheung City Youth Shelter · Seoul Yongsan Emergency Youth Shelter</div><div class="tr-desc">Youth Companion (YC) · Counselor (Professional Volunteer) · TSL Family Therapy — Certified Professional Counselor</div></div></div>
+  </div>
+</div>
+
+<!-- EDUCATION -->
+<div id="education" class="sw">
+  <div class="sh"><div class="sn">05 · Education</div><h2 class="st">Academic Training</h2></div>
+  <div class="tl">
+    <div class="tr"><div class="tr-period">Mar 2018 – Aug 2024</div><div><div class="tr-role">Ph.D. in Social Welfare — Family and Youth Welfare</div><div class="tr-org">Interdisciplinary Program in Social Welfare Policy, Yonsei University</div><div class="tr-desc">"Effectiveness of an individual TSL treatment program to improve family functioning and mental health in runaway youth: Focusing on the recovery process after running away"</div></div></div>
+  </div>
+</div>
+
+<!-- AWARDS & PROJECTS -->
+<div id="awards" class="sw">
+  <div class="sh"><div class="sn">06 · Awards &amp; Projects</div><h2 class="st">Recognition &amp; Research</h2></div>
+
+  <div class="subsection-label">🏅 Awards</div>
+  <div>
+    <div class="award-item">
+      <div class="award-date">Apr. 2026</div>
+      <div class="award-body">
+        <div class="award-title">🏆 우수포스터상 — 2026년 춘계 대한신경정신의학회 (KSBP)</div>
+        <div class="award-org">Sex-Specific Latent Typologies of Self-Harm Behaviors and Their Differential Associations with Suicidality in a National Sample</div>
+      </div>
+    </div>
+    <div class="award-item">
+      <div class="award-date">Mar. 2026</div>
+      <div class="award-body">
+        <div class="award-title">🏆 Outstanding Paper Award — Journal of Youth Counseling Research</div>
+        <div class="award-org">Korea Youth Counseling &amp; Welfare Institute (KYCI) — Selected as best paper published in 2025</div>
+      </div>
+    </div>
+    <div class="award-item">
+      <div class="award-date">Nov. 2025</div>
+      <div class="award-body">
+        <div class="award-title">🏆 First Prize (Best Paper Award) — Social Workers' Research Paper Competition</div>
+        <div class="award-org">Korean Association of Social Workers (KASW)</div>
+      </div>
+    </div>
+    <div class="award-item">
+      <div class="award-date">Nov. 2022</div>
+      <div class="award-body">
+        <div class="award-title">🏆 Excellent Poster Award — Annual Scientific Meeting</div>
+        <div class="award-org">Korean Society of Biological Psychiatry (KSBP)</div>
+      </div>
+    </div>
+    <div class="award-item">
+      <div class="award-date">Jul. 2020</div>
+      <div class="award-body">
+        <div class="award-title">🏆 Best Graduate Student Paper Award (Humanities Division)</div>
+        <div class="award-org">Graduate Student Academic Review, Yonsei University</div>
+      </div>
+    </div>
+    <div class="award-item">
+      <div class="award-date">Aug. 2019</div>
+      <div class="award-body">
+        <div class="award-title">🏆 Life Respect Award — Abstract &amp; Poster Presentation</div>
+        <div class="award-org">Korean Association for Suicide Prevention (KASP)</div>
+      </div>
+    </div>
+    <div class="award-item">
+      <div class="award-date">Oct. 2018</div>
+      <div class="award-body">
+        <div class="award-title">🏆 First Prize (Excellence Paper Award) — Community Child Center Child Abuse DB Policy Research Paper Competition</div>
+        <div class="award-org">Ministry of Health and Welfare</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection-label">📃 Project — Principal Investigator (PI)</div>
+  <div>
+    <div class="project-item">
+      <div class="project-year">2025</div>
+      <div class="project-body">
+        <div class="project-title">Youth Workers Savings Account Program Evaluation Study</div>
+        <div class="project-funder">Gyeonggi-do Future Generation Foundation</div>
+      </div>
+    </div>
+    <div class="project-item">
+      <div class="project-year">2024</div>
+      <div class="project-body">
+        <div class="project-title">Development of a Family Reunification Support Program for Runaway Youth</div>
+        <div class="project-funder">Humanities and Social Sciences Research Professorship Program (Type B), National Research Foundation of Korea (NRF)</div>
+      </div>
+    </div>
+    <div class="project-item">
+      <div class="project-year">2023</div>
+      <div class="project-body">
+        <div class="project-title">Development of a Topographic Model of Adverse Childhood Experiences (ACEs)</div>
+        <div class="project-funder">Humanities and Social Sciences Research Professorship Program (Type B), National Research Foundation of Korea (NRF)</div>
+      </div>
+    </div>
+    <div class="project-item">
+      <div class="project-year">2022</div>
+      <div class="project-body">
+        <div class="project-title">Network Mapping of PTSD, Depression, and Anxiety among North Korean Defectors</div>
+        <div class="project-funder">Humanities and Social Sciences Research Professorship Program (Type B), National Research Foundation of Korea (NRF)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-wrap">
+  <footer>
+    <div class="f-logo">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab @ CBNU
+    </div>
+    <div class="f-center">
+      <div class="f-stripe"><span class="fs1"></span><span class="fs2"></span><span class="fs3"></span><span class="fs4"></span><span class="fs5"></span></div>
+      <div class="f-copy">ACEs-Informed Recovery Lab</div>
+    </div>
+    <div class="f-right">Dept. of Child Welfare<br>Chungbuk National University<br>N20-1, Rm. 104 · Cheongju, Korea</div>
+  </footer>
+</div>
+
+<script>
+const NEWS_DATA = [
+  { date:"2026-1 신규", type:"member", title:"🎉 신규 멤버 환영", body:"26-1학기 신규 멤버: 권영희(박사과정), 정화영(석사과정), 조현진(석사과정) 선생님이 AIR Lab에 함께하기로 했습니다. 환영합니다! 🎊", sub:"기존 멤버: 신해순(석사과정), 이승연(석사과정)" },
+  { date:"2026.04.20", type:"award",   title:"🏆 우수포스터상 수상", body:"2026년 춘계 대한신경정신의학회 우수포스터상 수상", sub:"Sex-Specific Latent Typologies of Self-Harm Behaviors and Their Differential Associations with Suicidality in a National Sample" },
+  { date:"2026.04.30", type:"paper",   title:"New Publication (KCI)", body:"가정 밖 청소년의 안정적 가정복귀를 위한 청소년쉼터 종사자 인식 및 지원요구에 대한 질적 연구: 포커스그룹인터뷰(FGI)를 중심으로", sub:"생활과학연구논총, 30(1), 77-100." },
+  { date:"2026.04.30", type:"paper",   title:"New Publication (KCI)", body:"강제된 돌봄을 넘어 회복으로: 가족돌봄청소년 및 청년의 돌봄 경험 과정과 유형에 대한 질적 연구", sub:"한국가족관계학회지, 31(1), 283-319." },
+  { date:"2026.03.04", type:"award",   title:"🏆 우수논문 선정", body:"청소년상담연구 (한국청소년상담복지개발원) 2025년 게재 논문 중 우수논문 선정", sub:"가정 밖 청소년의 가족관계 변화와 회복 과정에 대한 질적 연구: 상담 개입 경험을 중심으로" },
+  { date:"2026",       type:"paper",   title:"New Publication (SSCI)", body:"Mapping the Structures of Adverse Childhood Experiences: A Network Analysis and a Sex-Differentiated Structural Framework for Prevention and Intervention", sub:"Journal of Interpersonal Violence" },
+  { date:"2026",       type:"paper",   title:"New Publication (SSCI)", body:"Do Adverse Childhood Experiences Intensify the Impact of Hazardous Drinking on Depression? Application of Quantile Regression Analysis", sub:"Child Abuse & Neglect" },
+  { date:"상시",       type:"recruit", title:"Recruiting", body:"아동청소년복지 및 정신건강, 지역사회 기반 실천 연구에 관심 있는 대학원생·학부생을 상시 모집합니다.", sub:"문의: jayb.kim@cbnu.ac.kr" },
+  { date:"2026.04~12", type:"project",  title:"New Research", body:"한국생명존중희망재단 — 청소년 심리부검 운영방안 및 면담 도구 개발 연구 공동연구 참여", sub:"한림대학교 정신건강의학과 홍현주 교수님과 함께" },
+  { date:"2026.04~06", type:"project",  title:"New Research", body:"대전광역시 — 2026 청소년지도자 처우개선 기본계획(2026-2030) 수립 연구 공동연구 참여", sub:"목원대학교 사회복지상담학과 이현 교수님과 함께" },
+  { date:"2026.03~11", type:"project",  title:"New Research", body:"청주복지재단 — 청주시 위기아동 보호체계 진단 및 개선방안 연구", sub:"2026. 3. ~ 2026. 11." },
+  { date:"2026.03~06", type:"project",  title:"New Research", body:"충청북도사회서비스원 — 청소년 온라인 도박 문제 예방 연구", sub:"2026. 3. ~ 2026. 6." }
+];
+
+const PUB_DATA = [
+  // ── 2026 ──
+  { no:73, year:2026, month:4, pubDate:"2026-04-30", type:"KCI",  status:"published", title:"가정 밖 청소년의 안정적 가정복귀를 위한 청소년쉼터 종사자 인식 및 지원요구에 대한 질적 연구: 포커스그룹인터뷰(FGI)를 중심으로", journal:"생활과학연구논총", authors:"김동현, 김준범, 이재은", citation:"김동현, 김준범, 이재은. (2026). 가정 밖 청소년의 안정적 가정복귀를 위한 청소년쉼터 종사자 인식 및 지원요구에 대한 질적 연구: 포커스그룹인터뷰(FGI)를 중심으로. 생활과학연구논총, 30(1), 77-100.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003332899" },
+  { no:72, year:2026, month:4, pubDate:"2026-04-30", type:"KCI",  status:"published", title:"강제된 돌봄을 넘어 회복으로: 가족돌봄청소년 및 청년의 돌봄 경험 과정과 유형에 대한 질적 연구", journal:"한국가족관계학회지", authors:"임소진, 김준범, 이재은", citation:"임소진, 김준범, 이재은. (2026). 강제된 돌봄을 넘어 회복으로: 가족돌봄청소년 및 청년의 돌봄 경험 과정과 유형에 대한 질적 연구. 한국가족관계학회지, 31(1), 283-319.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003332114" },
+  { no:71, year:2026, month:3, pubDate:"2026-03-31", type:"KCI",  status:"published", title:"ADHD는 학교적응력을 떨어뜨리는가?: 청소년 ADHD 증상 정도와 학교적응의 관계에서 제곱항을 이용한 비선형관계 검증", journal:"미래청소년학회지", authors:"전진호, 김나영, 강주연, 김준범, 한승희", citation:"전진호, 김나영, 강주연, 김준범, 한승희. (2026). ADHD는 학교적응력을 떨어뜨리는가?: 청소년 ADHD 증상 정도와 학교적응의 관계에서 제곱항을 이용한 비선형관계 검증. 미래청소년학회지, 23(1), 91-116.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003317209" },
+  { no:70, year:2026, month:4, pubDate:"2026-04-02", type:"SSCI", status:"published", title:"Patterns of Intimate Partner Sexual Violence: Latent Classes and Sex-Specific Associations with Suicidal Ideation", journal:"Journal of Family Violence", authors:"Im, J., & Kim, J.", citation:"Im, J., & Kim, J. (2026). Patterns of Intimate Partner Sexual Violence: Latent Classes and Sex-Specific Associations with Suicidal Ideation. Journal of Family Violence, 1-16.", doi:"https://link.springer.com/article/10.1007/s10896-026-01099-w" },
+  { no:69, year:2026, month:4, pubDate:"2026-04-01", type:"SSCI", status:"published", title:"Do Adverse Childhood Experiences Intensify the Impact of Hazardous Drinking on Depression? Application of Quantile Regression Analysis", journal:"Child Abuse & Neglect", authors:"Lee, M. S., & Kim, J.", citation:"Lee, M. S., & Kim, J. (2026). Do adverse childhood experiences intensify the impact of hazardous drinking on depression? Child Abuse & Neglect, 174, 107976.", doi:"https://www.sciencedirect.com/science/article/pii/S0145213426000955" },
+  { no:68, year:2026, month:3, pubDate:"2026-03-19", type:"SSCI", status:"published", title:"Mapping the Structures of Adverse Childhood Experiences: A Network Analysis and a Sex-Differentiated Structural Framework for Prevention and Intervention", journal:"Journal of Interpersonal Violence", authors:"Kim, J., & Son, S.", citation:"Kim, J., & Son, S. (2026). Mapping the Structures of Adverse Childhood Experiences: A Network Analysis and a Sex-Differentiated Structural Framework for Prevention and Intervention. Journal of Interpersonal Violence, 08862605261426592.", doi:"https://journals.sagepub.com/doi/10.1177/08862605261426592" },
+  // ── 2025 ──
+  { no:67, year:2025, type:"KCI",  isNew:false, status:"published", title:"초등학교 고학년 아동의 ADHD 증상과 정신건강 서비스 인식에 따른 자살 위험의 비교 연구", journal:"학교사회복지", authors:"이재은, 김준범, 박연주", citation:"이재은, 김준범, 박연주. (2025). 초등학교 고학년 아동의 ADHD 증상과 정신건강 서비스 인식에 따른 자살 위험의 비교 연구. 학교사회복지, (72), 1-25.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003281759" },
+  { no:66, year:2025, type:"KCI",  isNew:false, status:"published", title:"사회복지사의 일·생활 균형 인식과 조직 분위기의 잠재유형별 이직의도 차이", journal:"한국사회복지행정학", authors:"장은주, 김준범, 신우철", citation:"장은주, 김준범, 신우철. (2025). 사회복지사의 일·생활 균형 인식과 조직 분위기의 잠재유형별 이직의도 차이. 한국사회복지행정학, 27(4), 111-142.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003267939" },
+  { no:65, year:2025, type:"KCI",  isNew:false, status:"published", title:"가정 밖 청소년의 가족관계 변화와 회복 과정에 대한 질적 연구: 상담 개입 경험을 중심으로", journal:"청소년상담연구", authors:"김준범, 손수민", citation:"김준범, 손수민. (2025). 가정 밖 청소년의 가족관계 변화와 회복 과정에 대한 질적 연구. 청소년상담연구, 33(2), 53-84.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003266176" },
+  { no:64, year:2025, type:"SSCI", isNew:false, status:"published", title:"ADHD and Sex Differences in School Bullying Victimization and Perpetration Based on Inverse Probability Treatment Weighting", journal:"Child Psychiatry & Human Development", authors:"Kim, D., Choi, Y. H., & Kim, J.", citation:"Kim, D., Choi, Y. H., & Kim, J. (2025). ADHD and Sex Differences in School Bullying Victimization and Perpetration Based on Inverse Probability Treatment Weighting. Child Psychiatry & Human Development, 1-13.", doi:"https://link.springer.com/article/10.1007/s10578-025-01930-3" },
+  { no:63, year:2025, type:"KCI",  isNew:false, status:"published", title:"초등학생 ADHD 증상 수준별 양육태도 및 학교적응의 영향 분석: 분위회귀분석의 적용", journal:"학교사회복지", authors:"장대연, 김준범, 김사라", citation:"장대연, 김준범, 김사라. (2025). 초등학생 ADHD 증상 수준별 양육태도 및 학교적응의 영향 분석. 학교사회복지, (71), 49-76.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003246608" },
+  { no:62, year:2025, type:"SSCI", isNew:false, status:"published", title:"Assessing the Effectiveness of TSL Program for Runaway and Homeless Youth", journal:"Research on Social Work Practice", authors:"Kim, J., Kim, J. Y., & Lee, J.", citation:"Kim, J., Kim, J. Y., & Lee, J. (2025). Assessing the Effectiveness of TSL Program for Runaway and Homeless Youth. Research on Social Work Practice.", doi:"https://journals.sagepub.com/doi/full/10.1177/10497315251335239" },
+  { no:61, year:2025, type:"KCI",  isNew:false, status:"published", title:"배우자 폭력 피해에서 발생하는 강압적 통제에 관한 연구: 외현적 폭력과 내현적 폭력 간의 관계를 중심으로", journal:"한국범죄심리연구", authors:"이진석, 김준범", citation:"이진석, 김준범. (2025). 배우자 폭력 피해에서 발생하는 강압적 통제에 관한 연구. 한국범죄심리연구, 21(1), 209-224.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003194662" },
+  { no:60, year:2025, type:"KCI",  isNew:false, status:"published", title:"북한이탈주민의 PTSD, 불안, 우울의 증상 네트워크가 자살경향성에 미치는 영향", journal:"정신건강과 사회복지", authors:"김준범, 손수민", citation:"김준범, 손수민. (2025). 북한이탈주민의 PTSD, 불안, 우울의 증상 네트워크가 자살경향성에 미치는 영향. 정신건강과 사회복지, 53(1), 31-58.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003187123" },
+  { no:59, year:2025, type:"SCIE", isNew:false, status:"published", title:"A Comparison of Symptom Structure between Panic Disorder with and without Comorbid Agoraphobia Using Network Analysis", journal:"Yonsei Medical Journal", authors:"Kim, J., Seo, Y., Lee, S., Lee, G., Seok, J. H., Kim, H. E., & Oh, J.", citation:"Kim, J. et al. (2025). A Comparison of Symptom Structure between Panic Disorder with and without Comorbid Agoraphobia Using Network Analysis. Yonsei Medical Journal, 66(5), 277.", doi:"https://eymj.org/DOIx.php?id=10.3349/ymj.2024.0177" },
+  // ── 2024 ──
+  { no:58, year:2024, type:"KCI",  isNew:false, status:"published", title:"사회복지사의 직장 폭력 피해 유형과 도움요청 행위에 따른 우울 수준 비교 연구", journal:"정신건강과 사회복지", authors:"김준범, 장대연", citation:"김준범, 장대연. (2024). 사회복지사의 직장 폭력 피해 유형과 도움요청 행위에 따른 우울 수준 비교 연구. 정신건강과 사회복지, 52(4), 57-84.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003154686" },
+  { no:57, year:2024, type:"SCIE", isNew:false, status:"published", title:"A propensity score-adjusted HRV analysis of social avoidance and distress in patients with panic disorders", journal:"Psychophysiology", authors:"Kim, J., Ham, J., & Oh, J.", citation:"Kim, J., Ham, J., & Oh, J. (2025). A propensity score-adjusted HRV analysis of social avoidance and distress in patients with panic disorders. Psychophysiology, 62(2), e14746.", doi:"https://onlinelibrary.wiley.com/doi/10.1111/psyp.14746" },
+  { no:56, year:2024, type:"KCI",  isNew:false, status:"published", title:"사회복지사의 직무만족도 수준에 따른 금전적 보상 수준, 분배공정성 인식, 보상 체계 인식의 차이", journal:"한국사회복지행정학", authors:"김준범, 장은주, 신우철", citation:"김준범, 장은주, 신우철. (2024). 사회복지사의 직무만족도 수준에 따른 금전적 보상 수준, 분배공정성 인식, 보상 체계 인식의 차이. 한국사회복지행정학, 26(4), 91-116.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003140536" },
+  { no:55, year:2024, type:"KCI",  isNew:false, status:"published", title:"아동기 역경경험이 성인기 가정폭력과 아동학대의 중복가해에 미치는 영향", journal:"한국사회복지학", authors:"이진석, 김준범", citation:"이진석, 김준범. (2024). 아동기 역경경험이 성인기 가정폭력과 아동학대의 중복가해에 미치는 영향. 한국사회복지학, 76(3), 179-199.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003111607" },
+  { no:54, year:2024, type:"KCI",  isNew:false, status:"published", title:"부모의 아동기 역경경험이 성인기 아동학대 가해에 미치는 영향: 인과효과 추정을 위한 역확률가중치의 적용", journal:"한국범죄심리연구", authors:"이진석, 김준범", citation:"이진석, 김준범. (2024). 부모의 아동기 역경경험이 성인기 아동학대 가해에 미치는 영향. 한국범죄심리연구, 20(2), 73-88.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003102274" },
+  // ── 2023 ──
+  { no:53, year:2023, type:"KCI",  isNew:false, status:"published", title:"신체 증상 장애 환자의 심박변이도와 증상 심각도의 연관성", journal:"정신신체의학", authors:"김은환, 김희선, 함진실, 김준범, 오주영", citation:"김은환, 김희선, 함진실, 김준범, 오주영. (2023). 신체 증상 장애 환자의 심박변이도와 증상 심각도의 연관성. 정신신체의학, 31(2), 108-117.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003039676" },
+  { no:52, year:2023, type:"SCIE", isNew:false, status:"published", title:"Association and interaction between clinician-rated measures of depression and anxiety with heart rate variability in elderly patients with psychiatric disorders", journal:"Heliyon", authors:"Kim, J., Kim, J. J., Seok, J. H., Kim, E., Park, J. Y., Kim, H. E., & Oh, J.", citation:"Kim, J. et al. (2023). Association and interaction between clinician-rated measures of depression and anxiety with HRV in elderly patients with psychiatric disorders. Heliyon, 9(10).", doi:"https://www.sciencedirect.com/science/article/pii/S2405844023079483" },
+  { no:51, year:2023, type:"KCI",  isNew:false, status:"published", title:"고령장애인의 우울, 신체적 기능, 그리고 사회적 유대감이 자살위험에 미치는 영향: 삼원 상호작용 효과를 중심으로", journal:"한국장애인복지학", authors:"이병화, 김준범", citation:"이병화, 김준범. (2023). 고령장애인의 우울, 신체적 기능, 그리고 사회적 유대감이 자살위험에 미치는 영향. 한국장애인복지학, 127-149.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003000398" },
+  { no:50, year:2023, type:"KCI",  isNew:false, status:"published", title:"아동기 역경경험과 성인기 우울의 관계에 대한 연구", journal:"학교사회복지", authors:"손수민, 김준범", citation:"손수민, 김준범. (2023). 아동기 역경경험과 성인기 우울의 관계에 대한 연구. 학교사회복지, 62, 27-51.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002970125" },
+  { no:49, year:2023, type:"KCI",  isNew:false, status:"published", title:"재난 피해자의 트라우마 수준이 PTSD 증상에 미치는 영향에서 초기 증상 정도와 문제음주의 조절효과", journal:"정신건강과 사회복지", authors:"김준범, 임지혜", citation:"김준범, 임지혜. (2023). 재난 피해자의 트라우마 수준이 PTSD 증상에 미치는 영향에서 초기 증상 정도와 문제음주의 조절효과. 정신건강과 사회복지, 51(2), 29-52.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002969492" },
+  { no:48, year:2023, type:"SCIE", isNew:false, status:"published", title:"Can We Notice the Suicidal Warning Signs of Adolescents With Different Psychometric Profiles Before Their Death?: Analysis of Teachers' Reports", journal:"Journal of Korean Medical Science", authors:"Lee, M. S., Kim, J., Hong, H. J., & Bhang, S. Y.", citation:"Lee, M. S., Kim, J., Hong, H. J., & Bhang, S. Y. (2023). Can we notice the suicidal warning signs of adolescents with different psychometric profiles before their death? J Korean Med Sci, 38(25), e194.", doi:"https://pubmed.ncbi.nlm.nih.gov/37365728/" },
+  { no:47, year:2023, type:"SSCI", isNew:false, status:"published", title:"Depression, Alcohol Misuse, and Suicide Attempt Among North Korean Refugee Women Exposed to Gender-Based Violence", journal:"Journal of Interpersonal Violence", authors:"Nam, B., Kim, J., Kim, J. Y., & Lee, Y.", citation:"Nam, B., Kim, J., Kim, J. Y., & Lee, Y. (2023). Depression, alcohol misuse, and suicide attempt among North Korean refugee women exposed to gender-based violence. Journal of interpersonal violence, 38(15-16), 8878-8897.", doi:"https://journals.sagepub.com/doi/10.1177/08862605231161290" },
+  // ── 2022 ──
+  { no:46, year:2022, type:"KCI",  isNew:false, status:"published", title:"고령장애인의 우울과 분노가 자살시도에 미치는 영향: 장애인 쉼터 이용 만족도의 조절효과", journal:"보건과 복지", authors:"이병화, 김준범", citation:"이병화, 김준범. (2022). 고령장애인의 우울과 분노가 자살시도에 미치는 영향. 보건과 복지, 7-33.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002915089" },
+  { no:45, year:2022, type:"KCI",  isNew:false, status:"published", title:"아동기 역경경험의 잠재유형과 가정폭력 가해의 관계: 위험음주의 가중효과를 중심으로", journal:"한국사회복지학", authors:"김준범, 최선아", citation:"김준범, 최선아. (2022). 아동기 역경경험의 잠재유형과 가정폭력 가해의 관계. 한국사회복지학, 74(4), 219-240.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002900204" },
+  { no:44, year:2022, type:"KCI",  isNew:false, status:"published", title:"청소년 다중피해 발생 양상에 관한 성별 비교 연구: 네트워크 분석을 통한 맥락중심적 접근", journal:"학교사회복지", authors:"김준범", citation:"김준범. (2022). 청소년 다중피해 발생 양상에 관한 성별 비교 연구. 학교사회복지, 59, 57-86.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002885175" },
+  { no:43, year:2022, type:"KCI",  isNew:false, status:"published", title:"지역사회 강력 범죄 수준이 청소년 비행에 미치는 영향: 공격성의 종단적 매개효과", journal:"교정복지연구", authors:"김준범", citation:"김준범. (2022). 지역사회 강력 범죄 수준이 청소년 비행에 미치는 영향. 교정복지연구, (78), 1-30.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002850158" },
+  { no:42, year:2022, type:"SCIE", isNew:false, status:"published", title:"Characteristics of Korean Children and Adolescents Who Die by Suicide Based on Teachers' Reports", journal:"International Journal of Environmental Research and Public Health", authors:"Lee, M. S., Jhone, J. H., Kim, J. B., Kweon, Y. S., & Hong, H. J.", citation:"Lee, M. S. et al. (2022). Characteristics of Korean children and adolescents who die by suicide based on teachers' reports. Int J Environ Res Public Health, 19(11), 6812.", doi:"https://pmc.ncbi.nlm.nih.gov/articles/PMC9180601/" },
+  { no:41, year:2022, type:"KCI",  isNew:false, status:"published", title:"청소년의 아동학대 피해와 비행의 관계에서 지역사회 범죄 목격 경험에 대한 연구", journal:"한국범죄심리연구", authors:"최장원, 김준범", citation:"최장원, 김준범. (2022). 청소년의 아동학대 피해와 비행의 관계에서 지역사회 범죄 목격 경험에 대한 연구. 한국범죄심리연구, 18(1), 115-130.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002825658" },
+  // ── 2021 ──
+  { no:40, year:2021, type:"KCI",  isNew:false, status:"published", title:"북한이탈주민의 PTSD와 우울의 동반이환과 자살시도에 관한 연구", journal:"정신건강과 사회복지", authors:"김준범, 전진호", citation:"김준범, 전진호. (2021). 북한이탈주민의 PTSD와 우울의 동반이환과 자살시도에 관한 연구. 정신건강과 사회복지, 49(4), 56-78.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002787367" },
+  { no:39, year:2021, type:"SSCI", isNew:false, status:"published", title:"Perceived social stigma, self-concealment, and suicide risk among North Korean refugee women exposed to traumatic events", journal:"Suicide and Life-Threatening Behavior", authors:"Nam, B., Kim, J., Ryu, W., Kim, D. I., Frey, J. J., & DeVylder, J.", citation:"Nam, B., Kim, J., Ryu, W., Kim, D. I., Frey, J. J., & DeVylder, J. (2021). Perceived social stigma, self-concealment, and suicide risk among North Korean refugee women. Suicide and Life-Threatening Behavior, 51(6), 1235-1246.", doi:"https://pubmed.ncbi.nlm.nih.gov/34585437/" },
+  { no:38, year:2021, type:"SCIE", isNew:false, status:"published", title:"Comparison of Suicide Attempts and Suicide Deaths by Jumping from a High Place in Korean Children and Adolescents", journal:"International Journal of Environmental Research and Public Health", authors:"Song, J., Hong, S. H., Kim, J., Chang, S., Yook, K. H., & Hong, H. J.", citation:"Song, J. et al. (2021). Comparison of suicide attempts and suicide deaths by jumping from a high place in Korean children and adolescents. Int J Environ Res Public Health, 18(18), 9513.", doi:"https://pubmed.ncbi.nlm.nih.gov/34574436/" },
+  { no:37, year:2021, type:"SSCI", isNew:false, status:"published", title:"Workplace victimization and alcohol misuse among junior military personnel: Mediating the role of anger", journal:"Journal of Affective Disorders", authors:"Kim, J. Y., Kim, J., Park, S., & Fear, N.", citation:"Kim, J. Y., Kim, J., Park, S., & Fear, N. (2021). Workplace victimization and alcohol misuse among junior military personnel. Journal of affective disorders, 294, 638-644.", doi:"https://www.sciencedirect.com/science/article/pii/S0165032721006893" },
+  { no:36, year:2021, type:"KCI",  isNew:false, status:"published", title:"아동학대와 가정폭력 노출이 청소년기 최초 가출시기에 미치는 영향: 생존분석의 적용", journal:"한국범죄심리연구", authors:"최장원, 김준범", citation:"최장원, 김준범. (2021). 아동학대와 가정폭력 노출이 청소년기 최초 가출시기에 미치는 영향. 한국범죄심리연구, 17(2), 183-198.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002731451" },
+  { no:35, year:2021, type:"SSCI", isNew:false, status:"published", title:"Suicidal Ideation and Attempt among North Korean Refugee Women in South Korea: Factors that Distinguish Suicide Attempt from Suicidal Ideation", journal:"Suicide and Life-Threatening Behavior", authors:"Nam, B., Kim, J. Y., DeVylder, J., & Kim, J.", citation:"Nam, B., Kim, J. Y., DeVylder, J., & Kim, J. (2021). Suicidal ideation and attempt among North Korean refugee women in South Korea. Suicide and Life-Threatening Behavior, 51(3), 564-571.", doi:"https://pubmed.ncbi.nlm.nih.gov/33890688/" },
+  { no:34, year:2021, type:"KCI",  isNew:false, status:"published", title:"COVID-19로 인한 가정경제 악화가 청소년의 자살경향성에 미치는 효과 분석: 성향점수매칭 분석의 적용", journal:"한국학교·지역보건교육학회지", authors:"이미선, 한승희, 강주연, 김준범", citation:"이미선, 한승희, 강주연, 김준범. (2021). COVID-19로 인한 가정경제 악화가 청소년의 자살경향성에 미치는 효과 분석. 한국학교·지역보건교육학회지, 1-14.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002723450" },
+  { no:33, year:2021, type:"KCI",  isNew:false, status:"published", title:"아동학대 피해와 지역사회 강력 범죄율이 청소년기 중비행에 미치는 종단적 영향", journal:"안전문화연구", authors:"김준범, 공정식", citation:"김준범, 공정식. (2021). 아동학대 피해와 지역사회 강력 범죄율이 청소년기 중비행에 미치는 종단적 영향. 안전문화연구, (11), 115-129.", doi:"" },
+  { no:32, year:2021, type:"KCI",  isNew:false, status:"published", title:"대학교 자살예방정책 추진 실태 및 향후 방향성 모색: 순차적 혼합방법설계의 적용", journal:"교육문화연구", authors:"김준범, 홍성희, 홍현주", citation:"김준범, 홍성희, 홍현주. (2021). 대학교 자살예방정책 추진 실태 및 향후 방향성 모색. 교육문화연구, 27(1), 125-151.", doi:"" },
+  // ── 2020 ──
+  { no:31, year:2020, type:"KCI",  isNew:false, status:"published", title:"초기 청소년기 방임 경험과 이후의 비행에 관한 연구: 공격성의 종단적 매개효과", journal:"학교사회복지", authors:"김준범, 최윤희", citation:"김준범, 최윤희. (2020). 초기 청소년기 방임 경험과 이후의 비행에 관한 연구. 학교사회복지, 52, 181-202.", doi:"" },
+  { no:30, year:2020, type:"KCI",  isNew:false, status:"published", title:"Characteristics of First Visit Pediatric Patients with Suicidal Ideation and Behavior: An 8-Year Retrospective Chart Review", journal:"소아 청소년 정신의학", authors:"Song, J., Kweon, Y. S., Hong, S. H., Kim, J., et al.", citation:"Song, J., Kweon, Y. S., Hong, S. H., Kim, J., et al. (2020). Characteristics of first visit pediatric patients with suicidal ideation and behavior. J Korean Acad Child Adolesc Psychiatry, 31(4), 185.", doi:"" },
+  { no:29, year:2020, type:"KCI",  isNew:false, status:"published", title:"The Impact of Referral to Mental Health Services on Suicide Death Risk in Adolescent Suicide Survivors", journal:"소아 청소년 정신의학", authors:"Kim, J., Hong, S. H., & Hong, H. J.", citation:"Kim, J., Hong, S. H., & Hong, H. J. (2020). The impact of referral to mental health services on suicide death risk in adolescent suicide survivors. J Korean Acad Child Adolesc Psychiatry, 31(4), 177.", doi:"" },
+  { no:28, year:2020, type:"KCI",  isNew:false, status:"published", title:"청소년의 불안-우울 공존 양상과 자살시도: 부모의 낮은 정신건강 관심정도의 가중효과", journal:"정신건강과 사회복지", authors:"김준범, 한광현", citation:"김준범, 한광현. (2020). 청소년의 불안-우울 공존 양상과 자살시도. 정신건강과 사회복지, 48(3), 5-34.", doi:"" },
+  { no:27, year:2020, type:"KCI",  isNew:false, status:"published", title:"피해와 우울의 악순환: 학교폭력 피해가 우울의 종단적 매개로 재피해에 미치는 영향", journal:"학교사회복지", authors:"김준범, 최서연", citation:"김준범, 최서연. (2020). 피해와 우울의 악순환. 학교사회복지, (50), 1-24.", doi:"" },
+  { no:26, year:2020, type:"KCI",  isNew:false, status:"published", title:"아동학대 경험이 청소년기 다중피해에 미치는 효과 분석: 성향점수매칭 분석의 적용", journal:"한국범죄심리연구", authors:"최장원, 김준범", citation:"최장원, 김준범. (2020). 아동학대 경험이 청소년기 다중피해에 미치는 효과 분석. 한국범죄심리연구, 16(2), 171-188.", doi:"" },
+  { no:25, year:2020, type:"KCI",  isNew:false, status:"published", title:"청소년의 아동학대 경험이 위험음주와 자살생각에 미치는 영향", journal:"청소년학연구", authors:"김재엽, 김준범, 장은지", citation:"김재엽, 김준범, 장은지. (2020). 청소년의 아동학대 경험이 위험음주와 자살생각에 미치는 영향. 청소년학연구, 27(5), 119-145.", doi:"" },
+  { no:24, year:2020, type:"KCI",  isNew:false, status:"published", title:"아동기 역경경험과 생애 자살시도의 관계에 관한 연구", journal:"아동학회지", authors:"김준범, 손수민", citation:"김준범, 손수민. (2020). 아동기 역경경험과 생애 자살시도의 관계에 관한 연구. 아동학회지, 41(2), 27-39.", doi:"" },
+  { no:23, year:2020, type:"KCI",  isNew:false, status:"published", title:"청소년 인권존중 경험과 교육이 차별행동에 미치는 영향", journal:"한국사회복지조사연구", authors:"김준범, 이진석", citation:"김준범, 이진석. (2020). 청소년 인권존중 경험과 교육이 차별행동에 미치는 영향. 한국사회복지조사연구, 64, 127-152.", doi:"" },
+  { no:22, year:2020, type:"KCI",  isNew:false, status:"published", title:"초기 청소년기 방임 수준에 따른 학교폭력 피해에 관한 연구: 도움요청대상 유무를 중심으로", journal:"학교사회복지", authors:"김준범, 최윤희", citation:"김준범, 최윤희. (2020). 초기 청소년기 방임 수준에 따른 학교폭력 피해에 관한 연구. 학교사회복지, (49), 281-309.", doi:"" },
+  { no:21, year:2020, type:"KCI",  isNew:false, status:"published", title:"Visible minority 관점을 적용한 다문화 청소년의 자살경향성에 관한 연구", journal:"정신건강과 사회복지", authors:"장대연, 김준범", citation:"장대연, 김준범. (2020). Visible minority 관점을 적용한 다문화 청소년의 자살경향성에 관한 연구. 정신건강과 사회복지, 48(1), 5-32.", doi:"" },
+  // ── 2019 ──
+  { no:20, year:2019, type:"KCI",  isNew:false, status:"published", title:"지역아동센터 이용 초기 청소년의 또래애착과 비행에 관한 연구: 애착에 따른 잠재집단을 중심으로", journal:"학교사회복지", authors:"김준범", citation:"김준범. (2019). 지역아동센터 이용 초기 청소년의 또래애착과 비행에 관한 연구. 학교사회복지, 48, 193-217.", doi:"" },
+  { no:19, year:2019, type:"KCI",  isNew:false, status:"published", title:"교육부의 학교기반 자살예방정책에 대한 현장전문가의 요구 탐색 및 향후 방향성 모색", journal:"교육문화연구", authors:"김준범, 홍성희, 홍현주", citation:"김준범, 홍성희, 홍현주. (2019). 교육부의 학교기반 자살예방정책에 대한 현장전문가의 요구 탐색 및 향후 방향성 모색. 교육문화연구, 25(5), 5-31.", doi:"" },
+  { no:18, year:2019, type:"KCI",  isNew:false, status:"published", title:"3단계 이론을 적용한 청소년의 자살에 관한 연구: 자살생각의 촉발 및 심화, 그리고 자살시도로의 전이", journal:"정신건강과 사회복지", authors:"최장원, 김준범", citation:"최장원, 김준범. (2019). 3단계 이론을 적용한 청소년의 자살에 관한 연구. 정신건강과 사회복지, 47(3), 62-90.", doi:"" },
+  { no:17, year:2019, type:"KCI",  isNew:false, status:"published", title:"청소년 가출과 다중피해의 관계에서 지역사회 무질서의 가중효과", journal:"한국청소년연구", authors:"김준범, 최유일", citation:"김준범, 최유일. (2019). 청소년 가출과 다중피해의 관계에서 지역사회 무질서의 가중효과. 한국청소년연구, 30(3), 185-214.", doi:"" },
+  { no:16, year:2019, type:"KCI",  isNew:false, status:"published", title:"초기 청소년기 위험추구성향과 반사회적 행동의 관계: 또래동조성의 가중효과", journal:"한국범죄심리연구", authors:"김준범, 김수지", citation:"김준범, 김수지. (2019). 초기 청소년기 위험추구성향과 반사회적 행동의 관계. 한국범죄심리연구, 15(2), 83-96.", doi:"" },
+  { no:15, year:2019, type:"KCI",  isNew:false, status:"published", title:"초기청소년기 가정 내 학대피해와 가정 외 폭력피해 및 자살시도: 다중폭력피해 관점의 적용", journal:"한국청소년연구", authors:"김준범", citation:"김준범. (2019). 초기청소년기 가정 내 학대피해와 가정 외 폭력피해 및 자살시도. 한국청소년연구, 30(2), 213-239.", doi:"" },
+  { no:14, year:2019, type:"SSCI", isNew:false, status:"published", title:"Military hazing and suicidal ideation among active duty military personnel: Serial mediation effects of anger and depressive symptoms", journal:"Journal of Affective Disorders", authors:"Kim, J., Kim, J., & Park, S.", citation:"Kim, J., Kim, J., & Park, S. (2019). Military hazing and suicidal ideation among active duty military personnel. Journal of affective disorders, 256, 79-85.", doi:"" },
+  { no:13, year:2019, type:"KCI",  isNew:false, status:"published", title:"노년기 빈곤이 계층의식을 매개로 삶의 만족도에 미치는 영향: 독거노인과 동거노인의 비교를 중심으로", journal:"한국노년학", authors:"김준범, 장대연", citation:"김준범, 장대연. (2019). 노년기 빈곤이 계층의식을 매개로 삶의 만족도에 미치는 영향. 한국노년학, 39(1), 93-108.", doi:"" },
+  // ── 2018 ──
+  { no:12, year:2018, type:"KCI",  isNew:false, status:"published", title:"발달장애인의 도전적 행동이 보호자의 양육부담에 미치는 영향: 사회적 차별의 매개효과", journal:"지적장애연구", authors:"이병화, 김준범", citation:"이병화, 김준범. (2018). 발달장애인의 도전적 행동이 보호자의 양육부담에 미치는 영향. 지적장애연구, 20(4), 187-207.", doi:"" },
+  { no:11, year:2018, type:"KCI",  isNew:false, status:"published", title:"청소년 중비행의 촉발 및 반복에 영향을 미치는 스트레스 요인에 관한 연구", journal:"스트레스硏究", authors:"김준범, 박하연", citation:"김준범, 박하연. (2018). 청소년 중비행의 촉발 및 반복에 영향을 미치는 스트레스 요인에 관한 연구. 스트레스硏究, 26(3), 223-230.", doi:"" },
+  { no:10, year:2018, type:"KCI",  isNew:false, status:"published", title:"청소년의 중비행에 관한 연구: 촉발과 반복에 영향을 미치는 정신건강요인을 중심으로", journal:"청소년문화포럼", authors:"김준범, 장대연, 최장원, 서정열", citation:"김준범, 장대연, 최장원, 서정열. (2018). 청소년의 중비행에 관한 연구. 청소년문화포럼, 27-51.", doi:"" },
+  { no:9,  year:2018, type:"KCI",  isNew:false, status:"published", title:"초기 청소년기 다중폭력피해자의 자살시도에 관한 연구: 심리적 불안의 매개효과를 중심으로", journal:"피해자학연구", authors:"김준범, 최윤희", citation:"김준범, 최윤희. (2018). 초기 청소년기 다중폭력피해자의 자살시도에 관한 연구. 피해자학연구, 26(1), 121-149.", doi:"" },
+  { no:8,  year:2018, type:"KCI",  isNew:false, status:"published", title:"다문화가정 청소년의 학교부적응에 관한 연구: 자아탄력성의 종단적 매개효과를 중심으로", journal:"학교사회복지", authors:"김준범, 박성훈", citation:"김준범, 박성훈. (2018). 다문화가정 청소년의 학교부적응에 관한 연구. 학교사회복지, 41, 77-100.", doi:"" },
+  { no:7,  year:2018, type:"KCI",  isNew:false, status:"published", title:"청소년의 범죄에 대한 두려움에 영향을 미치는 가정 및 학교요인에 대한 연구", journal:"한국범죄심리연구", authors:"김준범, 김정현", citation:"김준범, 김정현. (2018). 청소년의 범죄에 대한 두려움에 영향을 미치는 가정 및 학교요인에 대한 연구. 한국범죄심리연구, 14(1), 49-66.", doi:"" },
+  // ── 2017 ──
+  { no:6,  year:2017, type:"KCI",  isNew:false, status:"published", title:"성장기 학대경험이 청소년의 비행지속에 미치는 영향에 관한 연구: 공격성과 학교부적응의 순차적 매개효과 검증", journal:"교정복지연구", authors:"김준범, 정지영", citation:"김준범, 정지영. (2017). 성장기 학대경험이 청소년의 비행지속에 미치는 영향에 관한 연구. 교정복지연구, (49), 1-30.", doi:"" },
+  { no:5,  year:2017, type:"KCI",  isNew:false, status:"published", title:"초기 청소년이 경험한 부모 과잉간섭 및 긍정적 교사관계와 교칙위반에 관한 종단연구", journal:"학교사회복지", authors:"김준범", citation:"김준범. (2017). 초기 청소년이 경험한 부모 과잉간섭 및 긍정적 교사관계와 교칙위반에 관한 종단연구. 학교사회복지, 38, 21-46.", doi:"" },
+  // ── 2016 ──
+  { no:4,  year:2016, type:"KCI",  isNew:false, status:"published", title:"치매노인의 증상정도가 부양자의 자살생각에 미치는 영향: 부양부담의 매개효과를 중심으로", journal:"한국노년학", authors:"김재엽, 김준범, 장대연, 송인한", citation:"김재엽, 김준범, 장대연, 송인한. (2016). 치매노인의 증상정도가 부양자의 자살생각에 미치는 영향. 한국노년학, 36(3), 883-903.", doi:"" },
+  { no:3,  year:2016, type:"KCI",  isNew:false, status:"published", title:"가출청소년의 부모로부터의 학대와 학교폭력의 중복피해가 자살생각에 미치는 영향: 공격성의 매개효과 검증", journal:"한국청소년연구", authors:"김재엽, 김준범, 장용언, 한기주", citation:"김재엽, 김준범, 장용언, 한기주. (2016). 가출청소년의 부모로부터의 학대와 학교폭력의 중복피해가 자살생각에 미치는 영향. 한국청소년연구, 27(2), 159-186.", doi:"" },
+  { no:2,  year:2016, type:"KCI",  isNew:false, status:"published", title:"성장기 학대경험이 청소년의 부모폭력에 미치는 영향: 긍정적 친구관계의 조절효과를 중심으로", journal:"사회복지연구", authors:"김재엽, 류원정, 김준범", citation:"김재엽, 류원정, 김준범. (2016). 성장기 학대경험이 청소년의 부모폭력에 미치는 영향. 사회복지연구, 47(1), 5-27.", doi:"" },
+  // ── 2015 ──
+  { no:1,  year:2015, type:"KCI",  isNew:false, status:"published", title:"학교폭력 가해-피해 중복경험 청소년의 우울, 공격성, 자기통제력과 가정폭력 경험에 관한 연구", journal:"학교사회복지", authors:"김재엽, 성신명, 김준범", citation:"김재엽, 성신명, 김준범. (2015). 학교폭력 가해-피해 중복경험 청소년의 우울, 공격성, 자기통제력과 가정폭력 경험에 관한 연구. 학교사회복지, 31, 83-109.", doi:"" },
+
+  // ── UNDER REVIEW ──
+  { no:null, year:2025, type:"SSCI", isNew:false, status:"review", reviewStage:"2nd Round", title:"Exploring the Symptom Comorbidity Structure of PTSD, Depression, and Anxiety in North Korean Refugees: A Network Analysis Approach", journal:"Transcultural Psychiatry", authors:"Kim, J., & Son, S.", citation:"Kim, J., & Son, S. (under review). Exploring the Symptom Comorbidity Structure of PTSD, Depression, and Anxiety in North Korean Refugees. Transcultural Psychiatry.", doi:"" },
+  { no:null, year:2025, type:"SSCI", isNew:false, status:"review", reviewStage:"2nd Round", title:"Assessing the Link between Attention Deficit Hyperactivity Disorder, Self-Harm and Suicidality in Adolescents: A Propensity Score Matching Analysis", journal:"Child and Adolescent Social Work Journal", authors:"Jang, D., Kim, J., & Sung, S.", citation:"Sung, S., Kim, J., & Jang, D. (under review). Assessing the Link between ADHD, Self-Harm and Suicidality in Adolescents. Child and Adolescent Social Work Journal.", doi:"" },
+  { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"Under Review", title:"Sex-Specific Latent Typologies of Self-Harm Behaviors and Their Differential Associations with Suicidality in a National Sample", journal:"Child Psychiatry & Human Development", authors:"Kim, J., Lee, M. S., & Jung, Y.", citation:"Kim, J., Lee, M. S., & Jung, Y. (under review). Sex-Specific Latent Typologies of Self-Harm Behaviors. Child Psychiatry & Human Development.", doi:"" },
+  { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"1st Round", title:"The Vicious Cycle of Maltreatment: Reciprocal Relationship between Child Maltreatment and Depression in Children with Disabilities", journal:"Child Abuse Review", authors:"Kim, D. H., & Kim, J.", citation:"Kim, D. H., & Kim, J. (under review). The Vicious Cycle of Maltreatment. Child Abuse Review.", doi:"" },
+  { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"1st Round", title:"The Moderating Role of Sleep Duration in the Link between Child Maltreatment Typology and Adolescent Depression: A Quantile Regression Approach", journal:"Child Abuse & Neglect", authors:"Lee, J., Yi, J., & Kim, J.", citation:"Kim, J., Lee, J., & Yi, J. (under review). The Moderating Role of Sleep Duration in the Link between Child Maltreatment Typology and Adolescent Depression. Child Abuse & Neglect.", doi:"" },
+  { no:null, year:2026, type:"KCI",  isNew:false, status:"review", reviewStage:"1차 심사", title:"누가 주도하고, 가담하며, 방어하고, 회피하는가: 학교폭력 참여 역할의 복합성과 관계적 영향요인 분석", journal:"청소년학연구", authors:"김준범, 이재은", citation:"김준범, 이재은. (under review). 누가 주도하고, 가담하며, 방어하고, 회피하는가. 청소년학연구.", doi:"" },
+  { no:null, year:2026, type:"KCI",  isNew:false, status:"review", reviewStage:"1차 심사", title:"경기도 노동자통장 양적연구 파트", journal:"사회복지행정학회", authors:"김동현, 김준범, 임지혜, 최윤희", citation:"김동현, 김준범, 임지혜, 최윤희. (under review). 경기도 노동자통장. 사회복지행정학회.", doi:"" }
+];
+
+function isIntl(t) { return t === 'SSCI' || t === 'SCIE'; }
+
+// Auto-detect NEW status: published within last 3 months from pubDate
+function isWithin3Months(pubDate) {
+  if (!pubDate) return false;
+  const pub = new Date(pubDate);
+  const now = new Date();
+  const diffMonths = (now.getFullYear() - pub.getFullYear()) * 12 + (now.getMonth() - pub.getMonth());
+  return diffMonths >= 0 && diffMonths < 3;
+}
+
+// Format year + month display
+function fmtYearMonth(p) {
+  if (p.month) {
+    const m = String(p.month).padStart(2, '0');
+    return `${p.year}.${m}`;
+  }
+  return `${p.year}`;
+}
+
+// Highlight PI's own name in author/citation strings
+function highlightPI(text) {
+  if (!text) return '';
+  // Match Korean name "김준범" and English variants "Kim, J.", "Kim, Joonbeom", "Kim, J. B."
+  return text
+    .replace(/김준범/g, '<span class="pi-self">김준범</span>')
+    .replace(/Kim, Joonbeom/g, '<span class="pi-self">Kim, Joonbeom</span>')
+    .replace(/Kim, J\. B\./g, '<span class="pi-self">Kim, J. B.</span>')
+    .replace(/Kim, J\.(?!\s*[A-Za-z])/g, '<span class="pi-self">Kim, J.</span>');
+}
+
+function renderTicker() {
+  const items = NEWS_DATA.map(n =>
+    `<div class="ticker-item"><strong>[${n.title}]</strong> ${n.body}</div>`
+  ).join('');
+  document.getElementById('tickerTrack').innerHTML = items + items;
+}
+
+function renderNews() {
+  const bm = { award:'badge-award', recruit:'badge-recruit', paper:'badge-paper', project:'badge-project', member:'badge-member' };
+  const lm = { award:'Award', recruit:'Recruit', paper:'Paper', project:'Research', member:'Members' };
+  document.getElementById('newsCards').innerHTML = NEWS_DATA.map(n => {
+    const isAward = n.type === 'award';
+    const isMember = n.type === 'member';
+    let rowStyle = '';
+    if (isAward) rowStyle = ' style="background:linear-gradient(to right,#fffef9,#ffffff);"';
+    if (isMember) rowStyle = ' style="background:linear-gradient(to right,#f8f4ff,#ffffff); border-left: 3px solid #c0a0e8; padding-left: 1rem;"';
+    const subHtml = n.sub
+      ? (isMember
+          ? `<em style="font-style:normal;color:var(--mid);font-size:0.78rem;display:block;margin-top:0.5rem;padding:0.5rem 0.8rem;background:#f5f0ff;border-radius:2px;">${n.sub}</em>`
+          : `<em>${n.sub}</em>`)
+      : '';
+    return `
+    <div class="nc"${rowStyle}>
+      <div class="nc-date">${n.date}</div>
+      <div class="nc-text"><strong>${n.title}</strong> — ${n.body}${subHtml}</div>
+      <span class="badge ${bm[n.type]}">${isAward ? '🏆 ' : ''}${lm[n.type]}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderPubs(filter) {
+  const published = PUB_DATA.filter(p => p.status === 'published');
+  const under_review = PUB_DATA.filter(p => p.status === 'review');
+
+  let filtered;
+  if (filter === 'all')    filtered = published;
+  else if (filter === 'intl') filtered = published.filter(p => isIntl(p.type));
+  else if (filter === 'kci')  filtered = published.filter(p => p.type === 'KCI');
+  else if (filter === 'review') filtered = under_review;
+  else filtered = published;
+
+  const isReviewMode = filter === 'review';
+  document.getElementById('pubCount').textContent = `${filtered.length} papers`;
+
+  const rows = filtered.map(p => {
+    const cls  = isIntl(p.type) ? 'pb-intl' : 'pb-kci';
+    const lbl  = isIntl(p.type) ? p.type : 'KCI';
+    // Auto-determine NEW: prioritize pubDate-based 3-month window; fallback to manual isNew flag
+    const showNew = isWithin3Months(p.pubDate) || p.isNew === true;
+    const newTitleBadge = (showNew && !isReviewMode) ? `<span class="pr-new-badge">NEW</span>` : '';
+    const stageB = isReviewMode && p.reviewStage
+      ? `<span class="pb pb-stage">${p.reviewStage}</span>` : '';
+    const doiB = p.doi
+      ? `<a class="detail-link" href="${p.doi}" target="_blank" onclick="event.stopPropagation()">View Paper ↗</a>`
+      : `<span class="detail-link disabled">No link</span>`;
+    const noLabel = p.no ? `<span class="pr-no">#${p.no}</span>` : '';
+    const yrDisplay = fmtYearMonth(p);
+    const authorsHi = highlightPI(p.authors);
+    const citationHi = highlightPI(p.citation);
+    return `
+      <div class="pr ${isReviewMode ? 'pr-review' : ''}" onclick="toggleDetail(this)">
+        <div class="pr-head">
+          <div class="pr-yr">${yrDisplay}${noLabel}</div>
+          <div>
+            <div class="pr-title-text">${newTitleBadge}${p.title}</div>
+            <div class="pr-authors-preview">${authorsHi} · <em>${p.journal}</em></div>
+          </div>
+          <div class="pr-badges">${stageB}<span class="pb ${cls}">${lbl}</span></div>
+        </div>
+        <div class="pr-detail">
+          <div class="detail-inner">
+            <div class="detail-block">
+              <div class="detail-row">
+                <div class="detail-key">Authors</div>
+                <div class="detail-val authors">${authorsHi}</div>
+              </div>
+              <div class="detail-row">
+                <div class="detail-key">Citation (APA)</div>
+                <div class="detail-val citation">${citationHi}</div>
+              </div>
+              ${isReviewMode && p.reviewStage ? `<div class="detail-row"><div class="detail-key">Status</div><div class="detail-val" style="color:var(--red);font-weight:500;">${p.reviewStage}</div></div>` : ''}
+            </div>
+            ${doiB}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('pubList').innerHTML = rows || '<div style="padding:2rem 0;color:var(--xlight);font-size:0.85rem;">No papers in this category.</div>';
+
+  document.querySelectorAll('.pr').forEach((el, i) => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(8px)';
+    el.style.transition = `opacity 0.32s ease ${i * 0.018}s, transform 0.32s ease ${i * 0.018}s`;
+    setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'none'; }, 10);
+  });
+}
+
+function toggleDetail(el) {
+  const d = el.querySelector('.pr-detail');
+  const open = d.classList.contains('open');
+  document.querySelectorAll('.pr-detail.open').forEach(x => x.classList.remove('open'));
+  if (!open) d.classList.add('open');
+}
+
+function fp(type, btn) {
+  document.querySelectorAll('.pfilt button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPubs(type);
+}
+
+// ── FIELD GALLERY SLIDER ──
+const SLIDE_CAPTIONS = [
+  {
+    eyebrow: "Teachers' Day · May 2026",
+    title: "Grateful for my students on Teachers' Day",
+    date: "May 2026 · Cheongju, Korea",
+    body: `My graduate advisees surprised me on Teachers' Day (스승의 날). I am so deeply grateful for these precious students who walk this journey with me — they are truly a gift.`
+  },
+  {
+    eyebrow: "With my undergraduates · May 2026",
+    title: "Photo booth with my undergraduate students",
+    date: "May 2026 · Cheongju, Korea",
+    body: `With some of my wonderful undergraduate students from the Department of Child Welfare at CBNU. Their warmth and kindness mean more to me than they know — I am incredibly thankful to have them.`
+  },
+  {
+    eyebrow: "Our Lab · KNPA 2026",
+    title: "With my lab members at the 2026 KNPA Spring Conference",
+    date: "Apr. 2026 · Seoul, Korea",
+    body: `With my lab members at the 69th Annual Spring Meeting of the Korean NeuroPsychiatric Association (KNPA), where we presented <strong>"Sex-Specific Latent Typologies of Self-Harm Behaviors and Their Differential Associations with Suicidality in a National Sample"</strong> and received an <strong>Outstanding Poster Award</strong>. So proud of these students.`
+  },
+  {
+    eyebrow: "Our Network · KNPA 2026",
+    title: "With our affiliated collaborators at KNPA 2026",
+    date: "Apr. 2026 · Seoul, Korea",
+    body: `Joined by our affiliated collaborators at the 2026 KNPA Spring Conference — <strong>Kim Taeho</strong> (Psychiatric Social Worker, Dongsan Hospital, Keimyung University), <strong>Lee Jaeeun</strong> (Ph.D. Candidate, Child Welfare, CBNU), and undergraduate researchers <strong>Lee Jaeguk</strong> &amp; <strong>Lee Sangjun</strong>. So grateful to work alongside such talented people.`
+  },
+  {
+    eyebrow: "CBNU Internal Grant · 2025",
+    title: "Our CBNU internal research project team",
+    date: "2025 · Cheongju, Korea",
+    body: `With my team on our CBNU internally funded research project — <strong>Lee Jaeeun</strong> (Ph.D. Candidate, Child Welfare, CBNU) and <strong>Lee Jaeguk</strong> (Undergraduate, Child Welfare, CBNU). Thankful for their dedication and hard work.`
+  },
+  {
+    eyebrow: "Young Mind · 3rd Cohort",
+    title: "Young Mind (영마인드) — 3rd Cohort",
+    date: "2025–2026 · Cheongju, Korea",
+    body: `With members of <em>Young Mind (영마인드)</em> 3rd cohort — our mental health support team at CBNU funded by the <strong>National Center for Mental Health (국립정신건강센터)</strong>. Team members: <strong>Lee Jaeguk</strong> &amp; <strong>Lee Sangjun</strong>. Proud of the meaningful work they are doing.`
+  }
+];
+
+let currentSlide = 0;
+const totalSlides = SLIDE_CAPTIONS.length;
+
+function goSlide(n) {
+  currentSlide = (n + totalSlides) % totalSlides;
+  const slidesEl = document.getElementById('fieldSlides');
+  slidesEl.style.transform = `translateX(-${currentSlide * 100}%)`;
+  document.getElementById('fieldCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+
+  // Update dots
+  document.querySelectorAll('.field-dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+  // Update thumbs
+  document.querySelectorAll('.field-thumb').forEach((t, i) => t.classList.toggle('active', i === currentSlide));
+
+  // Update caption with fade
+  const cap = SLIDE_CAPTIONS[currentSlide];
+  const captionEl = document.getElementById('fieldCaption');
+  captionEl.style.animation = 'none';
+  captionEl.offsetHeight; // reflow
+  captionEl.style.animation = 'captionFade 0.35s ease';
+  document.getElementById('fcEyebrow').textContent = cap.eyebrow;
+  document.getElementById('fcTitle').textContent = cap.title;
+  document.getElementById('fcMeta').innerHTML = `<span class="lab-meta-date">${cap.date}</span>${cap.body}`;
+}
+
+function moveSlide(dir) { goSlide(currentSlide + dir); }
+
+// Auto-advance every 6s
+let sliderTimer = setInterval(() => moveSlide(1), 6000);
+document.getElementById('fieldSlider').addEventListener('mouseenter', () => clearInterval(sliderTimer));
+document.getElementById('fieldSlider').addEventListener('mouseleave', () => {
+  sliderTimer = setInterval(() => moveSlide(1), 6000);
+});
+
+// Touch/swipe support
+let touchStartX = 0;
+document.getElementById('fieldSlider').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+document.getElementById('fieldSlider').addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 40) moveSlide(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+renderTicker();
+renderNews();
+renderPubs('all');
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='none'; io.unobserve(e.target); }
+  });
+}, { threshold: 0.05 });
+document.querySelectorAll('.tr, .nc').forEach((el, i) => {
+  el.style.opacity = '0'; el.style.transform = 'translateY(10px)';
+  el.style.transition = `opacity 0.38s ease ${i*0.04}s, transform 0.38s ease ${i*0.04}s`;
+  io.observe(el);
+});
+</script>
+</body>
+</html>
