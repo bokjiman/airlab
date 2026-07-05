@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OR vs PR — AIR Lab Statistics</title>
+<style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-display: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Pretendard Variable', Pretendard, 'Inter', system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-text:    'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Pretendard Variable', Pretendard, 'Inter', system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --white:#ffffff; --off:#f4f7fb; --black:#20262e; --mid:#46505c;
+  --light:#828d9b; --xlight:#aab4c1; --rule:#e6ebf1; --red:#e0573e;
+  --green:#2e9e6b; --gold:#c48a2f;
+  --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4;
+  --sky-soft:#e8f1fa; --sky-soft-2:#f3f8fd;
+  --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+  --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:var(--font-text); background:var(--white); color:var(--black);
+  line-height:1.7; letter-spacing:-0.01em; -webkit-font-smoothing:antialiased;
+}
+
+/* NAV */
+.stripe { display:flex; height:3px; width:100%; }
+.stripe span { flex:1; }
+.stripe .s1,.stripe .s5 { background:var(--sky-deep); }
+.stripe .s2,.stripe .s4 { background:var(--sky); }
+.stripe .s3 { background:var(--sky-bright); }
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(255,255,255,0.72);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,0.06);
+}
+.nav-inner { display:flex; align-items:center; justify-content:space-between; padding:0 2.5rem; height:52px; max-width:1000px; margin:0 auto; }
+.nav-logo { font-family:var(--font-display); font-weight:600; font-size:1rem; color:var(--black); text-decoration:none; display:flex; align-items:center; gap:0.6rem; }
+.nav-logo-dot { display:flex; gap:3px; }
+.nav-logo-dot span { display:block; width:6px; height:6px; border-radius:50%; }
+.nav-logo-dot .d1 { background:var(--sky-deep); } .nav-logo-dot .d2 { background:var(--sky); } .nav-logo-dot .d3 { background:var(--sky-bright); }
+.nav-links { display:flex; gap:1.5rem; list-style:none; margin:0; padding:0; }
+.nav-links a { font-size:0.82rem; letter-spacing:-0.01em; color:var(--mid); text-decoration:none; font-weight:400; transition:color 0.15s; }
+.nav-links a:hover { color:var(--sky-deep); }
+.nav-links a.active { color:var(--sky-deep); font-weight:600; }
+
+/* breadcrumb + hub return button (in-body) */
+.crumb { padding:1.3rem 0 0; font-size:0.8rem; color:var(--light); }
+.crumb a { color:var(--sky-deep); text-decoration:none; font-weight:500; }
+.crumb a:hover { text-decoration:underline; }
+.crumb span { margin:0 0.45rem; color:var(--xlight); }
+.hub-return { text-align:center; margin-top:3rem; }
+.hub-link { display:inline-flex; align-items:center; gap:0.65rem; padding:0.8rem 1.5rem; border-radius:var(--r-pill); background:var(--white); border:1px solid var(--rule); color:var(--sky-deep); font-weight:600; font-size:0.92rem; text-decoration:none; box-shadow:var(--shadow-card); transition:all 0.18s; }
+.hub-link:hover { background:var(--sky-soft); border-color:var(--sky-bright); transform:translateY(-2px); }
+.hub-link .ico { width:20px; height:20px; display:inline-flex; }
+
+/* LAYOUT */
+.wrap { max-width:1000px; margin:0 auto; padding:0 2.5rem 6rem; }
+.hero-band {
+  background:linear-gradient(135deg,#25507d 0%,#2f6fa8 55%,#3f86c4 100%);
+  color:#fff; margin-top:55px; padding:4.5rem 0 4rem;
+}
+.hero-inner { max-width:1000px; margin:0 auto; padding:0 2.5rem; }
+.hero-band .sn { font-size:0.66rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--sky-bright); font-weight:600; margin-bottom:1rem; }
+.hero-band h1 { font-family:var(--font-display); font-size:clamp(2rem,4vw,3rem); font-weight:600; letter-spacing:-0.03em; line-height:1.12; }
+.hero-band h1 em { font-style:normal; color:#bfe0ff; }
+.hero-band .lede { margin-top:1.2rem; max-width:640px; font-size:1rem; color:#dcecfb; line-height:1.75; font-weight:300; }
+.hero-chips { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1.8rem; }
+.chip { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); border-radius:var(--r-pill); padding:0.35rem 0.95rem; font-size:0.76rem; }
+.chip b { color:#bfe0ff; }
+
+/* SECTIONS */
+section { padding-top:4rem; scroll-margin-top:60px; }
+.act-label { display:inline-flex; align-items:center; gap:0.6rem; font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--sky-deep); margin-bottom:0.9rem; }
+.act-label .bar { width:26px; height:3px; background:var(--gold); border-radius:2px; }
+h2.sec { font-family:var(--font-display); font-size:1.7rem; font-weight:600; letter-spacing:-0.02em; color:var(--black); line-height:1.25; margin-bottom:0.8rem; }
+h3 { font-family:var(--font-display); font-size:1.15rem; font-weight:600; color:var(--sky-deep); margin:1.8rem 0 0.6rem; }
+p { font-size:0.98rem; color:var(--mid); margin-bottom:1rem; }
+p strong { color:var(--black); font-weight:600; }
+.hl { background:var(--sky-soft); padding:1px 6px; border-radius:4px; font-weight:600; color:var(--sky-deep); }
+.hlg { background:#fbf3e0; padding:1px 6px; border-radius:4px; font-weight:600; color:var(--gold); }
+.mono { font-family:'JetBrains Mono','SF Mono',ui-monospace,monospace; font-size:0.9em; }
+
+/* CARD / CALLOUT */
+.card { background:var(--white); border:1px solid var(--rule); border-radius:var(--r-lg); padding:1.6rem 1.8rem; margin:1.4rem 0; box-shadow:var(--shadow-card); }
+.callout { border-radius:var(--r-md); padding:1.1rem 1.4rem; margin:1.4rem 0; font-size:0.92rem; line-height:1.7; }
+.callout .ct { font-weight:700; font-size:0.9rem; margin-bottom:0.4rem; display:flex; align-items:center; gap:0.5rem; }
+.callout.key { background:var(--sky-soft); border-left:4px solid var(--sky-deep); }
+.callout.key .ct { color:var(--sky-deep); }
+.callout.warn { background:#fbeae8; border-left:4px solid var(--red); }
+.callout.warn .ct { color:var(--red); }
+.callout.good { background:#e6f2eb; border-left:4px solid var(--green); }
+.callout.good .ct { color:var(--green); }
+.callout.note { background:#fbf3e0; border-left:4px solid var(--gold); }
+.callout.note .ct { color:var(--gold); }
+.callout p { margin-bottom:0.5rem; color:var(--mid); }
+.callout p:last-child { margin-bottom:0; }
+
+/* INTERACTIVE PANEL */
+.viz { background:var(--sky-soft-2); border:1px solid var(--rule); border-radius:var(--r-lg); padding:1.6rem 1.7rem; margin:1.6rem 0; }
+.viz-title { font-family:var(--font-display); font-size:1rem; font-weight:600; color:var(--black); margin-bottom:0.2rem; }
+.viz-sub { font-size:0.8rem; color:var(--light); margin-bottom:1.2rem; }
+.ctrl-row { display:flex; align-items:center; gap:0.9rem; flex-wrap:wrap; margin-bottom:0.9rem; }
+.ctrl-row label { font-size:0.78rem; font-weight:600; color:var(--mid); min-width:0; }
+input[type=range] { accent-color:var(--sky-deep); flex:1; min-width:120px; }
+.val-pill { font-family:var(--font-display); font-size:0.92rem; font-weight:600; color:var(--sky-deep); min-width:3.2rem; text-align:right; }
+.seg { display:inline-flex; gap:0.35rem; }
+.seg button { font-family:var(--font-text); font-size:0.78rem; font-weight:500; padding:0.4rem 0.95rem; border-radius:var(--r-pill); border:1px solid var(--rule); background:var(--white); color:var(--mid); cursor:pointer; transition:all 0.15s; }
+.seg button:hover { border-color:var(--sky-bright); }
+.seg button.active { background:var(--sky-deep); border-color:var(--sky-deep); color:#fff; }
+
+.readout { display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:1.1rem; padding-top:1.1rem; border-top:1px solid var(--rule); }
+.ro { flex:1; min-width:100px; }
+.ro .k { font-size:0.64rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--xlight); font-weight:600; margin-bottom:0.15rem; }
+.ro .v { font-family:var(--font-display); font-size:1.5rem; font-weight:600; }
+.ro.or .v { color:var(--red); }
+.ro.pr .v { color:var(--green); }
+.ro.p .v { color:var(--sky-deep); font-size:1.2rem; }
+
+/* 2x2 TABLE */
+.tbl2 { border-collapse:separate; border-spacing:0; margin:0 auto; font-family:var(--font-display); }
+.tbl2 td, .tbl2 th { text-align:center; padding:0; }
+.cell-in { width:70px; }
+.cell-in input { width:60px; padding:0.4rem; text-align:center; font-family:var(--font-display); font-size:1.05rem; font-weight:600; border:1px solid var(--rule); border-radius:var(--r-sm); color:var(--sky-deep); background:#fff; }
+.cell-in input:focus { outline:none; border-color:var(--sky); }
+.tbl2 .hdr { font-size:0.72rem; font-weight:700; color:var(--light); text-transform:uppercase; letter-spacing:0.08em; padding:0.3rem 0.5rem; }
+.tbl2 .rowlbl { font-size:0.8rem; font-weight:700; color:var(--sky-deep); padding-right:0.6rem; }
+.tbl2 .marg { font-size:0.82rem; color:var(--mid); font-weight:600; padding:0 0.6rem; }
+
+/* CHART */
+canvas { display:block; width:100%; }
+.legend { display:flex; gap:1.3rem; flex-wrap:wrap; margin-top:0.8rem; font-size:0.78rem; color:var(--mid); }
+.legend span { display:inline-flex; align-items:center; gap:0.4rem; }
+.legend .sw { width:14px; height:3px; border-radius:2px; display:inline-block; }
+
+/* TABLE static */
+.dt-wrap { overflow-x:auto; margin:1.3rem 0; border:1px solid var(--rule); border-radius:var(--r-md); }
+table.dt { border-collapse:collapse; width:100%; font-size:0.86rem; }
+table.dt th, table.dt td { padding:0.6rem 0.9rem; text-align:center; border-bottom:1px solid var(--rule); }
+table.dt thead th { background:var(--sky-deep); color:#fff; font-weight:600; }
+table.dt td.lbl { text-align:left; font-weight:600; color:var(--black); }
+table.dt tbody tr:nth-child(even) { background:var(--sky-soft-2); }
+table.dt td.or { color:var(--red); font-weight:600; }
+table.dt td.pr { color:var(--green); font-weight:600; }
+
+/* CODE */
+.code { background:#11203a; border-radius:var(--r-md); margin:1.3rem 0; overflow:hidden; }
+.code-head { padding:0.6rem 1rem; font-size:0.72rem; color:#9fb6d4; border-bottom:1px solid rgba(255,255,255,0.08); font-family:'JetBrains Mono',monospace; }
+.code pre { margin:0; padding:1rem 1.2rem; overflow-x:auto; font-family:'JetBrains Mono','SF Mono',monospace; font-size:0.82rem; line-height:1.7; color:#e6edf6; }
+.code .cm { color:#7fa3c9; font-style:italic; } .code .kw { color:#6fd0ff; } .code .hl-line { color:#ffd479; }
+
+/* QUIZ */
+.quiz { background:var(--sky-soft); border:1px solid var(--sky-bright); border-radius:var(--r-lg); padding:1.6rem 1.8rem; margin:1.8rem 0; }
+.quiz .q { font-weight:600; color:var(--sky-deep); margin-bottom:0.9rem; }
+.quiz button.reveal { font-family:var(--font-text); font-size:0.82rem; font-weight:600; padding:0.5rem 1.2rem; border-radius:var(--r-pill); border:1px solid var(--sky-deep); background:#fff; color:var(--sky-deep); cursor:pointer; }
+.quiz button.reveal:hover { background:var(--sky-deep); color:#fff; }
+.quiz .answer { display:none; margin-top:1rem; font-size:0.92rem; color:var(--mid); line-height:1.75; }
+.quiz .answer.show { display:block; animation:fadeIn 0.3s; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+/* REFS */
+.refs { margin-top:1rem; }
+.refs li { font-size:0.85rem; color:var(--mid); margin-bottom:0.6rem; line-height:1.6; list-style:none; padding-left:1.2rem; text-indent:-1.2rem; }
+
+/* FOOTER */
+.footer-wrap { border-top:1px solid var(--rule); background:var(--off); margin-top:3rem; }
+footer { max-width:1000px; margin:0 auto; padding:2.5rem; text-align:center; color:var(--light); font-size:0.82rem; }
+
+@media (max-width:860px) { .nav-links { gap:1rem; } }
+@media (max-width:720px) { .nav-links { display:none; } }
+@media (max-width:800px) {
+  .wrap, .hero-inner, .nav-inner { padding-left:1.5rem; padding-right:1.5rem; }
+  .readout { gap:1rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html#news">News</a></li>
+      <li><a href="../index.html#lab-life">Lab Life</a></li>
+      <li><a href="../index.html#publications">Publications</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#education">Education</a></li>
+      <li><a href="../index.html#awards">Recognition</a></li>
+      <li><a href="../index.html#gallery">Gallery</a></li>
+      <li><a href="../statistics.html" class="active">Statistics</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-band">
+  <div class="hero-inner">
+    <div class="sn">Regression · Effect Measures</div>
+    <h1>OR vs PR?<br><em>Odds Ratio 말고 Prevalence Ratio가 필요한 순간</em></h1>
+    <p class="lede">횡단연구에서 이항 종속변수를 만나면 반사적으로 로지스틱 회귀를 돌리게 됩니다. 오늘 강의가 끝나면, 그 반사에 브레이크가 하나 생깁니다. 유병률이 높을 때 Odds Ratio가 어떻게 우리를 속이는지, 그리고 그 대안이 왜 공짜가 아닌지 직접 만져보며 배웁니다.</p>
+    <div class="hero-chips">
+      <span class="chip"><b>핵심 기준</b> 유병률 10%</span>
+      <span class="chip"><b>대안</b> modified Poisson</span>
+      <span class="chip"><b>근거</b> Tamhane et al. 2016</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<div class="crumb"><a href="../statistics.html">Statistics</a><span>/</span>OR vs PR</div>
+
+<!-- INTRO -->
+<section id="intro">
+  <div class="act-label"><span class="bar"></span>오늘의 질문</div>
+  <h2 class="sec">로지스틱 회귀만 돌리면 되는 거 아니었나요?</h2>
+  <p>여러분이 횡단조사 자료로 논문을 쓴다고 합시다. 종속변수는 우울증상 여부(있음/없음), 유병률은 30%입니다. 아마 반사적으로 로지스틱 회귀를 돌리고 <span class="hl">OR(Odds Ratio)</span>을 보고하겠죠. 그런데 정말 여러분이 말하고 싶은 건 "노출군의 우울 <strong>유병률</strong>이 비노출군의 몇 배인가"입니다. 그 질문에 OR이 정직하게 답하는지, 먼저 확률과 odds가 서로 다른 언어라는 것부터 확인해 봅시다.</p>
+
+  <div class="card" id="glossary">
+    <h3 style="margin-top:0">시작 전에 — 약어 세 개만 정리</h3>
+    <p style="margin-bottom:0.7rem"><strong>OR</strong> <span style="color:var(--light)">(Odds Ratio, 오즈비)</span> — 두 집단의 <em>odds</em>를 나눈 값. 2×2 표에서는 <span class="mono">ad / bc</span>.</p>
+    <p style="margin-bottom:0.7rem"><strong>POR</strong> <span style="color:var(--light)">(Prevalence Odds Ratio, 유병 오즈비)</span> — <span class="hl">횡단연구에서 계산한 바로 그 OR</span>입니다. 계산 공식은 OR과 완전히 똑같아요(<span class="mono">ad / bc</span>). 다만 코호트가 아니라 <em>한 시점의 유병(prevalence)</em> 자료로 구했기 때문에, 역학에서는 같은 값을 구분해서 POR이라 부릅니다. <strong>이 강의에서 POR = 횡단자료의 OR</strong>이라고 읽으면 됩니다.</p>
+    <p style="margin-bottom:0"><strong>PR</strong> <span style="color:var(--light)">(Prevalence Ratio, 유병률비)</span> — 두 집단의 <em>유병률(확률)</em>을 그대로 나눈 값. 우리가 "몇 배"라고 말할 때 실제로 뜻하는 그 숫자입니다.</p>
+    <div class="callout note" style="margin:1.1rem 0 0;">
+      <div class="ct">한 줄 요약</div>
+      <p style="margin-bottom:0"><strong>OR = POR</strong>(횡단연구에서 부르는 이름만 다름) ↔ <strong>PR</strong>(유병률을 직접 나눈 정직한 비). 이 강의는 결국 "<b>POR을 볼까, PR을 볼까</b>"의 문제입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ACT 1: prob vs odds -->
+<section id="lang">
+  <div class="act-label"><span class="bar"></span>1막 · 두 개의 언어</div>
+  <h2 class="sec">확률과 odds는 다른 언어다</h2>
+  <p><strong>확률(probability)</strong>은 100명 중 30명이 우울하면 0.30입니다. 직관적이죠. 반면 <strong>odds</strong>는 "있는 사람 대 없는 사람의 비", 즉 <span class="mono">p / (1−p)</span> = 0.30 / 0.70 = 0.43입니다. 경마장에서 쓰는 언어예요. 이 둘은 유병률이 낮을 때는 거의 같지만, 유병률이 커질수록 벌어집니다. 슬라이더를 움직여 보세요.</p>
+
+  <div class="viz">
+    <div class="viz-title">확률 → odds 변환기</div>
+    <div class="viz-sub">유병률 p를 움직이면 odds = p/(1−p)가 어떻게 가속하는지 보입니다</div>
+    <div class="ctrl-row">
+      <label>유병률 p</label>
+      <input type="range" id="pSlider" min="1" max="95" value="30">
+      <span class="val-pill" id="pVal">0.30</span>
+    </div>
+    <canvas id="oddsCanvas" height="300"></canvas>
+    <div class="legend">
+      <span><span class="sw" style="background:var(--sky-deep)"></span> odds = p/(1−p)</span>
+      <span><span class="sw" style="background:var(--xlight)"></span> 참조선 (p = odds일 때)</span>
+    </div>
+    <div class="readout">
+      <div class="ro"><div class="k">확률 p</div><div class="v" id="roP" style="color:var(--sky-deep)">0.30</div></div>
+      <div class="ro"><div class="k">odds</div><div class="v" id="roOdds" style="color:var(--gold)">0.43</div></div>
+      <div class="ro"><div class="k">배율 (odds/p)</div><div class="v" id="roRatio" style="color:var(--red)">1.43×</div></div>
+    </div>
+  </div>
+  <p>p = 0.03이면 odds = 0.031로 거의 같습니다. 그런데 p = 0.50이면 odds = 1.00, p = 0.70이면 odds = 2.33. <span class="hlg">분모 (1−p)가 줄어들며 odds가 가속 페달을 밟는</span> 겁니다. 바로 이 가속이 다음 이야기의 원인입니다.</p>
+</section>
+
+<!-- ACT 2: OR overestimates -->
+<section id="overest">
+  <div class="act-label"><span class="bar"></span>2막 · OR의 과장 버릇</div>
+  <h2 class="sec">그래서 OR이 유병률 차이를 "과장"한다</h2>
+  <p>다시 정리하면, <strong>POR</strong>(= 횡단자료의 OR)은 두 집단의 <em>odds</em>를 나눈 것이고, <strong>PR</strong>은 두 집단의 <em>유병률</em>을 그대로 나눈 것입니다. 우리가 논문에서 정말 말하고 싶은 건 후자죠. 아래 2×2 표의 칸(A·B·C·D)을 직접 바꿔가며, 같은 데이터에서 POR과 PR이 얼마나 벌어지는지 확인해 보세요.</p>
+
+  <div class="viz">
+    <div class="viz-title">2×2 표 계산기 — OR · POR · PR</div>
+    <div class="viz-sub">노출(Exposure) × 결과(Outcome) 빈도를 입력하면 세 지표가 실시간 계산됩니다</div>
+    <div style="display:flex;justify-content:center;margin:1rem 0 0.5rem;">
+      <table class="tbl2">
+        <tr><td></td><td></td><td class="hdr" colspan="2">결과 (Outcome)</td><td></td></tr>
+        <tr><td></td><td></td><td class="hdr">있음 +</td><td class="hdr">없음 −</td><td class="hdr">합</td></tr>
+        <tr>
+          <td class="rowlbl" rowspan="2" style="writing-mode:vertical-rl;transform:rotate(180deg)">노출</td>
+          <td class="rowlbl">노출+</td>
+          <td class="cell-in"><input id="cA" type="number" value="70" min="0"></td>
+          <td class="cell-in"><input id="cB" type="number" value="30" min="0"></td>
+          <td class="marg" id="mAB">100</td>
+        </tr>
+        <tr>
+          <td class="rowlbl">노출−</td>
+          <td class="cell-in"><input id="cC" type="number" value="48" min="0"></td>
+          <td class="cell-in"><input id="cD" type="number" value="52" min="0"></td>
+          <td class="marg" id="mCD">100</td>
+        </tr>
+      </table>
+    </div>
+    <div class="readout">
+      <div class="ro pr"><div class="k">PR (유병률비)</div><div class="v" id="roPR">1.46</div></div>
+      <div class="ro or"><div class="k">POR (=횡단 OR)</div><div class="v" id="roPOR">2.53</div></div>
+      <div class="ro"><div class="k">노출+ 유병률</div><div class="v" id="roR1" style="color:var(--sky-deep);font-size:1.2rem">70.0%</div></div>
+      <div class="ro"><div class="k">노출− 유병률</div><div class="v" id="roR0" style="color:var(--sky-deep);font-size:1.2rem">48.0%</div></div>
+    </div>
+    <div class="callout warn" id="gapNote" style="margin-bottom:0;">
+      <div class="ct">⚠ 과장 정도</div>
+      <p id="gapText">POR이 PR보다 <b>1.73배</b> 큽니다. 유병률이 높을수록 이 격차가 벌어집니다.</p>
+    </div>
+  </div>
+
+  <p>유병률이 낮으면(관례적으로 <span class="hl">10% 미만</span>) OR ≈ PR이라 아무 문제가 없습니다. 그런데 유병률이 10%를 넘어가면 OR은 <strong>항상</strong> PR보다 극단적인 값을 냅니다(Zocchetti et al., 1997). 아래 그래프는 노출−군 유병률을 고정한 채 노출+군 유병률을 키울 때, PR과 POR이 어떻게 갈라지는지 보여줍니다.</p>
+
+  <div class="viz">
+    <div class="viz-title">PR vs POR — 유병률이 높아질수록 벌어지는 격차</div>
+    <div class="viz-sub">기준군(노출−) 유병률을 슬라이더로 바꿔가며 두 곡선의 발산을 관찰하세요</div>
+    <div class="ctrl-row">
+      <label>기준군 유병률 p₀</label>
+      <input type="range" id="p0Slider" min="5" max="60" value="30">
+      <span class="val-pill" id="p0Val">0.30</span>
+    </div>
+    <canvas id="divCanvas" height="320"></canvas>
+    <div class="legend">
+      <span><span class="sw" style="background:var(--green)"></span> PR (유병률비)</span>
+      <span><span class="sw" style="background:var(--red)"></span> POR (odds비)</span>
+      <span><span class="sw" style="background:var(--xlight)"></span> 유병률 10% 경계</span>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section id="case">
+  <div class="act-label"><span class="bar"></span>실제 사례</div>
+  <h2 class="sec">HIV 환자 699명, 유병률 54%의 교실</h2>
+  <p>Tamhane et al.(2016)의 연구는 HIV 환자 699명의 고혈압 <em>조절 여부</em>를 본 횡단연구입니다. 결과변수 유병률이 무려 <span class="hlg">54.4%</span> — "10% 넘으면 OR이 부풀려진다"의 극단적 상황이죠. Black-Male을 기준으로 White-Female의 고혈압 조절을 비교하면:</p>
+
+  <div class="dt-wrap">
+    <table class="dt">
+      <thead>
+        <tr><th>비교 (기준: Black-Male)</th><th>실제 유병률</th><th class="pr">PR</th><th class="or">POR</th><th>해석 차이</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="lbl">White-Female</td><td>70.6% vs 47.8%</td><td class="pr">1.48</td><td class="or">2.63</td><td>"1.5배" vs "2.6배"</td></tr>
+        <tr><td class="lbl">White-Male</td><td>58.9% vs 47.8%</td><td class="pr">1.23</td><td class="or">1.57</td><td>"1.2배" vs "1.6배"</td></tr>
+        <tr><td class="lbl">Black-Female</td><td>53.3% vs 47.8%</td><td class="pr">1.12</td><td class="or">1.25</td><td>"1.1배" vs "1.3배"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>같은 데이터, 같은 비교인데 하나는 "2.6배", 하나는 "1.5배"로 읽힙니다. 실제 유병률은 70.6% 대 47.8% — <strong>1.48이 정직한 숫자</strong>이고, 2.63은 odds라는 렌즈가 만든 착시입니다. 도박사의 언어(odds)를 역학자의 언어(prevalence)로 번역 없이 읽으면 생기는 사고죠.</p>
+
+  <div class="callout key">
+    <div class="ct">🔑 왜 사회복지 연구가 이 문제의 한복판인가</div>
+    <p>우울증상 20–40%, 스마트폰 과의존 30%대, 학교폭력 피해 경험 10–20%. 우리 분야의 종속변수는 대부분 "흔한" 결과입니다. 즉 유병률 10% 기준선 위쪽에 우리가 서 있는 겁니다.</p>
+  </div>
+</section>
+
+<!-- ACT: get PR -->
+<section id="howto">
+  <div class="act-label"><span class="bar"></span>실무</div>
+  <h2 class="sec">그럼 PR은 어떻게 구하나</h2>
+  <p>count 변수에 음이항회귀를 돌리면 IRR이 나오죠. 그것과 <strong>똑같은 구조</strong>입니다. 이항 종속변수에 <span class="mono">log link</span>를 쓰면 exponentiated coefficient가 PR로 나옵니다. 방법은 두 가지입니다.</p>
+  <p>정공법은 <strong>log-binomial regression</strong>(binomial 분포 + log link)이지만, 예측확률이 1을 넘는 영역에서 수렴에 실패하는 일이 잦습니다. 그래서 실무 표준이 된 것이 <span class="hl">modified Poisson regression</span>입니다(Zou, 2004). 이항 자료에 Poisson 분포 + log link를 적용하면 계수는 PR로 정확히 나오는데 표준오차만 과대추정되므로, 이를 <strong>robust(sandwich) variance</strong>로 보정하면 끝입니다. 거의 항상 수렴하고 log-binomial과 결과가 사실상 일치합니다(Petersen & Deddens, 2008).</p>
+
+  <div class="code">
+    <div class="code-head">Stata — modified Poisson으로 aPR 추정</div>
+    <pre><span class="cm">* 이항 종속변수 y, 노출 x, 공변량 조정</span>
+<span class="hl-line">poisson y x c1 c2 c3, vce(robust) irr</span>
+<span class="cm">* 출력의 "IRR" 열을 횡단자료에서는 PR로 읽는다</span>
+
+<span class="cm">* R 대안: </span>
+<span class="cm">* glm(y ~ x + c1, family = poisson(link="log")), robust SE</span></pre>
+  </div>
+
+  <div class="callout good">
+    <div class="ct">✓ PR의 덤: collapsibility</div>
+    <p>OR은 <em>non-collapsible</em>해서 교란이 전혀 없어도 공변량을 추가하면 값이 변합니다. PR은 <em>collapsible</em>해서 모형 간 비교가 깨끗합니다(Cummings, 2009).</p>
+  </div>
+</section>
+
+<!-- ACT 3: asymmetry -->
+<section id="asym">
+  <div class="act-label"><span class="bar"></span>3막 · 공짜는 아니다</div>
+  <h2 class="sec">그런데 PR에는 반전이 있다 — 거울의 상실</h2>
+  <p>여기가 Tamhane 논문의 진짜 기여입니다. <strong>OR은 완벽한 거울</strong>입니다. "조절됨"을 모델링하면 2.63, "조절 안 됨"을 모델링하면 정확히 1/2.63 = 0.38. 뒤집으면 역수가 되고, p-value는 한 글자도 안 바뀝니다(p=0.02 그대로). 그런데 <strong>PR은 거울이 아닙니다.</strong> 아래 토글로 "모델링하는 범주"를 바꿔보세요.</p>
+
+  <div class="viz">
+    <div class="viz-title">거울 테스트 — 결과변수를 뒤집으면?</div>
+    <div class="viz-sub">White-Female vs Black-Male 사례(p₁=70.6%, p₀=47.8%)에서 모델링 범주를 전환</div>
+    <div class="ctrl-row">
+      <label>모델링하는 범주</label>
+      <div class="seg" id="modelSeg">
+        <button data-m="yes" class="active">조절됨 = Yes</button>
+        <button data-m="no">조절 안 됨 = No</button>
+      </div>
+    </div>
+    <div class="readout">
+      <div class="ro or"><div class="k">POR</div><div class="v" id="asPOR">2.63</div></div>
+      <div class="ro"><div class="k">1 / POR(반대범주)</div><div class="v" id="asPORinv" style="color:var(--red);font-size:1.2rem">0.38</div></div>
+      <div class="ro pr"><div class="k">PR</div><div class="v" id="asPR">1.48</div></div>
+      <div class="ro"><div class="k">1 / PR(반대범주)</div><div class="v" id="asPRinv" style="color:var(--green);font-size:1.2rem">0.68</div></div>
+    </div>
+    <div class="callout note" id="mirrorNote" style="margin-bottom:0;">
+      <div class="ct">🪞 거울 판정</div>
+      <p id="mirrorText"></p>
+    </div>
+  </div>
+
+  <p>수학적으로 당연합니다. "Yes"를 모델링할 때는 <span class="mono">p₁/p₀</span>를, "No"를 모델링할 때는 <span class="mono">(1−p₁)/(1−p₀)</span>를 추정하는 것이라 <strong>아예 다른 모수</strong>이기 때문입니다. 1/1.48 = 0.68 ≠ 0.56. 역수가 아니죠.</p>
+
+  <p>더 놀라운 건 <strong>p-value</strong>입니다. 같은 데이터에서 Yes를 모델링하면 p=0.003, No를 모델링하면 p=0.04. 저자들이 기준집단을 Black-Male에서 Black-Female로 바꿔보니 p=0.04가 <span class="hlg">p=0.10</span>이 되면서 유의성이 사라졌습니다. <strong>코딩 방향과 기준집단 선택만으로 "유의함"이 "유의하지 않음"이 되는</strong> 겁니다.</p>
+
+  <div class="callout warn">
+    <div class="ct">⚠ 그래서 PR을 쓸 때의 3대 사전 확정 사항</div>
+    <p><b>① 모델링할 범주</b> — 어느 쪽(Yes/No)을 모델링할지 미리 정한다. 자살시도 연구라면 당연히 attempt=Yes.</p>
+    <p><b>② 독립변수의 reference 집단</b> — 이론적 근거(최저위험군, 최대집단 등)로 미리 정하고 Methods에 명시한다. 사후에 이리저리 바꿔 유의한 조합을 찾으면 그게 곧 <b>p-hacking</b>이다.</p>
+    <p><b>③ 역수 변환 금지</b> — 메타분석에서 방향 맞추려 PR에 역수를 취하는 것은 OR에서만 합법, PR에서는 수학적으로 틀린 변환이다.</p>
+  </div>
+</section>
+
+<!-- ACT: decision -->
+<section id="rule">
+  <div class="act-label"><span class="bar"></span>정리</div>
+  <h2 class="sec">판단 규칙 — 종속변수가 이항일 때</h2>
+
+  <div class="viz">
+    <div class="viz-title">유병률으로 정하는 지표 선택</div>
+    <div class="viz-sub">종속변수 유병률을 움직이면 권고안이 바뀝니다</div>
+    <div class="ctrl-row">
+      <label>종속변수 유병률</label>
+      <input type="range" id="ruleSlider" min="1" max="60" value="30">
+      <span class="val-pill" id="ruleVal">30%</span>
+    </div>
+    <div id="ruleBox" class="callout" style="margin:0;"></div>
+  </div>
+
+  <p><strong>유병률 10% 미만</strong>이면 — 예컨대 자살시도 3% — OR과 PR이 거의 같으므로 로지스틱도 방어 가능합니다. 다만 전체 유병률이 3%여도 <span class="hl">고위험 하위집단(ACEs 4개 이상 등)에서는 유병률이 10–20%를 넘을 수 있고</span>, 바로 그 구간에서 OR의 왜곡이 커집니다. <strong>유병률 10% 초과</strong>면 — 우울·스트레스·과의존 등 — modified Poisson으로 PR을 직접 추정하는 것이 적합합니다.</p>
+
+  <div class="callout good">
+    <div class="ct">📄 논문에 쓸 표준 문장</div>
+    <p style="font-style:italic;">"Adjusted prevalence ratios were estimated using modified Poisson regression with a log link and robust variance estimation (Zou, 2004; Barros &amp; Hirakata, 2003), with the category modelled and reference groups specified a priori (Tamhane et al., 2016)."</p>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="act-label"><span class="bar"></span>시험 문제</div>
+  <div class="quiz">
+    <div class="q">Q. 여러분이 심사위원입니다. 유병률 35%인 결과변수에 로지스틱을 돌려 "OR = 3.2, 즉 3배 이상 높았다"고 쓴 원고를 받았습니다. 뭐라고 코멘트하겠습니까?</div>
+    <button class="reveal" onclick="var a=this.nextElementSibling;a.classList.toggle('show');this.textContent=a.classList.contains('show')?'답 접기':'모범답안 보기';">모범답안 보기</button>
+    <div class="answer">
+      <p>세 가지를 지적할 수 있습니다. 첫째, <strong>유병률 35%는 10% 기준선을 크게 넘으므로</strong> OR이 유병률비를 과대추정합니다. 이 조건에서 OR 3.2는 실제 PR이 대략 1.8~2.2 수준일 수 있어, "3배 이상 높다"는 해석은 odds의 언어를 확률의 언어로 잘못 번역한 것입니다.</p>
+      <p>둘째, 연구 목적이 <strong>유병률 비교</strong>라면 modified Poisson regression으로 <span class="hl">aPR</span>을 추정해 보고할 것을 권고합니다. 셋째, PR 사용 시 <strong>모델링 범주와 reference 집단을 사전 확정했는지, 그 근거를 Methods에 명시했는지</strong> 확인을 요청합니다. — 이제 답할 수 있죠.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REFS -->
+<section id="refs">
+  <div class="act-label"><span class="bar"></span>참고문헌</div>
+  <ul class="refs">
+    <li>Tamhane, A. R., Westfall, A. O., Burkholder, G. A., &amp; Cutter, G. R. (2016). Prevalence odds ratio versus prevalence ratio: choice comes with consequences. <em>Statistics in Medicine, 35</em>(30), 5730–5735.</li>
+    <li>Zou, G. (2004). A modified Poisson regression approach to prospective studies with binary data. <em>American Journal of Epidemiology, 159</em>(7), 702–706.</li>
+    <li>Barros, A. J. D., &amp; Hirakata, V. N. (2003). Alternatives for logistic regression in cross-sectional studies. <em>BMC Medical Research Methodology, 3</em>, 21.</li>
+    <li>Petersen, M. R., &amp; Deddens, J. A. (2008). A comparison of two methods for estimating prevalence ratios. <em>BMC Medical Research Methodology, 8</em>, 9.</li>
+    <li>Cummings, P. (2009). The relative merits of risk ratios and odds ratios. <em>Archives of Pediatrics &amp; Adolescent Medicine, 163</em>(5), 438–445.</li>
+    <li>Zocchetti, C., Consonni, D., &amp; Bertazzi, P. A. (1997). Relationship between prevalence rate ratios and odds ratios in cross-sectional studies. <em>International Journal of Epidemiology, 26</em>(1), 220–223.</li>
+  </ul>
+</section>
+
+<div class="hub-return">
+  <a class="hub-link" href="../statistics.html">
+    <span class="ico"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#2f6fa8"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#2f6fa8"/></svg></span>
+    Statistics 페이지의 다른 모듈 보기
+  </a>
+</div>
+
+</div>
+
+<div class="footer-wrap">
+  <footer>AIR Lab @ CBNU · ACEs-Informed Recovery Lab · Interactive Statistics</footer>
+</div>
+
+<script>
+const css = getComputedStyle(document.documentElement);
+const C = n => css.getPropertyValue(n).trim();
+function hidpi(cv, h) {
+  const dpr = window.devicePixelRatio || 1;
+  const w = cv.clientWidth;
+  cv.width = w * dpr; cv.height = h * dpr;
+  const ctx = cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
+  return { ctx, w, h };
+}
+
+/* ===== 1. odds converter ===== */
+(() => {
+  const cv = document.getElementById('oddsCanvas');
+  const sl = document.getElementById('pSlider');
+  function draw() {
+    const p = +sl.value / 100;
+    document.getElementById('pVal').textContent = p.toFixed(2);
+    document.getElementById('roP').textContent = p.toFixed(2);
+    const od = p/(1-p);
+    document.getElementById('roOdds').textContent = od.toFixed(2);
+    document.getElementById('roRatio').textContent = (od/p).toFixed(2)+'×';
+    const { ctx, w, h } = hidpi(cv, 300);
+    ctx.clearRect(0,0,w,h);
+    const pad = 42, W = w-pad*2, H = h-pad*1.4;
+    const maxY = 4;
+    const X = t => pad + t*W;              // t: prob 0-1
+    const Y = v => pad*0.4 + H - (Math.min(v,maxY)/maxY)*H;
+    // grid + axes
+    ctx.strokeStyle = C('--rule'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad,Y(0)); ctx.lineTo(pad+W,Y(0)); ctx.stroke();
+    ctx.fillStyle = C('--light'); ctx.font = '11px sans-serif'; ctx.textAlign='center';
+    for (let g=0; g<=1; g+=0.25){ ctx.fillText(g.toFixed(2), X(g), Y(0)+16); }
+    ctx.textAlign='right';
+    for (let g=0; g<=4; g++){ ctx.fillText(g.toString(), pad-6, Y(g)+4); ctx.strokeStyle='#eef2f6'; ctx.beginPath(); ctx.moveTo(pad,Y(g)); ctx.lineTo(pad+W,Y(g)); ctx.stroke(); }
+    // reference line odds=p (y=x on prob axis is p, so line from 0 to (1,1))
+    ctx.strokeStyle = C('--xlight'); ctx.setLineDash([4,4]); ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(X(0),Y(0)); ctx.lineTo(X(1),Y(1)); ctx.stroke(); ctx.setLineDash([]);
+    // odds curve
+    ctx.strokeStyle = C('--sky-deep'); ctx.lineWidth = 3; ctx.beginPath();
+    for (let i=0;i<=100;i++){ const t=i/100*0.97+0.005; const v=t/(1-t); i===0?ctx.moveTo(X(t),Y(v)):ctx.lineTo(X(t),Y(v)); }
+    ctx.stroke();
+    // marker
+    ctx.fillStyle = C('--gold'); ctx.beginPath(); ctx.arc(X(p),Y(od),6,0,7); ctx.fill();
+    ctx.strokeStyle = 'rgba(196,138,47,0.4)'; ctx.setLineDash([3,3]);
+    ctx.beginPath(); ctx.moveTo(X(p),Y(0)); ctx.lineTo(X(p),Y(od)); ctx.lineTo(pad,Y(od)); ctx.stroke(); ctx.setLineDash([]);
+  }
+  sl.addEventListener('input', draw);
+  window.addEventListener('resize', draw);
+  draw();
+})();
+
+/* ===== 2. 2x2 table ===== */
+(() => {
+  const ids = ['cA','cB','cC','cD'];
+  function calc() {
+    const A=+val('cA'), B=+val('cB'), Cc=+val('cC'), D=+val('cD');
+    const n1=A+B, n0=Cc+D;
+    document.getElementById('mAB').textContent=n1;
+    document.getElementById('mCD').textContent=n0;
+    const r1 = n1? A/n1 : 0, r0 = n0? Cc/n0 : 0;
+    const PR = r0? r1/r0 : NaN;
+    const POR = (B>0&&Cc>0)? (A*D)/(B*Cc) : NaN;
+    document.getElementById('roR1').textContent=(r1*100).toFixed(1)+'%';
+    document.getElementById('roR0').textContent=(r0*100).toFixed(1)+'%';
+    document.getElementById('roPR').textContent=isFinite(PR)?PR.toFixed(2):'—';
+    document.getElementById('roPOR').textContent=isFinite(POR)?POR.toFixed(2):'—';
+    const gt=document.getElementById('gapText');
+    if(isFinite(PR)&&isFinite(POR)&&PR>0){
+      const fold=(POR/PR);
+      const hi=Math.max(r1,r0)*100;
+      gt.innerHTML = `POR이 PR보다 <b>${fold.toFixed(2)}배</b> 큽니다. `+
+        (hi>=10? `유병률이 10%를 넘어(현재 최대 ${hi.toFixed(0)}%) 격차가 뚜렷합니다.`
+               : `현재는 유병률이 낮아(최대 ${hi.toFixed(0)}%) 두 값이 거의 같습니다.`);
+    } else gt.textContent='값을 계산할 수 없습니다 (0으로 나눔).';
+  }
+  function val(id){ return document.getElementById(id).value||0; }
+  ids.forEach(id=>document.getElementById(id).addEventListener('input',calc));
+  calc();
+})();
+
+/* ===== 3. divergence chart ===== */
+(() => {
+  const cv = document.getElementById('divCanvas');
+  const sl = document.getElementById('p0Slider');
+  function draw() {
+    const p0 = +sl.value/100;
+    document.getElementById('p0Val').textContent = p0.toFixed(2);
+    const { ctx, w, h } = hidpi(cv, 320);
+    ctx.clearRect(0,0,w,h);
+    const pad=46, W=w-pad*2, H=h-pad*1.5, maxY=6;
+    const X=t=>pad+t*W, Y=v=>pad*0.5+H-(Math.min(v,maxY)/maxY)*H;
+    ctx.strokeStyle=C('--rule'); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(pad,Y(0)); ctx.lineTo(pad+W,Y(0)); ctx.stroke();
+    ctx.fillStyle=C('--light'); ctx.font='11px sans-serif';
+    ctx.textAlign='center';
+    for(let g=0;g<=1;g+=0.25) ctx.fillText(g.toFixed(2),X(g),Y(0)+16);
+    ctx.fillText('노출+군 유병률 p₁ →',X(0.5),Y(0)+32);
+    ctx.textAlign='right';
+    for(let g=1;g<=maxY;g++){ ctx.fillText(g+'×',pad-6,Y(g)+4); ctx.strokeStyle='#eef2f6'; ctx.beginPath(); ctx.moveTo(pad,Y(g)); ctx.lineTo(pad+W,Y(g)); ctx.stroke(); }
+    // 10% boundary vertical
+    ctx.strokeStyle=C('--xlight'); ctx.setLineDash([4,4]); ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(X(0.1),Y(0)); ctx.lineTo(X(0.1),Y(maxY)); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle=C('--xlight'); ctx.textAlign='left'; ctx.fillText('10%',X(0.1)+4,Y(maxY)+12);
+    const od=p=>p/(1-p);
+    // PR and POR curves over p1 from p0.. up to 0.98
+    function curve(fn,color){ ctx.strokeStyle=color; ctx.lineWidth=3; ctx.beginPath(); let started=false;
+      for(let i=0;i<=200;i++){ const p1=i/200*0.98+0.005; if(p1<0.005)continue; const v=fn(p1); if(v<0.01)continue; started?ctx.lineTo(X(p1),Y(v)):ctx.moveTo(X(p1),Y(v)); started=true; } ctx.stroke(); }
+    curve(p1=>p1/p0, C('--green'));
+    curve(p1=>od(p1)/od(p0), C('--red'));
+    // marker at p1 = p0 (ratio=1)
+    ctx.fillStyle=C('--sky-deep'); ctx.beginPath(); ctx.arc(X(p0),Y(1),5,0,7); ctx.fill();
+    ctx.fillStyle=C('--mid'); ctx.textAlign='center'; ctx.font='10px sans-serif';
+    ctx.fillText('p₁=p₀',X(p0),Y(1)-10);
+  }
+  sl.addEventListener('input',draw);
+  window.addEventListener('resize',draw);
+  draw();
+})();
+
+/* ===== 4. asymmetry mirror ===== */
+(() => {
+  const p1=0.706, p0=0.478;
+  const od=p=>p/(1-p);
+  const PORyes=od(p1)/od(p0), PRyes=p1/p0;
+  const PORno=od(1-p1)/od(1-p0), PRno=(1-p1)/(1-p0);
+  const seg=document.getElementById('modelSeg');
+  function set(m){
+    const isYes=m==='yes';
+    document.getElementById('asPOR').textContent=(isYes?PORyes:PORno).toFixed(2);
+    document.getElementById('asPORinv').textContent=(isYes?PORno:PORyes).toFixed(2);
+    document.getElementById('asPR').textContent=(isYes?PRyes:PRno).toFixed(2);
+    document.getElementById('asPRinv').textContent=(isYes? (1/PRyes):(1/PRno)).toFixed(2);
+    const mt=document.getElementById('mirrorText');
+    const curPR=isYes?PRyes:PRno, othPR=isYes?PRno:PRyes;
+    mt.innerHTML = `POR: 반대 범주를 모델링하면 정확히 역수(${(isYes?PORno:PORyes).toFixed(2)} = 1/${(isYes?PORyes:PORno).toFixed(2)}). `+
+      `<b>완벽한 거울입니다.</b><br>PR: 지금 값 ${curPR.toFixed(2)}의 역수는 ${(1/curPR).toFixed(2)}인데, 반대 범주의 실제 PR은 ${othPR.toFixed(2)}. `+
+      `<b>일치하지 않습니다 — 거울이 깨졌습니다.</b>`;
+  }
+  seg.addEventListener('click',e=>{ if(e.target.tagName!=='BUTTON')return;
+    seg.querySelectorAll('button').forEach(b=>b.classList.remove('active')); e.target.classList.add('active'); set(e.target.dataset.m); });
+  set('yes');
+})();
+
+/* ===== 5. decision rule ===== */
+(() => {
+  const sl=document.getElementById('ruleSlider'), box=document.getElementById('ruleBox');
+  function set(){
+    const p=+sl.value; document.getElementById('ruleVal').textContent=p+'%';
+    if(p<10){ box.className='callout good'; box.innerHTML=
+      `<div class="ct">✓ 유병률 ${p}% — 로지스틱 방어 가능</div><p>OR ≈ PR이므로 로지스틱 회귀도 무방합니다. 단, 고위험 하위집단에서 유병률이 10%를 넘으면 그 구간부터는 PR을 고려하세요.</p>`;
+    } else if(p<20){ box.className='callout note'; box.innerHTML=
+      `<div class="ct">△ 유병률 ${p}% — 경계 구간</div><p>OR의 왜곡이 시작됩니다. 유병률 비교가 목적이라면 modified Poisson으로 PR을 함께 보고하는 것이 안전합니다.</p>`;
+    } else { box.className='callout warn'; box.innerHTML=
+      `<div class="ct">⚠ 유병률 ${p}% — PR 권장</div><p>OR을 "몇 배"로 해석하는 순간 과장이 시작됩니다. modified Poisson regression으로 aPR을 직접 추정하고, 모델링 범주·reference를 사전 확정하세요.</p>`;
+    }
+  }
+  sl.addEventListener('input',set); set();
+})();
+</script>
+
+</body>
+</html>
