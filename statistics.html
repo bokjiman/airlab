@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistics: AIR Lab @ CBNU</title>
+<style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-display: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Pretendard Variable', Pretendard, 'Inter', system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-text:    'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Pretendard Variable', Pretendard, 'Inter', system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+
+  --white:    #ffffff;
+  --off:      #f4f7fb;
+  --black:    #20262e;
+  --mid:      #46505c;
+  --light:    #828d9b;
+  --xlight:   #aab4c1;
+  --rule:     #e6ebf1;
+  --red:      #e0573e;
+  --navy:     #2f6fa8;
+  --hover-bg: #eef5fc;
+
+  --sky:        #3f86c4;
+  --sky-deep:   #2f6fa8;
+  --sky-bright: #6cb0e4;
+  --sky-soft:   #e8f1fa;
+  --sky-soft-2: #f3f8fd;
+
+  --shadow-card: 0 1px 2px rgba(36,64,102,0.04), 0 10px 30px rgba(36,64,102,0.06);
+  --shadow-img:  0 6px 24px rgba(36,64,102,0.10);
+
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-pill: 980px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-text);
+  background: var(--white);
+  color: var(--black);
+  line-height: 1.47;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ── STRIPE ── */
+.stripe { display: flex; height: 3px; width: 100%; }
+.stripe span { flex: 1; }
+.stripe .s1 { background: var(--sky-deep); }
+.stripe .s2 { background: var(--sky); }
+.stripe .s3 { background: var(--sky-bright); }
+.stripe .s4 { background: var(--sky); }
+.stripe .s5 { background: var(--sky-deep); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(255,255,255,0.72);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem; height: 52px;
+  max-width: 1200px; margin: 0 auto;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 600; font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--black); text-decoration: none;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.nav-logo-dot { display: flex; gap: 3px; align-items: center; }
+.nav-logo-dot span { display: block; width: 6px; height: 6px; border-radius: 50%; }
+.nav-logo-dot .d1 { background: var(--sky-deep); }
+.nav-logo-dot .d2 { background: var(--sky); }
+.nav-logo-dot .d3 { background: var(--sky-bright); }
+.nav-links { display: flex; gap: 1.9rem; list-style: none; }
+.nav-links a {
+  font-size: 0.82rem; letter-spacing: -0.01em;
+  color: var(--mid); text-decoration: none; font-weight: 400;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--sky-deep); }
+.nav-links a.active { color: var(--sky-deep); font-weight: 600; }
+
+/* ── PAGE HEADER ── */
+.page-head {
+  max-width: 1200px; margin: 0 auto;
+  padding: 8.5rem 2.5rem 3.5rem;
+}
+.page-head .sn {
+  display: block; font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sky); font-weight: 600; margin-bottom: 0.7rem;
+}
+.page-head h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 600;
+  letter-spacing: -0.03em; line-height: 1.05;
+  color: var(--black);
+}
+.page-head p {
+  margin-top: 1.1rem; max-width: 560px;
+  font-size: 0.95rem; color: var(--mid); line-height: 1.7;
+}
+
+/* ── FILTER PILLS ── */
+.filter-bar {
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 2.5rem 2.5rem;
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+}
+.filter-pill {
+  font-family: var(--font-text);
+  font-size: 0.78rem; font-weight: 500; letter-spacing: -0.01em;
+  padding: 0.42rem 1.05rem; border-radius: var(--r-pill);
+  border: 1px solid var(--rule); background: var(--white); color: var(--mid);
+  cursor: pointer; transition: all 0.15s;
+}
+.filter-pill:hover { background: var(--hover-bg); border-color: var(--sky-bright); }
+.filter-pill.active { background: var(--sky-deep); border-color: var(--sky-deep); color: #fff; }
+
+/* ── MODULE GRID ── */
+.module-grid {
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 2.5rem 6rem;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+}
+.mod-card {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--rule); border-radius: var(--r-lg);
+  padding: 1.7rem 1.6rem 1.5rem;
+  background: var(--white);
+  text-decoration: none;
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+}
+.mod-card:hover {
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+  border-color: var(--sky-bright);
+}
+.mod-card.coming { opacity: 0.55; pointer-events: none; }
+.mod-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.mod-cat {
+  font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+  font-weight: 600; color: var(--sky);
+}
+.mod-date { font-size: 0.7rem; color: var(--xlight); font-weight: 500; }
+.mod-title {
+  font-family: var(--font-display);
+  font-size: 1.12rem; font-weight: 600; letter-spacing: -0.02em;
+  color: var(--black); line-height: 1.3; margin-bottom: 0.35rem;
+}
+.mod-title-ko { font-size: 0.82rem; color: var(--light); margin-bottom: 0.8rem; }
+.mod-desc { font-size: 0.85rem; color: var(--mid); line-height: 1.65; flex: 1; }
+.mod-cta {
+  margin-top: 1.3rem;
+  font-size: 0.8rem; font-weight: 600; color: var(--sky-deep);
+  display: flex; align-items: center; gap: 0.35rem;
+}
+.mod-cta::after { content: "→"; transition: transform 0.15s; }
+.mod-card:hover .mod-cta::after { transform: translateX(3px); }
+.mod-badge {
+  font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 700; color: var(--red);
+}
+.grid-empty {
+  grid-column: 1 / -1; text-align: center; padding: 3rem 0;
+  color: var(--light); font-size: 0.88rem;
+}
+
+/* ── FOOTER ── */
+.footer-wrap { border-top: 1px solid var(--rule); background: var(--off); }
+footer {
+  max-width: 1200px; margin: 0 auto; padding: 3rem 2.5rem;
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: center;
+}
+.f-logo {
+  font-family: var(--font-display); font-size: 1rem; letter-spacing: -0.01em;
+  font-weight: 600; color: var(--black);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.f-center { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+.f-stripe { display: flex; gap: 4px; }
+.f-stripe span { display: block; width: 18px; height: 3px; border-radius: 2px; }
+.f-stripe .fs1,.f-stripe .fs5 { background: var(--sky-deep); }
+.f-stripe .fs2,.f-stripe .fs4 { background: var(--sky); }
+.f-stripe .fs3 { background: var(--sky-bright); }
+.f-copy { font-size: 0.7rem; letter-spacing: 0.06em; color: var(--light); }
+.f-right { text-align: right; font-size: 0.82rem; color: var(--light); line-height: 1.85; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+.page-head { animation: fadeUp 0.6s ease 0.05s both; }
+.filter-bar, .module-grid { animation: fadeUp 0.6s ease 0.2s both; }
+
+@media (max-width: 1024px) {
+  .nav-inner { padding: 0 1.5rem; }
+  .nav-links { gap: 1.3rem; }
+  .module-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .page-head, .filter-bar, .module-grid { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .module-grid { grid-template-columns: 1fr; }
+  footer { grid-template-columns: 1fr; text-align: center; }
+  .f-right { text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#news">News</a></li>
+      <li><a href="index.html#lab-life">Lab Life</a></li>
+      <li><a href="index.html#publications">Publications</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#education">Education</a></li>
+      <li><a href="index.html#awards">Recognition</a></li>
+      <li><a href="index.html#gallery">Gallery</a></li>
+      <li><a href="statistics.html" class="active">Statistics</a></li>
+      <li><a href="journal-club.html">Journal Club</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-head">
+  <div class="sn">Resources · Statistics</div>
+  <h1>Interactive Statistics</h1>
+  <p>연구방법론 수업과 연구 활동을 위한 인터랙티브 통계 학습 자료입니다. 각 모듈은 브라우저에서 바로 실행되며, 파라미터를 직접 조작하면서 통계 개념을 시각적으로 탐색할 수 있습니다.</p>
+</div>
+
+<!-- FILTER -->
+<div class="filter-bar" id="filterBar"></div>
+
+<!-- MODULE GRID -->
+<div class="module-grid" id="moduleGrid"></div>
+
+<!-- FOOTER -->
+<div class="footer-wrap">
+  <footer>
+    <div class="f-logo">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab @ CBNU
+    </div>
+    <div class="f-center">
+      <div class="f-stripe"><span class="fs1"></span><span class="fs2"></span><span class="fs3"></span><span class="fs4"></span><span class="fs5"></span></div>
+      <div class="f-copy">ACEs-Informed Recovery Lab</div>
+    </div>
+    <div class="f-right">
+      Dept. of Child Welfare<br>
+      Chungbuk National University<br>
+      N20-1, Rm. 104 · Cheongju, Korea
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   모듈 추가 방법:
+   아래 MODULES 배열에 객체 하나만 추가하면 카드가 자동 생성됩니다.
+   - href:  stats/ 폴더 안의 HTML 파일 경로
+   - cat:   카테고리 (필터 필이 자동 생성됨)
+   - isNew: true면 NEW 배지 표시
+   - coming: true면 준비 중(흐리게, 클릭 불가)
+   ============================================================ */
+const MODULES = [
+  {
+    title: "OR vs PR",
+    titleKo: "유병률이 높을 때, Odds Ratio 말고 Prevalence Ratio",
+    cat: "Regression",
+    date: "2026.07",
+    desc: "유병률 10%가 넘는 이항 종속변수에서 OR이 유병률 차이를 어떻게 과장하는지, modified Poisson으로 PR을 추정하는 이유는 무엇인지 인터랙티브 그래프로 탐색합니다.",
+    href: "stats/or-vs-pr.html",
+    isNew: true
+  },
+  {
+    title: "Central Limit Theorem",
+    titleKo: "중심극한정리 시뮬레이터",
+    cat: "Foundations",
+    date: "2026.07",
+    desc: "모집단 분포(균등·편포·이봉)를 선택하고 표본 크기를 조절하면서, 표본평균의 분포가 정규분포로 수렴하는 과정을 시뮬레이션으로 확인합니다.",
+    href: "stats/clt.html",
+    date: "2026.07"
+  },
+  {
+    title: "Mediation Analysis",
+    titleKo: "매개효과 분석 (준비 중)",
+    cat: "SEM",
+    date: "",
+    desc: "a, b, c′ 경로 계수를 조절하며 간접효과와 총효과의 관계를 시각적으로 이해합니다.",
+    href: "#",
+    coming: true
+  }
+];
+
+const grid = document.getElementById('moduleGrid');
+const bar = document.getElementById('filterBar');
+const cats = ['All', ...new Set(MODULES.map(m => m.cat))];
+let activeCat = 'All';
+
+function renderFilters() {
+  bar.innerHTML = cats.map(c =>
+    `<button class="filter-pill${c === activeCat ? ' active' : ''}" onclick="setCat('${c}')">${c}</button>`
+  ).join('');
+}
+function setCat(c) { activeCat = c; renderFilters(); renderGrid(); }
+
+function renderGrid() {
+  const list = MODULES.filter(m => activeCat === 'All' || m.cat === activeCat);
+  if (!list.length) {
+    grid.innerHTML = '<div class="grid-empty">No modules in this category yet.</div>';
+    return;
+  }
+  grid.innerHTML = list.map(m => `
+    <a class="mod-card${m.coming ? ' coming' : ''}" href="${m.href}">
+      <div class="mod-top">
+        <span class="mod-cat">${m.cat}</span>
+        ${m.isNew ? '<span class="mod-badge">New</span>' : `<span class="mod-date">${m.date || ''}</span>`}
+      </div>
+      <div class="mod-title">${m.title}</div>
+      <div class="mod-title-ko">${m.titleKo}</div>
+      <div class="mod-desc">${m.desc}</div>
+      <div class="mod-cta">${m.coming ? 'Coming soon' : 'Open module'}</div>
+    </a>
+  `).join('');
+}
+
+renderFilters();
+renderGrid();
+</script>
+
+</body>
+</html>

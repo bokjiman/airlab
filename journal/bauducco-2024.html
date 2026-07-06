@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bauducco et al. (2024) 양방향 모델 · In-depth Study · AIR Lab</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#evolution">모델의 진화</a></li>
+      <li><a href="#m11">1.1 기존 기제</a></li>
+      <li><a href="#m12">1.2 역방향</a></li>
+      <li><a href="#m13">1.3 위험</a></li>
+      <li><a href="#m14">1.4 보호</a></li>
+      <li><a href="#phrases">명문장</a></li>
+      <li><a href="#ourstudy">우리 연구</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <div class="overline">Bauducco et al. 2024 · In-depth Study</div>
+    <h1>스크린이 잠을 훔치는가,<br><em>잠 못 드는 밤이 스크린을 부르는가.</em></h1>
+    <p class="citation">
+      Bauducco, S., Pillion, M., Bartel, K., Reynolds, C., Kahn, M., &amp; Gradisar, M. (2024).
+      A bidirectional model of sleep and technology use: A theoretical review of How much, for whom, and which mechanisms.<br>
+      <em>Sleep Medicine Reviews, 76</em>, 101933.
+    </p>
+    <p class="subtitle">
+      논문의 절 순서(1.1.1 밝은 빛 → 1.4.2 기술 규칙)를 그대로 따라가며, 4대 기제와 역방향 2기제, 조절요인을
+      원문 인용·원본 그림·한글 요약 그림과 함께 정독하는 심화 자료. 각 그림에는 <strong>"이게 무슨 뜻인가"</strong>를
+      부연했다. 세 질문을 축으로 읽자: <strong>How much · For whom · Which mechanisms.</strong>
+    </p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">4 + 2</span><span class="lbl">기존 기제 4 + 역방향 기제 2</span></div>
+      <div class="stat"><span class="num">6 moderators</span><span class="lbl">위험 4 · 보호 2</span></div>
+      <div class="stat"><span class="num">~10분 vs 60분+</span><span class="lbl">빛·각성 vs 대체 효과크기</span></div>
+      <div class="stat"><span class="num">4 figures</span><span class="lbl">원문 그림 + 한글 요약</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>Bauducco et al. (2024)</div>
+
+<!-- ═══════ 01 논문 소개 ═══════ -->
+<section id="paper">
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div class="section-title-block">
+      <h2>이 논문은 어떤 글인가</h2>
+      <p class="section-subtitle">A theoretical review that updates 15 years of a research program.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p>
+      교신저자 Michael Gradisar는 2010년 Cain &amp; Gradisar의 고전적 리뷰에서 "전자미디어 이용 → 수면 문제"라는
+      단방향 모델을 정식화했던 장본인이다. 이 논문은 그로부터 14년 뒤, 같은 연구 계보가 자신들의 기존 모델을
+      반박하고 갱신한 결과물이다. 축적된 실험·종단 증거가 원래 모델로는 설명되지 않았기 때문이다.
+      주목할 점은 후속연구 제언이다. 이 논문의 제언은 그저 수사가 아니라 <strong>이론이 어떻게 발전해야 하는지</strong>를
+      구체적으로 보여준다. 내용뿐 아니라 이론이 성장하는 방식을 배울 수 있는 좋은 예시다.
+    </p>
+  </div>
+
+  <div class="paper-meta">
+    <h3>A bidirectional model of sleep and technology use</h3>
+    <div class="sub">A theoretical review of How much, for whom, and which mechanisms</div>
+    <div class="paper-meta-grid">
+      <div class="paper-meta-item">
+        <div class="label">Journal</div>
+        <div class="value">Sleep Medicine Reviews (SCIE)<br>Vol. 76, 101933 (2024)</div>
+      </div>
+      <div class="paper-meta-item">
+        <div class="label">Type</div>
+        <div class="value">이론적 리뷰 (theoretical review)<br>체계적 문헌고찰이 아님에 주의</div>
+      </div>
+      <div class="paper-meta-item">
+        <div class="label">Core claim</div>
+        <div class="value">기술이용과 수면의 관계는 양방향이며, 조절요인에 따라 조건적이다. 핵심 질문은 how much가 아니라 for whom과 which mechanisms다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quote-box">
+    "The link between technology and sleep is more complex than originally thought. In this updated theoretical review,
+    we propose a new model informed by the growing body of evidence in the area over the past 10 years.
+    The main theoretical change is the addition of <strong style="font-style:normal">bi-directional links</strong> between the use of technology and sleep problems."
+    <span class="trans">기술과 수면의 연결은 원래 생각했던 것보다 복잡하다. 이 갱신된 이론적 리뷰에서 우리는 지난 10년간 축적된 증거에 기반한 새 모델을 제안한다. 핵심적인 이론적 변화는 기술이용과 수면문제 사이의 <strong>양방향 연결</strong>을 추가한 것이다.</span>
+    <span class="attr">출처: Abstract</span>
+  </div>
+
+  <div class="callout sky">
+    <span class="callout-label">읽기 전에 잡아야 할 구도</span>
+    이 논문의 뼈대는 세 개의 질문이다. <strong>① How much</strong>: 기술과 수면은 서로에게 얼마나 영향을 주는가(효과크기).
+    <strong>② For whom</strong>: 누구에게 문제가 되는가(조절요인·취약 하위집단).
+    <strong>③ Which mechanisms</strong>: 어떤 기제로 연결되는가(빛·각성·야간방해·대체 + 역방향의 time filler·정서조절).
+    본문 전체가 이 세 질문에 대한 증거 감사(audit)로 구성된다. 스터디에서도 이 세 질문을 축으로 토론하면 된다.
+  </div>
+</section>
+
+<!-- ═══════ 02 Introduction ═══════ -->
+<section id="intro">
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div class="section-title-block">
+      <h2>Introduction: 직관은 옳은가</h2>
+      <p class="section-subtitle">Technological advances have developed alongside decreasing sleep. But are they connected?</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p>
+      논문은 도발적인 관찰에서 출발한다. 지난 100여 년간 기술은 폭발적으로 보급되었고, 같은 기간 인류의 수면 시간은
+      줄었다. 이 둘이 나란히 움직였다는 사실은 <strong>"기술이 잠을 갉아먹는다"</strong>는 직관을 낳는다. 저자들은 독자에게
+      직접 묻는다: 자기 전 폰을 보던 당신의 경험을 떠올려 보라고. 이런 개인적 경험이 쌓여 "기술 → 수면 악화"라는
+      단방향 믿음(스키마)을 만든다. 과학자, 의료진, 인플루언서까지 대부분 이 방향을 당연하게 여긴다.
+    </p>
+    <p>
+      그러나 상관은 인과가 아니다. 이 리뷰의 목적은 지난 10년의 증거로 그 직관을 <strong>감사(audit)</strong>하는 것이다.
+      결과적으로 저자들은 세 가지를 바꾼다: ① 화살표를 <strong>양방향</strong>으로(수면문제 → 기술이용 경로 추가),
+      ② 역방향을 설명할 <strong>두 개의 새 기제</strong>(정서조절, 시간 때우기)를 제안, ③ 조절요인(위험·보호)을 정리.
+    </p>
+  </div>
+
+  <div class="figure-block">
+    <div class="fig-title">Figure 4. 미국 가정의 기술 보급 (111년)</div>
+    <span class="fig-tag orig">원문 그림</span>
+    <div class="fig-orig"><img src="https://ars.els-cdn.com/content/image/1-s2.0-S1087079224000376-gr4_lrg.jpg" loading="lazy" onerror="this.style.display='none'" alt="1908년부터 2019년까지 미국 가정의 전기·컬러TV·휴대폰·컴퓨터·스마트폰·태블릿 보급률 곡선" /></div>
+    <p class="fig-cap">Fig. 4. Percentage increases in electric power and technological devices in homes in the USA over an 111-year period. (원문 인용, 출처: Our World in Data)</p>
+
+    <div class="fig-implies">
+      <b>이 그림이 함의하는 것:</b> 신기술의 가정 보급 속도가 갈수록 <b>가팔라진다</b>. 전기는 100% 도달까지 수십 년이 걸렸지만,
+      컬러TV·컴퓨터·휴대폰·스마트폰으로 올수록 곡선의 기울기가 급해진다. 즉 <b>새 기술이 우리 삶(특히 침실)에 침투하는 속도가
+      연구가 그 영향을 검증하는 속도를 앞지른다</b>. 저자들이 뒤에서 "기술기업이 연구자보다 빠르다"고 지적하는 문제의식의 출발점이다.
+      동시에, 기술 보급과 수면 감소가 '동시에' 일어났다는 이 시각적 상관이 바로 단방향 인과 직관의 뿌리이기도 하다.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 03 모델의 진화 ═══════ -->
+<section id="evolution">
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div class="section-title-block">
+      <h2>단방향에서 양방향으로: 모델의 진화</h2>
+      <p class="section-subtitle">From "screens ruin sleep" to a bidirectional, moderated model.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p>
+      기존의 통념(2010년 모델)은 아래 그림의 왼쪽이다. 저녁의 기술이용이 네 가지 기제(밝은 빛, 각성, 야간 방해,
+      수면 대체)를 통해 수면을 해친다는 단방향 인과였다. 2024년 모델(오른쪽)은 세 가지를 바꾼다. 첫째, <strong>역방향
+      화살표</strong>가 추가된다: 수면 문제가 먼저 있고, 잠들지 못하는 시간을 채우거나(time filler) 부정적 정서를 다루기
+      위해(emotion regulation) 기술로 손이 가는 경로다. 둘째, 관계 전체가 <strong>조절요인(moderators)</strong>의 지배를
+      받는다: 위험요인(위험감수 성향, 몰입/flow, FoMO, 취침 미루기)과 보호요인(자기통제력, 부모의 기술 규칙)에 따라
+      연결의 강도가 달라진다. 셋째, 기제별 <strong>증거의 무게</strong>가 재평가된다: 대중적으로 가장 유명한 빛·각성 기제가
+      실증적으로는 가장 약하다.
+    </p>
+
+    <div class="figure-block">
+      <div class="fig-title">Figure. 2010년 단방향 vs 2024년 양방향·조절 모델</div>
+      <span class="fig-tag kr">한글 요약</span>
+      <div class="fig-kr" style="text-align:left;">
+        <svg viewBox="0 0 1040 460" width="100%" style="max-width:1010px;">
+          <defs>
+            <marker id="e1" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#46505c"/></marker>
+            <marker id="e2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#e0573e"/></marker>
+            <marker id="e3" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#3fa88a"/></marker>
+          </defs>
+          <text x="245" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#20262e">2010년 모델 (단방향)</text>
+          <rect x="55" y="58" width="160" height="60" rx="12" fill="#e8f1fa" stroke="#3f86c4" stroke-width="1.5"/>
+          <text x="135" y="84" text-anchor="middle" font-size="14" font-weight="600" fill="#2f6fa8">저녁 기술이용</text>
+          <text x="135" y="103" text-anchor="middle" font-size="11" fill="#46505c">TV·게임·폰</text>
+          <rect x="145" y="168" width="200" height="112" rx="12" fill="#f4f7fb" stroke="#e6ebf1"/>
+          <text x="245" y="190" text-anchor="middle" font-size="11.5" font-weight="600" fill="#828d9b">4가지 기제</text>
+          <text x="245" y="210" text-anchor="middle" font-size="12" fill="#20262e">① 밝은 빛 (멜라토닌 억제)</text>
+          <text x="245" y="228" text-anchor="middle" font-size="12" fill="#20262e">② 각성 (arousal)</text>
+          <text x="245" y="246" text-anchor="middle" font-size="12" fill="#20262e">③ 야간 방해 (알림·진동)</text>
+          <text x="245" y="264" text-anchor="middle" font-size="12" fill="#20262e">④ 수면 대체 (displacement)</text>
+          <rect x="275" y="330" width="160" height="60" rx="12" fill="#fdeee9" stroke="#e0573e" stroke-width="1.5"/>
+          <text x="355" y="356" text-anchor="middle" font-size="14" font-weight="600" fill="#c0432b">수면 문제</text>
+          <text x="355" y="375" text-anchor="middle" font-size="11" fill="#b06a56">지연·단축·질 저하</text>
+          <path d="M155 118 L212 166" stroke="#46505c" stroke-width="2.2" marker-end="url(#e1)"/>
+          <path d="M285 280 L342 328" stroke="#46505c" stroke-width="2.2" marker-end="url(#e1)"/>
+          <line x1="520" y1="40" x2="520" y2="430" stroke="#e6ebf1" stroke-dasharray="6 5"/>
+          <text x="800" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#20262e">2024년 모델 (양방향 + 조절)</text>
+          <rect x="580" y="78" width="170" height="64" rx="12" fill="#e8f1fa" stroke="#3f86c4" stroke-width="1.5"/>
+          <text x="665" y="105" text-anchor="middle" font-size="14" font-weight="600" fill="#2f6fa8">저녁 기술이용</text>
+          <text x="665" y="124" text-anchor="middle" font-size="11" fill="#46505c">무엇을·어떻게 쓰는가</text>
+          <rect x="850" y="78" width="170" height="64" rx="12" fill="#fdeee9" stroke="#e0573e" stroke-width="1.5"/>
+          <text x="935" y="105" text-anchor="middle" font-size="14" font-weight="600" fill="#c0432b">수면 문제</text>
+          <text x="935" y="124" text-anchor="middle" font-size="11" fill="#b06a56">잠들지 못하는 밤</text>
+          <path d="M750 94 L845 94" stroke="#e0573e" stroke-width="2.4" marker-end="url(#e2)"/>
+          <text x="798" y="84" text-anchor="middle" font-size="10.5" fill="#c0432b" font-weight="600">대체 · 야간방해 (유망)</text>
+          <text x="798" y="110" text-anchor="middle" font-size="10" fill="#aab4c1" font-weight="500">빛 · 각성 (약함)</text>
+          <path d="M845 128 L750 128" stroke="#3fa88a" stroke-width="2.4" marker-end="url(#e3)"/>
+          <text x="798" y="150" text-anchor="middle" font-size="10.5" fill="#3fa88a" font-weight="600">time filler · 정서조절 (신규)</text>
+          <rect x="610" y="218" width="380" height="82" rx="12" fill="#fbf1dc" stroke="#c78a1e" stroke-width="1.5"/>
+          <text x="800" y="241" text-anchor="middle" font-size="12.5" font-weight="700" fill="#8a5f14">조절요인: For whom?</text>
+          <text x="800" y="262" text-anchor="middle" font-size="11.5" fill="#7a5410">위험: 위험감수 성향 · flow · FoMO · 취침 미루기</text>
+          <text x="800" y="282" text-anchor="middle" font-size="11.5" fill="#7a5410">보호: 자기통제력 · 부모의 기술 규칙</text>
+          <path d="M800 216 L800 166" stroke="#c78a1e" stroke-width="2.2" stroke-dasharray="5 4" marker-end="url(#e1)"/>
+          <rect x="610" y="338" width="380" height="70" rx="12" fill="#e6f5f0" stroke="#3fa88a" stroke-width="1.5"/>
+          <text x="800" y="363" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2c7d64">악순환 가능성 (vicious cycle)</text>
+          <text x="800" y="384" text-anchor="middle" font-size="11.5" fill="#46505c">잠이 안 와서 폰을 봄 → 각성·대체로 수면 악화 → 다시 폰</text>
+        </svg>
+      </div>
+      <p class="fig-cap">본 자료 제작 그림. 원 논문 Fig. 1의 논리 구조를 재구성. 빨강=순방향, 초록=역방향, 주황=조절요인.</p>
+    </div>
+
+    <div class="callout warm">
+      <span class="callout-label">대학원생을 위한 방법론 포인트</span>
+      이 그림의 왼쪽에서 오른쪽으로 넘어가는 데 14년이 걸렸다. 무엇이 모델을 바꿨는가? 단일 결정타가 아니라
+      <strong>세 종류의 증거가 수렴</strong>했다: ① 실험연구에서 빛·각성의 효과크기가 반복적으로 작게 나옴,
+      ② 종단연구에서 역방향 경로(수면문제→기술이용)가 관측됨, ③ 실험·조사에서 개인차(조절)가 주효과보다 크게 나타남.
+      이론 수정의 정당화가 어떻게 서술되는지(서론과 1.2절) 원문에서 직접 확인해 보라. 좋은 이론 논문은 "무엇을 몰랐는지"를 먼저 고백한다.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 1.1 기존 기제 ═══════ -->
+<section id="m11">
+  <div class="section-head">
+    <div class="section-num">1.1</div>
+    <div class="section-title-block">
+      <h2>기존 4대 기제 (기술 → 수면)</h2>
+      <p class="section-subtitle">The original mechanisms, re-audited. 통념이 가장 강하다고 믿은 것이 실은 가장 약하다.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p>
+      저자들은 2010년 모델이 제안한 네 기제를 실험증거에 하나씩 비추어 본다. 핵심 반전은 <strong>효과크기의 역설</strong>이다.
+      대중적으로 가장 유명한 밝은 빛·각성 가설이 실증적으로는 가장 약하고(분 단위 지연), 덜 알려진 야간방해·수면대체가
+      가장 유망하다(시간 단위 지연). 각 소절 제목 옆 배지가 저자들의 최종 평가다.
+    </p>
+  </div>
+
+  <article class="condition">
+    <div class="condition-header">
+      <div class="num-circle weak">1</div>
+      <div class="cond-titles">
+        <span class="cond-code">1.1.1</span>
+        <h3>밝은 빛 가설</h3>
+        <span class="cond-en">The bright light hypothesis &middot; melatonin suppression</span>
+      </div>
+      <span class="verdict weak">증거 약함</span>
+    </div>
+    <div class="condition-body">
+    <div class="plain-meaning">화면의 청색광이 멜라토닌을 억제해 잠을 늦춘다는, 가장 유명한 설명. 그런데 실제 수면잠복기 지연은 대부분 몇 분 수준이다.</div>
+    <p>
+      가설의 논리는 이렇다. 화면이 내뿜는 단파장(청색)광이 뇌의 멜라토닌 분비를 억제해 잠들기를 늦춘다.
+      실제로 화면의 스펙트럼을 측정하면 청색 파장 성분이 뚜렷이 존재한다. 아래 원문 Figure 2가 그 물리적 근거다.
+    </p>
+
+    <div class="figure-block">
+      <div class="fig-title">Figure 2. 스마트폰 화면의 스펙트럼 분석</div>
+      <span class="fig-tag orig">원문 그림</span>
+      <div class="fig-orig"><img src="https://ars.els-cdn.com/content/image/1-s2.0-S1087079224000376-gr2_lrg.jpg" loading="lazy" onerror="this.style.display='none'" alt="2700K(야간모드)과 6500K(전체밝기) 화면을 보는 얼굴과 각각의 파장별 스펙트럼 그래프" /></div>
+      <p class="fig-cap">Fig. 2. 전체 밝기 화면의 스펙트럼 분석. 오른쪽(6500K)은 필터 없음, 왼쪽(2700K)은 청색광 필터(야간모드) 적용. 청색 파장(약 450nm) 성분의 차이에 주목.</p>
+
+      <div class="fig-kr">
+        <span class="fig-tag kr">한글 요약</span>
+        <svg viewBox="0 0 660 210" width="100%" style="max-width:640px;">
+          <text x="165" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#c0432b">6500K · 필터 없음</text>
+          <text x="495" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#2c7d64">2700K · 야간모드</text>
+          <line x1="40" y1="170" x2="300" y2="170" stroke="#aab4c1" stroke-width="1.5"/>
+          <line x1="40" y1="40" x2="40" y2="170" stroke="#aab4c1" stroke-width="1.5"/>
+          <path d="M55 165 Q75 60 95 95 Q120 150 150 120 Q210 90 290 110" fill="none" stroke="#e0573e" stroke-width="2.5"/>
+          <rect x="60" y="70" width="18" height="95" fill="#3f86c4" opacity="0.8"/>
+          <text x="69" y="185" text-anchor="middle" font-size="10" fill="#2f6fa8" font-weight="600">청색↑</text>
+          <text x="170" y="188" text-anchor="middle" font-size="10" fill="#828d9b">파장(nm)</text>
+          <line x1="370" y1="170" x2="630" y2="170" stroke="#aab4c1" stroke-width="1.5"/>
+          <line x1="370" y1="40" x2="370" y2="170" stroke="#aab4c1" stroke-width="1.5"/>
+          <path d="M385 165 Q405 130 425 128 Q460 150 500 120 Q560 90 620 110" fill="none" stroke="#e0573e" stroke-width="2.5"/>
+          <rect x="390" y="140" width="18" height="25" fill="#3f86c4" opacity="0.5"/>
+          <text x="399" y="185" text-anchor="middle" font-size="10" fill="#2f6fa8" font-weight="600">청색↓</text>
+          <text x="500" y="188" text-anchor="middle" font-size="10" fill="#828d9b">파장(nm)</text>
+        </svg>
+        <p class="fig-cap" style="text-align:center;">야간모드(2700K)는 청색 파장 peak를 크게 낮춘다. "물리적 근거는 분명히 존재한다"는 것이 이 그림의 메시지.</p>
+      </div>
+
+      <div class="fig-implies">
+        <b>그런데 여기서 반전:</b> 화면에 청색광이 있다는 <b>물리적 사실</b>과, 그것이 <b>실제 수면을 얼마나 늦추느냐</b>는 별개다.
+        실험연구를 모으면(원문 Table 1) 밝은 화면 조건의 수면잠복기 지연은 대부분 몇 분에 그친다.
+        가장 큰 효과조차 <span class="stat-inline">9.9분</span>(Chang et al. 2015)이고, 오히려 밝은 화면에서 더 빨리 잠든 연구도 있다.
+        즉 <b>기제는 존재하나 효과는 미미하다</b>. 물리적 그럴듯함과 임상적 크기를 혼동하면 안 된다는 교훈.
+      </div>
+    </div>
+
+    <div class="callout danger">
+      <span class="callout-label">과학 커뮤니케이션 사례</span>
+      저자들은 Matthew Walker의 베스트셀러 <em>Why We Sleep</em>가 바로 이 9.9분짜리 <strong>단 하나의 연구</strong>를 인용해
+      "블루라이트가 기술의 수면 영향의 주범"이라는 대중 메시지를 증폭시켰다고 비판한다. 하나의 최대치 효과가 수천 명의 '수면 코치'를
+      거쳐 정설이 되는 과정. 근거 위계와 효과크기를 따지지 않은 과학 번역의 위험을 보여주는 교과서적 사례다.
+    </div>
+    </div>
+  </article>
+
+  <article class="condition">
+    <div class="condition-header">
+      <div class="num-circle weak">2</div>
+      <div class="cond-titles">
+        <span class="cond-code">1.1.2</span>
+        <h3>각성 가설</h3>
+        <span class="cond-en">The arousal hypothesis</span>
+      </div>
+      <span class="verdict weak">증거 약함</span>
+    </div>
+    <div class="condition-body">
+    <div class="plain-meaning">자극적인 콘텐츠가 심박·각성을 높여 잠을 방해한다는 설명. 각성 지표는 오르는데, 정작 수면 결과는 잘 안 바뀐다.</div>
+    <p>
+      자극적인 콘텐츠(폭력적 게임, 서스펜스)가 심리·생리적 각성(심박·심박변이 상승)을 일으켜 잠을 방해한다는 가설이다.
+      논리는 그럴듯하다. 그러나 실험(원문 Table 2)에서 각성 <strong>지표</strong>는 오르는데 정작 <strong>수면 결과</strong>는 잘 바뀌지 않는다.
+      기기 종류·콘텐츠 몰입도·심지어 폭력적 게임 여부와도 무관하게 수면잠복기 연장은 빛 연구와 비슷하게 작다.
+    </p>
+    <div class="quote-box">
+      "the suspenseful cliff-hanger group had the shortest sleep latency (mean difference of 5-min)."
+      <span class="trans">가장 손에 땀을 쥐게 하는 '클리프행어(다음 편 궁금하게 끊기)' 집단이 오히려 <strong>가장 짧은</strong> 수면잠복기를 보였다(평균 5분 차이).
+      각성이 곧 수면 방해라는 직관을 정면으로 뒤집는 결과다.</span>
+      <span class="attr">출처: §1.1.2</span>
+    </div>
+    <p>
+      TV 시청은 수면에 거의 영향이 없었고, 한 연구에서는 표본의 <span class="stat-inline">30%</span>가 취침 전 한 시간 안에
+      TV를 보다 잠들었다. 소셜미디어(스냅챗·왓츠앱) 30분 사용도 심박을 유의하게 바꾸지 못했다. 각성 가설은 "느낌"만큼 강하지 않다.
+    </p>
+    </div>
+  </article>
+
+  <article class="condition">
+    <div class="condition-header">
+      <div class="num-circle promising">3</div>
+      <div class="cond-titles">
+        <span class="cond-code">1.1.3</span>
+        <h3>야간 수면 방해</h3>
+        <span class="cond-en">Nighttime sleep disruptions</span>
+      </div>
+      <span class="verdict promising">유망하나 미개척</span>
+    </div>
+    <div class="condition-body">
+    <div class="plain-meaning">밤중에 오는 알림·진동·불빛이 잠을 끊는다는 설명. 잠재적 영향은 큰데, 정작 연구가 거의 없는 사각지대.</div>
+    <p>
+      잠든 뒤 도착하는 알림·진동·불빛이 수면을 중간에 끊는다는 기제다. 앞의 두 기제(취침 전 각성·빛)와 달리
+      <strong>이미 잠든 상태를 방해</strong>한다는 점에서 성격이 다르다. 저자들은 이를 "잠재적으로 수면에 큰 영향을 줄 유망한 단서"로
+      평가하면서도, 동시에 냉정하게 인정한다.
+    </p>
+    <div class="quote-box">
+      "the sleep science field&#8217;s downfall is that night-time disruptions from technology is a niche and understudied area."
+      <span class="trans">수면과학 분야의 약점은, 기술로 인한 야간 방해가 <strong>틈새이자 연구가 태부족한 영역</strong>이라는 점이다.</span>
+      <span class="attr">출처: §1.1.3</span>
+    </div>
+    <div class="fig-implies">
+      <b>왜 중요한가:</b> 빛·각성이 '분 단위' 효과라면, 야간 방해는 한 번의 알림으로 재입면에 실패하며 <b>시간 단위</b>로 수면 기회를 깎을 수 있다.
+      잠재적 영향은 큰데 연구가 없다는 것 자체가 후속연구의 빈칸이다. 스마트폰을 침실 밖에 두거나 방해금지 모드로 두는 개입의 근거가 여기 있다.
+    </div>
+    </div>
+  </article>
+
+  <article class="condition">
+    <div class="condition-header">
+      <div class="num-circle promising">4</div>
+      <div class="cond-titles">
+        <span class="cond-code">1.1.4</span>
+        <h3>수면 대체 가설</h3>
+        <span class="cond-en">The sleep displacement hypothesis &middot; a two-step process</span>
+      </div>
+      <span class="verdict promising">가장 유망</span>
+    </div>
+    <div class="condition-body">
+    <div class="plain-meaning">"잘 시간에 폰을 하느라 잘 시간이 밀린다." 네 기제 중 효과크기가 압도적으로 크다. 핵심은 '침대에 든 시간'과 '실제 자려는 시간(shut-eye time)'을 구분하는 것.</div>
+    <p>
+      가장 오래되고(거의 20년 전 개념화), 가장 단순하며, 효과크기가 압도적으로 큰 기제다. 핵심 명제:
+      <strong>"잘 시간에 폰을 하느라 잘 시간이 밀린다."</strong> 그런데 이 리뷰의 기여는 대체를 <strong>두 단계 과정</strong>으로
+      정교화한 데 있다. '침대에 들어간 시간(bedtime)'과 '눈 감고 자려는 시간(shut-eye time)'을 구분해야 한다는 것이다.
+    </p>
+
+    <div class="figure-block">
+      <div class="fig-title">Figure 3. 두 단계 과정으로서의 수면 대체</div>
+      <span class="fig-tag orig">원문 그림</span>
+      <div class="fig-orig"><img src="https://ars.els-cdn.com/content/image/1-s2.0-S1087079224000376-gr3_lrg.jpg" loading="lazy" onerror="this.style.display='none'" alt="TV·침대시간·스마트폰·shut-eye time·sleep-onset time으로 이어지는 타임라인. STAGE1 취침시간 대체, STAGE2 수면 대체." /></div>
+      <p class="fig-cap">Fig. 3. Sleep displacement as a two-stage process. Stage 1: 취침시간 자체가 밀림. Stage 2: 침대 안에서의 기기 사용이 'shut-eye latency'를 만들어 실제 수면 시도를 늦춤. (Exelmans &amp; Van den Bulck 모델 기반)</p>
+
+      <div class="fig-kr">
+        <span class="fig-tag kr">한글 요약</span>
+        <svg viewBox="0 0 680 175" width="100%" style="max-width:660px;">
+          <defs><marker id="tarr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#46505c"/></marker></defs>
+          <line x1="30" y1="95" x2="650" y2="95" stroke="#c8d2de" stroke-width="6" marker-end="url(#tarr)"/>
+          <circle cx="120" cy="60" r="30" fill="#fff" stroke="#2f6fa8" stroke-width="1.8"/>
+          <text x="120" y="56" text-anchor="middle" font-size="11" font-weight="700" fill="#2f6fa8">취침</text>
+          <text x="120" y="70" text-anchor="middle" font-size="9" fill="#828d9b">침대로 감</text>
+          <circle cx="340" cy="60" r="30" fill="#e6f5f0" stroke="#3fa88a" stroke-width="1.8"/>
+          <text x="340" y="52" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2c7d64">shut-eye</text>
+          <text x="340" y="66" text-anchor="middle" font-size="9" fill="#3fa88a">자려고 눈감음</text>
+          <circle cx="560" cy="60" r="30" fill="#fdeee9" stroke="#e0573e" stroke-width="1.8"/>
+          <text x="560" y="56" text-anchor="middle" font-size="10.5" font-weight="700" fill="#c0432b">수면개시</text>
+          <text x="560" y="70" text-anchor="middle" font-size="9" fill="#b06a56">실제로 잠듦</text>
+          <line x1="120" y1="90" x2="120" y2="100" stroke="#2f6fa8" stroke-width="1.5"/>
+          <line x1="340" y1="90" x2="340" y2="100" stroke="#3fa88a" stroke-width="1.5"/>
+          <line x1="560" y1="90" x2="560" y2="100" stroke="#e0573e" stroke-width="1.5"/>
+          <text x="230" y="128" text-anchor="middle" font-size="11" font-weight="600" fill="#2c7d64">shut-eye 지연</text>
+          <text x="230" y="143" text-anchor="middle" font-size="9.5" fill="#828d9b">(침대에서 폰 하는 시간)</text>
+          <text x="450" y="128" text-anchor="middle" font-size="11" font-weight="600" fill="#c0432b">수면개시 지연</text>
+          <text x="230" y="30" text-anchor="middle" font-size="10.5" font-weight="700" fill="#20262e">STAGE 1: 취침 대체</text>
+          <text x="450" y="30" text-anchor="middle" font-size="10.5" font-weight="700" fill="#20262e">STAGE 2: 수면 대체</text>
+        </svg>
+        <p class="fig-cap" style="text-align:center;">핵심: 침대에 8시간 누워 있어도, 그 안에서 폰 하는 'shut-eye 지연' 때문에 실제 수면은 8시간 미만이 된다.</p>
+      </div>
+
+      <div class="fig-implies">
+        <b>이 그림의 결정적 함의:</b> 4,010명 청소년 연구에서 <b>침대에 있는 시간</b>은 권장 8시간을 채웠지만, 긴 shut-eye 지연 때문에
+        <b>실제 수면</b>은 8시간 미만으로 줄었다. 즉 "몇 시에 누웠나"만 물으면 이 손실이 통째로 안 잡힌다. 그래서 저자들은
+        주관적 수면 측정에서 <b>'device stop-time'(폰 끈 시각)</b>을 따로 물어야 한다고 강조한다. 우리 연구가 수면을 '총 시간'으로만
+        측정한 한계도 바로 이 지점에서 짚을 수 있다.
+      </div>
+    </div>
+
+    <div class="callout sage">
+      <span class="callout-label">효과크기 비교: 이 논문의 결정적 한 방</span>
+      외부에서 취침시간을 정해주지 않으면 청소년은 새 게임을 하느라 취침을 <span class="stat-inline">최대 1시간 15분</span> 미뤘다.
+      빛 가설의 최대 지연 9.9분, 각성 가설 8.5분과 비교하면 <strong>자릿수가 다르다</strong>. 저자들이 대체를 "the leading mechanism"으로
+      지목하는 이유다. 유명한 설명(빛)이 약하고, 밋밋한 설명(대체)이 강하다.
+    </div>
+    </div>
+  </article>
+
+  <div class="subhead">
+    <span class="code">1.1.5</span>
+    <div><h3>기존 기제 요약</h3> <span class="en">Summary of original mechanisms</span></div>
+  </div>
+  <div class="panel">
+    <table class="mini-table">
+      <tr><th>기제</th><th>대표 효과크기</th><th>저자 평가</th></tr>
+      <tr><td>밝은 빛 (멜라토닌)</td><td>수면잠복기 ~9.9분 (최대)</td><td>약함. 물리적 기제만 뚜렷</td></tr>
+      <tr><td>각성 (arousal)</td><td>~8.5분, 비일관</td><td>약함. 각성지표↑ 수면결과 변화 미미</td></tr>
+      <tr class="hi"><td>야간 수면 방해</td><td>시간 단위 가능(추정)</td><td>유망하나 연구 부족</td></tr>
+      <tr class="hi"><td>수면 대체 (displacement)</td><td>취침 지연 60분+</td><td>가장 유망 (leading mechanism)</td></tr>
+    </table>
+    <p style="margin-top:6px;">
+      저자들의 결론: 대중이 믿는 빛·각성은 약하고, 실제로 수면 기회를 한 시간 이상 깎는 것은 <strong>야간방해와 대체</strong>다.
+      즉 "화면이 무엇을 뿜느냐(빛)"보다 "우리가 저녁 스크린 시간을 어떻게 관리하느냐"가 관건이다.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════ 1.2 역방향 ═══════ -->
+<section id="m12">
+  <div class="section-head">
+    <div class="section-num">1.2</div>
+    <div class="section-title-block">
+      <h2>역방향 기제 (수면 → 기술)</h2>
+      <p class="section-subtitle">Reverse mechanisms: sleep problems preceding technology use. 화살표를 뒤집는다.</p>
+    </div>
+  </div>
+
+  <article class="condition">
+    <div class="condition-header">
+      <div class="num-circle newm">역</div>
+      <div class="cond-titles">
+        <span class="cond-code">1.2.1</span>
+        <h3>수면 문제가 기술이용에 선행하는가?</h3>
+        <span class="cond-en">Can sleep problems precede technology use?</span>
+      </div>
+      <span class="verdict new">새 방향</span>
+    </div>
+    <div class="condition-body">
+    <div class="plain-meaning">통념과 반대 방향. 수면 문제가 먼저 있고, 그 결과로 기술 이용이 늘어난다는 경로. 종단연구가 이 화살표를 지지한다.</div>
+    <p>
+      "기술을 수면 보조 수단으로 쓴다"는 발상은 2006년부터 조사됐다. 청소년의 <span class="stat-inline">60%</span>가 음악,
+      <span class="stat-inline">37%</span>가 TV를 잠들기 위해 사용했다. 흥미롭게도 (책을 제외하고) 기술을 수면 보조로 쓴 청소년은
+      오히려 더 늦게 자고 수면이 짧고 더 피곤했다. 즉 <strong>그다지 효과적이지 않은 수면 보조수단</strong>이다.
+    </p>
+    <p>
+      그렇다면 닭이 먼저냐 달걀이 먼저냐. 종단연구가 답을 준다. 최초의 양방향 연구는 오히려 <strong>수면문제 → TV·SNS 이용 증가</strong>
+      경로만 지지했고(그 반대는 아님), 이후 연구들은 양방향 모두를 지지하되 미디어 종류·수면 특성에 따라 방향이 갈렸다.
+      단방향 통념으로는 설명되지 않는 화살표가 데이터에 존재한다는 것이다.
+    </p>
+    </div>
+  </article>
+
+  <div class="mod-grid">
+    <div class="mod-card protect">
+      <h4>1.2.2 · 시간 때우기 (time filler)</h4>
+      <div class="en">Technology use as a time filler</div>
+      <p>겉으로 보면 똑같다. '밤에 폰 보다가 늦게 잠'. 하지만 인과 방향이 반대다. 사춘기가 되면 생체시계가 뒤로 밀려 졸음이
+      늦게 오고, '수면 압력'(깨어 있을수록 쌓이는 졸린 힘)도 천천히 쌓인다. 그 결과 <strong>아직 졸리지 않은 저녁 시간대</strong>
+      (각성유지구간, wake-maintenance zone)가 생긴다. 폰이 없어도 어차피 그 시간엔 잠이 안 온다. 그때 폰을 드는 것은
+      <strong>이미 비어 있던 시간을 채우는 것</strong>일 뿐이다. 일기연구에서 이용량이 들쭉날쭉해도 그날 수면은 거의 안 변했다.</p>
+      <span class="keynum">순서를 뒤집음: 이용은 원인이 아니라 결과일 수 있음</span>
+    </div>
+    <div class="mod-card protect">
+      <h4>1.2.3 · 정서조절 도구 (emotion regulation)</h4>
+      <div class="en">Technology use as an emotion regulation strategy</div>
+      <p>잠들기 전은 중립적 시간이 아니라 침습적 사고와 부정 정서가 몰려오는 괴로운 시간일 수 있다. 이 각성을 다루려 청소년은
+      매우 접근하기 쉬운 도구, 즉 폰을 든다. 한 연구에서 <strong>62%가 부정적 생각에서 주의를 돌리는 수단</strong>으로 기술을
+      이용한다고 답했다. 명상·마음챙김 앱처럼 실제 조절 도구로 쓰기도 한다. <strong>역설</strong>: 폰을 뺏으면 오히려 부정적 생각과
+      각성이 늘어 불면이 악화될 수 있다.</p>
+      <span class="keynum">임상 함의: 무조건 스크린 제거가 답이 아닐 수 있음</span>
+    </div>
+  </div>
+
+  <div class="quote-box">
+    "sleep disturbances may be a precursor to the use of technology at bedtime, either as a way to fill the void while
+    waiting to fall asleep, or as a regulatory strategy to deal with unwanted thoughts and emotions during the sleep-onset process."
+    <span class="trans">수면 교란이 취침시간대 기술이용의 <strong>선행요인</strong>일 수 있다. 잠들기를 기다리는 동안 공백을 메우는 방식으로든,
+    수면개시 과정에서 원치 않는 생각·정서를 다루는 조절 전략으로든.</span>
+    <span class="attr">출처: §1.2</span>
+  </div>
+
+  <div class="callout warm">
+    <span class="callout-label">우리 연구의 대안 해석으로 반드시 다뤄야 할 지점</span>
+    이 두 기제는 우리 결과("위험 프로파일에서 수면이 우울을 가중하지 않음")에 <strong>역방향 해석</strong>을 준다.
+    우울·불면이 먼저 있고, 그 정서를 조절하려 오락·소통·위험콘텐츠 이용으로 끌려갔을 가능성이다. 횡단자료인 우리 연구는
+    이 방향을 배제할 수 없으므로, 정서조절 가설(emotion regulation hypothesis)을 Discussion에서 명시하면 심사 방어와
+    이론적 깊이 양쪽에 유리하다.
+  </div>
+</section>
+
+<!-- ═══════ 1.3 위험요인 ═══════ -->
+<section id="m13">
+  <div class="section-head">
+    <div class="section-num">1.3</div>
+    <div class="section-title-block">
+      <h2>조절요인: 위험요인</h2>
+      <p class="section-subtitle">For whom? "not all adolescents are the same." 주효과에서 상호작용으로.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p>
+      2010~2017년 모델의 진화에서 등장한 개념이 <strong>조절요인(moderator)</strong>이다. 저녁 기술이용과 수면의 연결은
+      <strong>특정 조건이 갖춰질 때만</strong> 뚜렷해진다는 것. 그 조건은 사람 안(성격 특성)과 기기 안(알고리즘) 양쪽에 있다.
+      대학원생이라면 여기서 <strong>주효과(main effect) 사고에서 상호작용(moderation) 사고로의 전환</strong>을 읽어야 한다.
+      우리 factorial 설계의 이론적 정당화가 바로 이 절이다.
+    </p>
+  </div>
+
+  <div class="mod-grid">
+    <div class="mod-card risk">
+      <h4>1.3.1 · 개인 취약성 × 알고리즘</h4>
+      <div class="en">individual vulnerabilities × technological algorithms</div>
+      <p>연결은 사람의 성격과 기기의 알고리즘이 <strong>맞물릴 때</strong> 발생한다. 초기 연구(Ivarsson)는 폭력적 게임에 대한
+      생리 반응(심박변이)이 게임 경험에 따라 달라짐을 보였다. 개인차와 기기 특성의 상호작용이라는 프레임의 출발점.</p>
+      <span class="keynum">사람 × 기기의 상호작용</span>
+    </div>
+    <div class="mod-card risk">
+      <h4>1.3.2 · 위험감수 성향</h4>
+      <div class="en">risk-taking</div>
+      <p>청소년기는 보상추구 시스템(선조체)이 과활성, 행동조절 시스템(전전두엽)이 저활성인 <strong>인지적 불균형</strong> 시기다.
+      이 불균형은 수면 부족 시 더 악화된다. 위험감수 측정치 <strong>1점 상승 = 취침 38분 지연</strong>. 빛·각성의 분 단위 효과와
+      비교하면, 개인차가 주효과보다 크다는 결정적 증거였다.</p>
+      <span class="keynum">1점 ↑ → +38분</span>
+    </div>
+    <div class="mod-card risk">
+      <h4>1.3.3 · 몰입 상태 (flow)</h4>
+      <div class="en">flow state × dynamic game balancing</div>
+      <p>시간 감각이 사라지고 자기와 환경의 경계가 흐려지는 몰입 상태. 고몰입 성향 청소년은 게임 난이도가 '어려움'일 때 취침을
+      더 미뤘다. 고/저 몰입 간 <strong>약 90분</strong> 차이. 게임사는 이미 'dynamic game balancing' 알고리즘으로 몰입을
+      유도하고 있었다. 저자들의 뼈아픈 관찰: <strong>"기술기업이 연구자보다 빨랐다."</strong></p>
+      <span class="keynum">고/저 몰입 → 90분 차</span>
+    </div>
+    <div class="mod-card risk">
+      <h4>1.3.4 · FoMO · 취침 미루기</h4>
+      <div class="en">FoMO &amp; bedtime procrastination</div>
+      <p>또래 대화에서 소외될까 봐(FoMO) 잠을 미룬다. 대화를 끊고 자는 게 "embarrassing"하다는 것. 3,000명 연구에서 FoMO
+      고득점자는 수면개시 지연·짧은 수면·낮은 수면의 질을 보였다. '취침 미루기(bedtime procrastination)'는 외부 방해 없이
+      스스로 취침을 미루는 성향으로, 수면부족과 중간 정도 상관을 보인다.</p>
+      <span class="keynum">사회적 압력 = 생리요인만큼 중요</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 1.4 보호요인 ═══════ -->
+<section id="m14">
+  <div class="section-head">
+    <div class="section-num">1.4</div>
+    <div class="section-title-block">
+      <h2>조절요인: 보호요인</h2>
+      <p class="section-subtitle">Protective factors: self-control &amp; technology rules.</p>
+    </div>
+  </div>
+
+  <div class="mod-grid">
+    <div class="mod-card protect">
+      <h4>1.4.1 · 자기통제력 (self-control)</h4>
+      <div class="en">the protective "battery"</div>
+      <p>충동을 조절하는 의식적·노력적 능력. 자기통제력이 낮으면 취침 미루기와 저녁 TV 유혹이 늘었다. 저자들의 비유:
+      자기통제력은 <strong>배터리</strong>처럼 좋은 수면 뒤 충전되어 취침시간까지 유지되며, 자기통제–의식적 이용–수면보존의
+      <strong>보호 루프</strong>를 형성한다. 'autoplay'가 사용자의 주체감을 무너뜨리고 "just one more video"로 rabbit hole에
+      빠뜨리는 '주의 경제(attention economy)'에서 특히 중요하다.</p>
+      <span class="keynum">보호 루프: 수면 → 자기통제 충전 → 절제 → 수면</span>
+    </div>
+    <div class="mod-card protect">
+      <h4>1.4.2 · 기술 규칙 (technology rules)</h4>
+      <div class="en">parent-set rules, with a caveat</div>
+      <p>부모가 정한 취침·기기 규칙은 더 이른 취침, 더 긴 수면과 연관된다. 규칙을 결합하면(취침시간 + 기기 제한) 학기 중
+      <strong>40분</strong> 더 잤다. 단, 규칙의 '존재'와 '준수'는 다르다. 규칙을 지킨 청소년만 이른 소등·긴 수면을 보였고,
+      미준수는 규칙 무효 연구들의 상충 결과를 설명한다. 대부분 상관연구라 <strong>역인과</strong>(잘 자는 아이가 규칙을 잘 받아들임)를
+      배제 못 한다. 저자들이 스스로 붙인 단서다.</p>
+      <span class="keynum">규칙 결합 → +40분 (단, 준수 전제)</span>
+    </div>
+  </div>
+
+  <div class="callout sky">
+    <span class="callout-label">조절요인 절 전체의 교훈</span>
+    같은 저녁 스크린 사용도 위험감수·몰입·FoMO가 높은 청소년에게는 해롭고, 자기통제·규칙이 있는 청소년에게는 덜 해롭다.
+    즉 "얼마나 쓰느냐(how much)"는 틀린 질문에 가깝고, "누구에게(for whom), 어떤 조건에서" 문제가 되느냐가 옳은 질문이다.
+    이 프레임이 우리 LPA-factorial 설계(프로파일 = 취약성 하위집단)를 정당화한다.
+  </div>
+</section>
+
+<!-- ═══════ 통합 모델 ═══════ -->
+<section id="model">
+  <div class="section-head">
+    <div class="section-num">★</div>
+    <div class="section-title-block">
+      <h2>통합: 갱신된 양방향 모델</h2>
+      <p class="section-subtitle">Figure 1. The updated bi-directional model. 모든 조각을 하나로.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p>지금까지의 기제와 조절요인이 하나의 그림에 모인다. 원문 Figure 1이 이 리뷰의 결론 도식이다.</p>
+
+    <div class="figure-block">
+      <div class="fig-title">Figure 1. 갱신된 양방향 모델</div>
+      <span class="fig-tag orig">원문 그림</span>
+      <div class="fig-orig"><img src="https://ars.els-cdn.com/content/image/1-s2.0-S1087079224000376-gr1_lrg.jpg" loading="lazy" onerror="this.style.display='none'" alt="기술이용과 수면문제를 잇는 양방향 타원 모델. 위쪽 회색상자는 순방향 기제, 아래 검은상자는 역방향 기제, 아래 위험·보호 조절요인." /></div>
+      <p class="fig-cap">Fig. 1. Updated bi-directional model of the links between technology use and sleep. 세 가지 변화: ① 수면문제 → 기술이용 방향 추가(양방향), ② 역방향의 두 기제(정서조절·시간 때우기), ③ 위험·보호 조절요인 정리.</p>
+
+      <div class="fig-implies">
+        <b>모델 전체가 말하는 것:</b> 기술과 수면은 <b>서로를 밀고 당기는 순환</b>이며(악순환 가능), 그 세기는 <b>조절요인</b>에 따라
+        사람마다 다르다. 통념의 단방향 화살표(왼→오른쪽)는 이 그림의 절반일 뿐이다. 우리 연구의 발견 3(수면 효과가 프로파일에 따라
+        조건적)은 이 그림에서 <b>프로파일이 조절요인 자리에 놓인 것</b>으로 읽을 수 있다.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 명문장 ═══════ -->
+<section id="phrases">
+  <div class="section-head">
+    <div class="section-num">★</div>
+    <div class="section-title-block">
+      <h2>논문에 쓸 만한 명문장</h2>
+      <p class="section-subtitle">Quotable phrasings: original + 해석 + 왜 좋은가. 서론·논의 집필에 바로 응용.</p>
+    </div>
+  </div>
+
+  <div class="phrase-grid">
+    <div class="phrase">
+      <div class="en">"The link between technology and sleep is more complex than originally thought."</div>
+      <div class="kr">기술과 수면의 연결은 원래 생각했던 것보다 복잡하다.</div>
+      <div class="why"><b>왜 좋은가:</b> 리뷰·서론의 전형적 오프너. "통념 → 사실은 더 복잡" 구조는 연구 필요성을 단번에 세운다.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"How much, for whom, and which mechanisms."</div>
+      <div class="kr">얼마나, 누구에게, 그리고 어떤 기제로.</div>
+      <div class="why"><b>왜 좋은가:</b> 세 명사구로 연구 의제 전체를 압축하는 제목 수사. 병렬 구조(triad)의 힘. 우리 초록의 "how much → for whom" 전환도 여기서 빌려온 것.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"not all adolescents are the same"</div>
+      <div class="kr">모든 청소년이 같지는 않다.</div>
+      <div class="why"><b>왜 좋은가:</b> 조절효과·이질성·person-centered 접근을 정당화하는 가장 간명한 문장. LPA 논문 서론에 이상적.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"person-oriented analyses can help to profile individuals at risk"</div>
+      <div class="kr">사람중심 분석은 위험에 처한 개인을 프로파일링하는 데 도움이 된다.</div>
+      <div class="why"><b>왜 좋은가:</b> 저자들이 직접 요청한 미래 연구 방향. 우리 LPA-factorial 연구가 이 요청에 대한 응답임을 서론에서 명시할 인용 근거.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"Additional cross-sectional studies … are not needed unless they explore novel mechanisms or epidemiological 'snapshots.'"</div>
+      <div class="kr">추가 횡단연구는, 새 기제를 탐색하거나 역학적 '스냅숏'을 제공하지 않는 한 더는 필요하지 않다.</div>
+      <div class="why"><b>왜 좋은가:</b> '또 하나의 횡단연구'라는 비판을 선제 방어. "novel mechanism(수면의 조건부 역할)을 탐색하는 횡단연구"로 위치설정 가능.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"one size does not fit all"</div>
+      <div class="kr">한 가지 방식이 모두에게 맞지는 않는다.</div>
+      <div class="why"><b>왜 좋은가:</b> 개입 함의(차별화된 접근) 서술의 관용구. "일반이용군엔 수면지도, 위험군엔 콘텐츠 개입" 대목에 얹기 좋다.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"Bright light and arousal do not seem to matter as much as how we manage our screentime in the evening."</div>
+      <div class="kr">밝은 빛과 각성은, 우리가 저녁 스크린 시간을 어떻게 관리하는가에 비하면 그리 중요하지 않아 보인다.</div>
+      <div class="why"><b>왜 좋은가:</b> 통념(빛·각성)을 밀어내고 행동·맥락으로 초점을 옮기는 한 문장. 우리 논문의 "양이 아니라 목적·맥락" 프레임과 직결.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"reporting effect sizes will be crucial to be able to compare the effects of these different bi-directional mechanisms."</div>
+      <div class="kr">효과크기를 보고하는 것이 이 상이한 양방향 기제들을 비교하는 데 결정적일 것이다.</div>
+      <div class="why"><b>왜 좋은가:</b> 유의성(p)이 아니라 효과크기(IRR·조정평균) 중심 보고의 정당화. 우리 결과 제시 방식(effect size 병기)을 뒷받침.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"removing all technology from the bedroom may not always be helpful and may lead to more negative thoughts, arousal and eventually fuel insomnia symptoms."</div>
+      <div class="kr">침실에서 모든 기술을 없애는 것이 늘 도움이 되는 것은 아니며, 오히려 부정적 사고·각성을 늘려 결국 불면 증상을 부추길 수 있다.</div>
+      <div class="why"><b>왜 좋은가:</b> "무조건 금지"의 통념을 뒤집는 임상 함의. 정서조절 가설과 짝을 이뤄 개입 논의를 정교하게 만든다.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"Technology is here to stay, and a harm minimization approach is warranted."</div>
+      <div class="kr">기술은 사라지지 않는다. 따라서 피해 최소화(harm minimization) 접근이 타당하다.</div>
+      <div class="why"><b>왜 좋은가:</b> 금욕(abstinence)이 아닌 현실적 개입 프레임. 정책·실천 함의 문단의 톤을 잡아준다.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"self-control can be recharged after a good night's sleep and last until bedtime."</div>
+      <div class="kr">자기통제력은 숙면 뒤 재충전되어 취침시간까지 유지될 수 있다.</div>
+      <div class="why"><b>왜 좋은가:</b> 보호요인을 '배터리' 은유로 각인시키는 문장. 양방향·순환 구조(수면↔자기통제)를 직관적으로 전달.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"Experimental studies are the gold standard for establishing how sleep and technology are causally linked."</div>
+      <div class="kr">실험연구는 수면과 기술이 어떻게 인과적으로 연결되는지를 규명하는 데 gold standard다.</div>
+      <div class="why"><b>왜 좋은가:</b> 횡단·상관 연구의 한계를 인정하고 후속 실험을 제언하는 관용 표현. 우리 논문 Limitation·Future direction에 그대로 응용.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 우리 연구 ═══════ -->
+<section id="ourstudy">
+  <div class="section-head">
+    <div class="section-num">★</div>
+    <div class="section-title-block">
+      <h2>우리 연구와의 연결</h2>
+      <p class="section-subtitle">이 리뷰가 우리 스마트폰-수면-우울 연구의 서론·논의를 어떻게 지탱하는가.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <table class="mini-table">
+      <tr><th style="width:22%;">우리 연구 요소</th><th>이 논문에서의 대응</th></tr>
+      <tr><td>서론 프레임</td><td>displacement 통념 → 양방향·조건부 모델 → "for whom" → person-oriented(LPA). 우리 초록 서론의 논리 단계와 동일.</td></tr>
+      <tr><td>발견 3의 착지</td><td>"수면 효과가 일반이용군에서만 유의"는 기술-수면 관계가 <strong>조절요인에 의해 조건적</strong>이라는 핵심 주장과 정합. 프로파일 = moderator.</td></tr>
+      <tr><td>대안 해석·한계</td><td>역방향 기제(time filler·정서조절)로 "우울이 먼저, 위험이용이 나중"이라는 가능성 명시 → 근거 있는 대안 경로.</td></tr>
+      <tr><td>수면 측정 한계</td><td>Fig 3의 shut-eye 지연 논리로, 우리의 '총 수면시간' 지표가 놓치는 것을 정확히 서술 가능.</td></tr>
+    </table>
+  </div>
+
+  <div class="callout sky">
+    <span class="callout-label">스터디 토론 질문</span>
+    ① 우리 '권장수면 미달(시간 기반)' 지표는 4대 기제 중 무엇을 포착하고 무엇을 놓치는가?
+    ② 우리 프로파일(위험콘텐츠·몰입)은 어떤 조절요인(위험감수·flow·FoMO)과 개념적으로 겹치는가?
+    ③ 종단설계로 간다면 발견 3을 어떻게 재검증할까(양방향 중 어느 화살표를 먼저 검정?).
+  </div>
+</section>
+
+<!-- ═══════ 정리 활동 ═══════ -->
+<section id="worksheet">
+  <div class="section-head">
+    <div class="section-num">✎</div>
+    <div class="section-title-block">
+      <h2>정리 활동</h2>
+      <p class="section-subtitle">Write to consolidate. 입력 내용은 브라우저에 자동 저장됩니다.</p>
+    </div>
+  </div>
+
+  <div class="worksheet">
+    <h4>활동 1 · 효과크기로 반박하기</h4>
+    <p class="prompt">"블루라이트가 청소년 수면의 주범"이라는 주장을, 이 논문의 효과크기 증거로 반박하는 3문장을 써 보세요(빛·각성 vs 대체 대비 포함).</p>
+    <textarea data-key="ws1" placeholder="빛 가설의 최대 지연은 ...분에 불과한 반면, 수면 대체는 ..."></textarea>
+    <span class="save-status" id="s-ws1">저장됨 ✓</span>
+  </div>
+  <div class="worksheet">
+    <h4>활동 2 · 두 단계 대체 설명하기</h4>
+    <p class="prompt">Fig 3의 'bedtime'과 'shut-eye time' 구분이 왜 중요한지, 수면 측정 관점에서 3문장으로 설명해 보세요.</p>
+    <textarea data-key="ws2" placeholder="침대에 8시간 누워 있어도 실제 수면은 ..."></textarea>
+    <span class="save-status" id="s-ws2">저장됨 ✓</span>
+  </div>
+  <div class="worksheet">
+    <h4>활동 3 · 우리 논문 Discussion 초안</h4>
+    <p class="prompt">발견 3(위험 프로파일 내 수면효과 부재)을 이 논문의 양방향·조절 모델과 역방향 기제로 해석하는 영문 문단(3~4문장)을 써 보세요.</p>
+    <textarea data-key="ws3" placeholder="Consistent with the bidirectional, moderated model proposed by Bauducco et al. (2024), ..."></textarea>
+    <span class="save-status" id="s-ws3">저장됨 ✓</span>
+  </div>
+</section>
+
+<div class="closing">
+  <div class="closing-inner">
+    <h2>스터디를 마치며</h2>
+    <p>
+      이 논문의 진짜 교훈은 특정 수면 결론이 아니라 <strong>이론이 증거 앞에서 스스로를 수정하는 방식</strong>이다.
+      가장 유명한 설명(블루라이트)이 가장 약한 근거 위에 서 있었고, 정작 중요한 질문은 "얼마나"가 아니라 "누구에게"였다.
+      그리고 화살표는 한 방향이 아니었다.
+    </p>
+    <p>
+      우리 스마트폰-수면-우울 연구가 하려는 일도 정확히 이것이다. 평균의 이야기에서 벗어나, 어떤 하위집단에게
+      무엇이 위험 신호인지를 가려내는 것. 내일 스터디에서는 세 질문(how much / for whom / which mechanisms)을 축으로,
+      우리 데이터가 이 리뷰의 어느 빈칸을 메우는지 함께 짚어보자.
+    </p>
+    <p class="signature">Bauducco et al. (2024), Sleep Medicine Reviews 76, 101933 · AIR Lab Journal Club</p>
+  </div>
+</div>
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(47,111,168,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#2f6fa8"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#2f6fa8"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<div class="footer">
+  본 자료는 AIR Lab 대학원 세미나 학습용으로 제작되었으며, 원문 인용과 그림은 교육 목적의 인용입니다. 한글 요약 도식은 이해를 돕기 위한 재구성입니다.
+</div>
+
+</main>
+
+<script>
+  function saveAll(){
+    document.querySelectorAll('textarea[data-key]').forEach(t=>{
+      localStorage.setItem('bauducco2_'+t.dataset.key, t.value);
+    });
+    const btns=document.querySelectorAll('.save-status');
+    btns.forEach(b=>b.classList.add('show'));
+    setTimeout(()=>btns.forEach(b=>b.classList.remove('show')),1500);
+  }
+  document.querySelectorAll('textarea[data-key]').forEach(t=>{
+    const saved=localStorage.getItem('bauducco2_'+t.dataset.key);
+    if(saved)t.value=saved;
+    t.addEventListener('input',()=>{
+      localStorage.setItem('bauducco2_'+t.dataset.key,t.value);
+      const s=document.getElementById('s-'+t.dataset.key);
+      if(s){s.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>s.classList.remove('show'),1200);}
+    });
+  });
+</script>
+</body>
+</html>
