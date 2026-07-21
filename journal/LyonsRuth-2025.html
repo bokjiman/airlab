@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIR Lab · Journal Club · Lyons-Ruth (2025)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-1Thin.ttf') format('truetype');font-weight:100;font-display:swap;}
+  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-2ExtraLight.ttf') format('truetype');font-weight:200;font-display:swap;}
+  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-3Light.ttf') format('truetype');font-weight:300;font-display:swap;}
+  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-4Regular.ttf') format('truetype');font-weight:400;font-display:swap;}
+  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-5Medium.ttf') format('truetype');font-weight:500;font-display:swap;}
+  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-6SemiBold.ttf') format('truetype');font-weight:600;font-display:swap;}
+  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-7Bold.ttf') format('truetype');font-weight:700;font-display:swap;}
+  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-8ExtraBold.ttf') format('truetype');font-weight:800;font-display:swap;}
+  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-9Black.ttf') format('truetype');font-weight:900;font-display:swap;}
+  :root{
+    --font-display:'Freesentation','Inter',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'Freesentation','Inter',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+
+  /* ===== 보조 컴포넌트 ===== */
+  .qgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  .qcard{background:var(--white);border:1px solid var(--rule);border-left:4px solid var(--sky);border-radius:var(--r-md);padding:14px 16px;box-shadow:var(--shadow-soft);display:flex;gap:12px;align-items:flex-start;transition:transform .18s, box-shadow .18s}
+  .qcard:hover{box-shadow:var(--shadow-card);transform:translateY(-2px)}
+  .qcard .qi{font-size:20px;line-height:1.2;flex-shrink:0}
+  .qcard .qt{font-size:13.5px;color:var(--mid);line-height:1.55}
+  .qcard .qt b{color:var(--ink);font-weight:600}
+  .qcard.hot{border-left-color:var(--coral);background:var(--coral-soft)}
+  .qcard.span2{grid-column:1/-1}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .chip{font-size:12px;font-weight:600;padding:5px 12px;border-radius:var(--r-pill);background:var(--sky-soft);color:var(--sky-deep);display:inline-flex;gap:6px;align-items:center}
+  .chip.mint{background:var(--mint-soft);color:var(--mint)} .chip.amber{background:var(--amber-soft);color:var(--amber)} .chip.coral{background:var(--coral-soft);color:var(--coral)}
+  .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
+  .reveal.in{opacity:1;transform:none}
+  .refbox{background:var(--off);border:1px solid var(--rule);border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:12.5px;color:var(--mid);line-height:1.7}
+  .refbox h4{margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--sky-deep);text-transform:uppercase}
+  .refbox p{margin:0 0 7px;padding-left:16px;text-indent:-16px}
+  .refbox p:last-child{margin-bottom:0}
+  .figwrap{border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:26px 0;box-shadow:var(--shadow-card);background:var(--white)}
+  .figwrap-head{background:linear-gradient(135deg,#2f6fa8 0%,#255d8f 100%);color:#fff;padding:14px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .figwrap-head .fnum{background:var(--sky-bright);color:#123a5c;font-weight:800;font-size:13px;padding:4px 12px;border-radius:var(--r-pill);flex-shrink:0}
+  .figwrap-head h3{margin:0;font-family:var(--font-display);font-size:16.5px;font-weight:700;color:#fff;letter-spacing:-.02em;flex:1;min-width:0}
+  .figwrap-body{padding:20px 24px}
+  .readgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+  .readbox{border-radius:var(--r-sm);padding:13px 15px;font-size:13.3px;line-height:1.62}
+  .readbox h5{margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .readbox.axis{background:var(--off);border:1px solid var(--rule)} .readbox.axis h5{color:var(--light)}
+  .readbox.find{background:var(--sky-soft);border:1px solid #cfe2f4} .readbox.find h5{color:var(--sky-deep)}
+  .readbox.span2{grid-column:1/-1}
+  .methcard{background:var(--white);border:1px solid var(--rule);border-left:4px solid var(--sky-deep);border-radius:var(--r-md);padding:16px 20px;margin:12px 0;box-shadow:var(--shadow-soft)}
+  .methcard h4{margin:0 0 4px;font-family:var(--font-display);font-size:15.5px;font-weight:700;color:var(--ink)}
+  .methcard .mwhat{font-size:12px;color:var(--light);margin-bottom:8px}
+  .methcard p{margin:0;font-size:13.6px;line-height:1.65}
+  .summarybox{background:linear-gradient(135deg,#eef5fc 0%,#f6fbff 100%);border:1px solid #cfe2f4;border-radius:var(--r-lg);padding:24px 28px;margin:22px 0}
+  .summarybox h3{margin:0 0 14px;font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--sky-deep)}
+  .sline{display:flex;gap:12px;align-items:flex-start;margin-bottom:11px;font-size:15px;line-height:1.6}
+  .sline:last-child{margin-bottom:0}
+  .sline .sn{background:var(--sky-deep);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
+  .glossary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gitem{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-sm);padding:11px 14px;font-size:13.2px;line-height:1.55}
+  .gitem b{color:var(--sky-deep)}
+  .videobox{margin:18px 0}
+  .videobox .vlabel{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--sky-deep);margin-bottom:8px}
+  .videoframe{position:relative;width:100%;padding-bottom:56.25%;height:0;border-radius:var(--r-md);overflow:hidden;border:1px solid var(--rule);box-shadow:var(--shadow-soft);background:#0b0b0b}
+  .videoframe iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+  .videobox .vcap{font-size:11.5px;color:var(--light);margin-top:7px;line-height:1.5}
+  .videobox .vcap a{color:var(--sky-deep);text-decoration:none}
+  .videobox .vcap a:hover{text-decoration:underline}
+  @media print{.videoframe{display:none}}
+  @media (max-width:900px){.qgrid,.readgrid,.glossary{grid-template-columns:1fr}}
+</style>
+</head>
+<body id="top">
+
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#top">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">배경</a></li>
+      <li><a href="#design">연구 설계</a></li>
+      <li><a href="#methods">분석 방법</a></li>
+      <li><a href="#f1">Figure 1–3</a></li>
+      <li><a href="#f4">Figure 4–5</a></li>
+      <li><a href="#f6">Figure 6–7</a></li>
+      <li><a href="#model">새 모델</a></li>
+      <li><a href="#phrases">명문장</a></li>
+      <li><a href="#ourstudy">우리 연구</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">Lyons-Ruth 2025 · Journal Club</div>
+    <h1>가장 원초적인 공포는 공격이 아니라<br><em>버려짐</em>이다</h1>
+    <div class="citation">
+      Lyons-Ruth, K. (2025). Is neglect the first form of threat? <em>Attachment &amp; Human Development, 27</em>(4), 511–538. https://doi.org/10.1080/14616734.2025.2518687 (Open Access, CC BY-NC-ND)
+    </div>
+    <p class="subtitle">
+      역경·정신병리 차원 모델(Dimensional Model of Adversity and Psychopathology, DMAP)은 방임(neglect)을 박탈로, 학대(abuse)를 위협으로 구분한다. 이 논문은 <strong>이러한 이분법적 구분에 발달의 시간축을 더해 그 순서를 뒤집는다.</strong> 생애 초기에는 돌봄이 없다는 사실 자체가 가장 절박한 위협이라는 것이다.
+    </p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">모–영아 181쌍</span><div class="lbl">MIND 연구 · 모의 57% 학대 경험</div></div>
+      <div class="stat"><span class="num">영아 뇌 MRI 57건</span><div class="lbl">생후 4~24개월</div></div>
+      <div class="stat"><span class="num">Figure 1~7</span><div class="lbl">원문 그림 전부 수록</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- 01 논문 소개 -->
+<section id="paper">
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div class="section-title-block">
+      <h2>📄 논문 소개</h2>
+      <p class="section-subtitle">Is neglect the first form of threat?</p>
+    </div>
+  </div>
+
+  <div class="summarybox">
+    <h3>🔎 한눈에 보기: 이 논문의 논지 세 줄</h3>
+    <div class="sline"><span class="sn">1</span><div>기존 이론은 <strong>학대를 위협, 방임을 박탈</strong>로 나눈다. 그리고 위협은 편도체를, 박탈은 인지 영역을 건드린다고 본다.</div></div>
+    <div class="sline"><span class="sn">2</span><div>그런데 생후 2년 이내 영아를 보니 반대였다. <strong>학대가 아니라 방임이</strong> 스트레스 호르몬을 올리고 편도체를 키웠다.</div></div>
+    <div class="sline"><span class="sn">3</span><div>저자의 결론: 생애 가장 이른 시기에 아기에게 가장 무서운 것은 <strong>맞는 것이 아니라 돌봄이 없는 것</strong>이다.</div></div>
+  </div>
+
+  <div class="panel" style="border-left:4px solid var(--amber)">
+    <h3 style="margin:0 0 4px;font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--ink)">🍼 먼저 알고 가기: 혼란형 애착이란</h3>
+    <p style="font-size:12.5px;color:var(--light);margin:0 0 12px">disorganized attachment · 오늘 논문을 읽기 위한 배경지식</p>
+    <div class="chips">
+      <span class="chip amber">#네번째_애착유형</span>
+      <span class="chip coral">#다가가고_싶은데_무섭다</span>
+      <span class="chip">#해결책_없는_공포</span>
+      <span class="chip mint">#안전기지가_곧_위협</span>
+      <span class="chip amber">#조용한_소통단절</span>
+      <span class="chip coral">#이후_정신병리_위험</span>
+    </div>
+    <p>애착 유형은 원래 세 가지로 분류됐다. <strong>안정형</strong>(불안하면 엄마에게 갔다가 안심하고 다시 논다), <strong>회피형</strong>(엄마가 와도 무덤덤하게 군다), <strong>저항·양가형</strong>(매달리면서도 화를 낸다). 그런데 어디에도 들어맞지 않는 아기들이 있었다. 1990년 Main과 Solomon이 이들을 <strong>네 번째 유형</strong>으로 정리한 것이 혼란형이다.</p>
+    <p>혼란형 아기의 행동은 <strong>앞뒤가 맞지 않는다.</strong> 엄마에게 다가가다가 중간에 멈추고, 다가가면서 고개는 반대로 돌린다. 갑자기 그 자리에 얼어붙거나(freezing), 방향을 잃은 듯 어정쩡한 자세를 보이기도 한다. <strong>다가가려는 마음과 피하려는 마음이 동시에</strong> 나오니 행동이 하나로 정리되지 못하는 것이다.</p>
+    <p>왜 이런 일이 생길까. 아기에게 양육자는 무서울 때 달려가야 할 <strong>안전기지</strong>다. 그런데 바로 그 양육자가 두려움의 원인이면, 아기는 <strong>달려가야 할 곳이 곧 도망쳐야 할 곳</strong>이라는 풀 수 없는 상황에 놓인다. Main과 Hesse는 이를 <strong>해결책 없는 공포(fright without solution)</strong>라고 불렀다.</p>
+    <p>초기 연구는 이런 상태를 만드는 원인으로 <strong>때리거나 위협하는 행동</strong>에 주목했다. 그런데 그것만으로는 설명되지 않는 사례가 많았다. Lyons-Ruth 연구진은 겉으로는 조용하지만 <strong>정서적 소통이 끊기는 양육</strong>, 즉 물러나 있기, 역할이 뒤바뀌기, 방향을 잃은 반응까지 함께 코딩하는 도구(AMBIANCE)를 만들었다. <strong>오늘 논문에 계속 나오는 "혼란된 돌봄"이 바로 이 계보에서 나온 개념이다.</strong></p>
+    <div class="videobox">
+      <div class="vlabel">🎬 참고 영상 · 애착 개념 이해를 돕는 자료</div>
+      <div class="videoframe">
+        <iframe src="https://www.youtube.com/embed/NkjVlLdFztw" title="애착 참고 영상" loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <p class="vcap">위 개념을 영상으로 먼저 보고 오면 이후 Figure들이 훨씬 쉽게 읽힙니다. 영상이 보이지 않으면 <a href="https://youtu.be/NkjVlLdFztw" target="_blank" rel="noopener">youtu.be/NkjVlLdFztw</a> 에서 직접 볼 수 있습니다. (인쇄 시에는 표시되지 않습니다.)</p>
+    </div>
+
+    <div class="callout sky" style="margin-bottom:0">
+      <span class="callout-label">📌 왜 중요한가</span>
+      혼란형 애착은 이후 <strong>외현화 문제, 해리 증상, 정신병리 위험</strong>과 연결되는 것으로 보고돼 왔다. 그래서 "무엇이 혼란형을 만드는가"는 예방·개입에서 핵심 질문이다. 오늘 논문은 그 답으로 <strong>학대보다 방임 쪽</strong>을 지목한다. <span style="color:var(--light)">※ 이 배경 설명은 애착 연구의 일반적 배경이며, 오늘 논문의 연구 결과 자체는 아니다.</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p>이 논문은 혼란형 애착(disorganized attachment) 연구를 오랫동안 이끌어 온 <strong>Karlen Lyons-Ruth</strong>가 2024년 국제애착학회 평생공로상 수상 강연을 바탕으로 쓴 이론 논문이다. 형식은 리뷰지만 하는 일은 조금 다르다. 저자가 이끈 <strong>MIND 연구</strong>에서 그동안 따로따로 발표된 결과들을 한자리에 모은 뒤, 그것들이 기존 이론과 맞지 않는다는 점을 보이고 새 설명을 제안한다.</p>
+    <p>기존 이론인 DMAP는 이렇게 정리된다. 위협은 신체적 해를 입거나 입을 위험이 있는 경험(학대, 폭력 목격 등)이고, 박탈은 있어야 할 돌봄과 자극이 없는 상태다. 그리고 학령기 이후 아동과 성인 자료에서 <strong>위협은 편도체를 줄이고, 박탈은 인지 관련 영역을 줄인다</strong>고 알려져 있다.</p>
+    <p>저자의 질문은 단순하다. <strong>이 구분이 생후 2년 이내에도 그대로 성립할까?</strong> MIND 자료의 답은 "아니다"였다. 그리고 흥미롭게도 이 결과는 성인 자료와는 어긋나지만 <strong>동물(설치류) 실험 결과와는 정확히 맞았다.</strong></p>
+  </div>
+
+  <div class="panel" style="border-left:4px solid var(--coral)">
+    <h3 style="margin:0 0 4px;font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--ink)">⚠️ 읽기 전 꼭 알아둘 것: 이 논문은 원저가 아니라 리뷰입니다</h3>
+    <p style="font-size:12.5px;color:var(--light);margin:0 0 12px">Figure를 오해하지 않기 위한 안내</p>
+
+    <p>가장 헷갈리기 쉬운 지점입니다. <strong>Figure 1~7은 이 논문에서 새로 분석한 결과가 아닙니다.</strong> 전부 <strong>이전에 이미 발표된 다른 논문에서 가져온 그림</strong>이고, 그래서 모든 캡션에 "Reprinted from…"이 붙어 있습니다.</p>
+
+    <table class="mini-table">
+      <thead><tr><th>Figure</th><th>무엇을 보여주나</th><th>원 출처</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>어머니의 어린 시절 경험 3유형</td><td>Khoury et al. (2022) · Sage</td></tr>
+        <tr><td><strong>2</strong></td><td>어머니의 상호작용 4프로파일</td><td>Khoury, Cunningham et al. (2023) · <em>Br. J. Dev. Psychol.</em></td></tr>
+        <tr><td><strong>3</strong></td><td>모–영아 코르티솔 궤적</td><td>Khoury et al. (2021) · <em>Dev. Psychobiology</em></td></tr>
+        <tr class="hi"><td><strong>4</strong></td><td>방임 × 혼란된 돌봄 → 코르티솔</td><td>Chasson et al. (2025) · <em>JCPP</em></td></tr>
+        <tr><td><strong>5</strong></td><td>학대 × 아기 나이 → 편도체</td><td>Lyons-Ruth et al. (2023) · <em>RCAP</em></td></tr>
+        <tr><td><strong>6</strong></td><td>코르티솔 ↔ 편도체·해마 크기</td><td>Khoury, Cunningham et al. (2023) · <em>Psychoneuroendocrinology</em></td></tr>
+        <tr class="hi"><td><strong>7</strong></td><td>방임 → 코르티솔 → 편도체 경로</td><td>Khoury et al. (2025)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout sage">
+      <span class="callout-label">✅ 그러나 표본은 하나입니다</span>
+      여기서 오해가 갈리는 지점이 있습니다. <strong>출처 논문은 여러 개지만, 대상이 된 아이들은 전부 같습니다.</strong> 모두 <strong>MIND 코호트, 모–영아 181쌍</strong>입니다. 같은 아이들을 두고 코르티솔 논문, 상호작용 논문, 뇌 영상 논문을 각각 따로 발표했고, 이 리뷰가 그 조각들을 하나로 꿰는 것입니다. 즉 <strong>"서로 다른 연구 7개"가 아니라 "한 코호트를 7가지 각도에서 본 것"</strong>으로 읽어야 합니다.
+    </div>
+
+    <div class="callout warm" style="margin-bottom:0">
+      <span class="callout-label">🔍 그래서 생기는 구조적 한계</span>
+      각 Figure가 원래 <strong>다른 논문에서 다른 목적으로</strong> 수행된 분석이다 보니, 서로 맞대어 본 결과가 없습니다. 예를 들어 Figure 1의 <strong>3개 계층</strong>과 Figure 2의 <strong>4개 프로파일</strong>이 실제로 얼마나 겹치는지를 보여 주는 <strong>교차표나 일치도 통계는 이 리뷰에 제시되지 않습니다.</strong> 저자는 "전반적 와해 프로파일에 나타난 역할혼란·혼란은 앞서 방임을 함께 겪은 어머니에게서 높았던 요소"라는 식으로 <strong>서술로만 연결</strong>합니다.<br><br>
+      이 점은 논문을 깎아내리려는 지적이 아니라, <strong>리뷰라는 형식이 갖는 구조적 특징</strong>입니다. 다만 두 유형화의 교차표가 하나만 있었어도 논증이 훨씬 단단했을 것이라는 점은 이번 저널클럽에서 짚어 볼 만합니다.
+    </div>
+  </div>
+
+  <div class="paper-meta">
+    <h3>Attachment &amp; Human Development (2025, 27:4, 511–538)</h3>
+    <div class="sub">Harvard Medical School · Cambridge Health Alliance · SSCI 등재</div>
+    <div class="paper-meta-grid">
+      <div class="paper-meta-item">
+        <div class="label">Journal / Indexing</div>
+        <div class="value">Attachment &amp; Human Development<br>SSCI 등재 · Open Access</div>
+      </div>
+      <div class="paper-meta-item">
+        <div class="label">Type / Design</div>
+        <div class="value">이론 논문 + MIND 코호트 결과 종합<br>관찰 · 종단 연구</div>
+      </div>
+      <div class="paper-meta-item">
+        <div class="label">핵심 주장</div>
+        <div class="value">영아기에는 <strong style="color:#fff">방임이 첫 번째 위협</strong>이며, 공격의 위협보다 먼저 절박하다</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quote-box">
+    "This model proposes that threat of lack of care poses the first survival threat across species and therefore is more salient than threat of attack for stress-sensitive brain regions in infancy."
+    <span class="attr">출처: Abstract</span>
+    <span class="trans">이 모델은 <strong>돌봄의 부재가 종을 가로질러 최초의 생존 위협</strong>이며, 따라서 영아기의 스트레스 민감 뇌영역에는 공격의 위협보다 더 절박하게 다가온다고 제안한다.</span>
+  </div>
+</section>
+
+<!-- 02 배경 -->
+<section id="intro">
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div class="section-title-block">
+      <h2>🧭 배경: 왜 하필 생후 2년인가</h2>
+      <p class="section-subtitle">Why the first two years matter</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p>출발점은 <strong>세대 간 전달</strong>이다. 어머니가 어린 시절 겪은 학대나 방임은 자녀의 정신건강에까지 이어진다. 그 통로 중 하나가 아기의 <strong>스트레스 반응 체계</strong>와 뇌 발달의 변화다.</p>
+    <p>왜 생후 2년에 주목할까. 이 시기 뇌가 가장 빠르게 자라기 때문이다. 회백질은 <strong>2세 무렵 성인의 80%</strong>에 도달하고, 위협을 감지하는 <strong>편도체도 이 시기에 가장 가파르게 성장</strong>한다. 빠르게 자라는 시기일수록 환경의 영향을 크게 받는다.</p>
+    <p>문제는 이 시기를 설명해 줄 문헌들이 서로 다른 방향을 가리킨다는 점이다. 아래 그림이 그 상황을 보여 준다.</p>
+  </div>
+
+  <div class="figure-block reveal">
+    <div class="fig-title">보조 그림. 세 갈래 연구가 서로 다른 답을 준다</div>
+    <span class="fig-tag kr">AIR Lab 제작 · 본문 서술에 근거</span>
+    <div class="fig-kr">
+      <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="세 문헌 비교">
+        <rect x="20" y="60" width="210" height="140" rx="14" fill="#fdeee9" stroke="#e0573e"/>
+        <text x="125" y="86" text-anchor="middle" font-size="12.5" font-weight="700" fill="#c0442f">아동·성인 연구</text>
+        <text x="125" y="118" text-anchor="middle" font-size="11.5" fill="#20262e">학대 → 편도체 작아짐</text>
+        <text x="125" y="140" text-anchor="middle" font-size="11.5" fill="#20262e">방임 → 인지 영역 영향</text>
+        <text x="125" y="172" text-anchor="middle" font-size="10.5" fill="#6b7683">기존 이론과 일치</text>
+
+        <rect x="255" y="60" width="210" height="140" rx="14" fill="#e6f5f0" stroke="#3fa88a"/>
+        <text x="360" y="86" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2c8065">설치류 실험</text>
+        <text x="360" y="118" text-anchor="middle" font-size="11.5" fill="#20262e">돌봄 부족 → 호르몬 ↑</text>
+        <text x="360" y="140" text-anchor="middle" font-size="11.5" fill="#20262e">→ 편도체 커짐</text>
+        <text x="360" y="172" text-anchor="middle" font-size="10.5" fill="#6b7683">방향이 정반대</text>
+
+        <rect x="490" y="60" width="210" height="140" rx="14" fill="#fbf1dc" stroke="#c78a1e"/>
+        <text x="595" y="86" text-anchor="middle" font-size="12.5" font-weight="700" fill="#9c6c14">인간 영아 (이 연구)</text>
+        <text x="595" y="118" text-anchor="middle" font-size="11.5" fill="#20262e">방임 → 호르몬 ↑</text>
+        <text x="595" y="140" text-anchor="middle" font-size="11.5" fill="#20262e">→ 편도체 커짐</text>
+        <text x="595" y="172" text-anchor="middle" font-size="10.5" fill="#6b7683">설치류 쪽과 일치</text>
+
+        <text x="360" y="35" text-anchor="middle" font-size="12.5" font-weight="700" fill="#20262e">영아 결과가 성인이 아니라 설치류와 맞았다</text>
+        <text x="360" y="228" text-anchor="middle" font-size="11" fill="#828d9b">이 불일치를 설명하려는 시도가 이 논문의 새 모델이다</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="callout warm">
+    <span class="callout-label">🎓 방법론 한 가지</span>
+    사람 대상 관찰연구는 현실을 반영하지만 <strong>인과를 말하기 어렵고</strong>, 동물 실험은 인과를 밝히지만 <strong>사람에게 그대로 적용하기 어렵다.</strong> 어느 한쪽만으로는 결론이 나지 않는다. 그런데 두 문헌이 같은 방향을 가리키면, 그 일치 자체가 근거가 된다. 이 논문의 추론이 여기에 기대고 있다.
+  </div>
+</section>
+
+<!-- 03 연구 설계 -->
+<section id="design">
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div class="section-title-block">
+      <h2>🔬 연구 설계: 무엇을 쟀나</h2>
+      <p class="section-subtitle">The MIND study in brief</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p><strong>MIND 연구</strong>는 모–영아 181쌍을 모집했다. 역경의 영향을 보려면 역경을 겪은 사람이 충분히 있어야 하므로, 일부러 <strong>어머니의 57%가 어린 시절 학대나 방임을 경험한</strong> 표본으로 구성했다. 측정은 크게 네 가지다.</p>
+  </div>
+
+  <div class="mod-grid">
+    <div class="mod-card risk">
+      <h4>① 어머니의 어린 시절 경험</h4>
+      <p>MACE라는 질문지로 학대와 방임을 <strong>유형별로, 심각도까지</strong> 측정했다. "있다/없다"가 아니라 정도를 재는 것이 중요하다.</p>
+    </div>
+    <div class="mod-card">
+      <h4>② 어머니–아기 상호작용</h4>
+      <p>생후 4개월에 <strong>정지얼굴 실험(Still-Face Paradigm)</strong>을 했다. 엄마가 잠시 무표정으로 있다가 다시 반응해 주는 절차로, 아기에게 가벼운 스트레스를 준다. 이때의 어머니 행동을 위축, 혼란, 침습성 등으로 나누어 코딩했다.</p>
+    </div>
+    <div class="mod-card protect">
+      <h4>③ 스트레스 호르몬</h4>
+      <p>실험 동안 아기와 엄마의 <strong>침을 세 번</strong> 받아 코르티솔을 쟀다. 전체 분비량을 하나의 값으로 요약한 것이 <strong>AUCg</strong>다.</p>
+    </div>
+    <div class="mod-card" style="border-top-color:var(--amber)">
+      <h4>④ 아기 뇌 MRI</h4>
+      <p>생후 4~24개월 사이에 <strong>약을 쓰지 않고 자연스럽게 잠든 상태에서</strong> 촬영했다. 어려운 촬영이라 119명 중 <strong>57명</strong>만 쓸 수 있는 영상을 얻었다.</p>
+    </div>
+  </div>
+
+  <div class="callout sky">
+    <span class="callout-label">📌 미리 알아 둘 용어</span>
+    <div class="glossary" style="margin-top:10px">
+      <div class="gitem"><b>코르티솔</b> 대표적인 스트레스 호르몬. 침으로 측정할 수 있다.</div>
+      <div class="gitem"><b>AUCg</b> 여러 번 잰 코르티솔을 합쳐 "전체적으로 얼마나 나왔나"로 요약한 값.</div>
+      <div class="gitem"><b>편도체</b> 위협을 감지하는 뇌 부위. 생후 2년에 빠르게 자란다.</div>
+      <div class="gitem"><b>해마</b> 기억과 스트레스 조절에 관여하는 뇌 부위.</div>
+      <div class="gitem"><b>회백질</b> 뇌에서 신경세포가 모여 있는 부분. 인지 기능과 관련된다.</div>
+      <div class="gitem"><b>혼란된 돌봄</b> 어색한 표정, 진심 같지 않은 반응처럼 <strong>정서적 소통이 끊기는</strong> 양육 행동.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 분석 방법 -->
+<section id="methods">
+  <div class="section-head">
+    <div class="section-num">04</div>
+    <div class="section-title-block">
+      <h2>🧮 분석 방법: 네 가지만 알면 된다</h2>
+      <p class="section-subtitle">Four analytic ideas behind the figures</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p>이 연구는 하나의 프로그램 안에서 여러 분석기법을 순서대로 사용한다. 기법마다 답할 수 있는 질문이 다르고, 그 질문들이 차례로 쌓이면서 최종 이론에 도달한다. 아래 네 가지만 알아 두면 그림을 읽는 데 충분하다.</p>
+  </div>
+
+  <div class="methcard reveal">
+    <h4>① 유형 찾기 (잠재계층분석 LCA · 잠재프로파일분석 LPA)</h4>
+    <div class="mwhat">Figure 1, 2에서 사용</div>
+    <p>"학대를 많이 겪을수록"처럼 <strong>정도</strong>를 묻는 대신, <strong>"어떤 조합을 겪은 사람들이 있는가"</strong>를 묻는 방법이다. 사람들을 비슷한 패턴끼리 몇 개의 유형으로 묶어 준다.</p>
+  </div>
+
+  <div class="methcard reveal">
+    <h4>② 두 사람의 변화를 함께 보기</h4>
+    <div class="mwhat">Figure 3에서 사용</div>
+    <p>엄마와 아기의 호르몬 변화를 <strong>한 모형에 같이</strong> 넣어 추적한다. 그러면 "엄마가 올라갈 때 아기도 올라가는가", "시간이 갈수록 둘이 벌어지는가" 같은 <strong>관계의 흐름</strong>을 볼 수 있다.</p>
+  </div>
+
+  <div class="methcard reveal">
+    <h4>③ "언제부터 효과가 나타나는가" 찾기 (조절효과)</h4>
+    <div class="mwhat">Figure 4, 5에서 사용</div>
+    <p>어떤 효과는 항상 나타나지 않고 <strong>특정 조건에서만</strong> 나타난다. 이 연구는 그 조건의 <strong>경계값</strong>을 계산했다. 예를 들어 "혼란된 돌봄이 일정 수준을 넘어설 때부터" 방임의 효과가 나타난다는 식이다.</p>
+  </div>
+
+  <div class="methcard reveal">
+    <h4>④ "무엇을 거쳐서 가는가" 확인하기 (매개분석)</h4>
+    <div class="mwhat">Figure 6, 7에서 사용</div>
+    <p>방임이 곧바로 뇌를 바꾸는 것이 아니라 <strong>중간 단계를 거친다</strong>는 가설을 검증한다. 이 연구가 찾은 중간 단계가 바로 <strong>아기의 코르티솔</strong>이다.</p>
+  </div>
+</section>
+
+<!-- 05 Figure 1~3 -->
+<section id="f1">
+  <div class="section-head">
+    <div class="section-num">05</div>
+    <div class="section-title-block">
+      <h2>📊 Figure 1~3: 유형을 나누고, 아기 몸의 반응을 본다</h2>
+      <p class="section-subtitle">Maltreatment types, interaction profiles, cortisol</p>
+    </div>
+  </div>
+
+  <!-- FIGURE 1 -->
+  <div class="figwrap reveal">
+    <div class="figwrap-head">
+      <span class="fnum">Figure 1</span>
+      <h3>어머니의 어린 시절 경험, 세 가지 유형</h3>
+    </div>
+    <div class="figwrap-body">
+      <div class="plain-meaning">어머니들을 세 유형으로 나눴더니, 학대와 방임을 <strong>함께</strong> 겪은 유형이 따로 존재했다. 이 유형이 이후 모든 분석의 중심이 된다.</div>
+      <span class="fig-tag orig">원문 Figure · Khoury et al. (2022)</span>
+      <div class="fig-orig">
+        <img src="https://www.tandfonline.com/cms/asset/22fc53a9-119f-4736-b2c8-8ab0572fc980/rahd_a_2518687_f0001_b.jpg" alt="Figure 1. 잠재계층분석으로 찾은 어머니 아동기 피학대 세 유형" loading="lazy">
+      </div>
+      <p class="fig-cap">Figure 1. Reprinted from Khoury et al. (2022). Copyright 2021 by Sage Publications. Reprinted with permission.</p>
+
+      <div class="readgrid">
+        <div class="readbox axis">
+          <h5>그림 읽는 법</h5>
+          세로축은 점수가 아니라 <strong>확률</strong>이다. 각 유형에 속한 사람이 그 경험을 보고할 가능성을 뜻한다. 선이 높이 솟은 항목이 그 유형의 특징이다.
+        </div>
+        <div class="readbox find">
+          <h5>세 유형과 그 결과</h5>
+          ⓐ 저학대 ⓑ 정서·신체 학대 ⓒ 복합(학대+방임). 이 중 <strong>ⓒ만 방임을 함께 겪은 유형</strong>이다. ⓒ 어머니들은 아기와 있을 때 <strong>더 위축되고, 더 혼란스러워했다.</strong>
+        </div>
+      </div>
+
+      <div class="fig-implies">
+        <b>중요한 지점.</b> ⓒ 어머니들이 아기에게 더 <b>공격적</b>이지는 않았다. 대신 <b>물러나 있고 방향을 잃은</b> 모습이 두드러졌다. 방임이 다음 세대에 남기는 <b>표현형(phenotype)</b>, 곧 겉으로 관찰되는 행동 특징은 "때리는 엄마"가 아니라 <b>"곁에 없는 것처럼 느껴지는 엄마"</b>였다는 뜻이다. 이 표현형이 확인되어야, 이후 그것이 아기의 코르티솔을 올리고(Figure 4·6) 뇌에 흔적을 남긴다(Figure 7)는 사슬이 성립한다.
+      </div>
+    </div>
+  </div>
+
+  <!-- FIGURE 2 -->
+  <div class="figwrap reveal">
+    <div class="figwrap-head">
+      <span class="fnum">Figure 2</span>
+      <h3>어머니의 상호작용, 네 가지 프로파일</h3>
+    </div>
+    <div class="figwrap-body">
+      <div class="plain-meaning">어머니의 상호작용을 네 유형으로 나눴더니, 아기들이 <strong>유형마다 다른 방식으로</strong> 반응했다.</div>
+      <span class="fig-tag orig">원문 Figure · Khoury, Cunningham, et al. (2023)</span>
+      <div class="fig-orig">
+        <img src="https://www.tandfonline.com/cms/asset/068b6002-38bc-4a11-9992-08a6e1cc453c/rahd_a_2518687_f0002_b.jpg" alt="Figure 2. 잠재프로파일분석으로 찾은 모성 혼란된 행동 네 프로파일" loading="lazy">
+      </div>
+      <p class="fig-cap">Figure 2. Reprinted from Khoury, Cunningham, et al. (2023), <em>British Journal of Developmental Psychology, 41</em>(2), 99–116. Copyright 2022 by British Psychological Society. Reprinted with permission.</p>
+
+      <div class="readgrid">
+        <div class="readbox axis">
+          <h5>네 프로파일</h5>
+          <strong>최적</strong>, <strong>부정·침습</strong>(과하게 밀어붙임), <strong>위축</strong>(물러나 있음), <strong>전반적 와해</strong>(여러 문제가 겹침).
+        </div>
+        <div class="readbox find">
+          <h5>아기들의 반응</h5>
+          전반적 와해 유형의 아기는 <strong>거의 모든 면에서</strong> 위축됐다. 부정·침습 유형의 아기는 부정적 감정이 많았다. 그런데 <strong>위축</strong> 유형의 아기는 여전히 다가가고 여전히 반응했다. 다만 <strong>웃음과 즐거운 교류가 줄었다.</strong>
+        </div>
+      </div>
+
+      <div class="fig-implies">
+        <b>가장 조용한 유형이 가장 걱정스럽다.</b> 위축된 어머니의 아기는 겉으로는 별문제 없어 보인다. 그러나 저자는 여기서 역전을 읽는다. <b>부모가 아이를 챙기는 대신, 아이가 부모를 챙기려 애쓰는</b> 관계가 시작된다는 것이다. 실제로 장기 추적에서 18개월 무렵 어머니의 위축은 <b>후기 청소년기의 자살경향성</b>을, 4세 반 무렵의 위축은 <b>15세의 충동적·자기손상 행동</b>을 예측했다.
+      </div>
+    </div>
+  </div>
+
+  <!-- FIGURE 3 -->
+  <div class="figwrap reveal">
+    <div class="figwrap-head">
+      <span class="fnum">Figure 3</span>
+      <h3>실험 동안 엄마와 아기의 코르티솔 변화</h3>
+    </div>
+    <div class="figwrap-body">
+      <div class="plain-meaning">어머니의 어린 시절 역경이 클수록, 엄마와 아기의 호르몬이 <strong>서로 따로 놀았다.</strong> 그리고 아기는 계속 높은 상태로 머물렀다.</div>
+      <span class="fig-tag orig">원문 Figure · Khoury et al. (2021)</span>
+      <div class="fig-orig">
+        <img src="https://www.tandfonline.com/cms/asset/7d7311ca-1369-4ef7-b8b1-b750e2260383/rahd_a_2518687_f0003_b.jpg" alt="Figure 3. 정지얼굴 실험 동안 모–영아 코르티솔 궤적" loading="lazy">
+      </div>
+      <p class="fig-cap">Figure 3. Reprinted from Khoury, J. E., Beeney, J., Shiff, I., Bosquet Enlow, M., &amp; Lyons-Ruth, K. (2021), <em>Developmental Psychobiology, 63</em>(5), 1309–1321. Copyright 2021 by Wiley Periodicals LLC.</p>
+
+      <div class="readgrid">
+        <div class="readbox axis">
+          <h5>그림 읽는 법</h5>
+          가로축은 실험의 세 시점, 세로축은 코르티솔이다. 두 선은 역경이 <strong>적은 경우와 많은 경우</strong>를 각각 나타낸 예측선이다.
+        </div>
+        <div class="readbox find">
+          <h5>핵심 결과</h5>
+          역경이 적은 쌍에서는 엄마와 아기의 호르몬이 <strong>같이 움직였다.</strong> 역경이 많은 쌍에서는 <strong>그 연동이 사라졌고</strong>, 아기는 처음부터 끝까지 높은 상태를 유지했다. 반면 역경이 적은 쌍의 아기는 시간이 지나며 <strong>안정을 되찾았다.</strong>
+        </div>
+      </div>
+
+      <div class="fig-implies">
+        <b>여기서 한 가지 한계.</b> 이 분석은 <b>학대와 방임을 구분하지 않고</b> 전체 역경 점수만 사용했다. 그래서 "무엇이 이 차이를 만들었나"는 아직 알 수 없다. 바로 그 질문을 Figure 4가 이어받는다.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 Figure 4~5 -->
+<section id="f4">
+  <div class="section-head">
+    <div class="section-num">06</div>
+    <div class="section-title-block">
+      <h2>🔀 Figure 4~5: 학대와 방임을 나눠 보니 결과가 뒤집혔다</h2>
+      <p class="section-subtitle">Separating abuse from neglect changes everything</p>
+    </div>
+  </div>
+
+  <!-- FIGURE 4 -->
+  <div class="figwrap reveal">
+    <div class="figwrap-head">
+      <span class="fnum">Figure 4</span>
+      <h3>방임을 겪은 어머니 + 혼란된 돌봄 → 아기 코르티솔 상승</h3>
+    </div>
+    <div class="figwrap-body">
+      <div class="plain-meaning">이 논문에서 <strong>가장 예상 밖의 결과</strong>다. 아기의 스트레스 호르몬을 올린 것은 학대 쪽이 아니라 <strong>방임 쪽</strong>이었다.</div>
+      <span class="fig-tag orig">원문 Figure · Chasson et al. (2025) · CC BY</span>
+      <div class="fig-orig">
+        <img src="https://www.tandfonline.com/cms/asset/3a0a5240-6840-4e9a-9049-697fcdd8e5d8/rahd_a_2518687_f0004_oc.jpg" alt="Figure 4. 모의 아동기 방임과 혼란된 돌봄의 상호작용" loading="lazy">
+      </div>
+      <p class="fig-cap">Figure 4. Reprinted from Chasson et al. (2025), <em>Journal of Child Psychology &amp; Psychiatry</em>. CC BY license.</p>
+
+      <div class="readgrid">
+        <div class="readbox axis span2">
+          <h5>왼쪽 (a) 패널: 축이 무엇인가</h5>
+          <strong>가로축(X) = 어머니의 혼란된 돌봄 정도.</strong> 실험 영상에서 코딩한 점수로, 실제 관측 범위는 1점에서 7점이다. 점수가 클수록 정서적 소통이 많이 끊긴 상태다.<br>
+          <strong>세로축(Y) = 아기의 코르티솔 총량(AUCg).</strong> 실험 동안 세 번 잰 스트레스 호르몬을 하나로 합친 값이다. 위로 갈수록 아기가 스트레스를 많이 받았다는 뜻이다.<br>
+          <strong>두 개의 선 = 어머니의 어린 시절 방임 경험 수준.</strong> 하나는 방임이 적었던 어머니, 다른 하나는 방임이 많았던 어머니를 나타낸다. 그래서 이 그림은 <strong>변수 세 개</strong>를 한 장에 담고 있다.
+        </div>
+        <div class="readbox find span2">
+          <h5>그래서 무엇이 보이나</h5>
+          <strong>방임이 적었던 어머니의 선은 거의 평평하다.</strong> 돌봄이 다소 혼란스러워도 아기의 코르티솔이 크게 변하지 않는다는 뜻이다. 반면 <strong>방임이 많았던 어머니의 선은 오른쪽으로 갈수록 뚜렷하게 올라간다.</strong> 즉 어머니의 어린 시절 방임 경험은 <strong>지금의 돌봄이 혼란스러울 때에만</strong> 아기의 몸에 나타났다. 오른쪽 (b) 패널은 그 효과가 정확히 <strong>어느 지점(약 3.2점)부터</strong> 통계적으로 유의해지는지를 계산해 표시한 것이다.
+        </div>
+        <div class="readbox find span2">
+          <h5>⚠️ 헷갈리기 쉬운 부분: "학대는 코르티솔을 낮췄다"는 어디서 나온 말인가</h5>
+          이 결과는 <strong>Figure 4에 그려져 있지 않다.</strong> 같은 연구(Chasson et al., 2025)에서 <strong>짝을 이루는 별도의 분석</strong>으로 수행되어 논문 본문에 글로만 서술된 내용이다. 구조는 Figure 4와 똑같되 변수만 바뀐다. 어머니의 어린 시절 경험을 <strong>방임 대신 학대</strong>로, 지금의 돌봄을 <strong>혼란된 돌봄 대신 공격적·침습적 돌봄</strong>으로 놓고 같은 방식으로 분석한 것이다. 그 결과 아기의 코르티솔은 올라간 것이 아니라 <strong>오히려 내려갔다.</strong> 즉 <strong>방임 계열 조합은 아기를 각성시켰고, 학대 계열 조합은 아기를 오히려 무디게 만들었다.</strong> 통념과 정반대인 이 대조가 저자가 새 이론을 제안하게 된 출발점이다.
+        </div>
+        <div class="readbox find span2">
+          <h5>왜 "혼란된 돌봄"이 방임의 신호인가</h5>
+          혼란된 돌봄은 아기에게 무섭게 구는 것이 아니라, <strong>정서적으로 연결이 끊기는</strong> 상태다. 어색한 표정, 진심 같지 않은 반응, 급하게 물러나는 모습 같은 것이다. 아기 입장에서는 <strong>내가 신호를 보내도 엄마에게 가닿지 않는</strong> 경험이 된다. 저자는 이것이 아기의 몸에 "돌봄이 없다"는 신호로 전달된다고 본다.
+        </div>
+      </div>
+
+      <div class="fig-implies">
+        <b>중요한 조건 하나.</b> 이 효과는 어머니의 어린 시절 경험만으로도, 지금의 양육만으로도 나타나지 않았다. <b>둘이 겹칠 때만</b> 나타났다. 저자는 이를 "출생 전 신호가 <b>일기예보</b>라면, 출생 후 환경이 그 예보를 <b>확인</b>해 줄 때 비로소 아기의 몸이 반응한다"고 설명한다.
+      </div>
+    </div>
+  </div>
+
+  <!-- FIGURE 5 -->
+  <div class="figwrap reveal">
+    <div class="figwrap-head">
+      <span class="fnum">Figure 5</span>
+      <h3>학대의 영향은 생후 2년째가 되어서야 나타났다</h3>
+    </div>
+    <div class="figwrap-body">
+      <div class="plain-meaning">학대는 아기 뇌에 영향을 주긴 했다. 다만 <strong>바로가 아니라 한참 뒤에</strong>, 그리고 방임과는 <strong>다른 부위에</strong> 나타났다.</div>
+      <span class="fig-tag orig">원문 Figure · Lyons-Ruth et al. (2023) · CC BY 4.0</span>
+      <div class="fig-orig">
+        <img src="https://www.tandfonline.com/cms/asset/a83c6192-a32f-471b-9188-bde37c21c804/rahd_a_2518687_f0005_oc.jpg" alt="Figure 5. 모의 아동기 학대와 영아 연령의 상호작용" loading="lazy">
+      </div>
+      <p class="fig-cap">Figure 5. Reprinted from Lyons-Ruth et al. (2023), <em>Research on Child and Adolescent Psychopathology, 51</em>(12), 1919–1932. CC BY 4.0.</p>
+
+      <div class="readgrid">
+        <div class="readbox axis span2">
+          <h5>축이 무엇인가: 앞의 그림들과 형태가 다르다</h5>
+          이 그림은 자료의 점을 찍은 산점도가 아니라, <strong>"효과의 크기"를 그린 그래프</strong>다.<br>
+          <strong>가로축(X) = 아기가 MRI를 찍은 나이(일 단위).</strong> 이 연구는 생후 4개월부터 24개월까지 다양한 시점에 촬영했다.<br>
+          <strong>세로축(Y) = 어머니의 학대 경험이 아기의 오른쪽 편도체 크기에 미치는 효과의 크기</strong>다. 0보다 아래면 "학대 경험이 많을수록 편도체가 작다", 0이면 "관련 없다"는 뜻이다.<br>
+          그리고 그 효과를 감싸는 <strong>띠는 신뢰구간</strong>이다. 이 띠가 <strong>0선을 완전히 벗어나는 구간</strong>에서만 효과가 통계적으로 유의하다. 즉 이 그림은 <strong>"아기가 몇 개월쯤 되었을 때부터 학대의 흔적이 보이기 시작하는가"</strong>를 답한다.
+        </div>
+        <div class="readbox find span2">
+          <h5>결과: 약 18개월이라는 분기점</h5>
+          띠가 0선을 벗어나는 지점은 <strong>생후 약 18개월</strong>이었다. 그 이전에는 어머니의 학대 경험과 아기 편도체 크기 사이에 <strong>아무 관계가 없었고</strong>, 18개월을 넘어서면서 비로소 "학대 경험이 많을수록 오른쪽 편도체가 작다"는 관계가 나타났다.<br><br>
+          같은 연구에서 <strong>방임</strong>은 전혀 다른 모습을 보였다. 방임은 아기의 <strong>회백질</strong>을 줄였고, 이 효과는 나이와 무관하게 <strong>생후 2년 내내 일정했다.</strong> 정리하면 <strong>방임은 처음부터 계속, 학대는 뒤늦게</strong> 나타났으며 영향을 준 뇌 부위도 서로 달랐다.
+        </div>
+      </div>
+
+      <div class="callout danger" style="margin-bottom:0">
+        <span class="callout-label">⚠️ 기존 이론과 맞지 않는 부분</span>
+        기존 위협 이론대로라면, 학대는 영아기 <strong>어느 시점엔가</strong> 스트레스 호르몬과 편도체를 <strong>올리는</strong> 구간이 있어야 한다. 그런데 이 자료에는 <strong>그런 구간이 없었다.</strong> 저자는 왜 학대의 효과가 2년째에야 나타나는지 <strong>아직 설명할 수 없다고 솔직히 밝힌다.</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 Figure 6~7 -->
+<section id="f6">
+  <div class="section-head">
+    <div class="section-num">07</div>
+    <div class="section-title-block">
+      <h2>🧠 Figure 6~7: 코르티솔이 방임과 뇌를 잇는 다리였다</h2>
+      <p class="section-subtitle">Cortisol as the bridge</p>
+    </div>
+  </div>
+
+  <!-- FIGURE 6 -->
+  <div class="figwrap reveal">
+    <div class="figwrap-head">
+      <span class="fnum">Figure 6</span>
+      <h3>코르티솔이 높은 아기일수록 편도체와 해마가 컸다</h3>
+    </div>
+    <div class="figwrap-body">
+      <div class="plain-meaning">스트레스 호르몬이 많이 나온 아기일수록 <strong>편도체와 해마가 더 컸다.</strong> 나이와 성별, 전체 뇌 크기를 감안한 뒤에도 그랬다.</div>
+      <span class="fig-tag orig">원문 Figure · Khoury, Cunningham, et al. (2023) · CC BY 4.0</span>
+      <div class="fig-orig">
+        <img src="https://www.tandfonline.com/cms/asset/19876d9a-2de7-4a72-913e-4e98d31ed29e/rahd_a_2518687_f0006_oc.jpg" alt="Figure 6. 영아 코르티솔과 편도체·해마 용적의 관계" loading="lazy">
+      </div>
+      <p class="fig-cap">Figure 6. Reprinted from Khoury, Cunningham, et al. (2023), <em>Psychoneuroendocrinology, 158</em>, 106379. CC BY 4.0.</p>
+
+      <div class="readgrid">
+        <div class="readbox axis span2">
+          <h5>축이 무엇인가</h5>
+          이 그림은 두 개의 산점도로 되어 있다. 점 하나가 <strong>아기 한 명</strong>이다.<br>
+          <strong>가로축(X) = 아기의 코르티솔 총량(AUCg).</strong> Figure 4에서 쓴 것과 같은 값이다.<br>
+          <strong>세로축(Y) = 편도체 크기(한쪽 그림)와 해마 크기(다른 쪽 그림).</strong><br>
+          여기서 중요한 처리가 하나 있다. 아기 뇌는 몇 주 차이로도 크게 자라므로, 크기를 그대로 비교하면 <strong>결국 나이 차이를 보는 셈</strong>이 된다. 그래서 <strong>나이·성별·전체 뇌 크기의 영향을 미리 걷어낸 뒤 남은 값</strong>으로 그렸다. "같은 나이, 같은 성별, 같은 전체 뇌 크기라면 어떤가"를 보는 것이다. 점들이 <strong>오른쪽 위로 올라가는 방향</strong>이면 "코르티솔이 높은 아기일수록 그 부위가 크다"는 뜻이다.
+        </div>
+        <div class="readbox find span2">
+          <h5>왜 중요한가</h5>
+          설치류 실험에서는 <strong>돌봄 부족 → 스트레스 호르몬 증가 → 편도체 커짐</strong>이라는 고리가 이미 인과적으로 밝혀져 있었다. 다만 사람 아기에게서 이 전체 경로가 확인된 적은 없었다. 이 그림이 그 빈칸을 메운다. 다만 사람 자료는 <strong>관찰연구이므로 "코르티솔이 편도체를 키웠다"고 단정할 수는 없고</strong>, 동물 실험 결과와 방향이 같다는 점에서 <strong>그럴 가능성이 높다</strong>고 말할 수 있는 수준이다.
+        </div>
+      </div>
+
+      <div class="fig-implies">
+        <b>"편도체가 크다/작다"는 질문 자체를 다시 보게 된다.</b> 시설에서 자란 아이들을 4세부터 20세까지 추적한 다른 연구에 따르면, 이들은 <b>어릴 때는 편도체가 더 컸다가 청소년기에는 더 작아졌다.</b> 일찍 자라고 일찍 멈춘 것이다. 이 연구의 "영아기에 큰 편도체"는 그 궤적의 앞부분과 맞아떨어진다.
+      </div>
+
+      <div class="callout warm">
+        <span class="callout-label">🤔 그런데 해마는 클수록 좋은 것 아닌가</span>
+        <p style="margin:0 0 10px">충분히 나올 수 있는 의문이고, 실제로 <strong>성인 연구에서는 그 직관이 대체로 맞습니다.</strong> 만성 스트레스, 외상후 스트레스장애, 우울증에서는 해마가 <strong>작아지는</strong> 방향으로 보고돼 왔습니다. 그래서 "해마가 크다"를 좋은 신호로 읽는 감각이 생깁니다.</p>
+        <p style="margin:0 0 10px">그런데 <strong>생애 초기에는 이 기준이 그대로 적용되지 않습니다.</strong> 뇌는 무작정 커지기만 하는 것이 아니라, 자라난 뒤 필요 없는 연결을 정리하는 <strong>가지치기(pruning)</strong> 과정을 거치며 다듬어집니다. 그래서 발달기에는 <strong>크기 자체보다 "언제 자라고 언제 멈추는가"라는 궤적</strong>이 더 중요합니다.</p>
+        <p style="margin:0 0 10px">스트레스는 이 시계를 <strong>앞당길</strong> 수 있습니다. 앞서 본 시설양육 연구가 그 예입니다. 이 아이들은 어릴 때 편도체가 더 컸지만 청소년기에는 더 작았습니다. 가정에서 자란 아이들이 9~10세까지 계속 자라 더 높은 지점에서 멈춘 반면, 이들은 <strong>일찍 자라고 일찍 멈춘</strong> 것입니다. 이런 현상을 <strong>가속 성숙</strong>이라고 부릅니다. 성장 여력을 앞당겨 써버린 셈입니다.</p>
+        <p style="margin:0 0 10px">그래서 영아기의 큰 용적은 <strong>"잘 발달했다"가 아니라 "너무 일찍 성숙했을 수 있다"</strong>는 신호로 읽힙니다. 편도체든 해마든 마찬가지입니다.</p>
+        <p style="margin:0"><strong>다만 여기서 정직하게 선을 그어야 합니다.</strong> 시설양육 추적 연구는 <strong>편도체만</strong> 다뤘습니다. 해마도 같은 궤적을 그릴 것이라는 건 <strong>이 논문의 확장 해석이지 직접 입증된 사실이 아닙니다.</strong> 게다가 MIND 연구는 이 아기들을 청소년기까지 추적하지 않았습니다. 그러므로 지금 단계에서 정확한 표현은 <strong>"큰 해마가 나쁘다"가 아니라 "큰 해마를 좋은 신호로 단정할 수 없다"</strong>입니다. 실제 의미는 <strong>이 아이들을 더 자란 뒤 다시 촬영해야</strong> 알 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIGURE 7 -->
+  <div class="figwrap reveal">
+    <div class="figwrap-head">
+      <span class="fnum">Figure 7</span>
+      <h3>방임 → 코르티솔 → 편도체, 사슬의 완성</h3>
+    </div>
+    <div class="figwrap-body">
+      <div class="plain-meaning">방임이 <strong>곧바로</strong> 뇌를 바꾼 것이 아니다. 반드시 <strong>아기의 코르티솔을 거쳐서만</strong> 뇌 변화로 이어졌다.</div>
+      <span class="fig-tag orig">원문 Figure · Khoury et al. (2025)</span>
+      <div class="fig-orig">
+        <img src="https://www.tandfonline.com/cms/asset/1cc809cc-06a9-4140-bebb-d5372a66e8d5/rahd_a_2518687_f0007_oc.jpg" alt="Figure 7. 코르티솔이 매개하는 방임과 편도체 용적의 관계" loading="lazy">
+      </div>
+      <p class="fig-cap">Figure 7. 화살표의 숫자는 경로의 크기, 함께 표시된 구간은 신뢰구간이다. 신뢰구간이 0을 포함하지 않으면 유의하다고 본다. Reprinted from Khoury et al. (2025).</p>
+
+      <div class="readgrid">
+        <div class="readbox axis span2">
+          <h5>이 그림은 무엇을 그린 것인가: 산점도가 아니라 '경로도'</h5>
+          앞의 그림들과 달리 이것은 <strong>화살표로 이어진 순서도</strong>다. 상자가 변수이고, 화살표가 "앞의 것이 뒤의 것에 영향을 준다"는 관계를 뜻한다. 왼쪽과 오른쪽 두 벌이 있는데 각각 <strong>오른쪽 편도체, 왼쪽 편도체</strong>에 대한 분석이다.<br><br>
+          <strong>순서는 이렇다.</strong> ① 어머니의 어린 시절 방임 정도 → ② 아기의 코르티솔 총량(AUCg) → ③ 아기의 편도체 크기. 여기에 전체 뇌 크기(WBV)를 함께 통제해서, 단순히 뇌가 큰 아기라서 편도체도 큰 것이 아님을 확인했다.
+        </div>
+        <div class="readbox axis span2">
+          <h5>화살표 옆 숫자를 어떻게 읽나</h5>
+          각 화살표에 붙은 숫자는 <strong>그 관계의 크기</strong>이고, 함께 표시된 구간은 <strong>신뢰구간</strong>이다. 판정 기준은 p값이 아니라 <strong>"이 구간이 0을 포함하는가"</strong>다. 0을 포함하면 "효과가 없을 가능성도 배제할 수 없다"는 뜻이고, <strong>0을 포함하지 않으면 유의하다</strong>고 본다.<br><br>
+          이런 분석을 <strong>매개분석</strong>이라고 부른다. 확인하려는 것은 "A가 C에 영향을 준다"가 아니라 <strong>"A가 B를 거쳐서 C에 도달한다"</strong>이다.
+        </div>
+        <div class="readbox find span2">
+          <h5>결과와 그 의미</h5>
+          어머니의 <strong>방임</strong>은 아기의 코르티솔을 높였고, 그 코르티솔을 거쳐 편도체와 해마가 커졌다. 반면 어머니의 <strong>학대</strong>는 아기 코르티솔과도, 편도체 크기와도 관련이 없었다.<br><br>
+          가장 중요한 대목은 이것이다. <strong>방임에서 뇌로 곧장 가는 화살표는 유의하지 않았다.</strong> 오직 <strong>코르티솔을 거칠 때만</strong> 연결됐다. 즉 방임이 그 자체로 뇌를 바꾼 것이 아니라, 방임이 아기의 몸에 <strong>스트레스 반응을 일으켰고 그 반응이 뇌에 남은 것</strong>이다.
+        </div>
+      </div>
+
+      <div class="fig-implies">
+        <b>실천적으로 무엇을 뜻하나.</b> 개입의 표적이 "방임 그 자체"라는 막연한 말에서, <b>"방임이 아기 몸에 일으키는 스트레스 반응"</b>이라는 구체적인 지점으로 좁혀진다. 다만 이 결과는 표본이 작고 추정이 불안정한 편이므로, 아직 확정된 사실이라기보다 <b>검증이 더 필요한 유력한 가설</b>로 읽는 것이 맞다.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 새 모델 -->
+<section id="model">
+  <div class="section-head">
+    <div class="section-num">08</div>
+    <div class="section-title-block">
+      <h2>🧩 새 모델: 두 종류의 위협에는 순서가 있다</h2>
+      <p class="section-subtitle">Developmental Salience Model of Threat</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p>기존 위협 이론에서 위협은 곧 공격이다. 위험이 닥치면 몸이 각성하고 <strong>싸우거나, 도망가거나, 얼어붙는다.</strong> 그리고 이 반응은 평생 똑같다고 여겨져 왔다. 저자가 문제 삼는 것이 바로 이 <strong>"평생 똑같다"</strong>는 가정이다.</p>
+    <p>아기는 혼자 먹고 체온을 유지할 수 없다. 그래서 아기에게 <strong>양육자 곁에 머무는 것</strong>은 생존 그 자체다. 그렇다면 생애 가장 이른 시기에 가장 위협적인 사건은 공격이 아니라 <strong>돌봄이 사라지는 것</strong>이 된다.</p>
+    <p>이 모델에서 가장 설득력 있는 부분은 <strong>두 위협이 정반대의 대응을 요구한다</strong>는 점이다. 공격 앞에서는 싸우거나 도망치는 것이 살길이다. 그러나 <strong>버려짐 앞에서 도망치는 것은 치명적이다.</strong> 그래서 아기는 반대로 행동한다. <strong>울고, 부르고, 매달려서</strong> 양육자를 다시 끌어온다. 같은 스트레스 체계를 쓰지만 나오는 행동은 전혀 다르다.</p>
+  </div>
+
+  <div class="figure-block reveal">
+    <div class="fig-title">보조 그림. 발달 순서가 있는 두 가지 위협</div>
+    <span class="fig-tag kr">AIR Lab 제작 · 본문 모델 서술에 근거</span>
+    <div class="fig-kr">
+      <svg viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Developmental Salience Model">
+        <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 Z" fill="#5b6673"/></marker></defs>
+        <line x1="60" y1="78" x2="700" y2="78" stroke="#c9d3de" stroke-width="2"/>
+        <text x="60" y="58" font-size="12" font-weight="700" fill="#20262e">출생</text>
+        <text x="360" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#20262e">생후 2년</text>
+        <text x="700" y="58" text-anchor="end" font-size="12" font-weight="700" fill="#20262e">이후 아동기</text>
+
+        <rect x="70" y="105" width="300" height="115" rx="14" fill="#e6f5f0" stroke="#3fa88a" stroke-width="2"/>
+        <text x="220" y="132" text-anchor="middle" font-size="14" font-weight="800" fill="#2c8065">위협 ①: 돌봄이 없다 (방임)</text>
+        <text x="220" y="154" text-anchor="middle" font-size="11.5" fill="#3a7d68">먼저 절박해지는 위협</text>
+        <text x="220" y="179" text-anchor="middle" font-size="11.5" fill="#20262e">코르티솔 ↑ → 편도체·해마 커짐</text>
+        <text x="220" y="200" text-anchor="middle" font-size="11.5" fill="#20262e">아기의 반응: <tspan font-weight="700" fill="#2c8065">울고 매달리기</tspan></text>
+
+        <rect x="400" y="245" width="300" height="115" rx="14" fill="#fdeee9" stroke="#e0573e" stroke-width="2"/>
+        <text x="550" y="272" text-anchor="middle" font-size="14" font-weight="800" fill="#c0442f">위협 ②: 공격받는다 (학대)</text>
+        <text x="550" y="294" text-anchor="middle" font-size="11.5" fill="#a25b4c">나중에 절박해지는 위협</text>
+        <text x="550" y="319" text-anchor="middle" font-size="11.5" fill="#20262e">오른쪽 편도체 작아짐 (18개월 이후)</text>
+        <text x="550" y="340" text-anchor="middle" font-size="11.5" fill="#20262e">아기의 반응: <tspan font-weight="700" fill="#c0442f">싸우거나 도망</tspan></text>
+
+        <path d="M300 220 C 360 245, 380 245, 430 245" fill="none" stroke="#5b6673" stroke-width="2.2" marker-end="url(#ar)"/>
+        <text x="318" y="272" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5b6673">발달 순서</text>
+
+        <circle cx="70" cy="78" r="4" fill="#3fa88a"/>
+        <circle cx="400" cy="78" r="4" fill="#c78a1e"/>
+        <circle cx="700" cy="78" r="4" fill="#e0573e"/>
+
+        <text x="380" y="400" text-anchor="middle" font-size="11" fill="#828d9b">두 위협 모두 같은 스트레스 체계를 쓰지만, 절박해지는 시기와 필요한 대응이 다르다</text>
+      </svg>
+    </div>
+    <div class="fig-implies">
+      <b>이 모델의 핵심.</b> 기존 이론은 위협과 박탈을 <b>나란히 놓고 구분</b>했다. 이 모델은 거기에 <b>시간</b>을 더한다. 무엇이 가장 위협적인지는 <b>발달 시기에 따라 달라진다</b>는 것이다.
+    </div>
+  </div>
+
+  <div class="quote-box">
+    "It may be that the most primal fear, with roots in our earliest development, is not fear of attack but fear of abandonment."
+    <span class="attr">출처: Discussion</span>
+    <span class="trans">우리의 가장 이른 발달에 뿌리를 둔 가장 원초적인 공포는, 공격의 공포가 아니라 <strong>버려짐의 공포</strong>일지 모른다.</span>
+  </div>
+
+  <div class="callout warm">
+    <span class="callout-label">🔇 그렇다면 학대는 왜 조용한가: 저반응기 가설</span>
+    <p style="margin:0 0 10px">저자는 동물 연구에서 힌트를 얻는다. 어린 설치류에게는 어미와 관련된 <strong>고통스러운 자극에 스트레스 체계가 반응하지 않는 시기</strong>가 있다. 이를 <strong>저반응기(stress-hyporesponsive period)</strong>라고 부른다.</p>
+    <p style="margin:0 0 10px">흥미로운 점은 이 무반응이 <strong>선택적</strong>이라는 것이다. 같은 시기에도 추위나 질병에는 코르티솔이 정상적으로 반응한다. 즉 스트레스 체계가 아직 미성숙해서 못 켜지는 것이 아니라, <strong>양육자와 관련된 고통에만 유독 조용해지는</strong> 것이다.</p>
+    <p style="margin:0 0 10px">왜 그럴까. 이 시기의 기능은 <strong>학대하는 양육자에게라도 애착이 형성되도록 보호하는 것</strong>으로 해석된다. 아기가 양육자를 위험으로 학습해 버리면 곁을 떠나려 할 텐데, 혼자 남는 것은 곧 죽음이다. 그래서 <strong>붙어 있는 편이 낫다</strong>는 계산이 발달에 새겨져 있다는 설명이다. 실제로 설치류에서는 젖을 뗀 뒤, 곧 스스로 먹이를 구할 수 있게 된 시점부터 같은 자극에 스트레스 체계가 반응하기 시작한다.</p>
+    <p style="margin:0"><strong>다만 신중해야 한다.</strong> 이 설명이 사람에게도 그대로 적용되는지는 <strong>아직 확인되지 않았다.</strong> 저자 본인도 학대의 영향이 왜 생후 2년째에야 나타나는지(Figure 5)를 두고, 저반응기가 걷히는 신호인지 아니면 다른 기제 때문인지 <strong>알 수 없다고 명시한다.</strong></p>
+  </div>
+</section>
+
+<!-- 09 명문장 -->
+<section id="phrases">
+  <div class="section-head">
+    <div class="section-num">09</div>
+    <div class="section-title-block">
+      <h2>✍️ 명문장: 영어 논문에 쓸 수 있는 문장</h2>
+      <p class="section-subtitle">Reusable sentences</p>
+    </div>
+  </div>
+
+  <div class="phrase-grid">
+    <div class="phrase span2">
+      <div class="en">"It may be that the most primal fear, with roots in our earliest development, is not fear of attack but fear of abandonment."</div>
+      <div class="kr">우리의 가장 이른 발달에 뿌리를 둔 가장 원초적인 공포는, 공격의 공포가 아니라 버려짐의 공포일지 모른다.</div>
+      <div class="why"><b>왜 유용한가:</b> "not X but Y"로 통념을 한 문장에 뒤집는다. 앞에 "It may be that"을 두어 단정을 피하면서도 주장의 무게는 유지한다.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"combining different forms of maltreatment into a single index risks underestimating or failing to detect effects that are, in fact, present."</div>
+      <div class="kr">여러 피학대 유형을 하나의 지수로 합치면, 실제로 존재하는 효과를 과소추정하거나 놓칠 위험이 있다.</div>
+      <div class="why"><b>왜 유용한가:</b> "risks + -ing"는 단정하지 않으면서 위험을 분명히 짚는 구문이다. 측정 방식을 비판할 때 쓰기 좋다.</div>
+    </div>
+    <div class="phrase">
+      <div class="en">"The often-cited fight, flight, or freeze behaviors … would be highly maladaptive as responses to threat of lack of care."</div>
+      <div class="kr">흔히 인용되는 투쟁·도피·경직 반응은, 돌봄의 부재라는 위협에 대한 반응으로는 대단히 부적응적일 것이다.</div>
+      <div class="why"><b>왜 유용한가:</b> 널리 쓰이는 개념을 부정하지 않으면서 <b>"여기에는 맞지 않는다"</b>고 적용 범위를 좁히는 방식이다.</div>
+    </div>
+    <div class="phrase span2">
+      <div class="en">"Only when the postnatal environment 'confirms' the prenatal vulnerabilities or 'weather forecast' signaled by the mother's childhood adversity, would the infant stress system be significantly affected."</div>
+      <div class="kr">어머니의 아동기 역경이 신호한 산전 취약성, 곧 '일기예보'를 산후 환경이 '확인'할 때에만 아기의 스트레스 체계가 유의하게 영향을 받는다.</div>
+      <div class="why"><b>왜 유용한가:</b> '일기예보'라는 비유로 어려운 개념을 직관적으로 만든다. <b>상호작용 효과를 문장으로 서술하는</b> 좋은 예이므로 그대로 빌려 쓸 만하다.</div>
+    </div>
+    <div class="phrase span2">
+      <div class="en">"the field of trauma studies has not yet worked out how to conceptualize the threat inherent in experiences of childhood neglect … when lack of care is life-threatening."</div>
+      <div class="kr">외상 연구 분야는 돌봄의 부재가 생명을 위협하는 시기의 아동기 방임에 내재한 위협을 아직 개념화하지 못했다.</div>
+      <div class="why"><b>왜 유용한가:</b> 특정 연구자를 비판하지 않으면서 <b>분야 전체의 미해결 과제</b>로 문제를 세운다. 서론에서 연구의 필요성을 밝힐 때 강력하다.</div>
+    </div>
+    <div class="phrase span2">
+      <div class="en">"disorientation may serve as one signal of maternal neglect to the infant stress response system."</div>
+      <div class="kr">혼란된 돌봄은 아기의 스트레스 반응 체계에 모성 방임을 알리는 하나의 신호로 작동할 수 있다.</div>
+      <div class="why"><b>왜 유용한가:</b> 관찰된 행동을 <b>기제적 '신호'로 재해석</b>하는 문형이다. 매개변인의 의미를 설명할 때 유용하다.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 AIR Lab 연결 -->
+<section id="ourstudy">
+  <div class="section-head">
+    <div class="section-num">10</div>
+    <div class="section-title-block">
+      <h2>🔗 AIR Lab 연구와의 연결</h2>
+      <p class="section-subtitle">ACEs · 청소년 자살·자해 · person-centered 방법</p>
+    </div>
+  </div>
+
+  <table class="mini-table">
+    <thead><tr><th>우리 연구 요소</th><th>이 논문에서의 대응</th><th>바로 쓸 수 있는 함의</th></tr></thead>
+    <tbody>
+      <tr><td>ACEs 측정</td><td>학대와 방임을 유형별로 나누어 측정하고 서로 통제했다</td><td>합산 점수 대신 <strong>유형을 나누어</strong> 분석하기</td></tr>
+      <tr><td>person-centered 방법</td><td>유형을 찾는 데서 멈추지 않고, 유형별 기제와 결과까지 연결했다</td><td>계층 도출 후 <strong>기제·결과까지</strong> 이어 보기</td></tr>
+      <tr><td>청소년 자살·자해</td><td>영아기 어머니의 위축이 후기 청소년기 자살경향성을 예측했다</td><td>위험 표적을 <strong>영아기까지</strong> 앞당기기</td></tr>
+      <tr><td>실천·선별</td><td>공격적 양육만 보면 위축형을 놓친다</td><td>선별 도구에 <strong>위축·혼란</strong> 항목 포함하기</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout sky">
+    <span class="callout-label">💬 스터디 토론 질문</span>
+    <div class="qgrid" style="margin-top:10px">
+      <div class="qcard"><div class="qi">①</div><div class="qt">사람 관찰연구와 동물 실험이 같은 방향을 가리킨다는 것만으로 새 이론을 세워도 될까? 어떤 결과가 나오면 이 모델은 틀린 것이 될까?</div></div>
+      <div class="qcard"><div class="qi">②</div><div class="qt">학대가 오히려 아기의 코르티솔을 <b>낮췄다</b>는 결과를, 저반응기 말고 다르게 설명할 수 있을까?</div></div>
+      <div class="qcard"><div class="qi">③</div><div class="qt">"조용한 방임이 눈에 띄는 학대보다 초기 위험이 클 수 있다"가 사실이라면, 우리 아동보호체계의 신고·조사 기준은 무엇을 놓치고 있을까?</div></div>
+      <div class="qcard span2 hot"><div class="qi">④</div><div class="qt"><b>구조에 대한 질문.</b> Figure 1의 3계층과 Figure 2의 4프로파일은 <b>같은 181쌍</b>을 대상으로 했는데도 교차표가 제시되지 않았다. 두 유형화가 실제로 얼마나 겹치는지 보여 주었다면 논증이 어떻게 달라졌을까? 반대로, 이미 발표된 결과들을 모아 새 이론을 세우는 리뷰에서 <b>어디까지가 정당한 종합이고 어디부터가 과잉 해석</b>일까?</div></div>
+    </div>
+  </div>
+
+  <div class="refbox">
+    <h4>함께 언급한 문헌</h4>
+    <p>Mersky, J. P., &amp; Plummer Lee, C. (2026). Dimensional Modeling of Adverse Childhood Experiences: An Empirical Analysis and Critique. <em>Child Maltreatment</em>. https://doi.org/10.1177/10775595251415193</p>
+    <p>Khoury, J. E., et al. (2021). <em>Developmental Psychobiology, 63</em>(5), 1309–1321. · Khoury, J. E., Cunningham, K., et al. (2023). <em>British Journal of Developmental Psychology, 41</em>(2), 99–116; <em>Psychoneuroendocrinology, 158</em>, 106379.</p>
+    <p>Lyons-Ruth, K., et al. (2023). <em>Research on Child and Adolescent Psychopathology, 51</em>(12), 1919–1932. · Chasson, M., et al. (2025). <em>Journal of Child Psychology &amp; Psychiatry</em>.</p>
+    <p>그 밖의 인용 서지사항은 원문 Lyons-Ruth (2025)의 참고문헌 목록을 따른다.</p>
+  </div>
+</section>
+
+<!-- 11 정리 활동 -->
+<section id="worksheet">
+  <div class="section-head">
+    <div class="section-num">11</div>
+    <div class="section-title-block">
+      <h2>📝 정리 활동</h2>
+      <p class="section-subtitle">작성 내용은 이 브라우저에 자동 저장됩니다</p>
+    </div>
+  </div>
+
+  <div class="worksheet">
+    <h4>① 세 줄 요약</h4>
+    <div class="prompt">이 논문의 주장, 근거, 한계를 각각 한 문장으로 적어 보세요.</div>
+    <textarea data-key="summary" placeholder="주장 / 근거 / 한계"></textarea>
+    <span class="save-status">저장됨</span>
+  </div>
+  <div class="worksheet">
+    <h4>② 그림 하나 고르기</h4>
+    <div class="prompt">Figure 1~7 중 이 논문의 주장을 가장 잘 보여 주는 그림 하나를 고르고, 그 이유를 적어 보세요.</div>
+    <textarea data-key="figure" placeholder="고른 그림과 이유"></textarea>
+    <span class="save-status">저장됨</span>
+  </div>
+  <div class="worksheet">
+    <h4>③ 우리 연구로 옮기기</h4>
+    <div class="prompt">이 논문의 어떤 부분을 우리 랩 연구에 적용해 보고 싶습니까? 적용할 때 예상되는 어려움도 함께 적어 보세요.</div>
+    <textarea data-key="transfer" placeholder="적용할 요소 · 예상 어려움"></textarea>
+    <span class="save-status">저장됨</span>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-inner">
+    <h2>이 논문의 이론적 기여: 구분에 시간을 더하다</h2>
+    <p>이 논문이 한 일은 새로운 변수를 추가하거나 표본을 늘린 것이 아니다. 기존의 <strong>학대와 방임이라는 구분</strong>에 <strong>발달의 시간</strong>이라는 축을 더해, 흩어져 있던 결과들을 하나로 꿰었다. 그 결과 영아기에는 박탈로 분류되던 방임이 오히려 <strong>첫 번째 위협</strong>으로 작동한다는 그림이 나온다.</p>
+    <p>동시에 이 논문은 자기 한계에 솔직하다. 학대가 왜 늦게 나타나는지는 아직 설명하지 못하고, 뇌 영상 표본은 57명뿐이며, 매개 경로의 추정도 안정적이지 않다. 저자는 이 모든 것을 본문에 적어 둔다. 그래서 이 논문은 <strong>결론이 아니라 잘 만들어진 가설</strong>로 읽는 것이 맞다.</p>
+    <p>그리고 남는 질문이 있다. 이 모델이 옳다면, 우리가 가장 늦게 알아차리는 <strong>조용한 방임</strong>이야말로 아기에게 가장 먼저 도달하는 위협이다. <strong>소리치지 않는 위험을 우리는 어떻게 볼 것인가.</strong></p>
+    <div class="signature">Lyons-Ruth, K. (2025). <em>Attachment &amp; Human Development, 27</em>(4), 511–538. · AIR Lab Journal Club</div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  본 페이지는 AIR Lab(ACEs-Informed Recovery Lab) 저널클럽의 <strong>교육 목적</strong> 자료입니다. 인용은 짧은 발췌에 한하며 출처를 명시했습니다.<br>
+  <strong>그림 저작권 안내:</strong> Figure 1~7은 출판사(Taylor &amp; Francis) 서버의 이미지를 직접 참조하며, 캡션에 원 출처와 저작권 표기를 실었습니다. Figure 4·5·6은 CC BY 계열이나 Figure 1·2·3은 Sage·British Psychological Society·Wiley의 개별 허락을 받아 재수록된 제3자 도판이므로, 공개 웹 게시 시에는 허락 범위를 확인하시기 바랍니다. 랩 내부·수업용 공유가 가장 안전합니다.
+</div>
+
+<script>
+  var PREFIX = 'jc_lyonsruth2025_';
+  function areas(){ return Array.prototype.slice.call(document.querySelectorAll('textarea[data-key]')); }
+  function flash(el){ var s = el.parentNode.querySelector('.save-status'); if(!s) return; s.classList.add('show'); setTimeout(function(){ s.classList.remove('show'); }, 1200); }
+  function saveOne(el){ try{ localStorage.setItem(PREFIX + el.getAttribute('data-key'), el.value); flash(el); }catch(e){} }
+  function saveAll(){ areas().forEach(saveOne); }
+  function restore(){ areas().forEach(function(el){ try{ var v = localStorage.getItem(PREFIX + el.getAttribute('data-key')); if(v!==null) el.value = v; }catch(e){} }); }
+  document.addEventListener('DOMContentLoaded', function(){
+    restore();
+    areas().forEach(function(el){
+      var t; el.addEventListener('input', function(){ clearTimeout(t); t = setTimeout(function(){ saveOne(el); }, 600); });
+    });
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.1});
+      document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+    } else {
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    }
+  });
+</script>
+</body>
+</html>
