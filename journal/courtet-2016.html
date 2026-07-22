@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIR Lab · Journal Club · Courtet et al. (2016)</title>
+<style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+:root{
+  --font-display:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --white:#fff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+  --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9; --sky:#3f86c4; --sky-deep:#2f6fa8;
+  --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd; --mint:#3fa88a; --mint-soft:#e6f5f0;
+  --amber:#c78a1e; --amber-soft:#fbf1dc;
+  --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+  --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+  --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);line-height:1.78;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+::selection{background:var(--sky-bright);color:#fff}
+.stripe{display:flex;height:3px;width:100%}.stripe span{flex:1}
+.stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}.stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.82);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+.nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+.nav-logo-dot{display:flex;gap:3px;align-items:center}.nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+.nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+.nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-size:.78rem;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;white-space:nowrap;}
+.nav-links a:hover{color:var(--sky-deep)}.nav-links a.active{color:var(--sky-deep);font-weight:600}
+.nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+.tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+.tool-btn:hover{background:var(--sky)}
+.tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+.tool-btn.ghost:hover{background:#eef5fc;border-color:var(--sky-bright)}
+section[id]{scroll-margin-top:66px}
+.hero{position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+.hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 56px;}
+.overline{display:inline-flex;align-items:center;gap:.6rem;font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+.overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+.hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.12;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+.hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+.hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+.hero .subtitle{margin-top:20px;max-width:800px;font-size:16px;color:var(--mid);line-height:1.85;}
+.hero .subtitle strong{color:var(--ink);font-weight:600}
+.hero-meta{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px;}
+.stat{background:#fff;border:1px solid var(--rule);border-radius:var(--r-md);padding:14px 18px;box-shadow:var(--shadow-soft);}
+.stat .num{font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.15;letter-spacing:-.01em;}
+.stat .lbl{font-size:11.5px;color:var(--light);margin-top:3px;}
+.container{max-width:1180px;margin:0 auto;padding:0 2rem 120px;}
+.section-head{display:flex;gap:16px;align-items:flex-start;margin:54px 0 14px;}
+.section-num{font-family:var(--font-display);font-size:14px;font-weight:700;color:#fff;background:var(--sky-deep);min-width:42px;height:28px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:23px;font-weight:600;letter-spacing:-.02em;line-height:1.3;}
+.section-subtitle{margin:2px 0 0;font-size:13px;color:var(--light);}
+p{margin:0 0 14px;}
+strong{color:var(--ink);font-weight:600}
+em.hl{font-style:normal;background:var(--sky-soft);padding:1px 6px;border-radius:5px;font-weight:600;color:var(--sky-deep)}
+em.hlc{font-style:normal;background:var(--coral-soft);padding:1px 6px;border-radius:5px;font-weight:600;color:var(--coral)}
+.mono{font-family:'Inter',monospace;font-size:.92em}
+.gloss{font-size:14px;color:var(--mid);background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:11px 15px;margin:10px 0 16px;line-height:1.7}
+.gloss b{color:var(--sky-deep)}
+.panel{background:#fff;border:1px solid var(--rule);border-radius:var(--r-lg);padding:22px 26px;margin:16px 0;box-shadow:var(--shadow-soft);}
+.callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14.5px;line-height:1.8;}
+.callout .ct{font-weight:700;font-size:13.5px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.callout p{margin:0 0 6px}.callout p:last-child{margin:0}
+.callout.key{background:var(--sky-soft);border-left:4px solid var(--sky-deep)}.callout.key .ct{color:var(--sky-deep)}
+.callout.warn{background:var(--coral-soft);border-left:4px solid var(--coral)}.callout.warn .ct{color:var(--coral)}
+.callout.good{background:var(--mint-soft);border-left:4px solid var(--mint)}.callout.good .ct{color:var(--mint)}
+.callout.note{background:var(--amber-soft);border-left:4px solid var(--amber)}.callout.note .ct{color:var(--amber)}
+.paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+.paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+.paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;position:relative;z-index:1;}
+.paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;position:relative;z-index:1;}
+.paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+.paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+.paper-meta-item .value{font-size:14px;color:#eaf2fa;line-height:1.55;}
+.figure-block{background:#fff;border:1px solid var(--rule);border-radius:var(--r-md);padding:22px 24px;margin:22px 0;box-shadow:var(--shadow-soft);}
+.fig-title{font-family:var(--font-display);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:12px;background:var(--sky-soft);color:var(--sky-deep)}
+.fig-cap{font-size:12.5px;color:var(--light);line-height:1.6;margin-top:10px;}
+.svg-wrap{width:100%;overflow-x:auto;background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;}
+.legend2{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--mid)}
+.legend2 span{display:inline-flex;align-items:center;gap:6px}
+.legend2 i{width:20px;height:10px;border-radius:3px;display:inline-block}
+.phrase{background:var(--sky-soft2);border:1px solid var(--rule);border-left:3px solid var(--sky);border-radius:var(--r-sm);padding:14px 18px;margin:12px 0;font-size:14.5px;}
+.phrase .en{color:var(--sky-deep);font-family:'Inter',var(--font-text);font-style:italic;font-size:13.5px;display:block;margin-bottom:4px}
+ul.tidy{margin:6px 0 16px;padding-left:20px}ul.tidy li{margin-bottom:9px;line-height:1.75}
+/* featured social section */
+.section-featured{background:linear-gradient(180deg,#fff6f3 0%,#fff 88%);border:1px solid #f3d5cb;border-left:4px solid var(--coral);border-radius:var(--r-lg);padding:6px 26px 24px;margin:40px 0;box-shadow:var(--shadow-soft);}
+.section-featured .section-num{background:var(--coral)}
+.featured-tag{display:inline-block;margin:20px 0 0;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);background:var(--coral-soft);padding:4px 12px;border-radius:var(--r-pill)}
+/* tooltip term */
+.term{position:relative;border-bottom:1px dashed var(--sky-deep);color:var(--sky-deep);font-weight:600;cursor:help;outline:none;}
+.term .tip{position:absolute;left:50%;bottom:150%;transform:translateX(-50%) translateY(5px);width:280px;max-width:76vw;background:#1c2634;color:#eef3f9;font-weight:400;font-size:12.7px;line-height:1.6;letter-spacing:0;padding:11px 13px;border-radius:11px;box-shadow:0 10px 28px rgba(20,30,45,.30);opacity:0;visibility:hidden;transition:.16s ease;z-index:60;text-align:left;pointer-events:none;white-space:normal;}
+.term .tip b{color:var(--sky-bright)}
+.term .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:7px solid transparent;border-top-color:#1c2634;}
+.term:hover .tip,.term:focus .tip,.term:focus-within .tip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.crumb{padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);}
+.crumb a{color:var(--sky-deep);text-decoration:none;font-weight:500}.crumb a:hover{text-decoration:underline}
+.crumb span{margin:0 0.45rem;color:var(--xlight)}
+.hub-return{text-align:center;margin:44px 0 0}
+.hub-link{display:inline-flex;align-items:center;gap:.65rem;padding:.8rem 1.5rem;border-radius:var(--r-pill);background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:.92rem;text-decoration:none;box-shadow:var(--shadow-card);transition:.18s;}
+.hub-link:hover{background:var(--sky-soft);border-color:var(--sky-bright);transform:translateY(-2px)}
+.footer{max-width:1180px;margin:0 auto;padding:26px 2rem 60px;color:var(--light);font-size:12.5px;line-height:1.7;border-top:1px solid var(--rule)}
+@media (max-width:900px){.paper-meta-grid{grid-template-columns:1fr}.hero-inner{padding:40px 1.3rem}.container{padding:0 1.3rem 90px}.section-featured{padding:6px 16px 20px}}
+</style>
+</head>
+<body>
+
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#why">배경</a></li>
+      <li><a href="#brain">뇌 증거</a></li>
+      <li><a href="#body">몸 증거</a></li>
+      <li><a href="#model">종합 모델</a></li>
+      <li><a href="#kyn">키뉴레닌 경로</a></li>
+      <li><a href="#social">사회적 방아쇠 ★</a></li>
+      <li><a href="#ourstudy">우리 실천</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <div class="overline">Courtet et al. 2016 · Review</div>
+    <h1>마음의 고통은 은유가 아니다,<br><em>염증이라는 생물학적 불씨</em></h1>
+    <div class="citation">
+      Courtet, P., Giner, L., Seneque, M., Guillaume, S., Olié, E., &amp; Ducasse, D. (2016). Neuroinflammation in suicide: Toward a comprehensive model. <em>The World Journal of Biological Psychiatry, 17</em>(8), 564–586. https://doi.org/10.3109/15622975.2015.1054879
+    </div>
+    <p class="subtitle">
+      자살행동(suicidal behaviour)은 우울증이나 조현병 같은 <strong>진단으로 다 설명되지 않는</strong>, 그 자체의 생물학적 취약성을 가진다. 이 리뷰는 그 취약성의 한 축이 <strong>신경염증</strong>이고, 그 염증에 불을 붙이는 흔한 방아쇠가 <strong>아동기 역경과 사회적 거절</strong>이라는 것을 187편의 연구로 종합해 하나의 모델로 그려낸다. 사회복지 실천의 언어로 옮기면: 관계와 소속을 다루는 개입이 왜 자살위험을 낮추는지에 대한 <strong>생물학적 근거</strong>를 제공하는 논문이다.
+    </p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">187편 종합</span><span class="lbl">PRISMA 기준 선별 리뷰</span></div>
+      <div class="stat"><span class="num">부검 + 말초 + 역학 + 유전</span><span class="lbl">네 층위의 증거를 통합</span></div>
+      <div class="stat"><span class="num">IDO → 키뉴레닌 → NMDA</span><span class="lbl">염증이 뇌로 번역되는 경로</span></div>
+      <div class="stat"><span class="num">사회적 거절 = 염증</span><span class="lbl">사회복지적 함의의 핵심</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+<div class="crumb"><a href="../journal-club.html">Journal Club</a><span>/</span>Courtet et al. (2016)</div>
+
+<div class="gloss">
+  <b>읽기 전 안내.</b> 파란 점선이 그어진 용어(예: <span class="term" tabindex="0">신경염증<span class="tip"><b>Neuroinflammation.</b> 뇌 안에서 일어나는 염증 반응. 감염이 없어도 뇌의 면역세포가 활성화되어 낮은 강도로 오래 지속되면 신경세포 기능에 해를 준다.</span></span>)는 <b>마우스를 올리면</b> 뜻풀이가 나옵니다. 휴대폰에서는 <b>살짝 탭</b>하면 됩니다.
+</div>
+
+<!-- 01 -->
+<section id="paper">
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div class="section-title-block">
+      <h2>이 논문은 어떤 글인가</h2>
+      <p class="section-subtitle">하나의 발견이 아니라, 하나의 지도.</p>
+    </div>
+  </div>
+  <p>단일 실험 논문이 아니라, "염증과 자살"을 다룬 연구 187편을 체계적 절차(PRISMA: 문헌을 어떻게 검색·선별했는지 투명하게 보고하는 국제 지침)로 골라 하나의 <strong>종합 모델</strong>로 엮은 리뷰다. 저자들은 프랑스 몽펠리에의 정신과·면역학 연구진으로, 자살을 우울증의 단순한 결과물이 아니라 <em class="hl">독립적인 생물학적 취약성</em>을 가진 상태로 본다. 그 관점에서 "같은 우울을 겪어도 왜 어떤 사람은 자살로 가는가"를 면역·염증의 언어로 설명하려 한다.</p>
+
+  <div class="paper-meta">
+    <h3>The World Journal of Biological Psychiatry (2016, 17:8, 564–586)</h3>
+    <div class="sub">Univ. of Montpellier · Inserm · FondaMental Foundation · SCIE 등재</div>
+    <div class="paper-meta-grid">
+      <div class="paper-meta-item"><div class="label">Journal / Indexing</div><div class="value">World J. of Biological Psychiatry<br>SCIE 등재</div></div>
+      <div class="paper-meta-item"><div class="label">Type / Method</div><div class="value">리뷰(PRISMA 기준 선별)<br>187편 질적 종합</div></div>
+      <div class="paper-meta-item"><div class="label">핵심 주장</div><div class="value"><strong style="color:#fff">염증은 진단과 별개로 자살 취약성에 기여</strong>하며, 아동기 역경·사회적 거절이 방아쇠다</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section id="why">
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div class="section-title-block">
+      <h2>왜 '우울'이 아니라 '자살' 자체인가</h2>
+      <p class="section-subtitle">자살을 독립된 생물학적 상태로 보기.</p>
+    </div>
+  </div>
+  <p>DSM-5(미국 정신질환 진단분류 5판)가 자살행동을 별도 연구 항목으로 넣은 배경에는 "자살에는 고유한 생물학적 취약성이 있다"는 가설이 있다. 이 리뷰의 출발점도 같다. 염증은 이미 우울증·조현병·양극성장애에서 관찰돼 왔지만, 저자들이 강조하는 것은 <strong>정신과 진단을 통계적으로 통제하고도 남는</strong>, 자살에 특이적인 염증 신호다. 쉽게 말해 "우울하니까 염증이 있는 것"으로 환원되지 않고, 자살 취약성 그 자체에 붙어 있는 생물학적 지문을 찾겠다는 것이다.</p>
+  <div class="callout note">
+    <div class="ct">맥락 하나: 몸의 염증이 곧 마음의 위험</div>
+    <p>전신 염증을 동반하는 자가면역질환(예: 전신홍반루푸스, SLE)에서 자살률이 기대치의 <strong>4~5배</strong>로 보고된다. 만성적으로 염증이 있는 몸에서 자살위험이 함께 올라간다는 이 역학 관찰이, 이 리뷰의 생물학적 논증에 힘을 싣는다.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section id="brain">
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div class="section-title-block">
+      <h2>뇌가 남긴 증거 (중추)</h2>
+      <p class="section-subtitle">자살 사망자의 뇌 조직에서 무엇이 달랐나.</p>
+    </div>
+  </div>
+  <p>저자들이 먼저 검토한 것은 <strong>부검(post-mortem) 연구</strong>, 즉 자살로 사망한 사람의 뇌 조직을 대조군의 뇌와 비교한 연구들이다. 여기서 세 가지가 반복해서 나타난다.</p>
+  <ul class="tidy">
+    <li><strong>염증성 사이토카인의 증가.</strong> <span class="term" tabindex="0">사이토카인<span class="tip"><b>Cytokine.</b> 면역세포가 분비해 서로 신호를 주고받는 작은 단백질. IL-1β, IL-6, TNF-α 등 '염증을 촉진하는' 종류가 많아지면 몸과 뇌가 염증 상태로 기운다.</span></span>(면역 신호물질)이 <span class="term" tabindex="0">안와전두피질<span class="tip"><b>OFC, 안와전두피질.</b> 이마 안쪽 아래에 있는 뇌 영역. 충동 억제, 보상·처벌 판단, 의사결정에 관여하며 자살 취약성과 연결되는 대표 부위.</span></span>(OFC)과 전전두엽에서 늘어 있었다. OFC는 충동 조절과 의사결정에 관여하는, 자살 취약성의 핵심 부위다.</li>
+    <li><strong>미세아교세포의 활성화(microgliosis).</strong> <span class="term" tabindex="0">미세아교세포<span class="tip"><b>Microglia.</b> 뇌 안에 상주하는 면역세포(뇌의 청소부이자 경비병). 평소엔 조용히 감시하다가 자극을 받으면 활성화되어 사이토카인을 분비하고 신경 환경을 바꾼다.</span></span>는 뇌에 상주하는 면역세포인데, 자살 사망자의 뇌에서 이들이 켜져 <em class="hl">낮은 강도의 신경염증</em> 상태를 만들고 있었다.</li>
+    <li><strong>선천면역 수용체의 증가.</strong> <span class="term" tabindex="0">TLR3·TLR4<span class="tip"><b>Toll-like Receptor(톨유사수용체).</b> 세포 표면에서 '위험 신호(병원체나 손상)'를 감지해 면역·염증 반응을 켜는 스위치. 뇌에서 과하게 발현되면 염증이 쉽게 점화된다.</span></span>(위험을 감지해 염증을 켜는 스위치) 단백질이 우울·비우울 자살 사망자 모두에서 대조군보다 증가해 있었다.</li>
+  </ul>
+  <p>중요한 점은 이 신호들이 <em class="hlc">정신과 진단과 무관하게</em> 나타났다는 것이다. 우울증이라서가 아니라, 자살이라는 결과 자체에 염증의 흔적이 붙어 있었다.</p>
+  <div class="callout key">
+    <div class="ct">🧠 미세아교세포: 몸과 뇌를 잇는 통역사</div>
+    <p>미세아교세포는 사이토카인을 만들고, 면역계와 신경계, 그리고 신경전달(세로토닌·글루타메이트) 사이의 대화를 중개한다. <span class="term" tabindex="0">혈뇌장벽<span class="tip"><b>BBB, 혈뇌장벽.</b> 혈액과 뇌 사이를 막아 해로운 물질의 진입을 걸러주는 방어벽. 느슨해지면 말초의 염증 물질과 면역세포가 뇌로 새어 들어간다.</span></span>(BBB, 뇌의 방어벽)이 느슨해지면 몸(말초)의 염증 물질이 뇌로 새어 들어오고, 뇌와 몸이 서로를 자극하는 <strong>피드포워드(자기증폭) 고리</strong>가 자살에 앞서 형성될 수 있다.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section id="body">
+  <div class="section-head">
+    <div class="section-num">04</div>
+    <div class="section-title-block">
+      <h2>몸이 남긴 증거 (말초 · 역학 · 유전)</h2>
+      <p class="section-subtitle">이 리뷰가 실제로 분석한 근거들.</p>
+    </div>
+  </div>
+  <p>이 리뷰의 설득력은 뇌 조직 한 곳이 아니라 <strong>네 층위의 증거</strong>가 같은 방향을 가리킨다는 데 있다. 저자들이 종합한 말초·임상·역학·유전 근거를 조금 더 구체적으로 보면 다음과 같다.</p>
+  <ul class="tidy">
+    <li><strong>염증을 '주입'하면 자살 생각이 늘었다(약물 유발 근거).</strong> C형 간염 치료제인 <span class="term" tabindex="0">인터페론-α<span class="tip"><b>IFN-α.</b> 바이러스 치료 등에 쓰는 면역 활성 물질. 몸에 넣으면 강한 염증 반응이 일어나는데, 이때 우울·자살사고 같은 정신과적 부작용이 자주 나타난다.</span></span>(IFN-α, 강한 염증을 일으키는 물질)를 투여받은 환자에서 우울과 자살사고가 늘었고, 뇌영상에서 사회적·정서적 고통에 반응하는 <span class="term" tabindex="0">dACC<span class="tip"><b>dACC, 등쪽 전대상피질.</b> 이마 안쪽 깊은 곳의 영역. 신체적 통증뿐 아니라 '사회적 거절의 아픔'에도 반응하는 뇌의 경보 장치. 자살행동과도 연결된다.</span></span>(사회적 고통의 경보 영역)가 활성화됐다. 염증이 원인 쪽에 설 수 있음을 보여주는 대목이다.</li>
+    <li><strong>염증성 질환에서 자살이 많다(역학 근거).</strong> 앞서 본 루푸스(SLE)의 4~5배 외에도, 알레르기·천식과 자살사고·자살행동의 연관, 그리고 봄철 꽃가루가 정점일 때 자살이 늘어나는 <em class="hl">계절성</em>이 여러 나라 자료에서 보고됐다. 알레르기 반응(=염증)이 이 계절 효과를 매개한다는 해석이다.</li>
+    <li><strong>혈액 표지자 메타분석(임상 근거).</strong> 자살 성향이 있는 환자와 없는 환자를 비교한 메타분석에서, 자살군이 특정 염증 지표(IL-1β, IL-6 등)에서 차이를 보였다. 즉 살아있는 사람의 피에서도 염증의 흔적이 잡힌다.</li>
+    <li><strong>키뉴레닌 경로의 증거.</strong> 자살시도자의 혈장에서 <span class="term" tabindex="0">키뉴레닌<span class="tip"><b>Kynurenine.</b> 아미노산 트립토판이 세로토닌 대신 흘러가는 대사 산물. 염증이 IDO 효소를 켜면 이 경로가 활성화되어, 뒤에 신경독성 물질(퀴놀린산)까지 만들어진다.</span></span>과 그 하류 물질이 우울·건강 대조군보다 높게 나타났다(뒤 06절에서 자세히).</li>
+    <li><strong>유전 근거.</strong> 염증 관련 유전자(사이토카인 유전자, <span class="term" tabindex="0">CRP<span class="tip"><b>C-reactive protein(C-반응성 단백).</b> 몸에 염증이 있을 때 간에서 만들어져 혈중에 증가하는 대표적 염증 지표. 건강검진에서도 흔히 측정한다.</span></span> 유전자 등)의 특정 변이형이 자살행동 위험과 연관된다는 보고들이 있었다. 이는 "염증 성향의 개인차"가 유전적으로도 자살위험과 얽혀 있을 가능성을 시사한다.</li>
+  </ul>
+  <div class="callout note">
+    <div class="ct">📎 읽는 법</div>
+    <p>이 근거들은 대부분 <strong>상관·연관</strong> 수준이며, "염증이 자살을 일으킨다"는 단선적 인과로 읽으면 안 된다. 저자들의 기여는 흩어진 조각들을 <strong>하나의 그럴듯한 경로</strong>로 꿰어, 앞으로 검증할 가설(모델)을 제시했다는 데 있다.</p>
+  </div>
+</section>
+
+<!-- 05 : model figure -->
+<section id="model">
+  <div class="section-head">
+    <div class="section-num">05</div>
+    <div class="section-title-block">
+      <h2>종합 모델: 불씨에서 불길까지</h2>
+      <p class="section-subtitle">원문 Figure 2를 한글로 재구성.</p>
+    </div>
+  </div>
+  <p>이 리뷰의 심장은 Figure 2, "염증이 어떻게 자살행동으로 이어지는가"의 종합 모델이다. 방아쇠(아동기 학대, <em>Toxoplasma</em> 감염, 수면장애)에서 시작해, 전신 염증 → <span class="term" tabindex="0">HPA축<span class="tip"><b>HPA축.</b> 시상하부-뇌하수체-부신으로 이어지는 스트레스 호르몬(코르티솔) 조절 축. 만성 염증·스트레스는 이 축을 망가뜨려 코르티솔 반응을 뒤틀리게 한다.</span></span> 조절이상 → <span class="term" tabindex="0">IDO 효소<span class="tip"><b>IDO(인돌아민-2,3-이산소화효소).</b> 염증이 켜는 효소. 트립토판을 '세로토닌'이 아니라 '키뉴레닌' 쪽으로 돌려버려, 결과적으로 세로토닌을 줄이고 신경독성 물질을 늘린다.</span></span> 활성 → 키뉴레닌 경로 → 미세아교세포 → NMDA 과자극, 그리고 이와 나란히 세로토닌 고갈로 이어지는 흐름을 아래 도식으로 옮겼다.</p>
+
+  <div class="figure-block">
+    <div class="fig-title">Figure 2. 자살의 신경염증 종합 모델</div>
+    <span class="fig-tag">한글 재구성 · 원문 Figure 2 기반</span>
+    <div class="svg-wrap">
+      <svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="자살의 신경염증 종합 모델 흐름도" style="width:100%;min-width:760px;height:auto;font-family:'Pretendard Variable',sans-serif;">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c0392b"/></marker>
+          <marker id="ab" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2f6fa8"/></marker>
+          <marker id="ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7a8798"/></marker>
+        </defs>
+        <style>
+          .bx{rx:11;stroke-width:1.5}
+          .tt{font-size:13px;font-weight:600;fill:#20262e}
+          .ts{font-size:11px;fill:#46505c}
+          .tw{font-size:13px;font-weight:600;fill:#fff}
+          .red{fill:#fbeae8;stroke:#c0392b}.blue{fill:#e8f1fa;stroke:#2f6fa8}.gray{fill:#f1f3f6;stroke:#aab4c1}
+          .lab{font-size:10.5px;fill:#7a8798}
+        </style>
+        <rect x="20" y="24" width="240" height="66" class="bx gray"/>
+        <text x="30" y="48" class="tt">방아쇠 (Triggers)</text>
+        <text x="30" y="68" class="ts">아동기 학대 · Toxoplasma 감염</text>
+        <text x="30" y="83" class="ts">· 수면장애</text>
+        <rect x="330" y="24" width="230" height="66" class="bx red"/>
+        <text x="340" y="48" class="tt">전신 염증 상태</text>
+        <text x="340" y="68" class="ts">IL-1β · IL-6 · TNF-α · CRP ↑</text>
+        <text x="340" y="83" class="ts">저강도 만성 염증</text>
+        <rect x="630" y="24" width="250" height="66" class="bx red"/>
+        <text x="640" y="48" class="tt">HPA축 조절이상</text>
+        <text x="640" y="68" class="ts">코르티솔 이상 · 스트레스 반응</text>
+        <text x="640" y="83" class="ts">신경 손상 효과</text>
+        <line x1="260" y1="57" x2="330" y2="57" stroke="#c0392b" stroke-width="2" marker-end="url(#ar)"/>
+        <line x1="560" y1="57" x2="630" y2="57" stroke="#c0392b" stroke-width="2" marker-end="url(#ar)"/>
+        <path d="M755 90 q0 40 -230 44" fill="none" stroke="#c0392b" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+        <text x="590" y="118" class="lab">스트레스 노출 시 피드포워드(자기증폭) ↻</text>
+        <rect x="630" y="150" width="250" height="60" class="bx red"/>
+        <text x="640" y="174" class="tt">IDO 효소 활성화</text>
+        <text x="640" y="194" class="ts">트립토판 → 키뉴레닌으로 전환</text>
+        <line x1="755" y1="90" x2="755" y2="150" stroke="#c0392b" stroke-width="2" marker-end="url(#ar)"/>
+        <rect x="630" y="248" width="250" height="72" class="bx red"/>
+        <text x="640" y="272" class="tt">미세아교세포 활성화</text>
+        <text x="640" y="292" class="ts">DLPFC · ACC · 시상(MDT)</text>
+        <text x="640" y="308" class="ts">퀴놀린산(신경독) ↑ · 키뉴렌산(보호) ↓</text>
+        <line x1="755" y1="210" x2="755" y2="248" stroke="#c0392b" stroke-width="2" marker-end="url(#ar)"/>
+        <rect x="630" y="360" width="250" height="56" class="bx red"/>
+        <text x="640" y="383" class="tt">NMDA 과자극</text>
+        <text x="640" y="402" class="ts">글루타메이트 흥분독성 ↑</text>
+        <line x1="755" y1="320" x2="755" y2="360" stroke="#c0392b" stroke-width="2" marker-end="url(#ar)"/>
+        <rect x="330" y="248" width="250" height="72" class="bx blue"/>
+        <text x="340" y="272" class="tt">세로토닌 고갈</text>
+        <text x="340" y="292" class="ts">트립토판 소모로 5-HT 합성 ↓</text>
+        <text x="340" y="308" class="ts">→ 충동적 공격성 · 비관</text>
+        <path d="M630 180 q-180 10 -215 68" fill="none" stroke="#2f6fa8" stroke-width="1.8" marker-end="url(#ab)"/>
+        <text x="360" y="238" class="lab">트립토판 고갈 경로</text>
+        <rect x="330" y="360" width="250" height="60" class="bx blue"/>
+        <text x="340" y="384" class="tt">자살 취약성</text>
+        <text x="340" y="404" class="ts">성격 차원: 충동성 · 절망</text>
+        <line x1="455" y1="320" x2="455" y2="360" stroke="#2f6fa8" stroke-width="2" marker-end="url(#ab)"/>
+        <path d="M630 388 h-50" fill="none" stroke="#7a8798" stroke-width="1.6" marker-end="url(#ag)"/>
+        <rect x="20" y="360" width="250" height="60" class="bx gray"/>
+        <text x="30" y="384" class="tt">스트레스원</text>
+        <text x="30" y="404" class="ts">정신질환 · 사회적 고립/거절</text>
+        <line x1="270" y1="390" x2="330" y2="390" stroke="#7a8798" stroke-width="2" marker-end="url(#ag)"/>
+        <rect x="300" y="470" width="300" height="62" rx="14" fill="#20262e"/>
+        <text x="450" y="500" text-anchor="middle" class="tw" style="font-size:16px">자살행동 (Suicidal Behaviour)</text>
+        <text x="450" y="520" text-anchor="middle" style="font-size:11px;fill:#aab4c1">취약성 × 스트레스 × 염증의 합류점</text>
+        <line x1="455" y1="420" x2="455" y2="470" stroke="#20262e" stroke-width="2.5" marker-end="url(#ag)"/>
+      </svg>
+    </div>
+    <div class="legend2">
+      <span><i style="background:#fbeae8;border:1px solid #c0392b"></i> 과활성 경로 (red)</span>
+      <span><i style="background:#e8f1fa;border:1px solid #2f6fa8"></i> 저활성 경로 (blue)</span>
+      <span><i style="background:#f1f3f6;border:1px solid #aab4c1"></i> 방아쇠·스트레스</span>
+    </div>
+    <p class="fig-cap">Fig. 2 재구성. 방아쇠 → 전신 염증 → HPA축 → IDO → 키뉴레닌 → 미세아교세포 → NMDA 과자극, 그리고 병렬로 세로토닌 고갈 → 취약성. 스트레스 노출은 이 고리를 자기증폭시킨다. (원문 인용, 교육 목적 재구성)</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section id="kyn">
+  <div class="section-head">
+    <div class="section-num">06</div>
+    <div class="section-title-block">
+      <h2>키뉴레닌 경로와 글루타메이트</h2>
+      <p class="section-subtitle">염증이 세로토닌·NMDA와 만나는 지점.</p>
+    </div>
+  </div>
+  <p>염증이 어떻게 '행동'으로 번역되는지, 그 분자 통로가 여기서 갈린다. 열쇠는 <strong>IDO 효소</strong>다. 원래 아미노산 <span class="term" tabindex="0">트립토판<span class="tip"><b>Tryptophan.</b> 음식으로 얻는 필수 아미노산. 평소엔 기분을 안정시키는 세로토닌의 재료가 되지만, 염증이 IDO를 켜면 키뉴레닌 쪽으로 방향이 틀어진다.</span></span>은 기분을 안정시키는 <strong>세로토닌</strong>의 재료로 쓰인다. 그런데 염증이 IDO를 켜면 트립토판이 세로토닌 대신 <em class="hl">키뉴레닌</em> 쪽으로 흘러간다. 그 결과 두 가지 문제가 동시에 생긴다.</p>
+  <ul class="tidy">
+    <li><strong>세로토닌이 고갈된다.</strong> 재료가 다른 데로 새니 세로토닌 합성이 줄고, 이는 <em class="hl">충동적 공격성·비관</em> 같은 자살 취약 성격 차원과 연결된다. (오래된 '세로토닌 부족' 이야기가, 염증이라는 상류 원인과 이어지는 지점이다.)</li>
+    <li><strong>신경독성이 켜진다.</strong> 미세아교세포가 키뉴레닌으로부터 <span class="term" tabindex="0">퀴놀린산<span class="tip"><b>Quinolinic acid.</b> 키뉴레닌 경로에서 미세아교세포가 만드는 물질. NMDA 수용체를 과하게 자극해 신경세포를 상하게 하는 '신경독성' 쪽으로 작용한다.</span></span>(신경을 해치는 물질)을 늘리고 <span class="term" tabindex="0">키뉴렌산<span class="tip"><b>Kynurenic acid.</b> 같은 경로에서 나오지만 NMDA를 억제해 신경을 '보호'하는 물질. 자살에서는 이 보호 물질이 상대적으로 줄어드는 쪽으로 균형이 깨진다.</span></span>(신경을 보호하는 물질)을 줄인다. 균형이 독성 쪽으로 기울면 <span class="term" tabindex="0">NMDA 수용체<span class="tip"><b>NMDA 수용체.</b> 글루타메이트가 붙는 흥분성 수용체. 학습·기억에 필수지만 과하게 자극되면 '흥분독성'으로 신경세포를 손상시킨다.</span></span>가 과자극되어 <span class="term" tabindex="0">흥분독성<span class="tip"><b>Excitotoxicity, 흥분독성.</b> 흥분성 신호(글루타메이트)가 지나치면 신경세포가 과부하로 손상·사멸하는 현상.</span></span>(과흥분으로 신경이 상하는 것)이 발생한다.</li>
+  </ul>
+  <div class="callout good">
+    <div class="ct">✓ 치료로 이어지는 다리</div>
+    <p>NMDA 축이 자살 병태에 걸려 있다는 점은, <strong>케타민</strong>(NMDA를 억제하는 약물)이 자살사고를 빠르게 낮춘다는 임상 관찰과 맞물린다. 저자들은 여기서 더 나아가 항염 전략, 그리고 <strong>마음챙김·수용전념치료(ACT)</strong>가 심리사회적 스트레스에 대한 염증 반응 자체를 낮춘다는 근거까지 치료적 방향으로 제시한다. 즉 '마음을 다루는 개입'이 '염증을 낮추는 개입'일 수 있다는 것이다.</p>
+  </div>
+</section>
+
+<!-- 07 : FEATURED social triggers -->
+<section id="social" class="section-featured">
+  <div class="section-head">
+    <div class="section-num">07</div>
+    <div class="section-title-block">
+      <h2>가장 사회적인 방아쇠</h2>
+      <p class="section-subtitle">이 리뷰가 사회복지에 주는 핵심 메시지.</p>
+    </div>
+  </div>
+  <span class="featured-tag">★ 사회복지적 함의의 핵심</span>
+
+  <p>이 논문에서 가장 독창적이고, 우리 분야에 가장 중요한 지점이다. 지금까지의 이야기(염증 → 뇌 → 자살)는 자칫 "결국 생물학이다"로 읽힐 수 있다. 그러나 저자들의 진짜 주장은 정반대에 가깝다. <strong>그 염증에 불을 붙이는 스위치가 대부분 '사회적'</strong>이라는 것이다. 관계에서 밀려나는 경험, 거절, 고립, 그리고 아동기의 관계적 상처가 바로 그 방아쇠다.</p>
+
+  <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:22px 0 6px;">① 사회적 거절은 '진짜' 통증이다</h3>
+  <p>Eisenberger와 Lieberman(2004)의 유명한 발견을 저자들은 핵심 근거로 든다. 사람이 사회적으로 거절당할 때, 신체적 통증을 느낄 때와 <em class="hlc">같은 뇌 경보 회로</em>(dACC, 전측 섬엽)가 켜진다. 즉 "따돌림당해서 마음이 아프다"는 말은 시적 표현이 아니라, 신경학적으로 통증과 같은 회로를 쓰는 실제 사건이다. 그리고 이 위협·통증 신호는 자율신경계와 <strong>염증 반응</strong>을 함께 활성화한다. 자살을 떠올리게 만드는 <em class="hl">"위협의 지각(perception of threat)"</em>이 곧 생물학적 스트레스·염증 반응의 방아쇠가 되는 것이다.</p>
+
+  <div class="phrase">
+    <span class="en">"The perception of threat that leads suicidal individuals to contemplate suicide may activate biological stress responses, including inflammatory responses."</span>
+    자살을 떠올리게 만드는 '위협의 지각'이, 염증을 포함한 생물학적 스트레스 반응을 켤 수 있다.
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:22px 0 6px;">② 소속은 생존의 문제다</h3>
+  <p>왜 거절이 이렇게까지 몸을 흔드는가. 진화적으로 인간에게 <strong>소속(belonging)</strong>은 생존 조건이었기 때문이다(Baumeister &amp; Leary의 '소속 욕구'). 집단에서 배제되는 것은 곧 위험이었고, 그래서 뇌는 사회적 배제를 신체적 위협처럼 처리하도록 진화했다. 만성적인 사회적 고립·외로움은 실제로 <strong>염증 촉진 유전자 발현</strong>을 높이는 쪽으로 몸을 바꾼다. 저자들이 인용하는 '질병 행동(sickness behavior)' 연구에서도, 사회적 위축은 IL-1·IL-6·TNF-α 같은 염증성 사이토카인에 의해 매개되는 것으로 나타난다. 고립이 염증을 부르고, 염증이 다시 위축과 무기력을 부르는 악순환이다.</p>
+
+  <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:22px 0 6px;">③ 아동기의 관계적 상처는 몸에 새겨진다</h3>
+  <p>아동기 학대·방임을 겪은 성인은 성인이 되어서도 <strong>HPA축 조절이상과 만성적 저강도 염증 상태</strong>를 안고 산다(gene×environment: 특정 유전형이 아동기 역경의 효과를 증폭시킨다). 즉 어린 시절의 관계적 역경(ACEs)은 단지 '기억'으로 남는 것이 아니라, 스트레스 반응계와 면역계의 <em class="hl">설정값 자체를 바꿔</em> 놓는다. 이것이 아동기 역경이 수십 년 뒤의 자살위험까지 끌어올리는 생물학적 경로의 하나다.</p>
+
+  <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:22px 0 6px;">④ 그래서 '연결'이 약이 된다</h3>
+  <p>이 대칭이 핵심이다. 거절·고립이 염증을 켠다면, 그 반대인 <strong>연결·지지·소속의 회복</strong>은 그 스위치를 끌 수 있어야 한다. 저자들은 실제로 사회적 지지가 자살예방의 핵심 요소이며(Knox 등, 2003), 위험군이 <em class="hlc">타인과 더 연결되어 있다고 느끼도록</em> 돕는 개입이 자살행동(특히 재시도)을 줄였다는 무작위 대조시험(Vaiva 등, 2006)을 인용한다. 그리고 논문의 마지막에서 <strong>사회신경과학과 면역학을 결합</strong>해 "사회적 유대의 생물학(biology of social ties)"을 자살 연구의 다음 과제로 제안한다.</p>
+
+  <div class="callout warn">
+    <div class="ct">💡 사회복지가 읽어야 할 문장</div>
+    <p>이 리뷰는 관계·소속·지지를 <strong>'부드러운 부가서비스'가 아니라 생물학적 개입</strong>으로 다시 정의한다. 누군가를 사회적으로 다시 연결시키는 일은, 이 모델에 따르면 그 사람의 위협 지각을 낮추고 HPA축·염증 반응을 진정시켜 세로토닌·NMDA 경로를 보호하는, <em class="hlc">측정 가능한 생물학적 사건</em>일 수 있다. 사회적 고통과 신체적 고통이 같은 회로를 쓴다면, 사회적 처방(연결)도 생물학적 효과를 낸다.</p>
+  </div>
+</section>
+
+<!-- 08 : our practice -->
+<section id="ourstudy">
+  <div class="section-head">
+    <div class="section-num">08</div>
+    <div class="section-title-block">
+      <h2>우리 실천과의 연결</h2>
+      <p class="section-subtitle">사회복지 개입은 왜 '신경생물학적' 개입이기도 한가.</p>
+    </div>
+  </div>
+  <p>이제 이 모델을 우리가 매일 쓰는 언어로 옮겨보자. 07절의 논리가 맞다면, 우리가 현장에서 하는 개입들은 단지 심리·정서적 지원이 아니라 <strong>염증·스트레스 반응을 낮추는 생물학적 개입</strong>이기도 하다. 사회적 고립과 위협 지각이 염증의 방아쇠라면, 그것을 되돌리는 실천이 곧 '해소'의 핵심이 된다.</p>
+  <ul class="tidy">
+    <li><strong>사회복지사의 지지적 관계.</strong> 지속적이고 신뢰로운 관계 자체가 '소속의 회복'이다. 클라이언트가 "나는 연결되어 있다"고 느끼는 것은, 이 모델에서 위협 지각을 낮추고 염증 스위치를 끄는 첫 단추다.</li>
+    <li><strong>상담적 개입.</strong> 위협·거절로 채색된 인지를 재구성하고 정서를 조절하는 상담은, dACC 기반 위협 반응과 그로 인한 염증 활성화를 줄이는 방향으로 작동할 수 있다. 특히 <strong>마음챙김·수용전념치료(ACT)</strong>는 스트레스에 대한 염증 반응을 실제로 낮춘다는 근거가 이 리뷰에도 인용된다.</li>
+    <li><strong>지역사회 기반 개입(community-based).</strong> 관계망을 복원하고 고립을 차단하는 지역사회 개입은, '만성 사회적 고립 → 염증 촉진 유전자 발현'이라는 악순환을 상류에서 끊는다. 자살예방에서 '연결'을 만드는 프로그램이 효과적이라는 근거(Vaiva 2006)와 정확히 맞닿는다.</li>
+    <li><strong>통합돌봄(integrated care)·사례관리.</strong> 정신건강·복지·의료를 잇는 통합돌봄은 위험군이 관계와 서비스에서 이탈하지 않도록 붙잡는다. 이 '이탈 방지'는 곧 위협·고립의 만성화를 막는 것이고, 생물학적으로는 피드포워드(자기증폭) 염증 고리가 굳어지는 것을 막는 일이다.</li>
+    <li><strong>위기개입 이후의 사후연결.</strong> 퇴원·시도 이후 '연결을 유지'하는 사후관리(caring contact)는, 재시도를 낮춘다는 임상 근거와 이 모델의 '연결 = 항염'이라는 논리가 함께 지지한다.</li>
+  </ul>
+  <div class="callout key">
+    <div class="ct">🔑 한 줄로</div>
+    <p>사회복지의 관계 기반·지역사회 기반 개입은 "생물학이 아닌 것"이 아니라, <strong>염증과 스트레스 반응을 조절하는 가장 인간적인 경로</strong>일 수 있다. 우리가 만드는 '연결'이 곧 신경생물학적 해소의 핵심이라는 것, 이것이 이 리뷰가 우리 실천에 주는 가장 큰 힘이다.</p>
+  </div>
+  <div class="callout note">
+    <div class="ct">📌 스터디 논점 &amp; 유의</div>
+    <p>다만 이 모델은 아직 <strong>가설 수준</strong>이며(대부분 상관·연관 근거), 사회적 개입이 실제로 인간의 염증 지표를 낮춰 자살위험을 줄인다는 직접 인과는 앞으로 검증할 몫이다. 스터디에서는 이렇게 물어보자: 우리 데이터에서 '지지·연결'의 보호효과를, (측정 가능한) 스트레스·염증 반응의 완화로 연결해 설명할 수 있는가?</p>
+  </div>
+</section>
+
+<div class="hub-return">
+  <a class="hub-link" href="../journal-club.html">
+    <span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#2f6fa8"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#2f6fa8"/></svg></span>
+    Journal Club의 다른 리뷰 보기
+  </a>
+</div>
+
+</div>
+
+<div class="footer">
+  본 페이지는 AIR Lab(ACEs-Informed Recovery Lab) 저널클럽의 <strong>교육 목적</strong> 학습자료입니다. 원문 인용은 짧은 발췌에 한하며 출처를 명시했습니다. Figure 2 도식은 원문 모델을 이해를 돕기 위해 한글로 재구성한 것으로, 원저작권은 원 출판사(Informa/Taylor &amp; Francis)에 있습니다.<br>
+  Courtet et al. (2016), <em>The World Journal of Biological Psychiatry, 17</em>(8), 564–586 · AIR Lab Journal Club
+</div>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+  var map = {};
+  links.forEach(function(a){ var id=a.getAttribute('href').slice(1); var s=document.getElementById(id); if(s) map[id]=a; });
+  var ids = Object.keys(map);
+  function onScroll(){
+    var y = window.scrollY + 90, cur = ids[0];
+    ids.forEach(function(id){ if(document.getElementById(id).offsetTop <= y) cur = id; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    if(map[cur]) map[cur].classList.add('active');
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
