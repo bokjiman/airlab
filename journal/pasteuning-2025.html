@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIR Lab · Journal Club : Pasteuning (2025)</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+</style>
+</head>
+<body id="top">
+
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">§1 Introduction</a></li>
+      <li><a href="#clinical">§2 임상 함의</a></li>
+      <li><a href="#molecular">§3 분자 기제</a></li>
+      <li><a href="#neuro">§4 신경생물</a></li>
+      <li><a href="#psychosocial">§5 심리사회</a></li>
+      <li><a href="#lifestyle">§6 생활습관</a></li>
+      <li><a href="#pathways">§7 다중모드 경로</a></li>
+      <li><a href="#recommend">§8 권고</a></li>
+      <li><a href="#phrases">명문장</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">Pasteuning 2025 · In-depth Study</div>
+    <h1>진단명을 지우고 기제를 보다:<br>아동기 외상의 <em>다중모드·초진단</em> 경로</h1>
+    <div class="citation">
+      Pasteuning, J. M., Broeder, C., Broeders, T. A. A., Busby, R. G. G., Gathier, A. W., Kuzminskaite, E., Linsen, F., Souama, C. P., Verhoeven, J. E., Sep, M. S. C., &amp; Vinkers, C. H. (2025). <em>Mechanisms of childhood trauma: an integrative review of a multimodal, transdiagnostic pathway.</em> Neurobiology of Stress, 37, 100737. https://doi.org/10.1016/j.ynstr.2025.100737
+    </div>
+    <p class="subtitle">이 통합 리뷰는 아동기 외상(childhood trauma, CT)의 영향을 <strong>분자 · 신경생물 · 심리사회 · 행동</strong> 네 층위에 걸쳐 하나의 경로로 엮는다. 핵심 주장은 이렇다: CT의 흔적은 특정 진단명 안에 갇히지 않고 <strong>여러 modality에 동시에</strong> 남으며, 서로 얽혀 정신질환과 신체질환을 함께 만들어낸다. 따라서 연구와 임상은 이를 modality를 가로질러(transdiagnostic) 통합해서 보아야 한다. 이 페이지는 논문의 장·절 순서를 그대로 따라가며, 각 절마다 "쉽게 풀면" 요약을 붙였다.</p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">6.6 to 47.2%</span><span class="lbl">전 세계 아동학대·방임 유병률</span></div>
+      <div class="stat"><span class="num">OR 1.55 to 1.74</span><span class="lbl">성인기 정신질환 발병 위험</span></div>
+      <div class="stat"><span class="num">4 modalities</span><span class="lbl">분자·신경생물·심리사회·행동</span></div>
+      <div class="stat"><span class="num">SCIE · CC BY</span><span class="lbl">Neurobiology of Stress · 등재 확인</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>Pasteuning (2025)</div>
+
+<!-- 01 논문 소개 -->
+<div class="section-head" id="paper">
+  <div class="section-num">01</div>
+  <div class="section-title-block">
+    <h2>논문 소개: 분절된 기제를 하나의 지도로</h2>
+    <p class="section-subtitle">Integrating mechanisms across modalities</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>지금까지 아동기 외상 연구는 분야마다 각자의 기제만 팠다. 신경과학은 HPA축과 뇌 구조를, 심리학은 애착·정서조절·대처를, 행동역학은 흡연·운동 같은 생활습관을 다뤘다. Pasteuning과 동료들(2025)은 이 분절 자체를 문제로 삼는다. CT의 기제들은 <strong>서로 얽혀(interrelated)</strong> 있는데, 한 modality만 들여다보면 그 얽힘이 보이지 않는다는 것이다.</p>
+  <p>이 논문은 새 실험 데이터를 내놓는 연구가 아니라, 흩어진 증거를 <strong>기제 수준에서 재조직하는 통합 리뷰(integrative review)</strong>다. 그래서 세미나의 초점은 "무엇을 발견했는가"가 아니라, "산재한 문헌을 어떤 축으로 조직해 하나의 이론적 지도를 그리는가"에 있다. 저자들은 논문 서두에서 자신들의 목표를 세 가지로 명시한다: I) (신경)생물·심리사회·행동 기제를 통합하고, II) 그 영향을 정신질환과 신체질환에 걸쳐 살피며, III) CT의 정밀하고 일관된 정의를 강조한다.</p>
+</div>
+
+<div class="paper-meta">
+  <h3>Neurobiology of Stress</h3>
+  <div class="sub">Elsevier · SCIE (Neurosciences) 등재 확인 · Open Access (CC BY 4.0)</div>
+  <div class="paper-meta-grid">
+    <div class="paper-meta-item">
+      <div class="label">Type / Design</div>
+      <div class="value">통합 리뷰(Review article, peer-reviewed). Vol. 37, Article 100737 (2025).</div>
+    </div>
+    <div class="paper-meta-item">
+      <div class="label">Scope</div>
+      <div class="value">CT의 분자·신경생물·심리사회·행동 기제를 건강 및 정신·신체 질환 전반에 걸쳐 통합.</div>
+    </div>
+    <div class="paper-meta-item">
+      <div class="label">Core claim</div>
+      <div class="value">CT의 영향은 다중모드적이며, 현재 건강 상태·진단 범주와 독립적으로 다뤄져야 한다.</div>
+    </div>
+  </div>
+</div>
+
+<div class="quote-box">
+  "Rather than a one-to-one relationship, CT may exert many-to-many effects, where type, severity, chronicity, and timing of trauma, as well as resilience factors, influence multiple (neuro)biological and psychosocial systems, which may in turn be linked to numerous health problems."
+  <span class="attr">출처: §2 Clinical implications of CT</span>
+  <span class="trans">CT는 일대일 관계가 아니라 <strong>다대다(many-to-many) 효과</strong>를 낸다. 외상의 유형·심각도·만성성·시점, 그리고 회복탄력성 요인이 여러 (신경)생물·심리사회 체계에 영향을 주고, 그것이 다시 수많은 건강 문제로 이어진다.</span>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">이 논문의 조직 질문</span>
+  <strong>① CT의 영향을 왜 modality를 가로질러 통합해야 하는가?</strong> &nbsp; <strong>② 왜 진단 범주에 갇히지 않는 초진단적(transdiagnostic) 관점이 필요한가?</strong> &nbsp; <strong>③ 진단이 없는 사람과 회복탄력성, 그리고 일상 스트레스(daily-life stress)를 기제 모형에 어떻게 넣을 것인가?</strong>
+</div>
+
+<!-- 02 Introduction -->
+<div class="section-head" id="intro">
+  <div class="section-num">02</div>
+  <div class="section-title-block">
+    <h2>§1 Introduction: CT란 무엇이고, 왜 정의가 문제인가</h2>
+    <p class="section-subtitle">What CT is, and why its definition matters</p>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="plain-meaning">아동기 외상은 전 세계적으로 매우 흔하다. 그런데 학자마다 "무엇을 외상으로 셀지"가 달라서, 연구 결과들을 나란히 비교하기가 어렵다. 이 논문은 먼저 정의부터 못 박고 시작한다.</div>
+  <p>CT는 전 세계적으로 흔한 공중보건 문제다. 아동기 학대·방임의 유병률은 지역에 따라 <span class="stat-inline">6.6% to 47.2%</span>로 보고되며, 낙인과 두려움 때문에 이마저 과소추정일 가능성이 높다. CT는 정신증(psychosis), 양극성장애, 알코올 의존, 섭식장애부터 심혈관질환, 당뇨까지 광범위한 질환과 연결된다.</p>
+  <p>문제는 정의다. 저자들의 표현대로 CT는 <strong>넓고 일관성 없게 정의된 개념(a broad and inconsistently defined concept)</strong>이다. Childhood Trauma Questionnaire(CTQ)는 CT를 "18세 이전의 정서적·신체적·성적 학대와 정서적·신체적 방임"으로 정의하지만, 다른 도구는 괴롭힘·빈곤·부모 별거·자연재해까지 포함한다. 특히 <strong>ACEs(adverse childhood experiences)</strong> 개념(Felitti et al., 1998)은 영향력이 컸지만, "모든 ACEs가 건강에 동등하게 작용한다"고 가정하는 한계가 있다. 실제로는 정신건강 결과가 주로 학대·방임에 의해 좌우된다. 그래서 이 논문은 CTQ식 조작적 정의(18세 이전의 학대·방임)를 <strong>일관되게</strong> 채택한다.</p>
+  <p>또 하나의 문제의식은 치료다. CT와 질환의 관계는 잘 확립되어 있지만, <strong>CT 관련 기제를 직접 겨냥한 근거기반 개입은 부족하다.</strong> CT가 있는 우울증은 더 이르게 발병하고, 증상이 더 심하며, 재발이 잦고, 자살·불면·심혈관 공존질환이 더 많다. 그럼에도 PTSD와 성격장애 맥락 바깥에서 CT를 표적으로 개발된 치료는 사실상 없다.</p>
+  <div class="callout warm">
+    <span class="callout-label">대학원생을 위한 방법론 포인트</span>
+    저자들이 서론에서 <strong>정의의 일관성</strong>을 그토록 강조하는 이유를 놓치지 말 것. CT를 어떻게 정의·측정하느냐가 이후 모든 효과크기 비교를 좌우한다. ACEs처럼 이질적 항목을 한 점수로 합산하면, 서로 다른 기제를 가진 경험들이 뭉개진다. 이는 뒤의 "정밀성과 일관성" 권고(§8)의 복선이다.
+  </div>
+</div>
+
+<!-- 03 Clinical implications -->
+<div class="section-head" id="clinical">
+  <div class="section-num">03</div>
+  <div class="section-title-block">
+    <h2>§2 임상적 함의: 정신건강과 신체건강에 걸친 부담</h2>
+    <p class="section-subtitle">Clinical implications across mental and somatic health</p>
+  </div>
+</div>
+
+<div class="subhead">
+  <span class="code">§2.1</span>
+  <h3>정신건강에서의 임상적 함의</h3>
+  <span class="en">mental health(care)</span>
+  <span class="verdict promising">근거 강함</span>
+</div>
+<div class="panel">
+  <div class="plain-meaning">CT가 있으면 성인기에 정신질환에 걸릴 확률이 대략 1.5배에서 1.7배 높아진다. 그리고 우울·조현병 환자의 절반 안팎이 어린 시절 외상을 보고한다. 특히 정서적 학대와 방임이 가장 자주 나타난다.</div>
+  <p>메타분석(McKay et al., 2022)에 따르면 전향적으로 확인된 CT 노출자는 성인기 정신질환 발병 위험이 방임 <span class="stat-inline">OR 1.55</span>, 신체학대 <span class="stat-inline">OR 1.69</span>, 정서학대 <span class="stat-inline">OR 1.74</span>로 비노출자의 거의 두 배에 이른다. 거꾸로, 정신질환자에게서 CT가 흔하게 관찰된다. 주요우울장애(MDD) 성인의 <strong>46 to 62%</strong>가 CT 이력을 보고하고 약 19%는 복수 하위유형을 보고한다. 오피오이드 사용장애 38 to 43%, 섭식장애 21 to 59%, 경계선 성격장애 25 to 90%로, 여러 진단에 걸쳐 <strong>정서적 학대와 방임</strong>이 가장 흔히 보고되는 하위유형이다.</p>
+  <p>CT는 증상의 심각도·만성성·공존질환, 그리고 자살성을 높인다. 자기보고 CT가 있으면 재발성 우울과 정신증적 증상은 약 2배, 자살·자해 행동은 2 to 3배, 공존 정신질환(PTSD, 물질·알코올 남용, 불안, 우울)은 2 to 4배 더 흔하다. 우울증 발병 시점도 약 <strong>4년</strong> 이르다.</p>
+  <p>하위유형별 차이도 보고된다(Carr et al., 2013): 신체학대·성학대·방임은 기분·불안장애와 가장 강하게, <strong>정서학대는 성격장애·조현병</strong>과 가장 강하게, 신체적 방임은 성격장애와(가장 약하게) 연결됐다. 다만 외상 유형은 자주 공존하며, 학대와 방임이 결합되면 MDD·양극성장애 위험이 <strong>가산 효과를 넘어서(exceeding additive effects)</strong> 커진다(Alkema et al., 2024).</p>
+  <p>치료 측면에서, CT가 있으면 우울증 치료 반응·관해율이 낮고(<span class="stat-inline">OR 1.43</span>), 정신증 치료 성과도 더 나쁘다(<span class="stat-inline">OR 1.51</span>). 다만 최근 관점은 더 미묘하다. Kuzminskaite 등(2022)은 CT가 있는 우울증 환자가 시작·종료 시점 증상은 더 심하지만 <strong>1차 치료의 이득 자체는 비슷하게</strong> 얻는다고 보고했다. 외상초점 인지행동치료와 EMDR은 CT 후 PTSD 증상 감소에 특히 효과적이다.</p>
+</div>
+
+<div class="subhead">
+  <span class="code">§2.2</span>
+  <h3>신체건강에서의 임상적 함의</h3>
+  <span class="en">somatic health(care)</span>
+  <span class="verdict mixed">과소연구 영역</span>
+</div>
+<div class="panel">
+  <div class="plain-meaning">외상은 마음뿐 아니라 몸에도 남는다. 비만·대사이상·심혈관·자가면역 질환 위험이 올라간다. 다만 지금까지 연구는 정신건강에 쏠려 있어, 신체건강 쪽 임상 지침은 부족하다.</div>
+  <p>CT와 비만의 관계는 잘 확립되어 있다. 두 개의 대규모 메타분석이 각각 성인 비만 위험을 <span class="stat-inline">OR 1.36</span>, <span class="stat-inline">OR 1.34</span>로 보고했고, 이 연관은 CT·비만 정의와 연구설계(전향/후향)를 가로질러 일관됐다. 이상지질혈증, 대사증후군도 더 흔하며, 9년 종단연구는 CT 이력자가 시간에 걸쳐 <strong>지속적으로 더 나쁜 대사 프로파일</strong>을 보인다고 확인했다(Souama et al., 2023).</p>
+  <p>하위유형별로도 특이적 연결이 있다(Goodwin &amp; Stein, 2004): 신체학대는 호흡기질환(OR 1.5)·관절질환(OR 1.5), 성학대는 심장질환(<span class="stat-inline">OR 3.7</span>), 방임은 당뇨(OR 2.2)·자가면역질환(<span class="stat-inline">OR 4.4</span>)과 연결됐다.</p>
+  <p>정신 대 신체 위험의 상대적 크기는 어떨까. 같은 표본(n = 156,807)에서 직접 비교한 최근 연구(Klinger-König et al., 2024)는 <strong>정신질환 쪽 위험이 더 크다</strong>고 보고했다: 우울 OR 2.36, 불안 OR 2.08인 반면, 암 1.10, 심근경색 1.13, 당뇨 1.16, 뇌졸중 1.35, COPD 1.45. 그럼에도 CT는 <strong>정신·신체 공존이환</strong>을 높여, CT 경험자는 심대사질환과 우울의 공존 가능성이 3배였다(<span class="stat-inline">OR 3.04</span>). 저자들은 이 지점을 근거로 CT를 "정신과 신체 건강을 잇는 공유 위험요인"으로 규정한다.</p>
+</div>
+
+<div class="figure-block" id="fig1">
+  <div class="fig-title">Figure 1. CT가 정신·신체 건강에 미치는 광범위한 영향 (odds ratios)</div>
+  <span class="fig-tag orig">원문 Figure 1 · Pasteuning et al. (2025)</span>
+  <div class="fig-orig">
+    <img src="https://www.clinicalkey.com/ui/service/v2/media/1-s2.0-S2352289525000311-gr1?type=image" alt="Figure 1. Broad impact of CT on mental and somatic health (odds ratios forest plot)" loading="lazy" onerror="this.onerror=null;this.src='https://ars.els-cdn.com/content/image/1-s2.0-S2352289525000311-gr1.jpg';">
+  </div>
+  <p class="fig-cap">Fig. 1. Pasteuning et al. (2025), Neurobiology of Stress, 37, 100737, under CC BY 4.0. 교육 목적 인용.</p>
+  <div class="callout sky">
+    <span class="callout-label">그림 읽는 법</span>
+    점(dot)은 각 질환의 <strong>오즈비(OR)</strong>, 가로 막대(error bar)는 신뢰구간이다. <strong>분홍</strong>은 정신질환·호소, <strong>파랑</strong>은 신체질환을 뜻한다. OR이 1보다 오른쪽으로 갈수록 CT와의 연관이 강하다. 여러 연구가 있으면 OR을 평균했고, 최소·최대 신뢰구간을 적용했다.
+  </div>
+  <div class="fig-implies">
+    <b>이게 무슨 뜻인가.</b> 한 장의 그림이 이 논문의 첫 번째 주장을 압축한다: CT의 그림자는 <b>특정 질환 하나</b>가 아니라 정신·신체를 아우르는 <b>넓은 스펙트럼</b>에 드리운다. 저자들은 방법(메타분석 기법)과 하위유형이 서로 달라 OR 직접 비교에는 <b>주의가 필요</b>하다고 명시하며, 이 목록이 전부가 아님(not exhaustive)을 밝힌다.
+  </div>
+</div>
+
+<!-- 04 Molecular -->
+<div class="section-head" id="molecular">
+  <div class="section-num">04</div>
+  <div class="section-title-block">
+    <h2>§3 분자 기제: 몸속에 새겨지는 스트레스</h2>
+    <p class="section-subtitle">Molecular mechanisms</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>이 장은 CT와 네 가지 분자 기제의 연결을 다룬다: HPA축, 면역계, 생물학적 노화, 그리고 (후성)유전. 저자들은 각 기제를 독립 원인이 아니라 <strong>서로 얽힌 고리</strong>로 배치한다.</p>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">3.1</div>
+    <div class="cond-titles">
+      <div class="cond-code">MOLECULAR : STRESS AXIS</div>
+      <h3>HPA축: 스트레스 반응의 기본 설정값이 바뀐다</h3>
+      <div class="cond-en">the hypothalamic-pituitary-adrenal axis</div>
+    </div>
+    <span class="verdict promising">일관된 연관</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">HPA축은 몸의 스트레스 대응 시스템이고, 그 끝에서 코르티솔이 나온다. 어릴 때 과도한 스트레스는 이 시스템의 "기본 설정값"을 바꿔, 평생 스트레스에 유연하게 반응하는 능력을 떨어뜨린다.</div>
+    <p>CT는 신경가소성이 높은 결정적 발달기에 일어나 스트레스 시스템 발달 자체에 영향을 준다. 성인기 HPA축 기능 변화(기저 활동과 스트레스 유발 활동 모두)가 일관되게 보고되며, 급성 스트레스에 대해 <strong>코르티솔 반응이 증가한 경우와 둔화된(blunted) 경우가 모두</strong> 관찰된다. 이 겉보기 모순은 외상의 유형·기간·강도·횟수, 그리고 연령·성·개인 취약성(유전·후성유전)에 따라 달라진다.</p>
+    <p>중요한 것은, <strong>유사한 HPA축 변화가 서로 다른 진단에 걸쳐 나타난다</strong>는 점이다. Murphy 등(2022)은 양극성장애와 정신증에서 공유된 HPA 프로파일을 확인했다(우울증에서는 아님). 저자들의 표현대로 이는 CT 관련 HPA 조절이상이 <strong>진단 경계를 넘어(beyond diagnostic boundaries)</strong> 정신질환 취약성을 높일 수 있음을 시사한다. 다만 신체질환 맥락에서의 HPA 연구는 여전히 부족한 <strong>결정적 공백</strong>이다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">3.2</div>
+    <div class="cond-titles">
+      <div class="cond-code">MOLECULAR : INFLAMMATION</div>
+      <h3>면역계: 만성 염증이라는 흔적</h3>
+      <div class="cond-en">the immune system</div>
+    </div>
+    <span class="verdict promising">메타분석 지지</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">외상을 겪은 사람은 몸의 염증 수치가 더 높고, 스트레스에 염증으로 더 크게 반응한다. 이 염증은 여러 진단에 공통으로 나타난다.</div>
+    <p>CT 이력자는 일상·실험 스트레스 모두에 더 큰 염증 반응을 보인다. 대규모 메타분석(Baumeister et al., 2016)은 CT와 CRP, IL-6, TNF-α 상승의 연관을 확인했고, 연령·성·BMI는 이를 조절하지 못했으나 <strong>외상 하위유형은 조절했다</strong>: 성학대는 TNF-α와, 신체학대는 TNF-α와 IL-6 모두와 더 강하게 연결됐다. 최근 메타분석은 기분장애·물질사용장애·조현병 스펙트럼·섭식장애·불안장애를 포함해 이 염증 효과가 <strong>초진단적(transdiagnostic)</strong>임을 보였다.</p>
+    <p>기저 분자 기제는 주로 동물연구에서 온다: 초기 면역 활성화가 미세아교세포를 "점화(priming)"시켜 이후 염증 자극에 더 민감하게 만들고, 사이토카인이 HPA축을 활성화하는 <strong>신경내분비 교차민감화(cross-sensitization)</strong>가 심리사회 스트레스의 효과를 모방한다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">3.3</div>
+    <div class="cond-titles">
+      <div class="cond-code">MOLECULAR : AGING</div>
+      <h3>생물학적 노화: 세포가 더 빨리 늙는다</h3>
+      <div class="cond-en">biological aging</div>
+    </div>
+    <span class="verdict mixed">하위유형 간 불일치</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">외상은 세포 수준의 노화를 앞당길 수 있다. 텔로미어 길이 같은 지표로 측정되는데, "위협형(학대)"과 "결핍형(방임)"에서 양상이 다르게 나타난다.</div>
+    <p>텔로미어 길이, 미토콘드리아 DNA 복제수 같은 누적 세포 스트레스 지표가 방임 후 나쁜 건강 결과와 연결되며, 외상의 세대 간 전이에도 관여할 수 있다(다만 학대에서는 유의하지 않았다). 대규모 메타분석은 <strong>위협(threat, 즉 학대)</strong>은 이른 사춘기 시작과 큰 세포 노화와, <strong>결핍(deprivation, 즉 방임)</strong>은 그렇지 않은 것과 연결됨을 보였다. Colich 등(2020)은 위협이 vmPFC 피질 얇아짐과, 결핍이 하전두회 등 다른 영역과 연결됨을 보고했다. 하위유형 간 불일치에도 불구하고, CT는 전반적으로 <strong>가속화된 생물학적 노화</strong>와 연관된다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">3.4</div>
+    <div class="cond-titles">
+      <div class="cond-code">MOLECULAR : (EPI)GENETICS</div>
+      <h3>(후성)유전: 유전과 환경이 함께 짠다</h3>
+      <div class="cond-en">(epi)genetics</div>
+    </div>
+    <span class="verdict promising">GxE 상호작용</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">외상의 영향은 순수한 환경 탓도, 순수한 유전 탓도 아니다. 유전자와 환경이 함께 작동한다(GxE). 또 유전자 발현을 조절하는 후성유전 변화(DNA 메틸화)가 외상의 장기 흔적을 일부 설명한다.</div>
+    <p>쌍둥이·형제 연구는 환경적 기여를 지지한다: Baldwin 등(2023)은 유전·공유환경을 통제해도 CT가 <strong>독립적으로</strong> 정신병리 위험에 기여함을 보였다. 동시에 GWAS 메타분석(Warrier et al., 2021, n &gt; 185,000)은 CT의 완만한 유전율과 우울·조현병·ADHD와의 유의한 유전적 상관을 보고했다. 특정 유전 프로파일은 취약성을 크게 증폭했다. 다만 폴리제닉 위험과 CT의 상호작용을 찾지 못한 연구도 있어(Peyrot et al., 2018), 과거 보고가 우연이었을 가능성도 지적된다.</p>
+    <p>후성유전 쪽에서는 DNA 메틸화가 가장 많이 연구됐다. CT는 HPA축, BDNF, 신경전달물질, 전사인자, 수초화 관련 유전자의 메틸화 변화와 연결되며, 다섯 개 EWAS 메타분석은 CT와 연결된 <strong>44개의 차등 메틸화 CpG 위치</strong>를 확인했다(Neves et al., 2021). CT는 또한 후성유전적 노화 가속과 연결된다. 결국 후성유전 변화가 면역·노화 등 다른 분자 영역과도 얽혀, CT의 다층적 얽힘을 다시 보여준다.</p>
+  </div>
+</div>
+
+<!-- 05 Neurobiological -->
+<div class="section-head" id="neuro">
+  <div class="section-num">05</div>
+  <div class="section-title-block">
+    <h2>§4 신경생물 기제: 구조와 기능의 변화</h2>
+    <p class="section-subtitle">Neurobiological mechanisms</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">4.1</div>
+    <div class="cond-titles">
+      <div class="cond-code">BRAIN : STRUCTURE</div>
+      <h3>뇌 용적과 미세구조</h3>
+      <div class="cond-en">brain volume and microstructure</div>
+    </div>
+    <span class="verdict mixed">결과 이질적</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">외상은 스트레스 호르몬 수용체가 밀집한 뇌 영역(해마·편도체·전전두엽)의 발달 타이밍을 바꾼다. 다만 연구마다 결과가 갈리는데, 표본 특성과 측정법이 다르기 때문이다.</div>
+    <p>CT 노출자에게서 해마·편도체·PFC의 <strong>회백질 용적(GMV) 감소</strong>가 보고된다. 흥미롭게도 해마 GMV 감소는 성인에게서는 보이지만 아동에게서는 아닌 경우가 있어(Woon &amp; Hedges, 2008), 외상이 <strong>GR 밀집 영역의 발달을 시간에 걸쳐</strong> 해친다는 생각을 뒷받침한다. 전두엽 결과는 증가·감소가 뒤섞여 있으며, 이는 하위유형·공존질환·연령·성 차이 때문으로 보인다. 피질 두께(CTh)와 백질 온전성(WMI) 연구도 혼재하지만, 최근 메타분석은 CT가 대상회·부대상회에서 가장 일관된 감소와 연결되고(Yang et al., 2023), 백질에서는 뇌량·뇌궁·시각로의 광범위한 WMI 감소와 연결됨을 시사한다(Lim et al., 2020). 저자들은 이 변화가 <strong>전두-변연(fronto-limbic) 연결</strong>을 교란할 수 있다고 본다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">4.2</div>
+    <div class="cond-titles">
+      <div class="cond-code">BRAIN : FUNCTION</div>
+      <h3>기능적 반응성과 연결성</h3>
+      <div class="cond-en">functional responsivity and connectivity</div>
+    </div>
+    <span class="verdict promising">비임상군에도 관찰</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">외상을 겪은 뇌는 위협 신호(부정적 감정)에 편도체가 과하게 반응하고, 감정을 위에서 조절하는 회로가 약해진다. 중요한 건 이 변화가 진단이 없는 건강한 사람에게서도 보인다는 점이다.</div>
+    <p>CT는 편도체·해마·섬엽·배외측 PFC의 기능 변화와 연결되며, 특히 <strong>부정적 정서 자극에 대한 편도체 과반응</strong>이 두드러진다. 이는 감정·위협 처리를 담당하는 전두-변연 회로의 일부다. 주목할 점은, 이런 전두-변연 연결 이상이 <strong>건강한 아동·청소년·성인은 물론 MDD·PTSD 환자에게서도</strong> 관찰된다는 것이다. 비임상군과 임상군에서 유사한 패턴이 나타난다는 사실은 CT 관련 변화가 <strong>질환 발병에 앞설(precede) 수 있음</strong>을 시사한다. 최근 연구는 전두두정망(FPN)·기본모드망(DMN) 같은 대규모 뇌 네트워크의 역동까지 살피기 시작했다.</p>
+  </div>
+</div>
+
+<!-- 06 Psychosocial -->
+<div class="section-head" id="psychosocial">
+  <div class="section-num">06</div>
+  <div class="section-title-block">
+    <h2>§5 심리사회 기제: 사회복지가 개입하는 층</h2>
+    <p class="section-subtitle">Psychosocial mechanisms</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>이 장은 CT와 건강을 잇는 심리사회 기제, 즉 <strong>애착, 초기 부적응 도식, 성격, 자존감, 정서조절·대처·지각된 사회적 지지</strong>를 다룬다. 저자들은 이들을 초진단적 매개 후보로 제시한다. 사회복지 실천이 직접 개입할 수 있는 지점이 바로 이 층이다.</p>
+</div>
+
+<div class="mod-grid">
+  <div class="mod-card">
+    <h4>5.1 애착 유형</h4>
+    <div class="en">attachment style</div>
+    <p>CT는 주 양육자와의 애착을 교란해 불안·회피 애착으로 이어진다. 불안 애착은 자신을 무가치하게 보고 거부·유기를 두려워하며, 회피 애착은 친밀함을 피한다. 특히 <strong>회피 애착 + CT는 높은 자살 위험</strong>과 연결된다(Ihme et al., 2022).</p>
+  </div>
+  <div class="mod-card">
+    <h4>5.2 핵심 신념과 초기 부적응 도식</h4>
+    <div class="en">early maladaptive schemas</div>
+    <p>어린 시절 핵심 욕구가 충족되지 않으면 부정적 도식이 생긴다. 정서학대는 "정서적 결핍"·"복종" 도식과, 정서적 방임은 "불신/학대"·"유기"·"사회적 고립"·"실패" 도식과 연결된다(May et al., 2022; Pilkington et al., 2021). 이 도식이 CT와 정신건강을 매개할 수 있다.</p>
+  </div>
+  <div class="mod-card">
+    <h4>5.3 성격 특성</h4>
+    <div class="en">personality traits</div>
+    <p>Big Five 중 CT는 특히 <strong>신경증(neuroticism) 상승</strong>과 연결되며, 신경증은 정서학대와 우울·불안 사이를 유의하게 매개한다. DSM-5 대안모형에서 (주로 정서적) CT는 부정적 정서성·거리두기·정신증 성향과 연관된다.</p>
+  </div>
+  <div class="mod-card">
+    <h4>5.4 자존감</h4>
+    <div class="en">self-esteem</div>
+    <p>학대·방임 모두 아동·성인의 낮은 자존감과 일관되게 연결되며, 자존감은 CT와 증상 심각도(특히 우울·불안) 사이를 매개하는 핵심 기제로 제안된다(Rosenberg 척도 기반 다수 연구).</p>
+  </div>
+  <div class="mod-card span2" style="grid-column:1 / -1;">
+    <h4>5.5 정서조절, 대처, 지각된 사회적 지지</h4>
+    <div class="en">emotion regulation, coping, and perceived social support</div>
+    <p>메타분석은 CT가 아동·청소년기 <strong>정서조절 저하</strong>와 연결되고, 정서조절 곤란이 CT와 정신병리를 매개함을 보인다(Miu et al., 2022). <strong>회피적 대처</strong>(부정, 사회적 위축, 정서적 이탈)는 학대·외상 후 고통과 연결되는 반면, <strong>긍정적 대처</strong>(사회적 지지 추구, 재구성)와 지각된 사회적 지지는 CT의 악영향을 완충할 수 있다. 이 완충 요인은 뒤의 회복탄력성 논의와 이어진다.</p>
+  </div>
+</div>
+
+<div class="quote-box">
+  "These findings underscore the relevance of CT as a shared risk factor linking mental and somatic health."
+  <span class="attr">출처: §2.2 Clinical implications in somatic health(care)</span>
+  <span class="trans">이 결과들은 CT가 <strong>정신건강과 신체건강을 잇는 공유 위험요인</strong>으로서 갖는 중요성을 부각한다.</span>
+</div>
+
+<!-- 07 Lifestyle -->
+<div class="section-head" id="lifestyle">
+  <div class="section-num">07</div>
+  <div class="section-title-block">
+    <h2>§6 생활습관 요인: 정신과 신체를 잇는 통로</h2>
+    <p class="section-subtitle">Lifestyle factors</p>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="plain-meaning">외상의 영향은 흡연·음주·수면부족·신체 비활동 같은 일상 행동으로도 흘러간다. 이 행동들이 몸의 건강을 갉아먹으면서, 정신건강과 신체건강을 잇는 통로가 된다.</div>
+  <p>메타분석(Norman et al., 2012)은 신체·정서 학대와 정서적 방임이 음주·약물·흡연·위험한 성행동·신체 비활동·대인 및 자기지향 폭력 등 다양한 건강 위해 행동과 연결됨을 보였다. 최근 코호트(Tong et al., 2024, n = 2,968)는 CT와 흡연·약물·사회적 비활동·수면박탈·과체중 증가 사이의 <strong>용량-반응 관계</strong>를 확인했다. UK Biobank 연구(Yang et al., 2022, n = 110,596)는 이 <strong>건강 위해 행동이 CT와 가속 노화 사이를 매개</strong>함을 보였다.</p>
+  <p>다만 생활습관은 생물·심리 기제와 깊이 얽혀 있어 개별 효과를 떼어내기 어렵다. 예컨대 CT와 물질사용의 관계는 심리(기분·충동성)와 생물(HPA축·보상 회로) 요인이 함께 작동하는 복합적 상호작용이다. 불건강한 선택이 종종 스트레스 대처의 한 방식이라는 점에서, 저자들은 <strong>생물·심리·행동 경로를 함께 다루는 통합적 개입</strong>을 강조한다.</p>
+</div>
+
+<!-- 08 Multimodal pathways -->
+<div class="section-head" id="pathways">
+  <div class="section-num">08</div>
+  <div class="section-title-block">
+    <h2>§7 다중모드 경로: 두 가지 가설적 경로</h2>
+    <p class="section-subtitle">Two hypothetical multimodal pathways</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>이 장은 이 리뷰의 이론적 심장이다. 저자들은 앞의 모든 기제를 엮어 <strong>두 개의 가설적 다중모드 경로</strong>를 제안한다. 이 둘은 상호배타적이지도, 전부를 망라하지도 않는다. 각 경로는 어릴 때는 <strong>적응적(adaptive)</strong>이던 반응이 장기적으로는 <strong>부적응적(maladaptive)</strong>으로 바뀐다는 공통 논리를 갖는다.</p>
+</div>
+
+<div class="figure-block" id="fig2">
+  <div class="fig-title">Figure 2. CT를 정신·신체 건강에 잇는 초진단적 기제 (BioRender)</div>
+  <span class="fig-tag orig">원문 Figure 2 · Pasteuning et al. (2025)</span>
+  <div class="fig-orig">
+    <img src="https://www.clinicalkey.com/ui/service/v2/media/1-s2.0-S2352289525000311-gr2?type=image" alt="Figure 2. Transdiagnostic mechanisms linking childhood trauma exposure to mental and somatic health" loading="lazy" onerror="this.onerror=null;this.src='https://ars.els-cdn.com/content/image/1-s2.0-S2352289525000311-gr2.jpg';">
+  </div>
+  <p class="fig-cap">Fig. 2. Pasteuning et al. (2025), Neurobiology of Stress, 37, 100737, under CC BY 4.0. Figure created using BioRender. 교육 목적 인용.</p>
+  <div class="fig-implies">
+    <b>이게 무슨 뜻인가.</b> CT는 <b>생물(뇌 구조·기능, HPA축, 면역, 후성유전, 노화)</b>, <b>심리사회</b>, <b>행동(생활습관)</b> 영역에 걸쳐 깊고 장기적인 영향을 남긴다. 약어: GR(당질코르티코이드 수용체), HPA(시상하부-뇌하수체-부신), TNF-α, IL-6, CRP(염증표지자), GMV(회백질 용적), CTh(피질 두께), WMI(백질 온전성), PFC/dlPFC(전전두엽).
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">두 경로 재구성: 같은 뿌리, 다른 적응 전략</div>
+  <span class="fig-tag kr">Lab 제작 · 한국어 주석 재구성</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 820 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="스트레스 민감화 경로와 위협 회피 경로 재구성">
+      <defs>
+        <marker id="pa" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#2f6fa8"/></marker>
+      </defs>
+      <!-- root -->
+      <rect x="330" y="20" width="160" height="56" rx="12" fill="#2f6fa8"/>
+      <text x="410" y="45" font-size="13" font-weight="700" text-anchor="middle" fill="#fff">아동기 외상 (CT)</text>
+      <text x="410" y="63" font-size="10.5" text-anchor="middle" fill="#bcd6ee">공통 출발점</text>
+      <!-- split arrows -->
+      <line x1="380" y1="76" x2="250" y2="120" stroke="#2f6fa8" stroke-width="2" marker-end="url(#pa)"/>
+      <line x1="440" y1="76" x2="570" y2="120" stroke="#2f6fa8" stroke-width="2" marker-end="url(#pa)"/>
+      <!-- Path 1 : stress sensitization -->
+      <rect x="40" y="122" width="350" height="286" rx="14" fill="#e8f1fa" stroke="#3f86c4"/>
+      <text x="215" y="148" font-size="14" font-weight="700" text-anchor="middle" fill="#2f6fa8">경로 ①: 스트레스 민감화</text>
+      <text x="215" y="167" font-size="11" text-anchor="middle" fill="#46505c">stress sensitization</text>
+      <rect x="62" y="182" width="306" height="46" rx="9" fill="#fff" stroke="#cfe0f1"/>
+      <text x="215" y="203" font-size="11.5" text-anchor="middle" fill="#20262e">과각성 + 스트레스 반응성 증가</text>
+      <text x="215" y="219" font-size="10" text-anchor="middle" fill="#828d9b">hypervigilance, increased reactivity</text>
+      <rect x="62" y="238" width="306" height="60" rx="9" fill="#fff" stroke="#cfe0f1"/>
+      <text x="215" y="258" font-size="11" text-anchor="middle" fill="#20262e">코르티솔 신호 증가, GR 밀집 영역 과활성</text>
+      <text x="215" y="275" font-size="11" text-anchor="middle" fill="#20262e">편도체 과반응, 신경증(neuroticism) 상승</text>
+      <text x="215" y="290" font-size="10" text-anchor="middle" fill="#828d9b">이른 사춘기, 면역 신호 증가 동반</text>
+      <rect x="62" y="308" width="306" height="40" rx="9" fill="#e6f5f0" stroke="#3fa88a"/>
+      <text x="215" y="333" font-size="11" text-anchor="middle" fill="#2f6fa8">처음엔 적응적, 길게는 부적응적</text>
+      <rect x="62" y="358" width="306" height="38" rx="9" fill="#fdeee9" stroke="#e0573e"/>
+      <text x="215" y="382" font-size="11" text-anchor="middle" fill="#c0442f">부정적 정서 증가, (정신)병리 취약성</text>
+      <!-- Path 2 : threat avoidance -->
+      <rect x="430" y="122" width="350" height="286" rx="14" fill="#f2f8fd" stroke="#3f86c4"/>
+      <text x="605" y="148" font-size="14" font-weight="700" text-anchor="middle" fill="#2f6fa8">경로 ②: 위협 회피</text>
+      <text x="605" y="167" font-size="11" text-anchor="middle" fill="#46505c">threat avoidance</text>
+      <rect x="452" y="182" width="306" height="46" rx="9" fill="#fff" stroke="#cfe0f1"/>
+      <text x="605" y="203" font-size="11.5" text-anchor="middle" fill="#20262e">회피 · 해리 · 수동적 행동</text>
+      <text x="605" y="219" font-size="10" text-anchor="middle" fill="#828d9b">avoidant, dissociative, passive</text>
+      <rect x="452" y="238" width="306" height="60" rx="9" fill="#fff" stroke="#cfe0f1"/>
+      <text x="605" y="258" font-size="11" text-anchor="middle" fill="#20262e">감정회로 연결 변화, 코르티솔 반응 감소</text>
+      <text x="605" y="275" font-size="11" text-anchor="middle" fill="#20262e">보상 반응 둔화, 거리두기·회피 애착</text>
+      <text x="605" y="290" font-size="10" text-anchor="middle" fill="#828d9b">낮은 외향성, 복종 도식 동반</text>
+      <rect x="452" y="308" width="306" height="40" rx="9" fill="#e6f5f0" stroke="#3fa88a"/>
+      <text x="605" y="333" font-size="11" text-anchor="middle" fill="#2f6fa8">처음엔 적응적, 길게는 부적응적</text>
+      <rect x="452" y="358" width="306" height="38" rx="9" fill="#fdeee9" stroke="#e0573e"/>
+      <text x="605" y="382" font-size="11" text-anchor="middle" fill="#c0442f">낮은 자존감, 사회적 고립, 조절 곤란</text>
+    </svg>
+  </div>
+  <div class="fig-implies">
+    <b>이게 무슨 뜻인가.</b> 두 경로 모두 <b>같은 뿌리(CT)</b>에서 갈라진다. 경로 ①(스트레스 민감화)은 위협을 <b>더 예민하게 감지</b>하는 쪽으로, 경로 ②(위협 회피)는 위협을 <b>피하고 물러서는</b> 쪽으로 적응한다. 둘 다 어린 시절에는 생존에 도움이 되지만, 오래 지속되면 각각 병리 취약성과 사회적 고립으로 이어진다. 저자들은 특히 경로 ②에서 <b>신경생물과 심리사회 요소를 잇는 직접 연결은 아직 과소연구</b>임을 인정한다. (도식은 §7 서술을 근거로 한 Lab 재구성이다.)
+  </div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트</span>
+  다중모드 접근은 문헌의 <strong>이질성(heterogeneity)</strong>을 두 가지로 나눠 설명한다: 단순한 방법론적 편차일 수도 있고, <strong>서로 다른 적응 경로</strong>일 수도 있다는 것. 저자들은 하위 수준(신경생물)과 상위 수준(행동·기능)을 잇는 도구로 <strong>계산정신의학(computational psychiatry)</strong>을 제안한다. "평균으로 뭉개진 이질성 뒤에 서로 다른 기제가 있다"는 발상은 person-centered 방법론과 통한다.
+</div>
+
+<!-- 09 Integration & recommendations -->
+<div class="section-head" id="recommend">
+  <div class="section-num">09</div>
+  <div class="section-title-block">
+    <h2>§8-9 통합·결론: 다섯 가지 핵심 권고</h2>
+    <p class="section-subtitle">Five key facets for studying and treating CT</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>이 리뷰의 실질적 결론은 흩어진 기제를 <strong>다섯 가지 연구·임상 권고</strong>로 압축한 데 있다. 이것이 곧 "CT 연구를 앞으로 어떻게 해야 하는가"에 대한 의제 설정이다.</p>
+</div>
+
+<div class="mod-grid">
+  <div class="mod-card protect">
+    <h4>① 다중모드 평가</h4>
+    <div class="en">multimodal evaluation</div>
+    <p>CT의 효과는 후성유전부터 부적응 도식까지 여러 층에 걸친다. 취약성과 회복탄력성을 구분하고 개인 맞춤 치료를 개발하려면, 생물·심리사회·행동을 <strong>함께</strong> 평가해야 한다.</p>
+  </div>
+  <div class="mod-card protect">
+    <h4>② 초진단적 범위</h4>
+    <div class="en">transdiagnostic scope</div>
+    <p>CT 관련 변화는 진단 유무와 무관하게 일관되게 나타났다. 저자들은 진단을 버리자는 게 아니라, CT가 <strong>더 중심 무대로</strong> 올라와야 한다고 본다. Teicher(2022)의 제안처럼 DSM에 CT 이력 specifier를 넣어 ecophenotype을 구분하는 방안을 예시한다.</p>
+  </div>
+  <div class="mod-card protect">
+    <h4>③ 진단 없는 사람과 회복탄력성</h4>
+    <div class="en">understanding resilience</div>
+    <p>건강한 사람에게서도 CT의 신경생물 흔적이 보인다는 것은, 병리 발현 <strong>전에</strong> 이미 변화가 있을 수 있음을 뜻한다. 보상 기제·환경이 완충할 수 있으나, 회복탄력성은 <strong>역동적</strong>이어서 지금 보호받아도 나중에 취약해질 수 있다. 종단연구가 시급하다.</p>
+  </div>
+  <div class="mod-card protect">
+    <h4>④ CT 측정의 정밀성·일관성</h4>
+    <div class="en">precision and consistency in CT assessment</div>
+    <p>CT가 ACEs 같은 넓은 개념과 혼용되고 정의가 불명확한 경우가 많다. 하위유형·기간·시점·만성성을 명시해야 한다. 저자들은 이를 연도별로 포착하는 <strong>MACE 척도</strong>(52문항)를 유용한 도구로 든다.</p>
+  </div>
+  <div class="mod-card protect span2" style="grid-column:1 / -1;">
+    <h4>⑤ 일상 스트레스의 통합</h4>
+    <div class="en">involving daily-life stress</div>
+    <p>CT 이력자는 급성 스트레스에 HPA·염증·편도체 반응이 다르다. 이는 <strong>이후 스트레스에 대처하는 능력의 손상</strong>으로 취약성을 설명하는 스트레스 민감화 가설과 맞닿는다. 저자들은 실시간 스트레스를 포착하는 <strong>생태순간평가(EMA)</strong>를 유망한 방법으로 제안한다.</p>
+  </div>
+</div>
+
+<div class="quote-box">
+  "While we do not propose the disregard of diagnosis altogether, we do argue for CT to take more center stage."
+  <span class="attr">출처: §8 Integration, conclusions and recommendations</span>
+  <span class="trans">우리는 진단을 완전히 무시하자고 제안하는 것이 아니라, <strong>CT가 더 중심 무대로 올라와야</strong> 한다고 주장한다.</span>
+</div>
+
+<div class="quote-box">
+  "The multimodal impact of CT requires more recognition in research and clinical practice and should be considered independent of current health status and diagnostic categories."
+  <span class="attr">출처: Abstract / §9 Conclusions</span>
+  <span class="trans">CT의 다중모드적 영향은 연구와 임상에서 더 많은 인식을 요하며, <strong>현재 건강 상태 및 진단 범주와 독립적으로</strong> 고려되어야 한다.</span>
+</div>
+
+<!-- Phrases -->
+<div class="section-head" id="phrases">
+  <div class="section-num">10</div>
+  <div class="section-title-block">
+    <h2>명문장: 영어 논문에 옮겨 쓸 문장</h2>
+    <p class="section-subtitle">Notable sentences from the paper</p>
+  </div>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">사용 안내</span>
+  아래 문장은 모두 <strong>원문(PDF 전문)에서 확인한 직접 인용</strong>이며, 절 위치를 함께 표기했다. 대학원생 자신의 영어 원고에 그대로 차용하거나 변형해 쓸 수 있는 문형 중심으로 골랐다.
+</div>
+
+<div class="phrase-grid">
+  <div class="phrase span2">
+    <div class="en">"Rather than a one-to-one relationship, CT may exert many-to-many effects, where type, severity, chronicity, and timing of trauma, as well as resilience factors, influence multiple (neuro)biological and psychosocial systems."</div>
+    <div class="kr">CT는 일대일 관계가 아니라 다대다 효과를 낸다. 외상의 유형·심각도·만성성·시점, 그리고 회복탄력성 요인이 여러 (신경)생물·심리사회 체계에 영향을 준다.</div>
+    <div class="why"><b>왜 유용한가</b> "Rather than A, X may exert B, where …"는 단순 인과를 복잡계로 재규정하는 강력한 문형. 서론·논의에서 통념을 확장할 때. <span style="color:#828d9b">(§2)</span></div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Rather than providing an in-depth review of any single modality, our goal is to offer a broad, integrative perspective."</div>
+    <div class="kr">단일 modality를 깊이 다루기보다, 우리의 목표는 넓고 통합적인 관점을 제시하는 것이다.</div>
+    <div class="why"><b>왜 유용한가</b> 리뷰의 범위(scope)를 정직하게 선언하는 문장. 통합 리뷰 서론의 목적 진술 템플릿. <span style="color:#828d9b">(§1)</span></div>
+  </div>
+  <div class="phrase">
+    <div class="en">"This suggests that CT-related HPA-axis dysregulation may increase vulnerability to mental illness beyond diagnostic boundaries."</div>
+    <div class="kr">이는 CT 관련 HPA축 조절이상이 진단 경계를 넘어 정신질환 취약성을 높일 수 있음을 시사한다.</div>
+    <div class="why"><b>왜 유용한가</b> "beyond diagnostic boundaries"는 초진단 주장을 한 구절로 압축하는 표현. <span style="color:#828d9b">(§3.1)</span></div>
+  </div>
+  <div class="phrase">
+    <div class="en">"These findings underscore the relevance of CT as a shared risk factor linking mental and somatic health."</div>
+    <div class="kr">이 결과들은 CT가 정신건강과 신체건강을 잇는 공유 위험요인으로서 갖는 중요성을 부각한다.</div>
+    <div class="why"><b>왜 유용한가</b> "shared risk factor linking A and B"는 두 영역을 하나의 원인으로 묶는 결론 문형. <span style="color:#828d9b">(§2.2)</span></div>
+  </div>
+  <div class="phrase">
+    <div class="en">"While we do not propose the disregard of diagnosis altogether, we do argue for CT to take more center stage."</div>
+    <div class="kr">진단을 완전히 무시하자는 것이 아니라, CT가 더 중심 무대로 올라와야 한다고 주장한다.</div>
+    <div class="why"><b>왜 유용한가</b> "While we do not …, we do argue …"는 과격해 보이지 않게 강한 주장을 펴는 균형 문형. <span style="color:#828d9b">(§8)</span></div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Given the dynamic nature of resilience, individuals may be temporarily protected from ill health but remain vulnerable over time."</div>
+    <div class="kr">회복탄력성의 역동적 속성을 고려하면, 개인은 일시적으로 건강을 보호받아도 시간이 지나며 여전히 취약할 수 있다.</div>
+    <div class="why"><b>왜 유용한가</b> 회복탄력성을 정적 특질이 아니라 시간 의존적 과정으로 규정. 종단연구 필요성 논거로 재사용. <span style="color:#828d9b">(§8)</span></div>
+  </div>
+  <div class="phrase span2">
+    <div class="en">"As a starting point, individuals with CT should be differentiated from those without, both within and between diagnostic categories."</div>
+    <div class="kr">출발점으로서, CT가 있는 사람은 진단 범주 안에서도 사이에서도 없는 사람과 구분되어야 한다.</div>
+    <div class="why"><b>왜 유용한가</b> 추상적 주장을 "As a starting point, X should be …"로 실행 가능한 권고로 착지시키는 문형. 논의·함의 절에 유용. <span style="color:#828d9b">(§8)</span></div>
+  </div>
+  <div class="phrase span2">
+    <div class="en">"These recommendations may improve understanding, treatment and eventually prevention of CT-related health problems."</div>
+    <div class="kr">이러한 권고는 CT 관련 건강 문제의 이해, 치료, 나아가 예방을 개선할 수 있다.</div>
+    <div class="why"><b>왜 유용한가</b> "understanding, treatment and eventually prevention"의 삼단 상승으로 기여를 절제되게 확장하는 결론 문장. <span style="color:#828d9b">(Abstract)</span></div>
+  </div>
+</div>
+
+<!-- Our study -->
+<div class="section-head" id="ourstudy">
+  <div class="section-num">11</div>
+  <div class="section-title-block">
+    <h2>AIR Lab 연구와의 연결</h2>
+    <p class="section-subtitle">ACEs · 심리사회 매개 · trauma-informed recovery</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>이 리뷰는 랩의 ACEs 프로그램에 <strong>기제의 지도</strong>를 제공한다. 우리가 ACEs에서 건강 결과로 갈 때 자주 남는 "블랙박스"를, 네 층(분자·신경생물·심리사회·행동)으로 분해해 사고하도록 돕는다. 특히 심리사회 층(애착·정서조절·대처·자존감)은 사회복지 실천이 직접 개입하는 지점이자, 랩의 매개 모형에서 핵심 후보다. 초진단적 관점은 우리 연구가 특정 진단(우울·자해 등)에 갇히지 않고 <strong>공유 취약성</strong>으로 결과를 재구성하도록 촉구한다.</p>
+</div>
+
+<table class="mini-table">
+  <thead><tr><th>우리 연구 요소</th><th>이 논문에서의 대응</th></tr></thead>
+  <tbody>
+    <tr><td>ACEs에서 정신건강 결과로 가는 매개 기제</td><td>분자·신경생물·심리사회·행동 4층 통합 경로 (§3 to §6)</td></tr>
+    <tr class="hi"><td>사회복지 개입 지점(정서조절·대처·애착·자존감)</td><td>심리사회 modality (§5), 생물과 행동을 잇는 중간 다리</td></tr>
+    <tr><td>ACEs 누적점수 접근의 한계</td><td>CT 정의의 정밀성·일관성 권고, 하위유형 차등 효과 (§1, §8)</td></tr>
+    <tr><td>자살·자해 위험</td><td>회피 애착 + CT의 높은 자살 위험, 자살성 2 to 3배 (§2.1, §5.1)</td></tr>
+    <tr><td>ACEs-Informed Recovery, 회복탄력성</td><td>역동적 회복탄력성 권고, 저자들의 선행 프레임워크 (§8)</td></tr>
+    <tr><td>현재 스트레스 맥락의 반영</td><td>일상 스트레스 통합, EMA 방법 제안 (§8)</td></tr>
+  </tbody>
+</table>
+
+<div class="callout sky">
+  <span class="callout-label">스터디 토론 질문</span>
+  <strong>1.</strong> 우리 ACEs 모형에서 "심리사회 매개(정서조절·대처·자존감)"를 어떤 지표로 측정해 생물·행동 층과 함께 볼 수 있는가? &nbsp; <strong>2.</strong> 초진단적 관점을 우리 결과변수 설계(자해·우울·신체 증상 통합)에 적용하면 무엇이 달라지는가? &nbsp; <strong>3.</strong> 두 경로(스트레스 민감화 vs 위협 회피) 중 우리 표본의 어떤 하위집단이 어느 경로에 더 가까운가?
+</div>
+
+<!-- Worksheet -->
+<div class="section-head" id="worksheet">
+  <div class="section-num">12</div>
+  <div class="section-title-block">
+    <h2>정리 활동: 세미나 워크시트</h2>
+    <p class="section-subtitle">입력 내용은 브라우저에 자동 저장됩니다</p>
+  </div>
+</div>
+
+<div class="worksheet">
+  <h4>① 네 층으로 내 연구 배치하기</h4>
+  <p class="prompt">내 관심 결과변수(예: 청소년 자해)를 분자·신경생물·심리사회·행동 네 층에 어떤 지표로 나눠 측정할 수 있을지 적어 보세요.</p>
+  <textarea data-key="q1" placeholder="분자: ... / 신경생물: ... / 심리사회: ... / 행동: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+<div class="worksheet">
+  <h4>② 두 경로로 사례 설명하기</h4>
+  <p class="prompt">스트레스 민감화 경로와 위협 회피 경로 중 하나를 골라, 내가 아는 사례나 우리 표본의 한 하위집단을 이 경로로 설명해 보세요.</p>
+  <textarea data-key="q2" placeholder="이 하위집단은 ... 경로에 가깝다. 왜냐하면 ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+<div class="worksheet">
+  <h4>③ 5대 권고 중 하나 실행 계획</h4>
+  <p class="prompt">다섯 권고 중 하나를 골라, 다음 연구에서 구체적으로 어떻게 충족할지 3 to 4문장으로 계획해 보세요. (예: MACE 척도 도입, EMA 설계)</p>
+  <textarea data-key="q3" placeholder="선택한 권고: ... / 실행 방법: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<!-- Closing -->
+<div class="closing">
+  <div class="closing-inner">
+    <h2>이 논문이 세미나에 남기는 메타 교훈</h2>
+    <p>이론은 <strong>새로운 발견이 아니라 더 나은 조직화</strong>로도 성장한다. Pasteuning과 동료들(2025)은 새 실험을 하지 않았다. 대신 분야마다 흩어져 있던 기제를 <strong>네 modality 곱하기 초진단 축</strong>이라는 지도 위에 다시 배치하고, "진단 범주에 갇히지 말라"는 관점 전환을 선언했다. 좋은 통합 리뷰는 문헌의 요약이 아니라, <strong>필드가 다음에 무엇을 물어야 하는지</strong>를 다섯 권고로 지정한다.</p>
+    <p>대학원생이 가져갈 교훈: 리뷰를 쓸 때는 "무엇을 모았는가"보다 <strong>"어떤 축으로 조직했는가"가 기여를 만든다.</strong> 그리고 통합 주장은 강하게 하되, 인과 방향과 매개 순서에 대해서는 아직 열려 있음을 정직하게 남겨 두어야 한다. 이 논문이 경로 ②의 신경생물-심리사회 연결을 "과소연구"라고 스스로 밝힌 것처럼.</p>
+    <div class="signature">Pasteuning et al. (2025). Neurobiology of Stress, 37, 100737. · AIR Lab Journal Club</div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(47,111,168,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#2f6fa8"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#2f6fa8"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<div class="footer">
+  본 페이지는 교육·세미나 목적의 비상업적 자료입니다. 원문은 CC BY 4.0 오픈액세스이며, Figure 1·2는 저작권 라이선스(CC BY)에 따라 출처를 표기해 인용했습니다. 통계 수치와 인용문은 원문 전문(PDF)을 근거로 합니다. 하단 SVG는 §7 서술을 교육용으로 재구성한 Lab 제작 도식입니다.
+</div>
+
+<script>
+  var PREFIX = 'jc_Pasteuning2025_';
+  function saveAll(){
+    document.querySelectorAll('textarea[data-key]').forEach(function(t){
+      try{ localStorage.setItem(PREFIX + t.dataset.key, t.value); }catch(e){}
+      var s = t.parentElement.querySelector('.save-status');
+      if(s){ s.classList.add('show'); setTimeout(function(){ s.classList.remove('show'); }, 1500); }
+    });
+  }
+  document.querySelectorAll('textarea[data-key]').forEach(function(t){
+    try{ var v = localStorage.getItem(PREFIX + t.dataset.key); if(v!==null) t.value = v; }catch(e){}
+    var timer=null;
+    t.addEventListener('input', function(){
+      clearTimeout(timer);
+      timer = setTimeout(function(){
+        try{ localStorage.setItem(PREFIX + t.dataset.key, t.value); }catch(e){}
+        var s = t.parentElement.querySelector('.save-status');
+        if(s){ s.classList.add('show'); setTimeout(function(){ s.classList.remove('show'); }, 1200); }
+      }, 500);
+    });
+  });
+</script>
+
+</body>
+</html>
