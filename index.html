@@ -1365,8 +1365,9 @@ footer {
       Dept. of Child Welfare<br>
       Chungbuk National University<br>
       N20-1, Rm. 104 · Cheongju, Korea
-      <div class="f-visitors">
-        <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fbokjiman.github.io%2Fairlab&label=Today&color=%232f6fa8&style=flat-square" alt="Today visitor count">
+      <div class="f-visitors" id="todayRow">
+        <span class="vc-label">Today Visitors</span>
+        <span id="todayHits" style="font-size:0.72rem;font-weight:700;color:#2f6fa8;background:#e8f1fa;border-radius:5px;padding:2px 9px;line-height:14px;">–</span>
       </div>
       <div class="f-visitors" style="margin-top:0.45rem">
         <span class="vc-label">Total Visitors</span>
@@ -1824,6 +1825,26 @@ document.querySelectorAll('.tr, .nc').forEach((el, i) => {
   el.style.transition = `opacity 0.38s ease ${i*0.04}s, transform 0.38s ease ${i*0.04}s`;
   io.observe(el);
 });
+
+/* ── Today visitor counter ──
+   hitscounter.dev 배지(오늘/누적 형식)를 fetch해서 '오늘' 숫자만 추출해 표시.
+   (배지의 두 숫자 중 작은 쪽 = 오늘. CORS 등으로 실패하면 원래 배지 이미지로 대체) */
+(function(){
+  var el = document.getElementById('todayHits');
+  if (!el) return;
+  var api = 'https://hitscounter.dev/api/hit?url=https%3A%2F%2Fbokjiman.github.io%2Fairlab&label=Today&color=%232f6fa8&style=flat-square';
+  fetch(api).then(function(r){ if(!r.ok) throw 0; return r.text(); }).then(function(svg){
+    var nums = (svg.match(/>([\d,]+)</g) || [])
+      .map(function(s){ return parseInt(s.replace(/[^\d]/g,''), 10); })
+      .filter(function(n){ return !isNaN(n); });
+    if (!nums.length) throw 0;
+    el.textContent = Math.min.apply(null, nums).toLocaleString();
+  }).catch(function(){
+    var img = document.createElement('img');
+    img.src = api; img.alt = 'Today visitor count'; img.style.height = '18px';
+    el.replaceWith(img);
+  });
+})();
 </script>
 </body>
 </html>
