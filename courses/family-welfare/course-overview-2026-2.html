@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>가족복지론 · 2026-2 운영 가이드</title>
+<style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+:root{
+  --font:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+  --rule:#e6ebf1; --off:#f4f7fb;
+  --blue:#2f6fa8; --blue-soft:#e8f1fa; --blue-bright:#6cb0e4;
+  --coral:#e0573e; --coral-soft:#fdeee9;
+  --mint:#3fa88a; --mint-soft:#e6f5f0;
+  --amber:#c78a1e; --amber-soft:#fbf1dc;
+  --gray-soft:#eef1f5;
+  --shadow:0 1px 2px rgba(36,64,102,.04),0 10px 30px rgba(36,64,102,.06);
+  --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font);color:var(--ink);background:#fff;line-height:1.7;font-size:15px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+.stripe{display:flex;height:3px}.stripe span{flex:1}
+.stripe .s1{background:var(--blue)}.stripe .s2{background:var(--blue-bright)}.stripe .s3{background:var(--coral)}.stripe .s4{background:var(--mint)}.stripe .s5{background:var(--amber)}
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid var(--rule)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:0 1.6rem;height:52px;gap:1rem}
+.nav-logo{font-weight:700;font-size:.92rem}
+.nav-links{display:flex;gap:1rem;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-size:.78rem;color:var(--mid);text-decoration:none;white-space:nowrap}
+.nav-links a:hover{color:var(--blue)}
+.hero{background:linear-gradient(180deg,var(--blue-soft) 0%,rgba(243,248,253,.5) 55%,#fff 100%)}
+.hero-inner{max-width:1180px;margin:0 auto;padding:44px 1.6rem 40px}
+.overline{display:inline-flex;align-items:center;gap:.6rem;font-size:.66rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+.overline::before{content:'';width:26px;height:1.5px;background:var(--blue)}
+.hero h1{margin:0;font-size:clamp(26px,4vw,40px);line-height:1.18;font-weight:800;letter-spacing:-.03em}
+.hero h1 em{color:var(--blue);font-style:normal}
+.hero .sub{margin-top:14px;max-width:820px;color:var(--mid);font-size:15.5px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.stat{background:#fff;border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 16px;box-shadow:var(--shadow)}
+.stat .num{font-size:17px;font-weight:800;color:var(--blue);display:block;line-height:1.2}
+.stat .lbl{font-size:11.5px;color:var(--light);margin-top:2px}
+.container{max-width:1180px;margin:0 auto;padding:0 1.6rem 100px}
+section[id]{scroll-margin-top:64px}
+.section-head{display:flex;gap:14px;align-items:flex-start;margin:52px 0 8px}
+.section-num{font-size:13px;font-weight:800;color:#fff;background:var(--blue);min-width:40px;height:26px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;margin-top:3px}
+.section-head h2{margin:0;font-size:22px;font-weight:800;letter-spacing:-.02em}
+.section-sub{margin:2px 0 0;font-size:13px;color:var(--light)}
+p.lead{color:var(--mid);margin:10px 0 18px;max-width:860px}
+/* ── activity badge system ── */
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:var(--r-pill);white-space:nowrap}
+.b-sp{background:var(--blue-soft);color:var(--blue)}
+.b-jc{background:var(--coral-soft);color:var(--coral)}
+.b-il{background:var(--mint-soft);color:#2c7a63}
+.b-pp{background:var(--amber-soft);color:#9a6b12}
+.b-free{background:var(--gray-soft);color:var(--light)}
+.b-zoom{background:#20262e;color:#fff}
+.type-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-top:16px}
+.type-card{background:#fff;border:1px solid var(--rule);border-left:4px solid var(--rule);border-radius:var(--r-md);padding:16px 18px;box-shadow:var(--shadow)}
+.type-card.tc-sp{border-left-color:var(--blue)}
+.type-card.tc-jc{border-left-color:var(--coral)}
+.type-card.tc-il{border-left-color:var(--mint)}
+.type-card.tc-pp{border-left-color:var(--amber)}
+.type-card.tc-x{border-left-color:var(--xlight)}
+.type-card h3{margin:0 0 6px;font-size:15.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.type-card .who{font-size:12px;font-weight:700;color:var(--light);margin-bottom:6px}
+.type-card p{margin:0;font-size:13.5px;color:var(--mid);line-height:1.75}
+.type-card p b{color:var(--ink)}
+/* ── timebox bar ── */
+.flowbox{background:#fff;border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;box-shadow:var(--shadow);margin-top:16px}
+.flowbox h3{margin:0 0 4px;font-size:15px}
+.flowbox .fb-sub{font-size:12px;color:var(--light);margin-bottom:14px}
+.tbar{display:flex;width:100%;height:46px;border-radius:9px;overflow:hidden;gap:2px;background:#fff}
+.tseg{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;line-height:1.25;text-align:center;padding:2px 4px;min-width:0}
+.tseg small{font-weight:600;font-size:10px;opacity:.92}
+.tseg.sp{background:var(--blue)}.tseg.jc{background:var(--coral)}.tseg.il{background:var(--mint)}.tseg.pp{background:var(--amber)}
+.tseg.op{background:#8a97a6}.tseg.rest{background:var(--gray-soft);color:var(--mid)}
+.tcap{display:flex;justify-content:space-between;font-size:11px;color:var(--xlight);margin-top:5px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--mid)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+/* ── semester strip ── */
+.sem-strip{display:grid;grid-template-columns:repeat(15,1fr);gap:4px;margin-top:16px}
+.wk-cell{border-radius:8px;padding:7px 4px 6px;text-align:center;font-size:10.5px;font-weight:700;color:#fff;cursor:pointer;transition:.15s;border:none;font-family:inherit;line-height:1.3}
+.wk-cell small{display:block;font-weight:600;font-size:9px;opacity:.9;margin-top:1px}
+.wk-cell:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.ph-a{background:var(--blue)}.ph-b{background:var(--coral)}.ph-c{background:#8a97a6}.ph-d{background:#20262e}.ph-e{background:var(--mint)}.ph-f{background:var(--amber)}
+.sem-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--mid)}
+/* ── accordion weeks ── */
+details.week{background:#fff;border:1px solid var(--rule);border-radius:var(--r-md);margin:10px 0;box-shadow:var(--shadow);overflow:hidden}
+details.week[open]{border-color:var(--blue-bright)}
+details.week summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 18px;flex-wrap:wrap}
+details.week summary::-webkit-details-marker{display:none}
+.wk-no{min-width:52px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;flex-shrink:0}
+.wk-title{flex:1;min-width:220px}
+.wk-title .en{display:block;font-weight:750;font-size:14.5px}
+.wk-title .ko{display:block;font-size:12px;color:var(--light);margin-top:1px}
+.wk-badges{display:flex;gap:6px;flex-wrap:wrap}
+.chev{margin-left:auto;color:var(--xlight);transition:.2s;font-size:13px;flex-shrink:0}
+details[open] .chev{transform:rotate(180deg)}
+.wk-body{border-top:1px solid var(--rule);padding:16px 18px 18px;background:#fcfdfe}
+.wk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-bottom:14px}
+.wk-item{background:#fff;border:1px solid var(--rule);border-radius:var(--r-sm);padding:10px 13px;font-size:13px;color:var(--mid);line-height:1.65}
+.wk-item .k{display:block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin-bottom:3px}
+.wk-item b{color:var(--ink)}
+.mini-label{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--light);text-transform:uppercase;margin:10px 0 6px}
+.tbar.mini{height:38px}
+.note{font-size:12.5px;color:var(--mid);background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:9px 13px;margin-top:12px;line-height:1.7}
+.note b{color:var(--blue)}
+.toolrow{display:flex;gap:8px;margin:14px 0 4px}
+.tool-btn{background:var(--blue);color:#fff;border:none;padding:7px 15px;border-radius:var(--r-pill);font-size:.76rem;font-weight:700;cursor:pointer;font-family:inherit}
+.tool-btn.ghost{background:#fff;color:var(--blue);border:1px solid var(--rule)}
+.tool-btn:hover{filter:brightness(1.08)}
+/* ── slots ── */
+.slot-wrap{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.slot{border-radius:9px;padding:8px 12px;font-size:12px;font-weight:700;background:var(--blue-soft);color:var(--blue);border:1px solid #cfe2f5}
+.slot small{display:block;font-weight:600;font-size:10.5px;color:var(--light)}
+.slot.extra{background:#fff;border:1.5px dashed var(--blue-bright)}
+/* ── assessment ── */
+.abar{display:flex;width:100%;height:52px;border-radius:10px;overflow:hidden;gap:2px;margin-top:16px}
+.aseg{display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;font-size:11.5px;font-weight:750;text-align:center;line-height:1.3;padding:2px 4px;min-width:0}
+.aseg small{font-size:10px;font-weight:600;opacity:.92}
+.atable{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
+.atable th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--light);text-align:left;padding:7px 10px;border-bottom:1.5px solid var(--rule)}
+.atable td{padding:8px 10px;border-bottom:1px solid var(--rule);color:var(--mid)}
+.atable td:first-child{font-weight:700;color:var(--ink)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+/* ── milestones ── */
+.mile-track{display:flex;gap:6px;overflow-x:auto;padding:14px 2px 6px;margin-top:8px}
+.mile{min-width:118px;background:#fff;border:1px solid var(--rule);border-top:4px solid var(--amber);border-radius:var(--r-sm);padding:9px 11px;font-size:12px;color:var(--mid);position:relative;box-shadow:var(--shadow)}
+.mile .mw{font-size:10px;font-weight:800;color:var(--amber);letter-spacing:.06em}
+.mile b{display:block;color:var(--ink);font-size:12.5px;margin:2px 0 1px}
+.mile.major{border-top-color:var(--coral);background:var(--coral-soft)}
+.mile.major .mw{color:var(--coral)}
+.footer{max-width:1180px;margin:0 auto;padding:22px 1.6rem 56px;color:var(--light);font-size:12px;border-top:1px solid var(--rule);line-height:1.7}
+@media(max-width:760px){.sem-strip{grid-template-columns:repeat(5,1fr)}.tseg small{display:none}}
+</style>
+</head>
+<body>
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+<nav><div class="nav-inner">
+  <div class="nav-logo">🏡 가족복지론 <span style="color:var(--light);font-weight:500">2026-2</span></div>
+  <ul class="nav-links">
+    <li><a href="#types">수업 구성요소</a></li>
+    <li><a href="#flow">한 주의 흐름</a></li>
+    <li><a href="#semester">학기 지도</a></li>
+    <li><a href="#weeks">주차별 상세</a></li>
+    <li><a href="#slots">조별 발표</a></li>
+    <li><a href="#grade">평가</a></li>
+    <li><a href="#track">TSL 실천 트랙</a></li>
+  </ul>
+</div></nav>
+
+<header class="hero"><div class="hero-inner">
+  <div class="overline">Undergraduate · 전공선택 · Seniors · Mondays 06-08</div>
+  <h1>가족에게 직접 실천하며 배우는<br><em>TSL 가족복지</em></h1>
+  <p class="sub">이론(가족복지의 개념·정책·대상별 이해)과 실천(TSL Practice)을 매주 병행합니다. <b>T(Thank you, 고맙습니다) → S(Sorry, 미안합니다·용서합니다) → L(Love, 사랑합니다)</b> 세 마디를 한 학기에 걸쳐 순서대로 실천하고, 회상(Recall)·인정(Recognize)·실현(Realize)·강화(Reinforce)·재충전(Refresh)의 5Re 리듬으로 자기 가족과의 관계를 다시 씁니다.</p>
+  <div class="hero-meta">
+    <div class="stat"><span class="num">이론 Ch × Practice</span><span class="lbl">주교재·부교재 병행, 매주 짝을 이룸</span></div>
+    <div class="stat"><span class="num">T · S · L 3부</span><span class="lbl">5Re 리듬으로 한 학기 완주</span></div>
+    <div class="stat"><span class="num">매주 실천 과제</span><span class="lbl">가족(또는 소중한 사람) 대상 · 조별발표 9회</span></div>
+    <div class="stat"><span class="num">기말 Story Book</span><span class="lbl">15주 실천 전체를 담은 개인 포트폴리오</span></div>
+  </div>
+</div></header>
+
+<div class="container">
+
+<!-- 01 구성요소 -->
+<section id="types">
+  <div class="section-head"><div class="section-num">01</div><div><h2>수업 구성요소: 이론과 실천이 매주 짝을 이룹니다</h2><p class="section-sub">아래 색과 배지는 이 페이지 전체(한 주 흐름, 학기 지도, 주차 카드, 평가)에서 동일하게 쓰입니다.</p></div></div>
+  <div class="type-grid">
+    <div class="type-card tc-il">
+      <h3>🎓 이론 강의 <span class="badge b-il">Ch · 매주</span></h3>
+      <div class="who">누가: 교수 · 매주 약 50분</div>
+      <p>가족의 의미와 기능, 가족복지의 관점과 정책, 대상별 가족 문제(영케어러, 은둔고립청년, 수용자 자녀, 중독, 가정폭력 등)를 주교재·부교재 단원으로 강의합니다. <b>매주 강의안을 배포하므로 교재를 반드시 구매할 필요는 없습니다</b>(심화 학습 희망 시 구매 가능).</p>
+    </div>
+    <div class="type-card tc-sp">
+      <h3>💬 TSL Practice <span class="badge b-sp">Practice · 매주</span></h3>
+      <div class="who">누가: 전원 · 매주 약 40분 · 실행 계획 20분</div>
+      <p>그 주의 실천법(존재에 대한 감사, 용서, 사랑의 표현 등)을 배우고 <b>실행 계획</b>을 세웁니다. T → S → L 순서로 진행되며, 앞 단계의 지속 실천(기본과제)이 누적됩니다.</p>
+    </div>
+    <div class="type-card tc-jc">
+      <h3>🗣️ 실천 나눔 <span class="badge b-jc">나눔 · 매주</span></h3>
+      <div class="who">누가: 전원 · 매주 약 30분 · 조별·전체 공유</div>
+      <p>지난주 과제의 실천 경험(계획, 실행, 상대방의 반응, 나의 반응)을 나누고 피드백합니다. <b>가족 사례는 비식별화 원칙, 공개는 자율</b>이며, 수업 내 공유 내용은 철저히 비밀보장 원칙을 따릅니다.</p>
+    </div>
+    <div class="type-card tc-pp">
+      <h3>📝 주간 과제 + Story Book <span class="badge b-pp">과제 · 매주 / 기말</span></h3>
+      <div class="who">누가: 전원 · 매주 실천 기록지 · 기말 개인 포트폴리오</div>
+      <p>매주 실천 기록지(누구에게, 계획, 실행 여부, 실제 표현 방법, 상대방의 반응, 나의 반응)를 제출합니다. 기말에는 15주 실천 전체를 정리한 <b>Story Book</b>(들어가며, 주차별 변화, T·S·L별 총평과 5Re, 앞으로의 각오)을 제출합니다.</p>
+    </div>
+    <div class="type-card tc-x">
+      <h3>🎤 전문가 초빙 특강 <span class="badge b-zoom">9주차</span></h3>
+      <div class="who">가족복지 전문가 · 가족스트레스 주간</div>
+      <p>가족복지 전문가를 초빙해 현장의 이야기를 듣습니다. 세부 주제·형식은 개강 후 공지됩니다.</p>
+    </div>
+    <div class="type-card tc-x">
+      <h3>✍️ 시험 <span class="badge b-free">8주 · 15주</span></h3>
+      <div class="who">중간고사 · 기말고사</div>
+      <p>중간고사(8주)와 기말고사(15주)를 치릅니다. 범위·형식은 강의에서 안내합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 한 주의 흐름 -->
+<section id="flow">
+  <div class="section-head"><div class="section-num">02</div><div><h2>표준 주간 흐름 (3시간 연강 · 170분)</h2><p class="section-sub">나눔 → 이론 → 실천법 → 계획의 리듬이 매주 반복됩니다. 특수 주(1·8·9·15주)는 아래 주차 카드를 참조하세요.</p></div></div>
+  <div class="flowbox">
+    <h3>🕐 월요일 06-08교시, 이렇게 흘러갑니다</h3>
+    <div class="fb-sub">막대 길이 = 시간 비중. 색 = 위 구성요소와 동일. 시간 배분은 제안값이며 나눔 분량이 많은 주는 강의를 압축합니다.</div>
+    <div class="tbar" role="img" aria-label="170분 구성: 오프닝과 출석 10분, 실천 나눔 30분, 이론 강의 50분, 휴식 10분, TSL Practice 40분, 실행 계획 작성과 조별 점검 20분, 정리와 과제 안내 10분">
+      <div class="tseg op" style="flex:10"><span>오프닝</span><small>10′</small></div>
+      <div class="tseg jc" style="flex:30"><span>🗣️ 실천 나눔</span><small>30′</small></div>
+      <div class="tseg il" style="flex:50"><span>🎓 이론 강의 (Ch)</span><small>50′</small></div>
+      <div class="tseg rest" style="flex:10"><span>☕</span><small>10′</small></div>
+      <div class="tseg sp" style="flex:40"><span>💬 TSL Practice</span><small>40′</small></div>
+      <div class="tseg sp" style="flex:20;opacity:.75"><span>실행 계획</span><small>20′</small></div>
+      <div class="tseg op" style="flex:10"><span>정리·과제</span><small>10′</small></div>
+    </div>
+    <div class="tcap"><span>시작</span><span>~85′</span><span>종료 (170′)</span></div>
+    <div class="legend">
+      <span><i style="background:var(--mint)"></i>이론 강의</span>
+      <span><i style="background:var(--blue)"></i>TSL Practice</span>
+      <span><i style="background:var(--coral)"></i>실천 나눔</span>
+      <span><i style="background:var(--amber)"></i>주간 과제·Story Book</span>
+      <span><i style="background:#8a97a6"></i>운영·시험</span>
+      <span><i style="background:var(--gray-soft);border:1px solid var(--rule)"></i>휴식</span>
+    </div>
+    <div class="note">💡 이 수업은 <b>학생들이 직접 수행한 과제를 바탕으로 수업 시간이 이루어지는</b> 학생 중심 수업입니다. 매주 가족(또는 소중한 사람)과의 의사소통 과제가 부여되므로 일정 수준의 자기 개방과 실질적 참여가 필요합니다.</div>
+  </div>
+</section>
+
+<!-- 03 학기 지도 -->
+<section id="semester">
+  <div class="section-head"><div class="section-num">03</div><div><h2>학기 한눈에 보기: 15주 지도</h2><p class="section-sub">색 = T·S·L 세션. 칸을 누르면 해당 주차 상세로 이동합니다.</p></div></div>
+  <div class="sem-strip">
+    <button class="wk-cell ph-c" onclick="go(1)">W1<small>OT 🧭</small></button>
+    <button class="wk-cell ph-a" onclick="go(2)">W2<small>서약 · P1·2</small></button>
+    <button class="wk-cell ph-a" onclick="go(3)">W3<small>감사 T</small></button>
+    <button class="wk-cell ph-a" onclick="go(4)">W4<small>영케어러</small></button>
+    <button class="wk-cell ph-a" onclick="go(5)">W5<small>은둔고립</small></button>
+    <button class="wk-cell ph-a" onclick="go(6)">W6<small>수용자 자녀</small></button>
+    <button class="wk-cell ph-b" onclick="go(7)">W7<small>용서 S</small></button>
+    <button class="wk-cell ph-c" onclick="go(8)">W8<small>중간 ✍️</small></button>
+    <button class="wk-cell ph-d" onclick="go(9)">W9<small>특강 🎤</small></button>
+    <button class="wk-cell ph-b" onclick="go(10)">W10<small>가정폭력</small></button>
+    <button class="wk-cell ph-b" onclick="go(11)">W11<small>권력과 사랑</small></button>
+    <button class="wk-cell ph-e" onclick="go(12)">W12<small>사랑 L</small></button>
+    <button class="wk-cell ph-e" onclick="go(13)">W13<small>의사소통</small></button>
+    <button class="wk-cell ph-f" onclick="go(14)">W14<small>총평 📖</small></button>
+    <button class="wk-cell ph-c" onclick="go(15)">W15<small>기말 ✍️</small></button>
+  </div>
+  <div class="sem-legend">
+    <span><i class="dot" style="background:var(--blue)"></i>T 세션 · 고맙습니다 (2~6주)</span>
+    <span><i class="dot" style="background:var(--coral)"></i>S 세션 · 미안합니다·용서합니다 (7~11주)</span>
+    <span><i class="dot" style="background:var(--mint)"></i>L 세션 · 사랑합니다 (12~13주)</span>
+    <span><i class="dot" style="background:var(--amber)"></i>총평·Story Book</span>
+    <span><i class="dot" style="background:#20262e"></i>전문가 특강</span>
+    <span><i class="dot" style="background:#8a97a6"></i>운영·시험</span>
+  </div>
+  <div class="note">📚 <b>배치 규칙</b>: 각 세션은 5Re(회상 → 인정 → 실현 → 강화 → 재충전)의 순서를 따르며, 기본과제(앞 단계의 지속 실천)가 누적됩니다. 이론은 대상별 이해(영케어러 → 은둔고립청년 → 수용자 자녀 → 중독 → 가정폭력 → 경계선지능 → 정신질환 부모 → 자살시도·사망자 가족)가 나란히 진행됩니다. T·S·L 세션의 주차 경계와 Practice별 매핑은 실천 진행에 따라 조정될 수 있으며 개강 주에 확정·공지됩니다.</div>
+</section>
+
+<!-- 04 주차별 상세 -->
+<section id="weeks">
+  <div class="section-head"><div class="section-num">04</div><div><h2>주차별 상세: 눌러서 펼쳐 보세요</h2><p class="section-sub">각 카드: 이론 / 실천법 / 이번 주 과제 / 나눔. 특수 주는 자체 시간 흐름 포함.</p></div></div>
+  <div class="toolrow">
+    <button class="tool-btn" onclick="toggleAll(true)">전체 펼치기</button>
+    <button class="tool-btn ghost" onclick="toggleAll(false)">전체 접기</button>
+  </div>
+
+  <details class="week" id="w1"><summary>
+    <span class="wk-no" style="background:#8a97a6">W1</span>
+    <span class="wk-title"><span class="en">🧭 Orientation: Understanding the Family</span><span class="ko">수업 전반 소개 및 가족에 대한 이해</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 이론</span><span class="badge b-free">과제 없음</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>주교재 1장 · 부교재 1장</b>: 가족의 의미, 이 수업이 이론과 실천을 병행하는 이유</div>
+        <div class="wk-item"><span class="k">💬 실천법</span>TSL 개관: T → S → L 세 마디와 5Re 리듬 소개</div>
+        <div class="wk-item"><span class="k">🗣️ 이 주에 하는 일</span>강좌 설계·평가 안내, 매주 과제 부여 방식과 자기 개방 수준 안내, 질의응답</div>
+      </div>
+      <div class="mini-label">이 주의 흐름</div>
+      <div class="tbar mini">
+        <div class="tseg op" style="flex:40"><span>강좌 소개·운영 방식</span><small>40′</small></div>
+        <div class="tseg il" style="flex:50"><span>🎓 강의: 가족에 대한 이해</span><small>50′</small></div>
+        <div class="tseg rest" style="flex:10"><span>☕</span></div>
+        <div class="tseg sp" style="flex:45"><span>💬 TSL 개관</span><small>45′</small></div>
+        <div class="tseg op" style="flex:25"><span>질문·정리</span><small>25′</small></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w2"><summary>
+    <span class="wk-no" style="background:var(--blue)">W2</span>
+    <span class="wk-title"><span class="en">🤝 Understanding Family Welfare + Practice 1·2</span><span class="ko">가족복지에 대한 이해: 가족 정의, 사회변동과 가족 변화, 한국의 가족</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 이론</span><span class="badge b-sp">💬 P1·2</span><span class="badge b-pp">🔒 서약</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>주교재 1·2장 · 부교재 2장</b></div>
+        <div class="wk-item"><span class="k">💬 실천법</span><b>Practice 1·2</b>: T 세션 시작, 가족을 회상하기(Recall)</div>
+        <div class="wk-item"><span class="k">📝 이번 주 과제</span>Practice 1·2 실천 기록지</div>
+        <div class="wk-item"><span class="k">🔒 운영</span><b>비밀유지 서약서 작성</b>: 수업 내 공유 내용은 강의실 밖으로 나가지 않습니다</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w3"><summary>
+    <span class="wk-no" style="background:var(--blue)">W3</span>
+    <span class="wk-title"><span class="en">🙏 Policy + Gratitude for Being</span><span class="ko">가족복지정책 / 인성발달과 존재에 대한 감사</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 이론</span><span class="badge b-sp">💬 P3</span><span class="badge b-jc">🗣️ 나눔</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>주교재 3장 · 부교재 3장</b>: 가족복지 정책대상, 지원유형, 관련 법률</div>
+        <div class="wk-item"><span class="k">💬 실천법</span><b>존재에 대한 감사</b>(T: 인정 Recognize): 가족이 존재한다는 것 자체에 대한 감사</div>
+        <div class="wk-item"><span class="k">📝 이번 주 과제</span>Practice 3 실천 기록지 + 기본과제(앞 단계 지속 실천)</div>
+        <div class="wk-item"><span class="k">🗣️ 나눔</span>Practice 1·2 실천 경험 공유</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w4"><summary>
+    <span class="wk-no" style="background:var(--blue)">W4</span>
+    <span class="wk-title"><span class="en">🧑‍🦽 Families in Focus 1: Young Carers</span><span class="ko">가족복지 대상의 이해 1: 영케어러가 있는 가족 / 가족복지실천 과정</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 이론</span><span class="badge b-sp">💬 P4</span><span class="badge b-jc">📣 조별발표 1</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>주교재 4장 · 부교재 5·6장</b>: 영케어러가 있는 가족, 실천 과정(인테이크·사정·개입·종결)</div>
+        <div class="wk-item"><span class="k">💬 실천법</span>Practice 4 (T 세션 계속)</div>
+        <div class="wk-item"><span class="k">📝 이번 주 과제</span>Practice 4 실천 기록지 + 기본과제</div>
+        <div class="wk-item"><span class="k">📣 조별발표 1</span>발표 후 동료평가 반영</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w5"><summary>
+    <span class="wk-no" style="background:var(--blue)">W5</span>
+    <span class="wk-title"><span class="en">🚪 Families in Focus 2: Reclusive Youth</span><span class="ko">가족복지 대상의 이해 2: 은둔고립청년이 있는 가족 / 가족치료 개관</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 이론</span><span class="badge b-sp">💬 P5</span><span class="badge b-jc">📣 조별발표 2</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>주교재 5장 · 부교재 7·8장</b>: 은둔고립청년이 있는 가족, 가족치료 개념·이론·발달배경, 가족사회학 패러다임</div>
+        <div class="wk-item"><span class="k">💬 실천법</span>Practice 5 (T: 실현 Realize)</div>
+        <div class="wk-item"><span class="k">📝 이번 주 과제</span>Practice 5 실천 기록지 + 기본과제</div>
+        <div class="wk-item"><span class="k">📣 조별발표 2</span></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w6"><summary>
+    <span class="wk-no" style="background:var(--blue)">W6</span>
+    <span class="wk-title"><span class="en">👨‍👧 Families in Focus 3: Children of Incarcerated Parents</span><span class="ko">가족복지 대상의 이해 3: 수용자 자녀와 가족 / 현대가족의 특징</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 이론</span><span class="badge b-sp">💬 P6</span><span class="badge b-jc">📣 조별발표 3</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>주교재 6장</b>: 수용자 자녀와 가족, 현대가족의 특징</div>
+        <div class="wk-item"><span class="k">💬 실천법</span>Practice 6 (T: 강화 Reinforce)</div>
+        <div class="wk-item"><span class="k">📝 이번 주 과제</span>Practice 6 실천 기록지 + 기본과제</div>
+        <div class="wk-item"><span class="k">📣 조별발표 3</span></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w7"><summary>
+    <span class="wk-no" style="background:var(--coral)">W7</span>
+    <span class="wk-title"><span class="en">🕊️ Families in Focus 4: Addiction + Conflict & Forgiveness</span><span class="ko">가족복지 대상의 이해 4: 중독문제가 있는 가족 / 가족갈등과 용서</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 이론</span><span class="badge b-sp">💬 P7 · S 시작</span><span class="badge b-jc">📣 조별발표 4</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>부교재 8장</b>: 중독문제가 있는 가족, 가족갈등과 용서</div>
+        <div class="wk-item"><span class="k">💬 실천법</span><b>S 세션 시작</b>(미안합니다·용서합니다: 회상 Recall): Practice 7</div>
+        <div class="wk-item"><span class="k">📝 이번 주 과제</span>Practice 7 실천 기록지 + 기본과제(T 지속)</div>
+        <div class="wk-item"><span class="k">📣 조별발표 4</span></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w8"><summary>
+    <span class="wk-no" style="background:#8a97a6">W8</span>
+    <span class="wk-title"><span class="en">✍️ Midterm Exam</span><span class="ko">중간고사</span></span>
+    <span class="wk-badges"><span class="badge b-free">대면시험</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">✍️ 시험</span>중간고사(범위·형식은 강의에서 안내)</div>
+        <div class="wk-item"><span class="k">📝 실천은 계속</span>시험 주에도 기본과제(T·S 지속 실천)는 이어집니다</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w9"><summary>
+    <span class="wk-no" style="background:#20262e">W9</span>
+    <span class="wk-title"><span class="en">🎤 Family Stress + Invited Expert Lecture</span><span class="ko">가족스트레스 / 가족복지 전문가 초빙 특강</span></span>
+    <span class="wk-badges"><span class="badge b-zoom">🎤 특강</span><span class="badge b-il">🎓 이론</span><span class="badge b-sp">💬 P8</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>주교재 8장</b>: 가족스트레스</div>
+        <div class="wk-item"><span class="k">🎤 특강</span>가족복지 전문가 초빙 특강(세부 주제·형식은 개강 후 공지)</div>
+        <div class="wk-item"><span class="k">📝 이번 주 과제</span>Practice 8 실천 기록지 + 기본과제</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w10"><summary>
+    <span class="wk-no" style="background:var(--coral)">W10</span>
+    <span class="wk-title"><span class="en">🛑 Families in Focus 5: Family Violence</span><span class="ko">가족복지 대상의 이해 5: 가정폭력 가정·아동학대, 배우자폭력 가족 / 가족권력 1 ※민감 주제 사전 고지</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 이론</span><span class="badge b-sp">💬 P9</span><span class="badge b-jc">📣 조별발표 5</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>주교재 9장 · 부교재 9장</b>: 가정폭력 가정·아동학대, 배우자폭력 가족, 가족권력 1(부모-자녀 권력 관계)</div>
+        <div class="wk-item"><span class="k">💬 실천법</span>Practice 9 (S: 인정 Recognize)</div>
+        <div class="wk-item"><span class="k">📝 이번 주 과제</span>Practice 9 실천 기록지 + 기본과제</div>
+        <div class="wk-item"><span class="k">📣 조별발표 5</span></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w11"><summary>
+    <span class="wk-no" style="background:var(--coral)">W11</span>
+    <span class="wk-title"><span class="en">⚖️ Families in Focus 6: Borderline Intellectual Functioning</span><span class="ko">가족복지 대상의 이해 6: 경계선지능인이 있는 가정 / 가족권력 2: 부부간 갈등, 권력과 사랑</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 이론</span><span class="badge b-sp">💬 P10</span><span class="badge b-jc">📣 조별발표 6</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>주교재 10장 · 부교재 9장</b>: 경계선지능인이 있는 가정, 부부간 갈등, 권력과 사랑</div>
+        <div class="wk-item"><span class="k">💬 실천법</span>Practice 10 (S: 실현·강화 Realize·Reinforce)</div>
+        <div class="wk-item"><span class="k">📝 이번 주 과제</span>Practice 10 실천 기록지 + 기본과제</div>
+        <div class="wk-item"><span class="k">📣 조별발표 6</span></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w12"><summary>
+    <span class="wk-no" style="background:var(--mint)">W12</span>
+    <span class="wk-title"><span class="en">❤️ Families in Focus 7: Parental Mental Illness + The Meaning of Love</span><span class="ko">가족복지 대상의 이해 7: 정신질환을 가진 부모가 있는 가족 / 가족 사랑의 의미 ※민감 주제 사전 고지</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 이론</span><span class="badge b-sp">💬 P11 · L 시작</span><span class="badge b-jc">📣 조별발표 7</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>주교재 11장 · 부교재 11장</b>: 정신질환을 가진 부모가 있는 가족, 가족 사랑의 의미</div>
+        <div class="wk-item"><span class="k">💬 실천법</span><b>L 세션 시작</b>(사랑합니다: 회상·인정): Practice 11</div>
+        <div class="wk-item"><span class="k">📝 이번 주 과제</span>Practice 11 실천 기록지 + 기본과제(T·S 지속)</div>
+        <div class="wk-item"><span class="k">📣 조별발표 7</span></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w13"><summary>
+    <span class="wk-no" style="background:var(--mint)">W13</span>
+    <span class="wk-title"><span class="en">💬 Families in Focus 8: Suicide-Bereaved Families + Positive Communication</span><span class="ko">가족복지 대상의 이해 8: 자살시도(사망)자의 가족 / 가족 긍정적 의사소통, 결혼과 부부관계 ※민감 주제 사전 고지</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 이론</span><span class="badge b-sp">💬 P12·13</span><span class="badge b-jc">📣 조별발표 8</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>주교재 12·13장 · 부교재 12장</b>: 자살시도(사망)자의 가족, 가족 긍정적 의사소통, 결혼과 부부관계</div>
+        <div class="wk-item"><span class="k">💬 실천법</span>Practice 12·13 (L: 실현·강화)</div>
+        <div class="wk-item"><span class="k">📝 이번 주 과제</span>Practice 12·13 실천 기록지 + 기본과제</div>
+        <div class="wk-item"><span class="k">📣 조별발표 8</span></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w14"><summary>
+    <span class="wk-no" style="background:var(--amber)">W14</span>
+    <span class="wk-title"><span class="en">📖 Synthesis + Story Book</span><span class="ko">총평: 한 학기 실천의 정리와 Story Book 작성 지원</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 이론</span><span class="badge b-sp">💬 P14</span><span class="badge b-jc">📣 조별발표 9</span><span class="badge b-pp">📖 Story Book</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">🎓 이론</span><b>주교재 14장</b>: 총평</div>
+        <div class="wk-item"><span class="k">💬 실천법</span>Practice 14 (재충전 Refresh): 15주 실천을 돌아보며 T·S·L을 하나로 잇습니다</div>
+        <div class="wk-item"><span class="k">📖 Story Book</span>구성(들어가며 / 주차별 변화 / T·S·L별 총평: 5단계 발달 평가 + 5Re / 총평·앞으로의 각오) 안내와 작성 지원. 제출 시점은 개강 주에 확정·공지</div>
+        <div class="wk-item"><span class="k">📣 조별발표 9</span>마지막 조별발표</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w15"><summary>
+    <span class="wk-no" style="background:#8a97a6">W15</span>
+    <span class="wk-title"><span class="en">✍️ Final Exam</span><span class="ko">기말고사</span></span>
+    <span class="wk-badges"><span class="badge b-free">대면시험</span><span class="badge b-pp">📖 Story Book 제출</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">✍️ 시험</span>기말고사(범위·형식은 강의에서 안내)</div>
+        <div class="wk-item"><span class="k">📖 Story Book</span>15주 실천 전체를 담은 개인 포트폴리오 제출(구체적 제출 시점·방식은 개강 주 확정)</div>
+      </div>
+    </div>
+  </details>
+</section>
+
+<!-- 05 조별 발표 -->
+<section id="slots">
+  <div class="section-head"><div class="section-num">05</div><div><h2>조별 발표: 9개 주차</h2><p class="section-sub">학기 중 1회 이상 조별 발표가 있으며, 발표 후 동료평가에 따라 점수가 차등 부여됩니다.</p></div></div>
+  <div class="slot-wrap">
+    <div class="slot">발표 1 · W4<small>영케어러가 있는 가족</small></div>
+    <div class="slot">발표 2 · W5<small>은둔고립청년이 있는 가족</small></div>
+    <div class="slot">발표 3 · W6<small>수용자 자녀와 가족</small></div>
+    <div class="slot">발표 4 · W7<small>중독문제가 있는 가족</small></div>
+    <div class="slot">발표 5 · W10<small>가정폭력·아동학대</small></div>
+    <div class="slot">발표 6 · W11<small>경계선지능인이 있는 가정</small></div>
+    <div class="slot">발표 7 · W12<small>정신질환을 가진 부모</small></div>
+    <div class="slot">발표 8 · W13<small>자살시도(사망)자의 가족</small></div>
+    <div class="slot extra">발표 9 · W14<small>총평 주간</small></div>
+  </div>
+  <div class="note">🙋 조 편성과 조별 발표 주제의 세부 배정은 개강 후 확정·공지됩니다. 발표는 그 주의 "가족복지 대상의 이해" 주제와 연동됩니다.</div>
+</section>
+
+<!-- 06 평가 -->
+<section id="grade">
+  <div class="section-head"><div class="section-num">06</div><div><h2>평가 구조: 무엇이 몇 %인가</h2><p class="section-sub">중간 25 · 기말 25 · 출석 10 · 기타 40(참여: 토론·발표·과제 성실성 등). 총 100%.</p></div></div>
+  <div class="abar" role="img" aria-label="평가 구성: 중간고사 25%, 기말고사 25%, 참여(주간 과제, 조별 발표, 실천 나눔) 40%, 출석 10%">
+    <div class="aseg" style="flex:25;background:var(--amber)"><span>✍️ 중간고사</span><small>25%</small></div>
+    <div class="aseg" style="flex:25;background:#a8750f"><span>✍️ 기말고사</span><small>25%</small></div>
+    <div class="aseg" style="flex:40;background:var(--coral)"><span>🗣️ 참여: 과제·발표·나눔</span><small>40%</small></div>
+    <div class="aseg" style="flex:10;background:#8a97a6"><span>✅ 출석</span><small>10%</small></div>
+  </div>
+  <table class="atable">
+    <tr><th>항목</th><th>배점</th><th>내용</th></tr>
+    <tr><td><i class="dot" style="background:var(--amber)"></i>중간고사</td><td>25%</td><td>8주차 · 범위·형식은 강의에서 안내</td></tr>
+    <tr><td><i class="dot" style="background:#a8750f"></i>기말고사</td><td>25%</td><td>15주차 · 범위·형식은 강의에서 안내</td></tr>
+    <tr><td><i class="dot" style="background:var(--coral)"></i>참여</td><td>40%</td><td>매주 실천 과제(기록지) 제출, 학기 중 1회 이상 조별 발표(동료평가에 따라 점수 차등), 실천 나눔·토론 참여, Story Book</td></tr>
+    <tr><td><i class="dot" style="background:#8a97a6"></i>출석</td><td>10%</td><td>학사운영규정에 따름</td></tr>
+  </table>
+  <div class="note">📌 참여 40%의 내부 배분(주간 과제 / 조별 발표 / 나눔 / Story Book)은 개강 주에 확정·공지됩니다. 실천 기록은 사실대로 작성하는 것이 원칙이며, 실행하지 못한 주는 그 이유의 성찰로 대체할 수 있습니다.</div>
+</section>
+
+<!-- 07 TSL 실천 트랙 -->
+<section id="track">
+  <div class="section-head"><div class="section-num">07</div><div><h2>TSL 실천 트랙: 세 마디로 한 학기를 완주합니다</h2><p class="section-sub">이 페이지의 핵심 섹션. 각 세션은 회상 → 인정 → 실현 → 강화 → 재충전(5Re)의 리듬을 따릅니다.</p></div></div>
+  <div class="mile-track">
+    <div class="mile"><span class="mw">W1</span><b>가족 재발견</b>나는 누구인가</div>
+    <div class="mile"><span class="mw">W2 🔒</span><b>서약 · P1·2</b>T: 회상 Recall</div>
+    <div class="mile"><span class="mw">W3</span><b>존재에 대한 감사</b>T: 인정 Recognize</div>
+    <div class="mile major"><span class="mw">W4~6</span><b>T 실현·강화</b>고맙습니다 완결</div>
+    <div class="mile"><span class="mw">W7</span><b>갈등과 용서</b>S: 회상 Recall</div>
+    <div class="mile major"><span class="mw">W8 ✍️</span><b>중간고사</b>25%</div>
+    <div class="mile"><span class="mw">W9 🎤</span><b>전문가 특강</b>가족스트레스</div>
+    <div class="mile"><span class="mw">W10~11</span><b>S 인정·실현·강화</b>미안합니다 완결</div>
+    <div class="mile"><span class="mw">W12</span><b>사랑의 의미</b>L: 회상·인정</div>
+    <div class="mile"><span class="mw">W13</span><b>긍정적 의사소통</b>L: 실현·강화</div>
+    <div class="mile major"><span class="mw">W14 📖</span><b>총평 · Refresh</b>Story Book 작성</div>
+    <div class="mile major"><span class="mw">W15 🏁</span><b>Story Book + 기말</b>25%</div>
+  </div>
+  <div class="note">🔢 세션별 5Re 단계 표기는 진행 리듬의 안내이며, Practice별 정확한 매핑과 세션 경계는 개강 주에 확정·공지됩니다. 기본과제(앞 단계의 지속 실천)는 학기 내내 누적됩니다.</div>
+</section>
+
+<!-- 08 수강 안내 -->
+<section id="notice">
+  <div class="section-head"><div class="section-num">08</div><div><h2>수강 안내</h2><p class="section-sub">자기 개방, 비밀보장, 실천 기록에 관한 약속입니다.</p></div></div>
+  <div class="note">🫶 <b>실천 대상 조정</b>: 실천 과제는 자기 가족을 대상으로 하지만, 가족 상황에 따라 실천 대상·방식을 교수와 협의해 조정할 수 있습니다(정서적으로 의미 있는 타인 등 대체 대상 실천 허용). 가족 관계의 어려움이 있는 경우 개별 면담과 교내 학생상담센터 이용을 안내합니다.</div>
+  <div class="note">🔒 <b>비밀보장</b>: 나눔·과제에 등장하는 가족 이야기는 강의실 밖으로 공유하지 않으며(SNS 게시 금지), 과제 기록은 교육 목적으로만 사용합니다. 2주차에 전원 비밀유지 서약서를 작성합니다.</div>
+  <div class="note">📝 <b>실천 기록</b>: 사실대로 작성하는 것이 원칙이며, 실행하지 못한 주는 그 이유의 성찰로 대체할 수 있습니다. 생성형 AI는 기록 정리의 보조로만 활용하고, 실천 경험 자체를 대체하지 않습니다.</div>
+  <div class="note">📚 <b>교재</b>: 매주 교수자가 강의안을 배포할 예정이므로 책을 반드시 구매할 필요는 없습니다. 심화 학습을 원하는 학생은 교재를 구매할 수 있습니다.</div>
+</section>
+
+</div>
+
+<div class="footer">
+  가족복지론 (7707091-01) · 2026-2 · 아동복지학과 학부 4학년 · 전공선택 3학점 · 월 06-08교시 · N20-1-121 · 담당 김준범 교수<br>
+  주교재: 김재엽 (2023), TSL 가족치료와 가족복지 (학지사) · 부교재: 김연옥·김혜미·최해경·한윤선 (2022), 가족복지론 (학지사) · 세부 운영은 개강 주에 확정·공지됩니다
+</div>
+
+<script>
+function go(n){var el=document.getElementById('w'+n);if(!el)return;el.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}
+function toggleAll(open){document.querySelectorAll('details.week').forEach(function(d){d.open=open;});}
+</script>
+</body>
+</html>

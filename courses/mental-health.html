@@ -122,7 +122,7 @@ footer { max-width:1200px; margin:0 auto; padding:3rem 2.5rem; display:grid; gri
   <div class="sn">Undergraduate Course · 7707064-01</div>
   <h1>정신건강론</h1>
   <div class="h-en">Mental Health</div>
-  <div class="meta-chips"><span class="chip hl">전공선택</span><span class="chip">2학년</span><span class="chip">3학점</span><span class="chip">2026-2</span></div>
+  <div class="meta-chips"><span class="chip hl">전공선택</span><span class="chip">2학년</span><span class="chip">3학점</span><span class="chip">수 06-08교시</span><span class="chip">N20-1-121</span><span class="chip">2026-2</span></div>
   <p class="intro">정신건강의 개념과 관점, 생애주기별 정신건강 문제와 정신건강 증진·서비스 체계를 개관하는 전공선택 과목입니다. 강의자료와 공지를 이 방에 업로드합니다.</p>
 </div>
 
@@ -158,7 +158,16 @@ footer { max-width:1200px; margin:0 auto; padding:3rem 2.5rem; display:grid; gri
    - isNew: true면 NEW 배지 표시
    - coming: true면 준비 중(흐리게, 클릭 불가)
    ============================================================ */
-const MATERIALS = [];
+const MATERIALS = [
+  {
+    "cat": "운영",
+    "title": "2026-2 강좌 운영 가이드 (Course Overview)",
+    "desc": "한 학기 전체 설계도: 수업 구성요소(강의·발표·체험 실습), 한 주의 흐름, 15주 주차별 상세, 발표 배정(A·B 주제), 평가 구조, 게이트키퍼 훈련까지 인터랙티브로 정리했습니다.",
+    "date": "2026.08",
+    "href": "mental-health/course-overview-2026-2.html",
+    "isNew": true
+  }
+];
 
 const grid = document.getElementById('matGrid');
 const bar = document.getElementById('filterBar');
