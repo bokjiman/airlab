@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정신건강론 · 2026-2 운영 가이드</title>
+<style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+:root{
+  --font:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+  --rule:#e6ebf1; --off:#f4f7fb;
+  --blue:#2f6fa8; --blue-soft:#e8f1fa; --blue-bright:#6cb0e4;
+  --coral:#e0573e; --coral-soft:#fdeee9;
+  --mint:#3fa88a; --mint-soft:#e6f5f0;
+  --amber:#c78a1e; --amber-soft:#fbf1dc;
+  --gray-soft:#eef1f5;
+  --shadow:0 1px 2px rgba(36,64,102,.04),0 10px 30px rgba(36,64,102,.06);
+  --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font);color:var(--ink);background:#fff;line-height:1.7;font-size:15px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+.stripe{display:flex;height:3px}.stripe span{flex:1}
+.stripe .s1{background:var(--blue)}.stripe .s2{background:var(--blue-bright)}.stripe .s3{background:var(--coral)}.stripe .s4{background:var(--mint)}.stripe .s5{background:var(--amber)}
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid var(--rule)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:0 1.6rem;height:52px;gap:1rem}
+.nav-logo{font-weight:700;font-size:.92rem}
+.nav-links{display:flex;gap:1rem;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-size:.78rem;color:var(--mid);text-decoration:none;white-space:nowrap}
+.nav-links a:hover{color:var(--blue)}
+.hero{background:linear-gradient(180deg,var(--blue-soft) 0%,rgba(243,248,253,.5) 55%,#fff 100%)}
+.hero-inner{max-width:1180px;margin:0 auto;padding:44px 1.6rem 40px}
+.overline{display:inline-flex;align-items:center;gap:.6rem;font-size:.66rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+.overline::before{content:'';width:26px;height:1.5px;background:var(--blue)}
+.hero h1{margin:0;font-size:clamp(26px,4vw,40px);line-height:1.18;font-weight:800;letter-spacing:-.03em}
+.hero h1 em{color:var(--blue);font-style:normal}
+.hero .sub{margin-top:14px;max-width:820px;color:var(--mid);font-size:15.5px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.stat{background:#fff;border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 16px;box-shadow:var(--shadow)}
+.stat .num{font-size:17px;font-weight:800;color:var(--blue);display:block;line-height:1.2}
+.stat .lbl{font-size:11.5px;color:var(--light);margin-top:2px}
+.container{max-width:1180px;margin:0 auto;padding:0 1.6rem 100px}
+section[id]{scroll-margin-top:64px}
+.section-head{display:flex;gap:14px;align-items:flex-start;margin:52px 0 8px}
+.section-num{font-size:13px;font-weight:800;color:#fff;background:var(--blue);min-width:40px;height:26px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;margin-top:3px}
+.section-head h2{margin:0;font-size:22px;font-weight:800;letter-spacing:-.02em}
+.section-sub{margin:2px 0 0;font-size:13px;color:var(--light)}
+p.lead{color:var(--mid);margin:10px 0 18px;max-width:860px}
+/* ── activity badge system ── */
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:var(--r-pill);white-space:nowrap}
+.b-sp{background:var(--blue-soft);color:var(--blue)}
+.b-jc{background:var(--coral-soft);color:var(--coral)}
+.b-il{background:var(--mint-soft);color:#2c7a63}
+.b-pp{background:var(--amber-soft);color:#9a6b12}
+.b-free{background:var(--gray-soft);color:var(--light)}
+.b-zoom{background:#20262e;color:#fff}
+.type-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-top:16px}
+.type-card{background:#fff;border:1px solid var(--rule);border-left:4px solid var(--rule);border-radius:var(--r-md);padding:16px 18px;box-shadow:var(--shadow)}
+.type-card.tc-sp{border-left-color:var(--blue)}
+.type-card.tc-jc{border-left-color:var(--coral)}
+.type-card.tc-il{border-left-color:var(--mint)}
+.type-card.tc-pp{border-left-color:var(--amber)}
+.type-card.tc-x{border-left-color:var(--xlight)}
+.type-card h3{margin:0 0 6px;font-size:15.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.type-card .who{font-size:12px;font-weight:700;color:var(--light);margin-bottom:6px}
+.type-card p{margin:0;font-size:13.5px;color:var(--mid);line-height:1.75}
+.type-card p b{color:var(--ink)}
+/* ── timebox bar ── */
+.flowbox{background:#fff;border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;box-shadow:var(--shadow);margin-top:16px}
+.flowbox h3{margin:0 0 4px;font-size:15px}
+.flowbox .fb-sub{font-size:12px;color:var(--light);margin-bottom:14px}
+.tbar{display:flex;width:100%;height:46px;border-radius:9px;overflow:hidden;gap:2px;background:#fff}
+.tseg{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;line-height:1.25;text-align:center;padding:2px 4px;min-width:0}
+.tseg small{font-weight:600;font-size:10px;opacity:.92}
+.tseg.sp{background:var(--blue)}.tseg.jc{background:var(--coral)}.tseg.il{background:var(--mint)}.tseg.pp{background:var(--amber)}
+.tseg.op{background:#8a97a6}.tseg.rest{background:var(--gray-soft);color:var(--mid)}
+.tcap{display:flex;justify-content:space-between;font-size:11px;color:var(--xlight);margin-top:5px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--mid)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+/* ── semester strip ── */
+.sem-strip{display:grid;grid-template-columns:repeat(15,1fr);gap:4px;margin-top:16px}
+.wk-cell{border-radius:8px;padding:7px 4px 6px;text-align:center;font-size:10.5px;font-weight:700;color:#fff;cursor:pointer;transition:.15s;border:none;font-family:inherit;line-height:1.3}
+.wk-cell small{display:block;font-weight:600;font-size:9px;opacity:.9;margin-top:1px}
+.wk-cell:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.ph-a{background:var(--blue)}.ph-b{background:var(--coral)}.ph-c{background:#8a97a6}.ph-d{background:#20262e}.ph-e{background:var(--mint)}.ph-f{background:var(--amber)}
+.sem-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--mid)}
+/* ── accordion weeks ── */
+details.week{background:#fff;border:1px solid var(--rule);border-radius:var(--r-md);margin:10px 0;box-shadow:var(--shadow);overflow:hidden}
+details.week[open]{border-color:var(--blue-bright)}
+details.week summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 18px;flex-wrap:wrap}
+details.week summary::-webkit-details-marker{display:none}
+.wk-no{min-width:52px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;flex-shrink:0}
+.wk-title{flex:1;min-width:220px}
+.wk-title .en{display:block;font-weight:750;font-size:14.5px}
+.wk-title .ko{display:block;font-size:12px;color:var(--light);margin-top:1px}
+.wk-badges{display:flex;gap:6px;flex-wrap:wrap}
+.chev{margin-left:auto;color:var(--xlight);transition:.2s;font-size:13px;flex-shrink:0}
+details[open] .chev{transform:rotate(180deg)}
+.wk-body{border-top:1px solid var(--rule);padding:16px 18px 18px;background:#fcfdfe}
+.wk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-bottom:14px}
+.wk-item{background:#fff;border:1px solid var(--rule);border-radius:var(--r-sm);padding:10px 13px;font-size:13px;color:var(--mid);line-height:1.65}
+.wk-item .k{display:block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin-bottom:3px}
+.wk-item b{color:var(--ink)}
+.mini-label{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--light);text-transform:uppercase;margin:10px 0 6px}
+.tbar.mini{height:38px}
+.note{font-size:12.5px;color:var(--mid);background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:9px 13px;margin-top:12px;line-height:1.7}
+.note b{color:var(--blue)}
+.toolrow{display:flex;gap:8px;margin:14px 0 4px}
+.tool-btn{background:var(--blue);color:#fff;border:none;padding:7px 15px;border-radius:var(--r-pill);font-size:.76rem;font-weight:700;cursor:pointer;font-family:inherit}
+.tool-btn.ghost{background:#fff;color:var(--blue);border:1px solid var(--rule)}
+.tool-btn:hover{filter:brightness(1.08)}
+/* ── slots ── */
+.slot-wrap{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.slot{border-radius:9px;padding:8px 12px;font-size:12px;font-weight:700;background:var(--blue-soft);color:var(--blue);border:1px solid #cfe2f5}
+.slot small{display:block;font-weight:600;font-size:10.5px;color:var(--light)}
+.slot.extra{background:#fff;border:1.5px dashed var(--blue-bright)}
+/* ── assessment ── */
+.abar{display:flex;width:100%;height:52px;border-radius:10px;overflow:hidden;gap:2px;margin-top:16px}
+.aseg{display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;font-size:11.5px;font-weight:750;text-align:center;line-height:1.3;padding:2px 4px;min-width:0}
+.aseg small{font-size:10px;font-weight:600;opacity:.92}
+.atable{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
+.atable th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--light);text-align:left;padding:7px 10px;border-bottom:1.5px solid var(--rule)}
+.atable td{padding:8px 10px;border-bottom:1px solid var(--rule);color:var(--mid)}
+.atable td:first-child{font-weight:700;color:var(--ink)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+/* ── milestones ── */
+.mile-track{display:flex;gap:6px;overflow-x:auto;padding:14px 2px 6px;margin-top:8px}
+.mile{min-width:118px;background:#fff;border:1px solid var(--rule);border-top:4px solid var(--amber);border-radius:var(--r-sm);padding:9px 11px;font-size:12px;color:var(--mid);position:relative;box-shadow:var(--shadow)}
+.mile .mw{font-size:10px;font-weight:800;color:var(--amber);letter-spacing:.06em}
+.mile b{display:block;color:var(--ink);font-size:12.5px;margin:2px 0 1px}
+.mile.major{border-top-color:var(--coral);background:var(--coral-soft)}
+.mile.major .mw{color:var(--coral)}
+.footer{max-width:1180px;margin:0 auto;padding:22px 1.6rem 56px;color:var(--light);font-size:12px;border-top:1px solid var(--rule);line-height:1.7}
+@media(max-width:760px){.sem-strip{grid-template-columns:repeat(5,1fr)}.tseg small{display:none}}
+</style>
+</head>
+<body>
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+<nav><div class="nav-inner">
+  <div class="nav-logo">🧠 정신건강론 <span style="color:var(--light);font-weight:500">2026-2</span></div>
+  <ul class="nav-links">
+    <li><a href="#types">수업 구성요소</a></li>
+    <li><a href="#flow">한 주의 흐름</a></li>
+    <li><a href="#semester">학기 지도</a></li>
+    <li><a href="#weeks">주차별 상세</a></li>
+    <li><a href="#slots">발표 배정</a></li>
+    <li><a href="#grade">평가</a></li>
+    <li><a href="#track">리추얼·안전 트랙</a></li>
+  </ul>
+</div></nav>
+
+<header class="hero"><div class="hero-inner">
+  <div class="overline">Undergraduate · 전공선택 · Wednesdays 06-08</div>
+  <h1>진단명 암기가 아니라<br><em>삶과 관계 속의 정신건강</em>을 읽는 수업</h1>
+  <p class="sub">주교재 <b>정신건강론(3판)</b>(최송식 외, 2024, 학지사) 17개 장을 15주에 배치합니다. 정신건강의 개념·이론, 주요 정신장애와 중독, 생애주기별 문제, 자살·학대·소수자 이슈를 사례기반학습(CBL)과 체험형 실습으로 배우고, 낙인과 회복의 관점에서 사회복지사의 역할을 중심에 둡니다.</p>
+  <div class="hero-meta">
+    <div class="stat"><span class="num">17개 장 → 15주</span><span class="lbl">유사 장 통합 · 민감 장 온전 배치</span></div>
+    <div class="stat"><span class="num">9개 조 · 매주 발표</span><span class="lbl">3명 1조 · 4주차 시작</span></div>
+    <div class="stat"><span class="num">2주 현장특강</span><span class="lbl">기초정신건강복지센터 실무자</span></div>
+    <div class="stat"><span class="num">게이트키퍼 훈련</span><span class="lbl">13주 · 묻고-듣고-연결하기 역할극</span></div>
+  </div>
+</div></header>
+
+<div class="container">
+
+<!-- 01 구성요소 -->
+<section id="types">
+  <div class="section-head"><div class="section-num">01</div><div><h2>수업 구성요소: 이 배지가 나오면 이렇게 진행됩니다</h2><p class="section-sub">아래 색과 배지는 이 페이지 전체(한 주 흐름, 학기 지도, 주차 카드, 평가)에서 동일하게 쓰입니다.</p></div></div>
+  <div class="type-grid">
+    <div class="type-card tc-il">
+      <h3>🎓 교수 강의 <span class="badge b-il">IL · 매주</span></h3>
+      <div class="who">누가: 교수 · 매주 · 강의 I 45분 + 강의 II 30분</div>
+      <p>진단기준 암기보다 <b>증상이 삶과 관계 속에서 나타나는 방식</b>을 중심으로 강의합니다. 교재의 통계는 최신 공표치로 갱신해 대조합니다(예: 자살률은 2024년 공표치 29.1명 기준).</p>
+    </div>
+    <div class="type-card tc-sp">
+      <h3>📣 팀별 발표 <span class="badge b-sp">TP · 4~13주</span></h3>
+      <div class="who">누가: 매주 1개 조(3명 1조 × 9개 조) · 발표 15분 + 참여 활동 10분 + 질의 · 8주 제외</div>
+      <p>주차별 <b>A·B 주제 택1</b>. 참여 장치(전체 투표·판정·미니 게임) 필수, 교재 페이지 인용과 최신 수치 1개 이상 직접 검증. <b>13주(자살) 발표는 교수자 사전 검토 필수</b>입니다.</p>
+    </div>
+    <div class="type-card tc-jc">
+      <h3>🎭 체험 실습·사례토론 <span class="badge b-jc">AC · 매주</span></h3>
+      <div class="who">누가: 전원 · 매주 약 35분</div>
+      <p>자가진단 도구 체험(AUDIT-K, 과의존 척도 등: <b>익명·비제출 원칙</b>), 역할연습(면접·게이트키퍼), 영화·사례 분석, 매주 사례토론으로 개념을 몸으로 익힙니다.</p>
+    </div>
+    <div class="type-card tc-pp">
+      <h3>📝 성찰 과제 <span class="badge b-pp">RF · 학기 2회 내외</span></h3>
+      <div class="who">누가: 전원 · 짧은 성찰문</div>
+      <p>'세 가지 좋은 일' 1주 실천, 조부모 인터뷰 등 <b>체험 과제 중 택1</b>로 짧은 성찰문을 제출합니다. AI 등 도구 활용 시 활용 내역과 검토 과정을 명시합니다.</p>
+    </div>
+    <div class="type-card tc-x">
+      <h3>🎤 현장특강 <span class="badge b-zoom">2주차</span> <span class="badge b-free">발표 없음</span></h3>
+      <div class="who">기초정신건강복지센터 실무자 · 60~90분 + 질의응답</div>
+      <p>「지역사회 기초정신건강복지센터의 역할과 실천의 현실: 실무자의 관점」. 사전 질문은 1주차 종료 시 수합합니다.</p>
+    </div>
+    <div class="type-card tc-x">
+      <h3>✍️ 시험 <span class="badge b-free">8주 · 15주</span></h3>
+      <div class="who">중간(1~7장) · 기말(8~17장) · 대면시험</div>
+      <p>강의에서 안내한 기준(최신 공표치와의 대조 포함)을 따릅니다. 15주는 종합 정리 후 기말고사를 치릅니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 한 주의 흐름 -->
+<section id="flow">
+  <div class="section-head"><div class="section-num">02</div><div><h2>표준 주간 흐름 (3시간 연강 · 170분)</h2><p class="section-sub">발표가 있는 주(4~7·9~13주) 기준입니다. 특수 주(1·2·8·14·15주)는 아래 주차 카드에서 각자의 흐름을 보여줍니다.</p></div></div>
+  <div class="flowbox">
+    <h3>🕐 수요일 06-08교시, 이렇게 흘러갑니다</h3>
+    <div class="fb-sub">막대 길이 = 시간 비중. 색 = 위 구성요소와 동일. 시간 배분은 운영상 조정될 수 있습니다.</div>
+    <div class="tbar" role="img" aria-label="170분 구성: 오프닝과 리캡 10분, 교수 강의 1부 45분, 휴식 10분, 팀별 발표 15분, 참여 활동 10분, 질의 5분, 교수 강의 2부 30분, 체험 실습과 사례토론 35분, 정리와 다음 주 안내 10분">
+      <div class="tseg op" style="flex:10"><span>오프닝·리캡</span><small>10′</small></div>
+      <div class="tseg il" style="flex:45"><span>🎓 강의 I</span><small>45′</small></div>
+      <div class="tseg rest" style="flex:10"><span>☕</span><small>10′</small></div>
+      <div class="tseg sp" style="flex:15"><span>📣 팀별 발표</span><small>15′</small></div>
+      <div class="tseg jc" style="flex:10"><span>참여 활동</span><small>10′</small></div>
+      <div class="tseg sp" style="flex:5;opacity:.75"><span>질의</span><small>5′</small></div>
+      <div class="tseg il" style="flex:30"><span>🎓 강의 II</span><small>30′</small></div>
+      <div class="tseg jc" style="flex:35"><span>🎭 실습·사례토론</span><small>35′</small></div>
+      <div class="tseg op" style="flex:10"><span>정리</span><small>10′</small></div>
+    </div>
+    <div class="tcap"><span>시작</span><span>~85′</span><span>종료 (170′)</span></div>
+    <div class="legend">
+      <span><i style="background:var(--mint)"></i>교수 강의</span>
+      <span><i style="background:var(--blue)"></i>팀별 발표</span>
+      <span><i style="background:var(--coral)"></i>체험 실습·사례토론</span>
+      <span><i style="background:var(--amber)"></i>성찰·과제</span>
+      <span><i style="background:#8a97a6"></i>운영</span>
+      <span><i style="background:var(--gray-soft);border:1px solid var(--rule)"></i>휴식</span>
+    </div>
+    <div class="note">💡 발표가 없는 주(1~3·14주)는 발표 블록을 실습·토론으로 대체합니다. 2주(특강)·8주(중간)·15주(정리 + 기말)는 주차 카드의 미니 시간 바를 참조하세요.</div>
+  </div>
+</section>
+
+<!-- 03 학기 지도 -->
+<section id="semester">
+  <div class="section-head"><div class="section-num">03</div><div><h2>학기 한눈에 보기: 15주 지도</h2><p class="section-sub">칸을 누르면 해당 주차 상세로 이동합니다.</p></div></div>
+  <div class="sem-strip">
+    <button class="wk-cell ph-e" onclick="go(1)">W1<small>OT 🧭</small></button>
+    <button class="wk-cell ph-d" onclick="go(2)">W2<small>특강 🎤</small></button>
+    <button class="wk-cell ph-e" onclick="go(3)">W3<small>이론</small></button>
+    <button class="wk-cell ph-e" onclick="go(4)">W4<small>방어기제 · 1조</small></button>
+    <button class="wk-cell ph-e" onclick="go(5)">W5<small>증상론 · 2조</small></button>
+    <button class="wk-cell ph-e" onclick="go(6)">W6<small>정신장애 · 3조</small></button>
+    <button class="wk-cell ph-e" onclick="go(7)">W7<small>물질중독 · 4조</small></button>
+    <button class="wk-cell ph-c" onclick="go(8)">W8<small>중간 ✍️</small></button>
+    <button class="wk-cell ph-a" onclick="go(9)">W9<small>행위중독 · 5조</small></button>
+    <button class="wk-cell ph-a" onclick="go(10)">W10<small>아동청소년 · 6조</small></button>
+    <button class="wk-cell ph-a" onclick="go(11)">W11<small>성인기 · 7조</small></button>
+    <button class="wk-cell ph-a" onclick="go(12)">W12<small>노년기 · 8조</small></button>
+    <button class="wk-cell ph-a" onclick="go(13)">W13<small>자살 · 9조</small></button>
+    <button class="wk-cell ph-b" onclick="go(14)">W14<small>학대·다양성</small></button>
+    <button class="wk-cell ph-c" onclick="go(15)">W15<small>정리+기말 ✍️</small></button>
+  </div>
+  <div class="sem-legend">
+    <span><i class="dot" style="background:var(--mint)"></i>개념·이론·장애·물질중독 (1~7주)</span>
+    <span><i class="dot" style="background:var(--blue)"></i>중독·생애주기·자살 (9~13주)</span>
+    <span><i class="dot" style="background:var(--coral)"></i>학대·다양성 (14주, 민감 주제 집중)</span>
+    <span><i class="dot" style="background:#20262e"></i>현장특강</span>
+    <span><i class="dot" style="background:#8a97a6"></i>시험</span>
+  </div>
+  <div class="note">📚 <b>교재 17개 장 → 15주 배치 규칙</b>: 3장(이론 6개)은 1주 통합, 8+9장(행위 중독)은 같은 골격이라 1주 통합, 10+11장(영유아·아동청소년)은 생애주기 전반부로 1주 통합. 14·15장(자살·학대)은 민감 주제이므로 각각 온전한 비중을 확보했고, 17장(개관 장)은 기말 정리와 통합했습니다.</div>
+</section>
+
+<!-- 04 주차별 상세 -->
+<section id="weeks">
+  <div class="section-head"><div class="section-num">04</div><div><h2>주차별 상세: 눌러서 펼쳐 보세요</h2><p class="section-sub">각 카드: 교재 범위 / 이 주에 하는 일 / 발표 / 실습·토론 / 제출물. 특수 주는 자체 시간 흐름 포함.</p></div></div>
+  <div class="toolrow">
+    <button class="tool-btn" onclick="toggleAll(true)">전체 펼치기</button>
+    <button class="tool-btn ghost" onclick="toggleAll(false)">전체 접기</button>
+  </div>
+
+  <details class="week" id="w1"><summary>
+    <span class="wk-no" style="background:var(--mint)">W1</span>
+    <span class="wk-title"><span class="en">🧭 Understanding Mental Health</span><span class="ko">정신건강의 이해: 정상과 이상의 경계, 웰빙과 회복</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 교수</span><span class="badge b-jc">🎭 실습</span><span class="badge b-free">발표 없음</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>1장</b></div>
+        <div class="wk-item"><span class="k">🗣️ 이 주에 하는 일</span>OT → <b>"나는 정신적으로 건강하다" 오프닝 투표</b>(15주에 재투표) → 판별기준 사례실습 → 발표 주제 목록 공개 → 특강 사전 질문 수합</div>
+        <div class="wk-item"><span class="k">🎭 실습</span>정상과 이상의 판별기준을 실제 사례에 적용해 보는 사례실습</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w2"><summary>
+    <span class="wk-no" style="background:#20262e">W2</span>
+    <span class="wk-title"><span class="en">🎤 Community Mental Health System + Field Expert Lecture</span><span class="ko">정신건강 실천 영역: 전달체계와 기초정신건강복지센터 · 현장특강</span></span>
+    <span class="wk-badges"><span class="badge b-zoom">🎤 현장특강</span><span class="badge b-il">🎓 교수</span><span class="badge b-free">발표 없음</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>2장</b></div>
+        <div class="wk-item"><span class="k">🎤 현장특강</span><b>「지역사회 기초정신건강복지센터의 역할과 실천의 현실: 실무자의 관점」</b> 60~90분 + 질의응답</div>
+        <div class="wk-item"><span class="k">🎭 실습</span>지역 자원 연계 경로 작성: 사례가 어디로 연결되는지 지도를 그려봅니다</div>
+        <div class="wk-item"><span class="k">👥 운영</span><b>조 편성(9개 조)</b></div>
+      </div>
+      <div class="mini-label">이 주의 흐름</div>
+      <div class="tbar mini">
+        <div class="tseg op" style="flex:10"><span>오프닝</span></div>
+        <div class="tseg il" style="flex:50"><span>🎓 강의: 전달체계</span><small>50′</small></div>
+        <div class="tseg rest" style="flex:10"><span>☕</span></div>
+        <div class="tseg" style="flex:70;background:#20262e"><span>🎤 현장특강 + 질의</span><small>70′</small></div>
+        <div class="tseg jc" style="flex:30"><span>🎭 자원 연계 경로·조 편성</span><small>30′</small></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w3"><summary>
+    <span class="wk-no" style="background:var(--mint)">W3</span>
+    <span class="wk-title"><span class="en">🧩 Theories of Mental Health</span><span class="ko">정신건강 관련 이론: 스트레스, 위기개입, 의사소통, 탄력성, 회복모델, 긍정심리학</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 교수</span><span class="badge b-jc">🎭 역할극</span><span class="badge b-sp">📣 발표 확정</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>3장</b> (이론 6개를 1주에 통합)</div>
+        <div class="wk-item"><span class="k">🎭 실습</span>생활사건 척도 자가채점(익명·비제출), 의사소통 유형 역할극</div>
+        <div class="wk-item"><span class="k">📣 마감</span><b>발표 조·주제 확정 마감</b>(선착순)</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w4"><summary>
+    <span class="wk-no" style="background:var(--mint)">W4</span>
+    <span class="wk-title"><span class="en">🛡️ Defense Mechanisms</span><span class="ko">방어기제의 이해: 적응과 방어, 성숙 위계</span></span>
+    <span class="wk-badges"><span class="badge b-sp">📣 1조 발표</span><span class="badge b-il">🎓 교수</span><span class="badge b-jc">🎭 퀴즈</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>4장</b></div>
+        <div class="wk-item"><span class="k">📣 1조 발표 (택1)</span><b>A</b> 예능 자막 속 방어기제 사냥(장면 보고 기제 4지선다 전체 투표) / <b>B</b> 유행어 성숙도 감별소(밈·유행어 배틀, 코너 스티커 투표)</div>
+        <div class="wk-item"><span class="k">🎭 실습</span>속담-기제 매칭 퀴즈</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w5"><summary>
+    <span class="wk-no" style="background:var(--mint)">W5</span>
+    <span class="wk-title"><span class="en">🔬 Symptomatology & the MSE</span><span class="ko">정신과 증상론: 정신상태검사(MSE)의 이해</span></span>
+    <span class="wk-badges"><span class="badge b-sp">📣 2조 발표</span><span class="badge b-il">🎓 교수</span><span class="badge b-jc">🎬 영화 실습</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>5장</b></div>
+        <div class="wk-item"><span class="k">📣 2조 발표 (택1)</span><b>A</b> 영화 속 증상 팩트체크("정확/과장" 팻말 판정) / <b>B</b> 가상 차트 번역기(증상 용어-일상어 짝맞추기 스피드 퀴즈)</div>
+        <div class="wk-item"><span class="k">🎬 실습</span>영화 〈뷰티풀 마인드〉 증상 관찰 실습: MSE 항목으로 장면을 기록해 봅니다</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w6"><summary>
+    <span class="wk-no" style="background:var(--mint)">W6</span>
+    <span class="wk-title"><span class="en">🧠 Understanding Mental Disorders</span><span class="ko">정신장애의 이해: DSM-5, 조현병, 우울·양극성장애, 성격장애</span></span>
+    <span class="wk-badges"><span class="badge b-sp">📣 3조 발표</span><span class="badge b-il">🎓 교수</span><span class="badge b-jc">💬 토론</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>6장</b></div>
+        <div class="wk-item"><span class="k">📣 3조 발표 (택1)</span><b>A</b> 기사 헤드라인 다시 쓰기(낙인 요소 분석, before/after 공정성 투표) / <b>B</b> 유병률 감각 테스트(추정치 게임, 우리 반 통계 대 실제 통계)</div>
+        <div class="wk-item"><span class="k">💬 토론</span><b>낙인과 병명</b>: 조현병 개명 사례로 병명이 삶에 미치는 힘을 토론합니다</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w7"><summary>
+    <span class="wk-no" style="background:var(--mint)">W7</span>
+    <span class="wk-title"><span class="en">🍺 Substance Addiction: Alcohol</span><span class="ko">물질 중독: 알코올 중독의 진단·치료와 가족(공동의존)</span></span>
+    <span class="wk-badges"><span class="badge b-sp">📣 4조 발표</span><span class="badge b-il">🎓 교수</span><span class="badge b-jc">🎭 자가진단</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>7장</b></div>
+        <div class="wk-item"><span class="k">📣 4조 발표 (택1)</span><b>A</b> 주류 광고의 심리학("이 광고가 파는 감정" 투표 후 중독 개념 재해석) / <b>B</b> 대학 술자리 인류학 보고서(권유 멘트 수집, 거절 롤플레이 배틀)</div>
+        <div class="wk-item"><span class="k">🎭 실습</span><b>AUDIT-K 자가진단(익명·비제출)</b>, 사례토론. 중간 범위(1~7장) 정리</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w8"><summary>
+    <span class="wk-no" style="background:#8a97a6">W8</span>
+    <span class="wk-title"><span class="en">✍️ Midterm Exam</span><span class="ko">중간고사: 1~7장</span></span>
+    <span class="wk-badges"><span class="badge b-free">대면시험</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">✍️ 범위</span><b>1~7장</b>(개념·이론·증상론·정신장애·물질 중독)</div>
+        <div class="wk-item"><span class="k">📌 기준</span>강의에서 안내한 기준을 따르며, 사례 중심 문항이 포함됩니다</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w9"><summary>
+    <span class="wk-no" style="background:var(--blue)">W9</span>
+    <span class="wk-title"><span class="en">🎰 Behavioral Addictions</span><span class="ko">행위 중독: 도박 중독과 스마트폰·인터넷 과의존</span></span>
+    <span class="wk-badges"><span class="badge b-sp">📣 5조 발표</span><span class="badge b-il">🎓 교수</span><span class="badge b-jc">🎲 체험</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>8·9장</b> (같은 골격이라 1주 통합)</div>
+        <div class="wk-item"><span class="k">📣 5조 발표 (택1)</span><b>A</b> 무한 스크롤 해부학(앱 속 낚시 장치 찾기, 대안 화면 목업) / <b>B</b> 가챠의 수학(기대 비용 계산, 즉석 가챠 시뮬레이션 체험)</div>
+        <div class="wk-item"><span class="k">🎲 실습</span>확률 체험 게임, 스마트폰 과의존 척도 체험(익명·비제출)</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w10"><summary>
+    <span class="wk-no" style="background:var(--blue)">W10</span>
+    <span class="wk-title"><span class="en">👶 Child & Adolescent Mental Health</span><span class="ko">영유아기·아동청소년기 정신건강: 애착, 자폐스펙트럼, ADHD, 품행장애, 우울</span></span>
+    <span class="wk-badges"><span class="badge b-sp">📣 6조 발표</span><span class="badge b-il">🎓 교수</span><span class="badge b-jc">🎭 비네트</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>10·11장</b> (생애주기 전반부로 1주 통합)</div>
+        <div class="wk-item"><span class="k">📣 6조 발표 (택1)</span><b>A</b> 육아 상담 예능 다시 보기(개입 적절성 판정: 아동 희화화 금지) / <b>B</b> "ADHD 약, 먹여야 하나요?" 모의 부모상담(청중이 부모 역할 즉석 질문)</div>
+        <div class="wk-item"><span class="k">🎭 실습</span>사례 비네트 실습: 짧은 사례로 발달단계별 신호를 구분해 봅니다</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w11"><summary>
+    <span class="wk-no" style="background:var(--blue)">W11</span>
+    <span class="wk-title"><span class="en">💼 Adult Mental Health</span><span class="ko">성인기 정신건강: 일과 사랑, 고립·은둔과 고독사</span></span>
+    <span class="wk-badges"><span class="badge b-sp">📣 7조 발표</span><span class="badge b-il">🎓 교수</span><span class="badge b-jc">🎭 타임라인</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>12장</b></div>
+        <div class="wk-item"><span class="k">📣 7조 발표 (택1)</span><b>A</b> 은둔 방의 문고리(수기 분석으로 회복 계기 유형화, 계기 카드 순위 투표) / <b>B</b> 결혼 통념 재판(통념 5개 O/X 선판정 후 연구 결과 공개)</div>
+        <div class="wk-item"><span class="k">🎭 실습</span>은둔 청년 사례, 인생구조 타임라인 그리기</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w12"><summary>
+    <span class="wk-no" style="background:var(--blue)">W12</span>
+    <span class="wk-title"><span class="en">🍂 Mental Health in Later Life</span><span class="ko">노년기 정신건강: 상실·고독·우울, 노인 알코올 문제</span></span>
+    <span class="wk-badges"><span class="badge b-sp">📣 8조 발표</span><span class="badge b-il">🎓 교수</span><span class="badge b-pp">📝 과제 공유</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>13장</b></div>
+        <div class="wk-item"><span class="k">📣 8조 발표 (택1)</span><b>A</b> 우울인가 치매인가 감별 챌린지(사례 카드 3택 투표 후 감별 근거 공개) / <b>B</b> 경로당 옆 유튜브(지역 프로그램을 고독 4형태에 매핑, 아이디어 스티커 투표)</div>
+        <div class="wk-item"><span class="k">🎭 실습</span>상실 목록 활동</div>
+        <div class="wk-item"><span class="k">📝 공유</span>조부모 인터뷰 과제(성찰 과제 택1) 수행자의 경험 공유</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w13"><summary>
+    <span class="wk-no" style="background:var(--blue)">W13</span>
+    <span class="wk-title"><span class="en">🕯️ Suicide & Mental Health: Gatekeeper Training</span><span class="ko">자살과 정신건강: 위험신호, 위험성 검토, 게이트키퍼 훈련 ※민감 주제 사전 고지</span></span>
+    <span class="wk-badges"><span class="badge b-sp">📣 9조 발표 · 사전 검토</span><span class="badge b-il">🎓 교수</span><span class="badge b-jc">🎭 역할극</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>14장</b> ※민감 주제: 자기 경험 공개를 요구하지 않으며 대체 활동을 허용합니다</div>
+        <div class="wk-item"><span class="k">📣 9조 발표 (택1 · 사전 검토 필수)</span><b>A</b> 자살 보도 채점단(권고기준 전원 채점, 재작성 후 재채점) / <b>B</b> 드라마 속 생명지킴이 평가("묻고-듣고-연결" 체크리스트 판정, 대안 대사 제안). 미디어·제도 분석 프레임만 허용</div>
+        <div class="wk-item"><span class="k">🎭 훈련</span><b>게이트키퍼 역할극(묻고-듣고-연결하기)</b>, 자살 보도 비교</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w14"><summary>
+    <span class="wk-no" style="background:var(--coral)">W14</span>
+    <span class="wk-title"><span class="en">🫂 Abuse, Trauma & Cultural Diversity</span><span class="ko">학대와 정신건강, 문화적 다양성: 아동학대·배우자학대·PTSD, 소수자 스트레스 ※민감 주제 사전 고지</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 교수</span><span class="badge b-jc">🎭 실습</span><span class="badge b-free">발표 없음</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재</span><b>15·16장</b> ※민감 주제 집중 주간이라 발표 없이 진행합니다</div>
+        <div class="wk-item"><span class="k">🎭 실습</span>학대 신화 OX, 소수자 스트레스 모델, 영화 발췌 분석</div>
+        <div class="wk-item"><span class="k">📌 취지</span>학대와 다양성 주제를 발표 부담 없이 충분한 안전장치 속에서 다룹니다</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="week" id="w15"><summary>
+    <span class="wk-no" style="background:#8a97a6">W15</span>
+    <span class="wk-title"><span class="en">🏁 Synthesis + Final Exam</span><span class="ko">종합 정리(정신건강과 사회환경) + 기말고사</span></span>
+    <span class="wk-badges"><span class="badge b-il">🎓 정리</span><span class="badge b-free">대면시험</span></span>
+    <span class="chev">▼</span></summary>
+    <div class="wk-body">
+      <div class="wk-grid">
+        <div class="wk-item"><span class="k">📖 교재·범위</span><b>17장(개관 장) + 기말 범위 8~17장</b></div>
+        <div class="wk-item"><span class="k">🗣️ 이 주에 하는 일</span>나선형 복습 지도 → <b>1주차 투표 재실시</b>(한 학기 동안 생각이 어떻게 바뀌었나) → 게이트키퍼 카드 배부 → 기말고사</div>
+      </div>
+      <div class="mini-label">이 주의 흐름</div>
+      <div class="tbar mini">
+        <div class="tseg il" style="flex:50"><span>🎓 나선형 복습 지도</span><small>50′</small></div>
+        <div class="tseg jc" style="flex:20"><span>🗳️ 재투표·카드 배부</span><small>20′</small></div>
+        <div class="tseg rest" style="flex:10"><span>☕</span></div>
+        <div class="tseg op" style="flex:90"><span>✍️ 기말고사</span><small>90′</small></div>
+      </div>
+    </div>
+  </details>
+</section>
+
+<!-- 05 발표 배정 -->
+<section id="slots">
+  <div class="section-head"><div class="section-num">05</div><div><h2>발표 배정: 9개 조 × 9개 주차, 조별 A·B 택1</h2><p class="section-sub">1주차 주제 공개, 2주차 조 편성, 3주차 확정 마감(선착순).</p></div></div>
+  <div class="slot-wrap">
+    <div class="slot">1조 · W4 방어기제<small>A 예능 자막 속 방어기제 사냥 / B 유행어 성숙도 감별소</small></div>
+    <div class="slot">2조 · W5 증상론<small>A 영화 속 증상 팩트체크 / B 가상 차트 번역기</small></div>
+    <div class="slot">3조 · W6 정신장애<small>A 기사 헤드라인 다시 쓰기 / B 유병률 감각 테스트</small></div>
+    <div class="slot">4조 · W7 알코올<small>A 주류 광고의 심리학 / B 대학 술자리 인류학 보고서</small></div>
+    <div class="slot">5조 · W9 행위 중독<small>A 무한 스크롤 해부학 / B 가챠의 수학</small></div>
+    <div class="slot">6조 · W10 아동청소년<small>A 육아 상담 예능 다시 보기 / B ADHD 모의 부모상담</small></div>
+    <div class="slot">7조 · W11 성인기<small>A 은둔 방의 문고리 / B 결혼 통념 재판</small></div>
+    <div class="slot">8조 · W12 노년기<small>A 우울·치매 감별 챌린지 / B 경로당 옆 유튜브</small></div>
+    <div class="slot extra">9조 · W13 자살<small>A 자살 보도 채점단 / B 생명지킴이 평가 · 사전 검토 필수</small></div>
+  </div>
+  <div class="note">🛟 <b>공통 안전 원칙</b>: 자기·타인 진단 금지, 당사자 희화화 금지. 13주차(자살)는 미디어·제도 분석 프레임만 허용하며 발표 전 교수자 사전 검토가 필수입니다. 공통 요건: 교재 페이지 인용 · 최신 수치 1개 이상 직접 검증 · 청중 전체 참여 장치 1개 이상.</div>
+</section>
+
+<!-- 06 평가 -->
+<section id="grade">
+  <div class="section-head"><div class="section-num">06</div><div><h2>평가 구조: 무엇이 몇 %인가</h2><p class="section-sub">중간 25 · 기말 25 · 출석 10 · 기타 40(참여 20 + 발표 15 + 성찰 5). 총 100%.</p></div></div>
+  <div class="abar" role="img" aria-label="평가 구성: 중간고사 25%, 기말고사 25%, 수업 참여 20%, 팀별 발표 15%, 출석 10%, 성찰 과제 5%">
+    <div class="aseg" style="flex:25;background:var(--amber)"><span>✍️ 중간고사</span><small>25%</small></div>
+    <div class="aseg" style="flex:25;background:#a8750f"><span>✍️ 기말고사</span><small>25%</small></div>
+    <div class="aseg" style="flex:20;background:var(--coral)"><span>🎭 수업 참여</span><small>20%</small></div>
+    <div class="aseg" style="flex:15;background:var(--blue)"><span>📣 팀별 발표</span><small>15%</small></div>
+    <div class="aseg" style="flex:10;background:#8a97a6"><span>✅ 출석</span><small>10%</small></div>
+    <div class="aseg" style="flex:5;background:var(--mint)"><span>📝</span><small>5%</small></div>
+  </div>
+  <table class="atable">
+    <tr><th>항목</th><th>배점</th><th>내용</th></tr>
+    <tr><td><i class="dot" style="background:var(--amber)"></i>중간고사</td><td>25%</td><td>1~7장 · 대면시험</td></tr>
+    <tr><td><i class="dot" style="background:#a8750f"></i>기말고사</td><td>25%</td><td>8~17장 · 대면시험</td></tr>
+    <tr><td><i class="dot" style="background:var(--coral)"></i>수업 참여</td><td>20%</td><td>매주 사례토론·실습·역할연습 참여의 성실성과 질, 발표 주차 청중 참여, 주차별 활동지/퀴즈응답 누적, 동료 피드백</td></tr>
+    <tr><td><i class="dot" style="background:var(--blue)"></i>팀별 발표</td><td>15%</td><td>내용 충실성, 근거의 질, 참여 장치 운영, 질의응답, 팀워크(동료평가 일부 반영)</td></tr>
+    <tr><td><i class="dot" style="background:#8a97a6"></i>출석</td><td>10%</td><td>학사운영규정에 따름</td></tr>
+    <tr><td><i class="dot" style="background:var(--mint)"></i>성찰 과제</td><td>5%</td><td>학기 중 2회 내외의 짧은 성찰문('세 가지 좋은 일' 1주 실천, 조부모 인터뷰 등 체험 과제 중 택1) · AI 등 도구 활용 시 내역 명시</td></tr>
+  </table>
+  <div class="note">📌 기타 40%의 내부 배분(참여 20 / 발표 15 / 성찰 5)은 현재 안이며 개강 전 확정·공지됩니다.</div>
+</section>
+
+<!-- 07 리추얼·안전 트랙 -->
+<section id="track">
+  <div class="section-head"><div class="section-num">07</div><div><h2>리추얼·안전 트랙: 학기를 관통하는 장치들</h2><p class="section-sub">1주차 투표에서 15주차 재투표까지, 이 수업의 반복 장치를 한 줄로 정리했습니다.</p></div></div>
+  <div class="mile-track">
+    <div class="mile"><span class="mw">W1</span><b>오프닝 투표</b>나는 건강한가</div>
+    <div class="mile"><span class="mw">W2</span><b>특강·조 편성</b>센터 실무자</div>
+    <div class="mile"><span class="mw">W3</span><b>발표 확정</b>선착순 마감</div>
+    <div class="mile"><span class="mw">W7</span><b>AUDIT-K 체험</b>익명·비제출</div>
+    <div class="mile major"><span class="mw">W8 ✍️</span><b>중간고사</b>1~7장 · 25%</div>
+    <div class="mile"><span class="mw">W12</span><b>인터뷰 공유</b>조부모 과제</div>
+    <div class="mile major"><span class="mw">W13 🛟</span><b>게이트키퍼 훈련</b>묻고-듣고-연결</div>
+    <div class="mile major"><span class="mw">W15 🏁</span><b>재투표·카드 배부</b>+기말 25%</div>
+  </div>
+</section>
+
+<!-- 08 수강 안내 -->
+<section id="notice">
+  <div class="section-head"><div class="section-num">08</div><div><h2>수강 안내</h2><p class="section-sub">민감 주제, 안전, AI 활용에 관한 약속입니다.</p></div></div>
+  <div class="note">🫶 <b>민감 주제 안내</b>: 이 수업은 우울, 자살, 학대, 중독 등 심리적으로 민감할 수 있는 주제를 다룹니다(특히 13~14주 사전 고지). 자신의 경험을 공개하도록 요구받지 않으며, 필요 시 대체 활동을 요청할 수 있습니다. 어려움이 있는 경우 교내 학생상담센터와 위기 상담 자원을 안내합니다.</div>
+  <div class="note">🎭 <b>실습의 성격</b>: 사례실습·자가진단은 교육 목적이며 실제 진단·치료가 아닙니다. 자가진단 도구 체험은 익명·비제출을 원칙으로 합니다.</div>
+  <div class="note">🗣️ <b>표현의 원칙</b>: 발표·토론에서 비하·낙인·차별적 표현을 사용하지 않으며, 특정인에 대한 진단·희화화를 금지합니다.</div>
+  <div class="note">🤖 <b>생성형 AI</b>: 학습 보조 목적으로만 활용하고 출처와 활용범위를 밝히며, 결과를 비판적으로 검토합니다. 위기 상황에서 전문적 도움을 대체하는 용도로 사용하지 않습니다.</div>
+</section>
+
+</div>
+
+<div class="footer">
+  정신건강론 (7707064-01) · 2026-2 · 아동복지학과 학부 2학년 · 전공선택 3학점 · 수 06-08교시 · N20-1-121 · 담당 김준범 교수<br>
+  주교재: 최송식 외 (2024), 정신건강론 (3판, 학지사) · 이 가이드는 강의계획서를 바탕으로 하며 세부 운영은 개강 주에 확정·공지됩니다
+</div>
+
+<script>
+function go(n){var el=document.getElementById('w'+n);if(!el)return;el.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}
+function toggleAll(open){document.querySelectorAll('details.week').forEach(function(d){d.open=open;});}
+</script>
+</body>
+</html>
