@@ -389,6 +389,15 @@ nav {
   0%,100% { box-shadow: 0 2px 9px rgba(46,158,107,0.32); }
   50%     { box-shadow: 0 2px 18px rgba(46,158,107,0.72); }
 }
+.badge-teaching {
+  background: linear-gradient(120deg, #ec4d9b, #f88fc5);
+  color: #fff; box-shadow: 0 2px 10px rgba(236,77,155,0.4);
+  animation: badgePulseTeaching 2.6s ease-in-out infinite;
+}
+@keyframes badgePulseTeaching {
+  0%,100% { box-shadow: 0 2px 9px rgba(236,77,155,0.32); }
+  50%     { box-shadow: 0 2px 18px rgba(236,77,155,0.72); }
+}
 
 /* Clickable news card (e.g. Statistics page link) */
 a.nc-link { text-decoration: none; color: inherit; cursor: pointer; }
@@ -444,7 +453,7 @@ a.nc-link:hover .nc-go::after { transform: translateX(4px); }
 }
 @keyframes newBob { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-2px) rotate(2deg); } }
 @media (prefers-reduced-motion: reduce) {
-  .nc-featured, .nc-featured::before, .badge-study, .badge-club, .nc-new { animation: none; }
+  .nc-featured, .nc-featured::before, .badge-study, .badge-club, .badge-teaching, .nc-new { animation: none; }
 }
 
 /* ── ABOUT ── */
@@ -864,6 +873,7 @@ footer {
       <li><a href="#education">Education</a></li>
       <li><a href="#awards">Recognition</a></li>
       <li><a href="#gallery">Gallery</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
       <li><a href="statistics.html">Statistics</a></li>
       <li><a href="journal-club.html">Journal Club</a></li>
     </ul>
@@ -1356,6 +1366,9 @@ footer {
       Chungbuk National University<br>
       N20-1, Rm. 104 · Cheongju, Korea
       <div class="f-visitors">
+        <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fbokjiman.github.io%2Fairlab&label=Today&color=%232f6fa8&style=flat-square" alt="Today visitor count">
+      </div>
+      <div class="f-visitors" style="margin-top:0.45rem">
         <span class="vc-label">Total Visitors</span>
         <img src="https://hits.sh/bokjiman.github.io/airlab.svg?style=flat-square&color=2f6fa8&labelColor=f4f7fb&label=" alt="Visitor count">
       </div>
@@ -1365,6 +1378,7 @@ footer {
 
 <script>
 const NEWS_DATA = [
+  { date:"2026.08",    type:"teaching", featured:true, title:"🎓 Teaching 페이지 개설", body:"2026-2학기 개설 과목별 강의자료실을 열었습니다. 아동복지 · 정신건강론 · 가족복지론 · 정신건강과 사회복지실천(대학원) 수업 자료를 이곳에 업로드합니다.", link:"teaching.html" },
     { date:"2026.07",    type:"study",   featured:true, title:"📊 Statistics 페이지 개설", body:"함께 공부해요! 통계 방법론을 직접 클릭하며 배우는 인터랙티브 학습 페이지를 새로 열었습니다.", link:"statistics.html" },
   { date:"2026.07",    type:"club",    featured:true, title:"📚 Journal Club 개설", body:"함께 읽어요! 대학원 세미나에서 다룬 논문들의 심층 리뷰를 모아두는 공간을 새로 열었습니다.", link:"journal-club.html" },
   { date:"2026.07", type:"paper", title:"New Publication (SSCI)", body:"Assessing the Link Between Attention Deficit Hyperactivity Disorder, Self-Harm and Suicidality in Adolescents: A Propensity Score Matching Analysis", sub:"Child and Adolescent Social Work Journal" },
@@ -1516,8 +1530,8 @@ function renderTicker() {
 }
 
 function renderNews() {
-  const bm = { award:'badge-award', recruit:'badge-recruit', paper:'badge-paper', project:'badge-project', member:'badge-member', study:'badge-study', club:'badge-club' };
-  const lm = { award:'Award', recruit:'Recruit', paper:'Paper', project:'Research', member:'Members', study:'Study', club:'Journal Club' };
+  const bm = { award:'badge-award', recruit:'badge-recruit', paper:'badge-paper', project:'badge-project', member:'badge-member', study:'badge-study', club:'badge-club', teaching:'badge-teaching' };
+  const lm = { award:'Award', recruit:'Recruit', paper:'Paper', project:'Research', member:'Members', study:'Study', club:'Journal Club', teaching:'Teaching' };
   document.getElementById('newsCards').innerHTML = NEWS_DATA.map(n => {
     const isAward = n.type === 'award';
     const isMember = n.type === 'member';
@@ -1529,7 +1543,7 @@ function renderNews() {
           ? `<em style="font-style:normal;color:var(--mid);font-size:0.78rem;display:block;margin-top:0.5rem;padding:0.5rem 0.8rem;background:#eef5fb;border-radius:2px;">${n.sub}</em>`
           : `<em>${n.sub}</em>`)
       : '';
-    const isFeatured = n.type === 'study' || n.type === 'club' || n.featured;
+    const isFeatured = n.type === 'study' || n.type === 'club' || n.type === 'teaching' || n.featured;
     const tag = n.link ? 'a' : 'div';
     const linkAttr = n.link ? ` href="${n.link}"` : '';
     const linkCls = (n.link ? ' nc-link' : '') + (isFeatured ? ' nc-featured' : '');
