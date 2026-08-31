@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>표지 시안 인기투표</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<!-- ==========================================================
+     여기 한 곳만 채우면 됩니다.
+     Firebase 콘솔 → 프로젝트 설정 → 내 앱 → 웹 앱 → firebaseConfig
+     의 값을 그대로 옮겨 적으세요. 비워 두면 투표는 이 브라우저에만
+     기록되고 다른 사람과 합산되지 않습니다.
+     ========================================================== -->
+<script>
+window.FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDYIRug95jJgNcMZcnjDbbzoyC3iWWVpXc",
+  authDomain: "airlab-vote.firebaseapp.com",
+  databaseURL: "https://airlab-vote-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "airlab-vote",
+  storageBucket: "airlab-vote.firebasestorage.app",
+  messagingSenderId: "526530193630",
+  appId: "1:526530193630:web:6d0ccc65a38fea43ff7a4f"
+};
+window.POLL_ID = "aces-cover-2026";
+</script>
+
+<style>
+:root{
+  --paper:#F4F6F2; --card:#FBFCFA; --ink:#161D19; --body:#2F3A34;
+  --mute:#6E7C74; --line:#DCE3DC; --line-soft:#E9EEE8;
+  --green:#1F6244; --green-bright:#3E9E63;
+  --shadow:0 1px 2px rgba(22,29,25,.06),0 14px 32px -16px rgba(22,29,25,.30);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#101613; --card:#161E1A; --ink:#E9EFE9; --body:#C4CFC7;
+    --mute:#8B9990; --line:#26312B; --line-soft:#1D2621;
+    --green:#4FB37D; --green-bright:#6FD09B;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 34px -18px rgba(0,0,0,.75);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#101613; --card:#161E1A; --ink:#E9EFE9; --body:#C4CFC7;
+  --mute:#8B9990; --line:#26312B; --line-soft:#1D2621;
+  --green:#4FB37D; --green-bright:#6FD09B;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 34px -18px rgba(0,0,0,.75);
+}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{
+  margin:0;background:var(--paper);color:var(--body);
+  font-family:"Pretendard Variable",Pretendard,"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  font-weight:350;font-size:16px;line-height:1.8;letter-spacing:-.005em;
+  -webkit-font-smoothing:antialiased;word-break:keep-all;
+}
+.wrap{max-width:1060px;margin:0 auto;padding:0 22px 150px}
+h1,h2{color:var(--ink);margin:0;letter-spacing:-.03em;text-wrap:balance}
+h1{font-size:clamp(27px,4.4vw,44px);line-height:1.22;font-weight:800}
+h2{font-size:clamp(19px,2.4vw,25px);line-height:1.35;font-weight:700}
+p{margin:0}
+.eyebrow{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);font-weight:500}
+
+header{padding:52px 0 30px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:15px}
+.booktitle{font-size:clamp(14.5px,1.9vw,18px);color:var(--body);font-weight:500}
+.guide{max-width:640px;font-size:16px}
+.guide b{color:var(--ink);font-weight:600}
+
+section{padding:40px 0;border-bottom:1px solid var(--line-soft)}
+.shead{display:flex;flex-direction:column;gap:9px;margin-bottom:24px;max-width:700px}
+.shead p{color:var(--mute);font-size:15px}
+
+.covers{display:grid;grid-template-columns:repeat(3,1fr);gap:24px 20px}
+@media (max-width:820px){.covers{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:540px){.covers{grid-template-columns:1fr}}
+
+.pick{
+  margin:0;padding:11px;border:1.5px solid transparent;border-radius:10px;background:transparent;
+  display:flex;flex-direction:column;gap:12px;cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%;
+  transition:border-color .18s,background .18s;
+}
+.pick:hover{background:color-mix(in srgb,var(--green) 6%,transparent)}
+.pick:focus-visible{outline:2px solid var(--green-bright);outline-offset:2px}
+.pick[aria-checked="true"]{border-color:var(--green);background:color-mix(in srgb,var(--green) 9%,transparent)}
+
+.cover{
+  container-type:inline-size;aspect-ratio:188/257;border-radius:2px;box-shadow:var(--shadow);
+  overflow:hidden;position:relative;display:flex;flex-direction:column;padding:9% 8.5% 7.5%;
+}
+.cv-t{font-size:8.3cqw;font-weight:800;line-height:1.24;letter-spacing:-.035em}
+.cv-s{font-size:4.2cqw;font-weight:400;line-height:1.45;margin-top:3.4cqw;letter-spacing:-.02em}
+.cv-foot{margin-top:auto;display:flex;flex-direction:column;gap:2.4cqw}
+.cv-o{font-family:"IBM Plex Mono",monospace;font-size:2.4cqw;letter-spacing:.09em;text-transform:uppercase;line-height:1.55}
+.cv-a{font-size:3.1cqw;line-height:1.55;font-weight:400}
+.cv-pub{font-size:3.3cqw;letter-spacing:.3em;font-weight:500}
+.motif{display:flex;align-items:center;justify-content:center;flex:1;min-height:0;padding:5cqw 0}
+.motif svg{width:100%;height:auto;max-height:100%}
+.motif.narrow svg{width:56%}
+
+.c1,.c4,.c5{background:#F2F3EE;color:#1B241E}
+.c1 .cv-s,.c4 .cv-s,.c5 .cv-s,.c1 .cv-a,.c4 .cv-a,.c5 .cv-a{color:#57635B}
+.c1 .cv-o,.c4 .cv-o,.c5 .cv-o,.c1 .cv-pub,.c4 .cv-pub,.c5 .cv-pub{color:#8A968D}
+
+.c2{background:#F2F3EE;color:#1B241E;padding-bottom:0}
+.c2 .cv-s{color:#57635B}
+.c2 .field{margin:auto -10.5cqw 0;flex:0 0 46%;min-height:0;background:#1B5B3E;position:relative;display:flex;flex-direction:column;padding:0 10.5cqw 7.5cqw}
+.c2 .field .motif{padding:6cqw 0 3cqw}
+.c2 .cv-o,.c2 .cv-pub{color:#8FBBA0}
+.c2 .cv-a{color:#E2EBE3}
+
+.c3{background:linear-gradient(168deg,#2E7A50 0%,#1D5C3D 46%,#123B29 100%);color:#F4F7F2}
+.c3 .rainlayer{position:absolute;inset:0}
+.c3 .inner{position:relative;display:flex;flex-direction:column;flex:1;min-height:0}
+.c3 .plate{background:#F4F6F1;color:#17231C;padding:7cqw 6.5cqw 7.5cqw}
+.c3 .plate .cv-s{color:#4E5B52}
+.c3 .cv-o,.c3 .cv-pub{color:#A5C7B2}
+.c3 .cv-a{color:#DCE9DE}
+
+.tally{display:flex;flex-direction:column;gap:5.6cqw;width:100%}
+.trow{display:flex;align-items:center;gap:2.6cqw}
+.tlb{font-family:"IBM Plex Mono",monospace;font-size:2.5cqw;letter-spacing:.1em;width:13cqw;flex:none}
+.tlb.a{color:#7C8C93}
+.tlb.p{color:#1F6244}
+.dots{display:flex;gap:2.3cqw}
+.d{width:3.8cqw;height:3.8cqw;border-radius:50%;flex:none}
+.d.a{border:.7cqw solid #7C8C93}
+.d.p{background:#1F6244}
+
+.c6{background:#F2F3EE;color:#16241C}
+.c6 .cv-t{font-size:11.4cqw;line-height:1.2}
+.c6 .rule{height:1.2cqw;background:#1F6244;margin:6.5cqw 0 5cqw;width:30%}
+.c6 .cv-s{color:#4A564E;margin-top:0}
+.c6 .cv-o{color:#8A968D}
+.c6 .cv-a{color:#57635B}
+.c6 .cv-pub{color:#1F6244}
+
+.cap{display:flex;flex-direction:column;gap:5px}
+.cap-h{display:flex;align-items:center;gap:8px}
+.cap-h strong{font-size:16.5px;color:var(--ink);font-weight:700;letter-spacing:-.02em}
+.mark{width:19px;height:19px;border-radius:50%;border:1.5px solid var(--line);flex:none;display:flex;align-items:center;justify-content:center}
+.pick[aria-checked="true"] .mark{border-color:var(--green);background:var(--green)}
+.mark svg{width:11px;height:11px;opacity:0}
+.pick[aria-checked="true"] .mark svg{opacity:1}
+.cap p{font-size:13.6px;line-height:1.65;color:var(--mute)}
+
+.bar{position:fixed;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--paper) 93%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:20}
+.bar-in{max-width:1060px;margin:0 auto;padding:13px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.status{font-size:14.5px;color:var(--mute);flex:1;min-width:170px}
+.status b{color:var(--ink);font-weight:600}
+.btn{font:inherit;font-weight:600;font-size:15px;letter-spacing:-.01em;padding:11px 26px;border-radius:4px;border:1px solid var(--green);background:var(--green);color:#F4F6F2;cursor:pointer;transition:opacity .15s}
+.btn:hover{opacity:.88}
+.btn:focus-visible{outline:2px solid var(--green-bright);outline-offset:3px}
+.btn[disabled]{opacity:.38;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--green);border-color:var(--line)}
+
+.results{display:flex;flex-direction:column;gap:28px;max-width:720px}
+.rgroup{display:flex;flex-direction:column;gap:12px}
+.rgroup h3{margin:0;font-size:14px;font-weight:600;color:var(--mute);letter-spacing:.02em}
+.rrow{display:grid;grid-template-columns:104px 1fr 66px;gap:11px;align-items:center}
+@media (max-width:460px){.rrow{grid-template-columns:88px 1fr 58px}}
+.rname{font-size:14px;color:var(--ink);font-weight:500}
+.track{height:9px;background:var(--line-soft);border-radius:99px;overflow:hidden}
+.fill{height:100%;background:var(--green);border-radius:99px;transition:width .5s cubic-bezier(.2,.7,.3,1)}
+.rrow.top .fill{background:var(--green-bright)}
+.rnum{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--mute);text-align:right;font-variant-numeric:tabular-nums}
+.rnum b{color:var(--ink);font-weight:500}
+.summary{border:1px solid var(--line);border-radius:3px;background:var(--card);padding:17px 19px;display:flex;flex-direction:column;gap:5px}
+.summary .big{font-size:17.5px;color:var(--ink);font-weight:700;letter-spacing:-.02em}
+.summary .sub{font-size:14px;color:var(--mute)}
+.hint{font-size:13.5px;color:var(--mute)}
+.warn{border:1px solid var(--line);border-left:3px solid #B0872F;border-radius:3px;background:var(--card);padding:16px 18px;font-size:14.5px;line-height:1.7;color:var(--mute);max-width:700px}
+.warn b{color:var(--ink);font-weight:600}
+footer{padding:32px 0 0;color:var(--mute);font-size:13px;line-height:1.8;max-width:700px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <p style="padding-top:18px;margin:0"><a href="../index.html" style="font-size:13px;color:var(--mute);text-decoration:none">← AIR Lab @ CBNU</a></p>
+  <header>
+    <div class="eyebrow">표지 시안 인기투표</div>
+    <h1>어느 표지가 가장 손이 갈까요</h1>
+    <p class="booktitle">아동기 역경경험과 보호 및 보상경험 : 상처받은 어린시절과 회복의 과학 (학지사, 근간)</p>
+    <p class="guide">아동기 역경경험을 다룬 번역서의 표지 시안입니다. 성격이 다른 두 묶음에서 <b>각각 하나씩, 모두 두 개</b>를 골라 주세요. 서점에서 이 책을 봤을 때 집어 들고 싶은 쪽이면 됩니다. 이유는 묻지 않겠습니다.</p>
+  </header>
+
+  <section>
+    <div class="shead"><div class="eyebrow">묶음 1</div>
+      <h2>원서의 초록과 우산을 이어받은 세 가지</h2>
+      <p>원서 표지가 초록빛 배경에 비 맞은 우산이 놓인 사진이라, 그 색과 모티프를 남긴 안들입니다.</p></div>
+    <div class="covers" role="radiogroup" aria-label="묶음 1">
+
+      <button type="button" class="pick" role="radio" aria-checked="false" data-g="a" data-id="1">
+        <div class="cover c1">
+          <div><div class="cv-t">아동기 역경경험과<br>보호 및 보상경험</div><div class="cv-s">상처받은 어린시절과 회복의 과학</div></div>
+          <div class="motif narrow"><svg viewBox="0 0 140 150" fill="none" aria-hidden="true"><path d="M8,72 Q29,56 50,72 Q70,56 90,72 Q111,56 132,72 C132,32 104,10 70,10 C36,10 8,32 8,72 Z" fill="#1F6244"/><path d="M70,72 L70,118 Q70,136 55,136 Q42,136 42,124" stroke="#1F6244" stroke-width="4.5" stroke-linecap="round"/><path d="M70,10 L70,2" stroke="#1F6244" stroke-width="4.5" stroke-linecap="round"/></svg></div>
+          <div class="cv-foot"><div class="cv-o">Adverse and Protective Childhood Experiences</div><div class="cv-a">Jennifer Hays-Grudo, Amanda Sheffield Morris 공저<br>김준범 · 장대연 · 이현 공역</div><div class="cv-pub">학지사</div></div>
+        </div>
+        <span class="cap"><span class="cap-h"><span class="mark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2,6.4 L4.6,9 L10,3.2" fill="none" stroke="#F4F6F2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>1안. 우산 하나</strong></span><p>종이색 바탕에 초록 우산 하나. 가장 절제된 구성.</p></span>
+      </button>
+
+      <button type="button" class="pick" role="radio" aria-checked="false" data-g="a" data-id="2">
+        <div class="cover c2">
+          <div><div class="cv-t">아동기 역경경험과<br>보호 및 보상경험</div><div class="cv-s">상처받은 어린시절과 회복의 과학</div></div>
+          <div class="field">
+            <div class="motif narrow"><svg viewBox="0 0 140 150" fill="none" aria-hidden="true"><path d="M8,72 Q29,56 50,72 Q70,56 90,72 Q111,56 132,72 C132,32 104,10 70,10 C36,10 8,32 8,72 Z" fill="#F2F3EE"/><path d="M70,72 L70,118 Q70,136 55,136 Q42,136 42,124" stroke="#F2F3EE" stroke-width="4.5" stroke-linecap="round"/></svg></div>
+            <div class="cv-foot"><div class="cv-o">Adverse and Protective Childhood Experiences</div><div class="cv-a">Jennifer Hays-Grudo, Amanda Sheffield Morris 공저<br>김준범 · 장대연 · 이현 공역</div><div class="cv-pub">학지사</div></div>
+          </div>
+        </div>
+        <span class="cap"><span class="cap-h"><span class="mark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2,6.4 L4.6,9 L10,3.2" fill="none" stroke="#F4F6F2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>2안. 초록 지평</strong></span><p>아래쪽을 원서의 깊은 초록으로 채우고 우산은 흰색으로.</p></span>
+      </button>
+
+      <button type="button" class="pick" role="radio" aria-checked="false" data-g="a" data-id="3">
+        <div class="cover c3">
+          <svg class="rainlayer" viewBox="0 0 188 257" preserveAspectRatio="none" aria-hidden="true"><g stroke="#CFE4D6" stroke-width="0.8" stroke-linecap="round" opacity="0.5"><line x1="14" y1="10" x2="9" y2="40"/><line x1="36" y1="-4" x2="31" y2="28"/><line x1="58" y1="16" x2="53" y2="50"/><line x1="82" y1="2" x2="77" y2="32"/><line x1="106" y1="20" x2="101" y2="54"/><line x1="130" y1="4" x2="125" y2="36"/><line x1="152" y1="18" x2="147" y2="54"/><line x1="174" y1="8" x2="169" y2="40"/><line x1="24" y1="172" x2="19" y2="206"/><line x1="52" y1="188" x2="47" y2="224"/><line x1="80" y1="174" x2="75" y2="208"/><line x1="108" y1="192" x2="103" y2="228"/><line x1="136" y1="178" x2="131" y2="212"/><line x1="164" y1="194" x2="159" y2="230"/><line x1="94" y1="224" x2="89" y2="250"/><line x1="38" y1="228" x2="33" y2="252"/><line x1="148" y1="230" x2="143" y2="254"/></g></svg>
+          <div class="inner">
+            <div class="plate"><div class="cv-t">아동기 역경경험과<br>보호 및 보상경험</div><div class="cv-s">상처받은 어린시절과 회복의 과학</div></div>
+            <div class="motif narrow"><svg viewBox="0 0 140 150" fill="none" aria-hidden="true"><path d="M8,72 Q29,56 50,72 Q70,56 90,72 Q111,56 132,72 C132,32 104,10 70,10 C36,10 8,32 8,72 Z" fill="#F4F7F2"/><path d="M70,72 L70,118 Q70,136 55,136 Q42,136 42,124" stroke="#F4F7F2" stroke-width="4.5" stroke-linecap="round"/></svg></div>
+            <div class="cv-foot"><div class="cv-o">Adverse and Protective Childhood Experiences</div><div class="cv-a">Jennifer Hays-Grudo, Amanda Sheffield Morris 공저<br>김준범 · 장대연 · 이현 공역</div><div class="cv-pub">학지사</div></div>
+          </div>
+        </div>
+        <span class="cap"><span class="cap-h"><span class="mark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2,6.4 L4.6,9 L10,3.2" fill="none" stroke="#F4F6F2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>3안. 빗줄기</strong></span><p>원서의 초록과 비와 우산을 선으로 옮긴, 원서에 가장 가까운 안.</p></span>
+      </button>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="shead"><div class="eyebrow">묶음 2</div>
+      <h2>우산을 버리고 책의 내용에서 출발한 세 가지</h2>
+      <p>역경경험 열 문항과 보호경험 열 문항의 대비, 그리고 생애에 걸친 발달 궤적을 모티프로 삼았습니다.</p></div>
+    <div class="covers" role="radiogroup" aria-label="묶음 2">
+
+      <button type="button" class="pick" role="radio" aria-checked="false" data-g="b" data-id="4">
+        <div class="cover c4">
+          <div><div class="cv-t">아동기 역경경험과<br>보호 및 보상경험</div><div class="cv-s">상처받은 어린시절과 회복의 과학</div></div>
+          <div class="motif"><div class="tally">
+            <div class="trow"><span class="tlb a">ACEs</span><span class="dots"><i class="d a"></i><i class="d a"></i><i class="d a"></i><i class="d a"></i><i class="d a"></i><i class="d a"></i><i class="d a"></i><i class="d a"></i><i class="d a"></i><i class="d a"></i></span></div>
+            <div class="trow"><span class="tlb p">PACEs</span><span class="dots"><i class="d p"></i><i class="d p"></i><i class="d p"></i><i class="d p"></i><i class="d p"></i><i class="d p"></i><i class="d p"></i><i class="d p"></i><i class="d p"></i><i class="d p"></i></span></div>
+          </div></div>
+          <div class="cv-foot"><div class="cv-o">Adverse and Protective Childhood Experiences</div><div class="cv-a">Jennifer Hays-Grudo, Amanda Sheffield Morris 공저<br>김준범 · 장대연 · 이현 공역</div><div class="cv-pub">학지사</div></div>
+        </div>
+        <span class="cap"><span class="cap-h"><span class="mark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2,6.4 L4.6,9 L10,3.2" fill="none" stroke="#F4F6F2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>4안. 열 개와 열 개</strong></span><p>역경경험 열 문항과 보호경험 열 문항을 빈 원과 채운 원으로.</p></span>
+      </button>
+
+      <button type="button" class="pick" role="radio" aria-checked="false" data-g="b" data-id="5">
+        <div class="cover c5">
+          <div><div class="cv-t">아동기 역경경험과<br>보호 및 보상경험</div><div class="cv-s">상처받은 어린시절과 회복의 과학</div></div>
+          <div class="motif"><svg viewBox="0 0 200 104" fill="none" aria-hidden="true"><defs><linearGradient id="tr" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8B9BA1"/><stop offset="46%" stop-color="#6E8189"/><stop offset="72%" stop-color="#2C7A54"/><stop offset="100%" stop-color="#1F6244"/></linearGradient></defs><path d="M4,30 C42,30 46,88 98,88 C152,88 160,26 196,16" stroke="url(#tr)" stroke-width="4.2" stroke-linecap="round"/><circle cx="196" cy="16" r="5.4" fill="#1F6244"/></svg></div>
+          <div class="cv-foot"><div class="cv-o">Adverse and Protective Childhood Experiences</div><div class="cv-a">Jennifer Hays-Grudo, Amanda Sheffield Morris 공저<br>김준범 · 장대연 · 이현 공역</div><div class="cv-pub">학지사</div></div>
+        </div>
+        <span class="cap"><span class="cap-h"><span class="mark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2,6.4 L4.6,9 L10,3.2" fill="none" stroke="#F4F6F2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>5안. 하나의 궤적</strong></span><p>꺾였다가 다시 올라오는 곡선 하나. 회색에서 초록으로.</p></span>
+      </button>
+
+      <button type="button" class="pick" role="radio" aria-checked="false" data-g="b" data-id="6">
+        <div class="cover c6">
+          <div><div class="cv-t">아동기<br>역경경험과<br>보호 및<br>보상경험</div><div class="rule"></div><div class="cv-s">상처받은 어린시절과<br>회복의 과학</div></div>
+          <div class="cv-foot"><div class="cv-o">Adverse and Protective Childhood Experiences</div><div class="cv-a">Jennifer Hays-Grudo, Amanda Sheffield Morris 공저<br>김준범 · 장대연 · 이현 공역</div><div class="cv-pub">학지사</div></div>
+        </div>
+        <span class="cap"><span class="cap-h"><span class="mark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2,6.4 L4.6,9 L10,3.2" fill="none" stroke="#F4F6F2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>6안. 활자만</strong></span><p>그림 없이 제목 크기와 초록 괘선 하나로만.</p></span>
+      </button>
+
+    </div>
+  </section>
+
+  <section id="resultsec" hidden>
+    <div class="shead"><div class="eyebrow">현재 집계</div><h2 id="rhead">집계</h2></div>
+    <div class="results">
+      <div id="summary"></div>
+      <div class="rgroup"><h3>원서 계승형 (1안 ~ 3안)</h3><div id="ra"></div></div>
+      <div class="rgroup"><h3>내용 출발형 (4안 ~ 6안)</h3><div id="rb"></div></div>
+      <p class="hint" id="rhint"></p>
+    </div>
+  </section>
+
+  <section id="localsec" hidden>
+    <div class="warn"><b>집계 서버에 연결하지 못했습니다.</b> 인터넷 연결을 확인한 뒤 새로고침해 주세요. 지금은 이 브라우저에만 기록됩니다.</div>
+  </section>
+
+  <footer><p>표지 시안은 협의용 스케치이며 최종 디자인은 출판사 편집부와 디자이너의 작업입니다. 투표는 누가 무엇을 골랐는지는 남기지 않고 숫자만 세어 둡니다.</p></footer>
+</div>
+
+<div class="bar"><div class="bar-in">
+  <span class="status" id="status">위아래 두 묶음에서 각각 하나씩 골라 주세요.</span>
+  <button type="button" class="btn ghost" id="see">결과 보기</button>
+  <button type="button" class="btn" id="submit" disabled>투표하기</button>
+</div></div>
+
+<script type="module">
+const NAMES = {
+  "1":"1안. 우산 하나","2":"2안. 초록 지평","3":"3안. 빗줄기",
+  "4":"4안. 열 개와 열 개","5":"5안. 하나의 궤적","6":"6안. 활자만"
+};
+const GA = ["1","2","3"], GB = ["4","5","6"];
+const KEY = "acesPollVote_" + (window.POLL_ID || "poll");
+
+let sel = {a:null, b:null};
+let counts = {a:{"1":0,"2":0,"3":0}, b:{"4":0,"5":0,"6":0}, pairs:{}, n:0};
+let online = false, busy = false, showRes = false;
+let db = null, ref = null, fs = null;
+
+const $ = (id) => document.getElementById(id);
+const mine = () => { try{ const v = localStorage.getItem(KEY); return v ? JSON.parse(v) : null; }catch(e){ return null; } };
+const setMine = (v) => { try{ v ? localStorage.setItem(KEY, JSON.stringify(v)) : localStorage.removeItem(KEY); }catch(e){} };
+
+/* ---------- 화면 ---------- */
+function paintPicks(){
+  document.querySelectorAll('.pick').forEach(el => {
+    el.setAttribute('aria-checked', sel[el.dataset.g] === el.dataset.id ? 'true' : 'false');
+  });
+}
+
+function rows(ids, group){
+  const total = ids.reduce((s,i) => s + (counts[group][i]||0), 0);
+  const max = Math.max(...ids.map(i => counts[group][i]||0));
+  return ids.map(id => {
+    const c = counts[group][id] || 0;
+    const pct = total ? Math.round(c/total*100) : 0;
+    const top = c > 0 && c === max ? ' top' : '';
+    return `<div class="rrow${top}"><span class="rname">${NAMES[id]}</span>` +
+      `<span class="track"><span class="fill" style="width:${total ? c/total*100 : 0}%"></span></span>` +
+      `<span class="rnum"><b>${c}</b>표 · ${pct}%</span></div>`;
+  }).join('');
+}
+
+function paintResults(){
+  $('rhead').textContent = `지금까지 ${counts.n}명이 투표했습니다`;
+  $('ra').innerHTML = rows(GA,'a');
+  $('rb').innerHTML = rows(GB,'b');
+  let best = null, bestN = 0;
+  for(const k in counts.pairs){ if(counts.pairs[k] > bestN){ bestN = counts.pairs[k]; best = k; } }
+  $('summary').innerHTML = best
+    ? `<div class="summary"><span class="big">가장 많이 나온 조합은 ${NAMES[best[0]].split('.')[0]} + ${NAMES[best[2]].split('.')[0]}입니다</span>` +
+      `<span class="sub">${bestN}명이 이 두 가지를 함께 골랐습니다. 전체 참여 ${counts.n}명.</span></div>`
+    : '';
+  $('rhint').textContent = online
+    ? '다른 분이 투표하면 이 화면의 숫자도 곧바로 따라 바뀝니다.'
+    : '아직 연결 전이라 이 브라우저의 기록만 보입니다.';
+}
+
+function paintBar(){
+  const m = mine();
+  const st = $('status'), sb = $('submit');
+  if(busy){ st.textContent = '보내는 중입니다.'; }
+  else if(m){ st.innerHTML = `<b>${NAMES[m.a]}</b> 과 <b>${NAMES[m.b]}</b> 에 투표하셨습니다. 바꾸시려면 다시 고르고 눌러 주세요.`; }
+  else if(sel.a && sel.b){ st.innerHTML = `<b>${NAMES[sel.a]}</b> 과 <b>${NAMES[sel.b]}</b> 을 고르셨습니다.`; }
+  else if(sel.a){ st.textContent = '4안에서 6안 중에서도 하나 골라 주세요.'; }
+  else if(sel.b){ st.textContent = '1안에서 3안 중에서도 하나 골라 주세요.'; }
+  else { st.textContent = '위아래 두 묶음에서 각각 하나씩 골라 주세요.'; }
+  sb.textContent = m ? '투표 바꾸기' : '투표하기';
+  sb.disabled = !(sel.a && sel.b) || busy;
+  $('see').hidden = showRes;
+}
+
+function render(){
+  paintPicks();
+  const m = mine();
+  showRes = showRes || !!m;
+  $('resultsec').hidden = !showRes;
+  if(showRes) paintResults();
+  paintBar();
+}
+
+/* ---------- 로컬 집계 (연결 전) ---------- */
+const LKEY = KEY + "_local";
+function loadLocal(){
+  try{ const v = localStorage.getItem(LKEY); if(v) counts = JSON.parse(v); }catch(e){}
+}
+function saveLocal(){ try{ localStorage.setItem(LKEY, JSON.stringify(counts)); }catch(e){} }
+
+function applyLocal(pick, prev){
+  if(prev){
+    counts.a[prev.a] = Math.max(0, (counts.a[prev.a]||0) - 1);
+    counts.b[prev.b] = Math.max(0, (counts.b[prev.b]||0) - 1);
+    const pk = prev.a + '-' + prev.b;
+    if(counts.pairs[pk]){ counts.pairs[pk]--; if(!counts.pairs[pk]) delete counts.pairs[pk]; }
+    counts.n = Math.max(0, counts.n - 1);
+  }
+  counts.a[pick.a] = (counts.a[pick.a]||0) + 1;
+  counts.b[pick.b] = (counts.b[pick.b]||0) + 1;
+  const k = pick.a + '-' + pick.b;
+  counts.pairs[k] = (counts.pairs[k]||0) + 1;
+  counts.n += 1;
+  saveLocal();
+}
+
+/* ---------- Firebase ---------- */
+async function connect(){
+  const cfg = window.FIREBASE_CONFIG || {};
+  if(!cfg.projectId || !cfg.apiKey || !cfg.databaseURL) return false;
+  const V = "10.12.5";
+  const appMod = await import(`https://www.gstatic.com/firebasejs/${V}/firebase-app.js`);
+  fs = await import(`https://www.gstatic.com/firebasejs/${V}/firebase-database.js`);
+  const app = appMod.initializeApp(cfg);
+  db = fs.getDatabase(app);
+  ref = fs.ref(db, "polls/" + (window.POLL_ID || "poll"));
+  fs.onValue(ref, (snap) => {
+    const d = snap.val() || {};
+    counts = {a:{}, b:{}, pairs:{}, n: d.n || 0};
+    GA.forEach(i => counts.a[i] = d["a"+i] || 0);
+    GB.forEach(i => counts.b[i] = d["b"+i] || 0);
+    for(const k in d){
+      const m = k.match(/^p_([1-3])_([4-6])$/);
+      if(m && d[k] > 0) counts.pairs[m[1] + '-' + m[2]] = d[k];
+    }
+    if(showRes) paintResults();
+  }, () => {});
+  return true;
+}
+
+async function sendRemote(pick, prev){
+  const inc = fs.increment;
+  const patch = {};
+  patch["a"+pick.a] = inc(1);
+  patch["b"+pick.b] = inc(1);
+  patch["p_"+pick.a+"_"+pick.b] = inc(1);
+  let dn = 1;
+  if(prev){
+    patch["a"+prev.a] = (prev.a === pick.a) ? ({__zero:true}) : inc(-1);
+    patch["b"+prev.b] = (prev.b === pick.b) ? ({__zero:true}) : inc(-1);
+    const pk = "p_"+prev.a+"_"+prev.b;
+    if(pk === "p_"+pick.a+"_"+pick.b){ patch[pk] = ({__zero:true}); } else { patch[pk] = inc(-1); }
+    dn = 0;
+  }
+  patch["n"] = inc(dn);
+  for(const k in patch){ if(patch[k] && patch[k].__zero) delete patch[k]; }
+  await fs.update(ref, patch);
+}
+
+/* ---------- 동작 ---------- */
+document.querySelectorAll('.pick').forEach(el => {
+  el.addEventListener('click', () => { sel[el.dataset.g] = el.dataset.id; render(); });
+});
+
+$('see').addEventListener('click', () => {
+  showRes = true; render();
+  $('resultsec').scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+$('submit').addEventListener('click', async () => {
+  if(busy || !sel.a || !sel.b) return;
+  const pick = {a:sel.a, b:sel.b}, prev = mine();
+  busy = true; paintBar();
+  try{
+    if(online){ await sendRemote(pick, prev); }
+    else { applyLocal(pick, prev); }
+    setMine(pick);
+    showRes = true;
+  }catch(e){
+    applyLocal(pick, prev); setMine(pick); showRes = true;
+    $('localsec').hidden = false;
+  }
+  busy = false; render();
+  $('resultsec').scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+/* ---------- 시작 ---------- */
+const m0 = mine();
+if(m0){ sel.a = m0.a; sel.b = m0.b; }
+loadLocal();
+render();
+
+connect().then(ok => {
+  online = ok;
+  $('localsec').hidden = ok;
+  if(showRes) paintResults();
+}).catch(() => {
+  online = false;
+  $('localsec').hidden = false;
+});
+</script>
+</body>
+</html>
