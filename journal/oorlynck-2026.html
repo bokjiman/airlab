@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oorlynck 2026 저널클럽</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+
+  /* ════════ AIR Lab theme: navy → recovery-teal (synced with index) ════════ */
+  :root{ --sky:#2d6a9f; --sky-deep:#1f4e79; --sky-bright:#7fa9d1; --sky-soft:#e9eff6; --sky-soft2:#f4f7fb; --sky-soft-2:#f4f7fb; --mint:#3a9a8f; --mint-soft:#eaf5f2; --hover-bg:#eef3f9; }
+  .stripe{background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+  .stripe span{background:transparent!important}
+  .nav-logo-dot .d3{background:#3a9a8f}
+  .hero{isolation:isolate}
+  .hero::before{background:radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%), linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%)!important}
+  .overline{color:#9fd3ca!important}
+  .overline::before{background:#8cc7bd!important}
+  .hero h1{color:#fff!important}
+  .hero h1 em{color:#bfe6df!important}
+  .hero .citation{color:#b7c9da!important;border-left-color:#8cc7bd!important}
+  .hero .citation em{color:#d6e5f2!important}
+  .hero .citation a{color:#bfe6df!important}
+  .hero .subtitle{color:#d2e0ec!important}
+  .hero .subtitle strong,.hero .subtitle b{color:#fff!important}
+  .hero .subtitle em{color:#bfe6df}
+  .hero .stat{background:rgba(255,255,255,0.08)!important;border-color:rgba(255,255,255,0.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .hero .stat .num{color:#fff!important}
+  .hero .stat .lbl{color:#a9c1d6!important}
+  .paper-meta,.condition-header{background:linear-gradient(120deg,#1c4a73 0%,#22655f 100%)!important}
+  .section-num{background:linear-gradient(120deg,#1f4e79 0%,#2d7d78 100%)!important}
+</style>
+</head>
+<body id="top">
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#method">방법</a></li>
+      <li><a href="#kb">지식 기반</a></li>
+      <li><a href="#theory">어떤 이론인가</a></li>
+      <li><a href="#sos">Signs of Safety</a></li>
+      <li><a href="#discussion">논의</a></li>
+      <li><a href="#critique">비판적 읽기</a></li>
+      <li><a href="#phrases">명문장</a></li>
+      <li><a href="#ourstudy">우리 연구</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">Oorlynck, Willekens &amp; Roose 2026 · Journal Club</div>
+    <h1>이론을 쓰는 84%, 사회를 보는 5%:<br><em>아동보호 실천에서 사라진 "사회적인 것"</em></h1>
+    <div class="citation">Oorlynck, D., Willekens, M., &amp; Roose, R. (2026). Knowledge, theory, and practice in child welfare and protection: Reclaiming the social dimension. <em>The British Journal of Social Work</em>. Advance online publication. https://doi.org/10.1093/bjsw/bcag039</div>
+    <p class="subtitle">아동보호 실천가들은 이론을 쓰지 않는가? 이 논문의 답은 뜻밖이다. 벨기에 플랑드르의 실천가 대다수는 <strong>이론을 쓴다고 답했다</strong>. 문제는 어떤 이론인가였다. 애착 이론, 인지행동 모형, 체계적 가족 접근은 넘쳐났지만, 빈곤과 불평등과 정책을 다루는 <strong>사회적·구조적 이론은 5.1%만이 언급</strong>했다. 이 논문은 "실천이 이론에서 멀어졌다"는 익숙한 탄식을 "실천이 특정 종류의 이론에서만 멀어졌다"는 더 정확한 명제로 바꾼다. 읽을 때는 이 분포를 저자들이 어떻게 제도적 기제로 설명하는지, 그리고 그 설명이 자료로부터 얼마나 떨어져 있는지를 따라가 보자.<br><br>아래 페이지는 원문의 논리 전개 순서를 따라가되, 각 단계마다 🧭 <strong>길잡이</strong>, 🍳 <strong>비유</strong>, 📊 <strong>그림 읽는 법</strong>, 🧪 <strong>용어 정리</strong>를 덧붙여 방법론 배경이 적은 학생도 따라올 수 있도록 구성했다.</p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">n = 338</span><div class="lbl">플랑드르 아동보호 실천가 (최종 분석)</div></div>
+      <div class="stat"><span class="num">83.7%</span><div class="lbl">이론적 지식을 사용한다고 응답</div></div>
+      <div class="stat"><span class="num">5.1%</span><div class="lbl">사회 지향 이론을 언급</div></div>
+      <div class="stat"><span class="num">58.8%</span><div class="lbl">사례관리자의 Signs of Safety 사용</div></div>
+      <div class="stat"><span class="num">597 → 338</span><div class="lbl">최초 응답 → 최종 분석</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>Oorlynck et al. (2026)</div>
+
+<!-- 01 -->
+<div class="section-head" id="paper">
+  <div class="section-num">01</div>
+  <div class="section-title-block"><h2>논문 소개</h2><p class="section-subtitle">사회복지 지식론(epistemology)의 경험적 검토</p></div>
+</div>
+
+<div class="panel">
+  <p>이 논문은 사회복지학의 오래된 논쟁, 즉 <strong>관리주의(managerialism)와 기술관료화가 사회복지의 지식 기반을 어떻게 바꾸었는가</strong>라는 질문에 서 있다. Parton(2006)은 사회복지의 지식 형태가 "사회적인 것"에서 "정보적인 것"으로, 서사에서 데이터베이스 중심의 추론으로 이동했다고 진단했다. Featherstone 등(2018)은 아동보호가 개인의 위험 사정과 행동 교정에 치우쳐 빈곤과 불평등이라는 구조적 조건을 가린다고 비판하며 "사회적 모델"을 제안했다. Van Pelt(2023)는 사회복지사가 정책의 도구적 집행자로 위치 지어지는 현상을 <strong>탈지성화(de-intellectualization)</strong>라 불렀다.</p>
+  <p>이 논쟁의 약점은 대부분이 이론적·규범적 논의였다는 점이다. 실천가들이 실제로 어떤 지식을 쓰는지를 대규모로 조사한 경험 연구는 드물었다. 이 논문은 플랑드르(벨기에) 아동복지·아동보호(CWP) 실천가를 대상으로 한 웹 설문을 통해, 실천가들이 사용하는 <strong>지식의 유형</strong>(이론적, 실천기반, 개인경험적)과 <strong>이론의 종류</strong>(개인 지향, 집단·맥락 지향, 사회 지향)를 경험적으로 지도화한다. 그리고 그 분포를 교육 수준, 직무, 기관 맥락과 연결하여 해석한다.</p>
+</div>
+
+<div class="paper-meta">
+  <h3>Knowledge, theory, and practice in Child Welfare and Protection</h3>
+  <div class="sub">Reclaiming the social dimension</div>
+  <div class="paper-meta-grid">
+    <div class="paper-meta-item"><div class="label">Journal</div><div class="value"><i>The British Journal of Social Work</i> (Oxford University Press / BASW), 2026년 5월 온라인 선게재<br>SSCI 등재</div></div>
+    <div class="paper-meta-item"><div class="label">Type</div><div class="value">웹 설문(2024년 10~11월), 폐쇄형 문항과 개방형 문항 결합<br>개방형 응답의 이분 코딩 후 교차표와 두 비율 z-검정</div></div>
+    <div class="paper-meta-item"><div class="label">Core claim</div><div class="value">실천가들은 이론을 사용하지만 개인·집단 수준에 머물며, 사회적·비판적 관점은 주변화되어 있다. 이는 개인의 역량보다 제도와 정책이 지식을 정당화하는 방식의 문제다</div></div>
+  </div>
+</div>
+
+<div class="quote-box">
+  "The findings show that practice-based knowledge occupies a dominant position, while theoretical insights are primarily applied within individual and group/context-oriented approaches. Structural and critical-emancipatory perspectives remain peripheral."
+  <span class="attr">출처: Abstract</span>
+  <span class="trans"><strong>번역.</strong> 연구 결과 <strong>실천기반 지식이 지배적 위치</strong>를 차지하며, 이론적 통찰은 주로 <strong>개인 및 집단·맥락 지향 접근</strong> 안에서 적용되었다. 구조적이고 비판적·해방적 관점은 <strong>주변부에 머물러</strong> 있다.<br><br>🧭 <b>길잡이.</b> "dominant", "primarily", "peripheral" 세 단어로 지식의 위계를 중심에서 주변까지 한 번에 그린다. 분포를 보고하는 결과를 서열의 언어로 요약하는 기술이다.</span>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">이 논문을 이끄는 세 가지 질문</span><br>
+  <b>① 무엇을 아는가.</b> 실천가들은 이론적, 실천기반, 개인경험적 지식을 각각 얼마나, 어떤 조합으로 쓰는가.<br>
+  <b>② 어느 수준을 보는가.</b> 이론을 쓴다면 그것은 개인, 집단·맥락, 사회 중 어느 수준을 향한 이론인가.<br>
+  <b>③ 누가, 어디서.</b> 이러한 지식 사용은 교육 수준, 직무, 기관 유형과 어떻게 연관되는가.<br><br>
+  🔑 세 질문은 각각 <b>지식의 유형</b> · <b>지식의 범위</b> · <b>지식의 제도적 분포</b>에 대응한다. 마지막 질문이 논문의 핵심 주장인 "제도가 지식을 정당화한다"로 이어진다.
+</div>
+
+<!-- 02 -->
+<div class="section-head" id="intro">
+  <div class="section-num">02</div>
+  <div class="section-title-block"><h2>Introduction: "올바른 사람을 고치는" 실천</h2><p class="section-subtitle">기술관료적 전환과 탈지성화 논쟁</p></div>
+</div>
+
+<div class="panel">
+  <p>서론은 비판 사회복지 문헌을 촘촘하게 엮어 하나의 진단을 만든다. 아동보호 실천은 표준화된 기술적·행동적 개입에 의해 지배되고, 이는 복잡한 사회문제를 <strong>개별화된 위험 사정과 사전 정의된 절차적 대응</strong>으로 환원한다. 근거기반실천(EBP)과 표준 프로토콜은 책무성과 효과성을 높이려는 의도에도 불구하고 측정 가능한 단기 결과를 우선시함으로써 이 환원을 강화했다. 신자유주의적 거버넌스는 시장 논리, 표준화, 성과 측정, 관리 통제를 강조하며 전문적 재량을 제약한다.</p>
+  <p>저자들은 이 흐름을 <strong>인식론의 협소화</strong>로 읽는다. 절차적·기술적 추론이 해석적·윤리적·비판적 성찰을 밀어내고, 실천가는 지식을 생산하고 적용하는 분석적 전문가가 아니라 정책의 집행자가 된다. 이에 대한 대안으로 가족을 더 넓은 사회·정치·경제적 맥락 속의 관계적 행위자로 보는 <strong>사회적으로 뿌리내린(socially embedded) 접근</strong>이 제시된다.</p>
+</div>
+
+<div class="quote-box">
+  "This dominant paradigm reflects an orientation towards restoring normative functioning by 'fixing the right people', rather than critically engaging with systemic power relations and social inequalities that perpetuate hardship."
+  <span class="attr">출처: Introduction</span>
+  <span class="trans"><strong>번역.</strong> 이 지배적 패러다임은 고통을 지속시키는 체계적 권력관계와 사회적 불평등에 비판적으로 관여하기보다, <strong>"올바른 사람을 고침으로써"</strong> 규범적 기능을 회복하려는 지향을 반영한다.<br><br>🧭 <b>길잡이.</b> 따옴표로 묶은 짧은 구절 하나가 비판 전체를 운반한다. "rather than" 뒤에 대안적 관점을 붙여 비판과 대안을 한 문장에 담았다.</span>
+</div>
+
+<div class="quote-box">
+  "... social workers are increasingly positioned as instrumental executors of policy, rather than as critical and analytical professionals who generate and apply knowledge in their practice."
+  <span class="attr">출처: Introduction (Van Pelt, 2023의 논의를 정리한 부분)</span>
+  <span class="trans"><strong>번역.</strong> 사회복지사는 점점 더 실천 속에서 지식을 생산하고 적용하는 비판적·분석적 전문가가 아니라, <strong>정책의 도구적 집행자</strong>로 위치 지어지고 있다.<br><br>🧭 <b>길잡이.</b> 수동태 "are positioned as"에 주목하자. 사회복지사가 스스로 그렇게 된 것이 아니라 구조가 그 자리에 놓았다는 뜻을 문법으로 전달한다.</span>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">M</div>
+    <div class="cond-titles"><div class="cond-code">Analytic bridge</div><h3>이론의 세 지향을 미시·중시·거시 실천에 연결하다</h3><div class="cond-en">Individual / group-context / societal orientations ↔ micro / meso / macro practice</div></div>
+    <span class="verdict new">new</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">🔭 "이론을 쓰는가"라는 질문을 "어느 수준의 이론을 쓰는가"로 바꾸면, 실천이 어느 수준에서 멈춰 있는지가 보인다.</div>
+    <p>이 논문의 개념적 장치는 단순하지만 효과적이다. 저자들은 실천가들이 언급한 이론을 개방형 응답에서 귀납적으로 세 지향으로 분류했다. <strong>개인 지향</strong>은 애착 이론이나 인지행동 모형처럼 개인의 기능과 변화 과정에 초점을 둔 심리·행동 이론이고, <strong>집단·맥락 지향</strong>은 가족이나 팀 내 관계를 다루는 체계적·상호작용적 접근과 집단활동, 생활집단(leefgroep) 실천의 전통이며, <strong>사회 지향</strong>은 불평등, 빈곤, 사회정의를 다루는 구조적, 비판적, 사회교육학적 관점이다. 그리고 이 셋을 사회복지 실천의 <strong>미시, 중시, 거시</strong> 수준에 명시적으로 대응시켰다. 이 대응 덕분에 플랑드르의 결과가 국제적 논쟁의 언어로 번역될 수 있다.</p>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="section-head" id="method">
+  <div class="section-num">03</div>
+  <div class="section-title-block"><h2>방법: 실천가에게 "어떤 이론을 쓰는가"를 묻다</h2><p class="section-subtitle">웹 설문 · 지식 유형 분류 · 이분 코딩 · 교차표</p></div>
+</div>
+
+<div class="panel">
+  <p>설문은 두 차례의 예비조사(실천가 20명, 실천가와 겐트대학교 아동복지·보호 과정 학생 63명)를 거쳐 다듬어졌고, 2024년 10월 24일부터 11월 27일까지 Qualtrics로 실시되었다. 배포는 플랑드르 정부 기관인 <strong>Opgroeien(Growing Up)</strong>이 인가한 기관들의 메일링 리스트와 연구자의 LinkedIn 네트워크를 통해 이루어졌다. Opgroeien은 플랑드르 아동보호 서비스의 조직 틀, 의뢰 경로, 인가를 관리하는 기관이며 대부분 기관의 주 재원이다. 이 사실은 뒤의 Signs of Safety 분석에서 중요해진다.</p>
+  <p>설문은 Van Bommel 등(2011)의 지식원 분류에 따라 <strong>이론적 지식</strong>(현상과 기제를 이해하게 돕는 과학적 설명), <strong>실천기반 지식</strong>(실천을 통해 얻은 통찰), <strong>개인경험적 지식</strong>(자신의 삶의 경험에서 비롯된 지식)을 구분했다. 개방형 응답은 이 세 지식 유형과 세 이론 지향에 대해 0/1로 이분 코딩되었고, 두 연구자가 독립적으로 코딩하여 모든 코드에서 <strong>90% 이상의 일치율</strong>을 보고했다. 분석 과정에서 Signs of Safety(SoS)에 대한 언급이 자주 나타나자, 관련 키워드("Signs of Safety", "safety mapping", "worry statements")를 기준으로 추가 이분 변수를 만들었다.</p>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">용어 정리</span><br>
+  🧪 <b>CWP(Child Welfare and Protection)</b>: 벨기에 플랑드르의 아동복지·아동보호 서비스 체계 전반.<br>
+  🧪 <b>Opgroeien(Growing Up)</b>: 아동보호 서비스의 조직 틀, 의뢰 경로, 기관 인가를 관리하는 플랑드르 정부 기관이자 대부분 기관의 주 재원.<br>
+  🧪 <b>Signs of Safety(SoS)</b>: 가족과 그 사회적 관계망과의 협력을 강조하는 안전·위험 지향 아동보호 실천 모형.<br>
+  🧪 <b>탈지성화(de-intellectualization)</b>: 사회복지사가 지식을 생산·적용하는 분석적 전문가가 아니라 정책의 도구적 집행자로 위치 지어지는 현상(Van Pelt, 2023).<br>
+  🧪 <b>암묵지(tacit knowledge)</b>: 행위 속에 내재되어 말로 명시하기 어려운 지식(Polanyi, 1966).<br>
+  🧪 <b>비판적·해방적(critical-emancipatory) 관점</b>: 권력관계와 구조적 불평등을 분석하고 변화시키는 것을 실천의 목표로 삼는 관점.<br>
+  🧪 <b>두 비율 z-검정</b>: 두 집단의 비율 차이가 우연으로 설명되는지를 검정하는 방법. 이 논문은 각 범주를 기준 집단과 비교하는 데 사용했다.
+</div>
+<div class="figure-block">
+  <div class="fig-title">표본의 흐름</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 본문 서술로 작성</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 760 200" width="100%" style="max-width:760px" role="img" aria-label="표본 선별 흐름">
+      <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fa8"/></marker></defs>
+      <rect x="20" y="40" width="180" height="70" rx="10" fill="#fff" stroke="#3f86c4"/>
+      <text x="110" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#20262e">응답 597명</text>
+      <text x="110" y="92" text-anchor="middle" font-size="11" fill="#46505c">메일링 리스트 + LinkedIn</text>
+      <line x1="200" y1="75" x2="278" y2="75" stroke="#2f6fa8" stroke-width="1.8" marker-end="url(#ar3)"/>
+      <rect x="280" y="40" width="180" height="70" rx="10" fill="#fff" stroke="#3f86c4"/>
+      <text x="370" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#20262e">506명</text>
+      <text x="370" y="92" text-anchor="middle" font-size="11" fill="#46505c">핵심 배경변수 결측 91명 제외</text>
+      <line x1="460" y1="75" x2="538" y2="75" stroke="#2f6fa8" stroke-width="1.8" marker-end="url(#ar3)"/>
+      <rect x="540" y="40" width="200" height="70" rx="10" fill="#2f6fa8"/>
+      <text x="640" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">최종 338명</text>
+      <text x="640" y="92" text-anchor="middle" font-size="11" fill="#e8f1fa">개방형 응답 완료 · 기타 직무 제외</text>
+      <rect x="20" y="130" width="720" height="54" rx="9" fill="#fbf1dc"/>
+      <text x="380" y="152" text-anchor="middle" font-size="12" fill="#c78a1e" font-weight="700">최초 응답의 약 57%만 분석에 포함 · 석사 학위자가 개방형 문항을 더 많이 완료</text>
+      <text x="380" y="171" text-anchor="middle" font-size="11" fill="#46505c">결측 지시변수 모형에서 교육 수준의 작은 효과 확인 · 다중대체는 적용하지 않음</text>
+    </svg>
+  </div>
+  <div class="fig-implies">
+    🎯 <b>이게 무슨 뜻인가.</b> 이 연구의 핵심 변수(어떤 지식과 이론을 쓰는가)는 모두 <b>개방형 응답</b>에서 나온다. 그런데 개방형 문항을 끝까지 쓴 사람만 분석에 남았고, 그들은 석사 학위자 쪽으로 약간 치우쳐 있다. 저자들은 이 선택적 무응답을 결과 해석 시 고려해야 한다고 명시한다. 석사 학위자가 이론을 더 많이 언급한다는 결과를 감안하면, 전체 모집단에서의 이론 사용률은 보고치보다 <b>낮을 가능성</b>이 있다.
+  </div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트</span><br>
+  🎲 <strong>일치율(percent agreement)과 희귀 코드.</strong> 저자들은 두 코더의 일치율이 모든 코드에서 90%를 넘었다고 보고한다. 그런데 "사회 지향 이론" 코드처럼 해당 비율이 5% 수준인 희귀 코드에서는, 두 코더가 모두 "0"을 매기기만 해도 일치율이 95% 가까이 나온다. 이 때문에 질적 코딩의 신뢰도는 우연 일치를 보정한 <strong>Cohen's kappa</strong>나 Krippendorff's alpha로 보고하는 것이 권장된다. 이 논문의 결론이 가장 크게 기대는 숫자(5.1%)가 바로 이 희귀 코드에서 나온다는 점을 기억하자. 코딩 신뢰도를 보고할 때 "어떤 지표로, 어떤 코드에 대해"를 함께 적는 습관이 필요한 이유다.
+</div>
+
+<!-- 04 -->
+<div class="section-head" id="kb">
+  <div class="section-num">04</div>
+  <div class="section-title-block"><h2>결과 1: 실천가들은 지식을 섞어 쓴다</h2><p class="section-subtitle">Table 2 · Table 3</p></div>
+</div>
+
+<div class="panel">
+  <p>응답자 대다수는 세 유형의 지식을 모두 사용한다고 답했다. 이론적 지식 <span class="stat-inline">83.7%</span>, 실천기반 지식 <span class="stat-inline">89.6%</span>, 개인경험적 지식 <span class="stat-inline">66.5%</span>이다. 조합으로 보면 절반 이상(55.8%)이 세 가지를 모두 결합했고, 이론만 사용한 사람은 4.7%, 이론을 전혀 사용하지 않은 사람은 16.3%였다. "실천가들은 이론을 쓰지 않는다"는 통념은 적어도 자기보고 수준에서는 지지되지 않는다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">지식 기반의 조합 (Table 2) · 직무별 이론적 지식 사용 (Table 3)</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 원문에는 Figure가 없으며 Table 수치를 시각화</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 780 470" width="100%" style="max-width:780px" role="img" aria-label="지식 기반 조합과 직무별 이론 사용 비율">
+      <text x="20" y="24" font-size="13" font-weight="700" fill="#20262e">A. 지식 기반의 조합 (n = 338)</text>
+      <rect x="20" y="38" width="120" height="40" fill="#e0573e"/>
+      <rect x="140" y="38" width="35" height="40" fill="#c78a1e"/>
+      <rect x="175" y="38" width="170" height="40" fill="#6cb0e4"/>
+      <rect x="345" y="38" width="415" height="40" fill="#2f6fa8"/>
+      <g font-size="12" font-weight="700" fill="#fff" text-anchor="middle">
+        <text x="80" y="63">16.3%</text><text x="260" y="63">23.1%</text><text x="552" y="63">55.8%</text>
+      </g>
+      <text x="157" y="96" font-size="11" fill="#c78a1e" text-anchor="middle" font-weight="700">4.7%</text>
+      <g font-size="11" fill="#46505c">
+        <rect x="20" y="110" width="12" height="12" fill="#e0573e"/><text x="38" y="120">이론 없음</text>
+        <rect x="130" y="110" width="12" height="12" fill="#c78a1e"/><text x="148" y="120">이론만</text>
+        <rect x="220" y="110" width="12" height="12" fill="#6cb0e4"/><text x="238" y="120">이론 + 실천기반 또는 경험 중 하나</text>
+        <rect x="470" y="110" width="12" height="12" fill="#2f6fa8"/><text x="488" y="120">이론 + 실천기반 + 경험 모두</text>
+      </g>
+      <text x="20" y="168" font-size="13" font-weight="700" fill="#20262e">B. 직무별 "이론적 지식을 사용한다" 응답 비율</text>
+      <g font-size="11.5" fill="#20262e" text-anchor="end">
+        <text x="250" y="200">아동생활지도원·상담원 (기준)</text>
+        <text x="250" y="230">팀장</text>
+        <text x="250" y="260">관리·경영진</text>
+        <text x="250" y="290">가족·맥락 실천가</text>
+        <text x="250" y="320">지원 직무</text>
+        <text x="250" y="350">사례관리자·컨설턴트</text>
+        <text x="250" y="380">사회복지사·심리사·교육학자</text>
+      </g>
+      <g>
+        <rect x="262" y="188" width="350" height="18" rx="3" fill="#aab4c1"/>
+        <rect x="262" y="218" width="445" height="18" rx="3" fill="#2f6fa8"/>
+        <rect x="262" y="248" width="466" height="18" rx="3" fill="#2f6fa8"/>
+        <rect x="262" y="278" width="438" height="18" rx="3" fill="#2f6fa8"/>
+        <rect x="262" y="308" width="421" height="18" rx="3" fill="#6cb0e4"/>
+        <rect x="262" y="338" width="470" height="18" rx="3" fill="#2f6fa8"/>
+        <rect x="262" y="368" width="412" height="18" rx="3" fill="#6cb0e4"/>
+      </g>
+      <g font-size="11" font-weight="700" fill="#46505c">
+        <text x="618" y="202">70.0</text><text x="713" y="232">89.0 ***</text><text x="734" y="262">93.3 ***</text><text x="706" y="292">87.7 **</text>
+        <text x="689" y="322">84.2</text><text x="738" y="352">94.1 **</text><text x="680" y="382">82.4</text>
+      </g>
+      <line x1="262" y1="396" x2="762" y2="396" stroke="#e6ebf1"/>
+      <text x="262" y="412" font-size="10" fill="#828d9b">0%</text><text x="762" y="412" font-size="10" fill="#828d9b" text-anchor="end">100%</text>
+      <text x="20" y="440" font-size="11" fill="#46505c">진한 파랑: 기준 집단 대비 유의한 차이 (** p &lt; .01, *** p &lt; .001, 두 비율 z-검정)</text>
+      <text x="20" y="458" font-size="11" fill="#46505c">교육 수준: 석사 89.1% vs 비석사 80.3% (p &lt; .01) · 안전거주시설(Veilig Verblijf) 54.5% vs 거주시설 84.2%</text>
+    </svg>
+  </div>
+  <p class="fig-cap">출처: Oorlynck et al. (2026), Table 2 및 Table 3. 가족·맥락 실천가의 수치는 Table 3에서 87.7%, 본문에서 87.6%로 서로 다르게 보고됨.</p>
+  <div class="fig-implies">
+    <b>📊 이 그림을 어떻게 읽는가.</b> A는 전체 응답자를 네 조합으로 나눈 것이고, B는 직무별로 이론을 쓴다고 답한 비율이다. B의 회색 막대(아동생활지도원·상담원)가 비교 기준이며, 나머지 막대는 이 기준과 비교한 z-검정 결과를 별표로 표시했다.<br><br>
+    🎯 <b>이게 무슨 뜻인가.</b> 이론 사용은 <b>직무 위계와 함께 올라간다</b>. 거주시설의 일선 생활지도원(70.0%)보다 팀장(89.0%), 관리자(93.3%), Opgroeien 소속 사례관리자(94.1%)가 더 많이 이론을 언급했다. 반면 개인경험적 지식은 반대 방향으로 움직여 팀장(52.1%)이 생활지도원(70.0%)보다 유의하게 낮았다. 아이들과 가장 가까이에서 일하는 사람일수록 자기 경험에, 조직의 위쪽으로 갈수록 이론에 더 기대는 구조다. 저자들은 이를 이론이 "일선이 아닌 관리층에 집중되는" 인식론적 위계의 증거로 읽는다.
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="section-head" id="theory">
+  <div class="section-num">05</div>
+  <div class="section-title-block"><h2>결과 2: 어떤 이론인가</h2><p class="section-subtitle">개인 84.7% · 집단·맥락 83.8% · 사회 5.1%</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">!</div>
+    <div class="cond-titles"><div class="cond-code">Key finding</div><h3>사회 지향 이론의 부재</h3><div class="cond-en">"In absolute contrast, only a small proportion (5.1 percent) ..."</div></div>
+    <span class="verdict weak">핵심 불균형</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">🏠 실천가들은 아이와 가족을 이해하는 이론은 충분히 갖고 있다. 그 가족을 둘러싼 빈곤과 제도를 이해하는 이론은 거의 갖고 있지 않다.</div>
+    <p>이론을 언급한 실천가 대다수가 개인 지향(84.7%)과 집단·맥락 지향(83.8%) 이론을 알고 적용한다고 답했다. 이와 "절대적으로 대조적으로", 사회 지향 이론을 언급한 사람은 <strong>5.1%</strong>였다. 저자들은 이를 실용적이고 사례 중심적인 미시 수준 접근이 지배하고, 구조적 성찰과 정책 지향적 사고가 주변에 머무는 상태로 해석한다.</p>
+    <div class="quote-box">
+      "In absolute contrast, only a small proportion (5.1 percent) indicated familiarity with or use of societal-oriented frameworks."
+      <span class="attr">출처: Research findings, What kind of theoretical knowledge</span>
+      <span class="trans"><strong>번역.</strong> 이와 <strong>절대적으로 대조적으로</strong>, 사회 지향 프레임워크에 대한 친숙함이나 사용을 언급한 비율은 <strong>5.1%</strong>에 불과했다.<br><br>🧭 <b>길잡이.</b> "In absolute contrast"는 결과 절에서는 드물게 강한 표현이다. 84.7%와 83.8% 다음에 5.1%를 놓는 배열 자체가 논증이 된다.</span>
+    </div>
+    <p>이 불균형 안에서도 차이가 있었다. 석사 학위자(8.5%)는 그렇지 않은 사람(2.9%)보다 사회 지향 이론을 더 많이 언급했고, 이 교육 효과는 직무를 통제한 뒤에도 유의했다고 보고된다. 그러나 석사 학위자의 91.5% 역시 사회 지향 이론을 언급하지 않았다. 교육은 레퍼토리를 넓히지만, 그것만으로 실천의 인식론을 바꾸지는 못한다는 뜻이다.</p>
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">이론 지향의 분포와 실천 수준</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 본문 수치로 작성</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 780 380" width="100%" style="max-width:780px" role="img" aria-label="이론 지향별 사용 비율과 미시 중시 거시 대응">
+      <!-- axis -->
+      <line x1="80" y1="300" x2="740" y2="300" stroke="#aab4c1"/>
+      <!-- bars -->
+      <rect x="130" y="300" width="130" height="0" fill="#2f6fa8"/>
+      <rect x="130" y="80" width="130" height="220" rx="6" fill="#2f6fa8"/>
+      <rect x="330" y="82" width="130" height="218" rx="6" fill="#3f86c4"/>
+      <rect x="530" y="287" width="130" height="13" rx="3" fill="#e0573e"/>
+      <g text-anchor="middle" font-weight="700">
+        <text x="195" y="70" font-size="18" fill="#2f6fa8">84.7%</text>
+        <text x="395" y="72" font-size="18" fill="#3f86c4">83.8%</text>
+        <text x="595" y="276" font-size="18" fill="#e0573e">5.1%</text>
+      </g>
+      <g text-anchor="middle">
+        <text x="195" y="322" font-size="13" font-weight="700" fill="#20262e">개인 지향</text>
+        <text x="195" y="340" font-size="11" fill="#46505c">애착 이론, 인지행동 모형</text>
+        <text x="395" y="322" font-size="13" font-weight="700" fill="#20262e">집단·맥락 지향</text>
+        <text x="395" y="340" font-size="11" fill="#46505c">체계적 가족 접근, 생활집단 실천</text>
+        <text x="595" y="322" font-size="13" font-weight="700" fill="#20262e">사회 지향</text>
+        <text x="595" y="340" font-size="11" fill="#46505c">구조적·비판적·사회교육학 관점</text>
+      </g>
+      <g text-anchor="middle" font-size="12" font-weight="700">
+        <rect x="150" y="355" width="90" height="22" rx="11" fill="#e8f1fa"/><text x="195" y="370" fill="#2f6fa8">미시 (micro)</text>
+        <rect x="350" y="355" width="90" height="22" rx="11" fill="#e8f1fa"/><text x="395" y="370" fill="#2f6fa8">중시 (meso)</text>
+        <rect x="550" y="355" width="90" height="22" rx="11" fill="#fdeee9"/><text x="595" y="370" fill="#e0573e">거시 (macro)</text>
+      </g>
+      <!-- annotation -->
+      <rect x="560" y="120" width="200" height="120" rx="10" fill="#fff" stroke="#e0573e" stroke-dasharray="4 3"/>
+      <text x="660" y="142" text-anchor="middle" font-size="11.5" font-weight="700" fill="#e0573e">사회 지향 내부의 차이</text>
+      <text x="575" y="166" font-size="11" fill="#46505c">남성 11.1% vs 여성 2.9% (p &lt; .001)</text>
+      <text x="575" y="188" font-size="11" fill="#46505c">석사 8.5% vs 비석사 2.9% (p &lt; .01)</text>
+      <text x="575" y="210" font-size="11" fill="#46505c">석사 학위자도 91.5%는 언급 없음</text>
+      <text x="575" y="230" font-size="10.5" fill="#828d9b">Table 1 기준</text>
+      <line x1="620" y1="240" x2="600" y2="270" stroke="#e0573e" stroke-dasharray="3 3"/>
+    </svg>
+  </div>
+  <div class="fig-implies">
+    🎯 <b>이게 무슨 뜻인가.</b> 세 막대는 서로 배타적인 비율이 아니다. 한 사람이 개인 지향과 집단·맥락 지향을 동시에 언급할 수 있으므로 합이 100을 넘는다. 이 그림의 요점은 높이의 순서가 아니라 <b>두 막대와 한 막대 사이의 절벽</b>이다. 미시·중시 수준의 이론은 거의 보편적이고, 거시 수준의 이론은 거의 부재하다. 저자들은 이 절벽이 바로 서론에서 말한 "사회문제의 개별화"가 실천가의 지식 수준에서 나타난 모습이라고 본다.
+  </div>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">🍳 비유로 다시 읽기</span><br>
+  <b>카메라 렌즈로 생각해 보자.</b><br>
+  · <b>개인 지향 이론</b> = 접사 렌즈. 아이 한 명의 애착, 정서, 행동을 선명하게 본다.<br>
+  · <b>집단·맥락 지향 이론</b> = 표준 렌즈. 가족과 생활집단 안의 관계를 한 화면에 담는다.<br>
+  · <b>사회 지향 이론</b> = 광각 렌즈. 그 가족이 사는 동네의 빈곤, 주거, 제도까지 화면에 들어온다.<br><br>
+  🎯 이 논문이 보여준 것은 플랑드르 실천가들의 가방에 접사 렌즈와 표준 렌즈는 거의 모두 들어 있지만, <b>광각 렌즈는 스무 명 중 한 명꼴</b>이라는 사실이다. 광각 렌즈가 없으면 같은 가족을 찍어도 문제는 늘 "그 가족 안"에서만 보이게 된다.
+</div>
+<!-- 06 -->
+<div class="section-head" id="sos">
+  <div class="section-num">06</div>
+  <div class="section-title-block"><h2>결과 3: Signs of Safety와 제도의 손</h2><p class="section-subtitle">누가 표준화된 모형을 쓰는가</p></div>
+</div>
+
+<div class="panel">
+  <p>분석 도중 저자들은 개방형 응답에서 <strong>Signs of Safety(SoS)</strong>가 반복적으로 언급된다는 점을 발견했다. SoS는 가족 및 사회적 관계망과의 협력을 강조하는 안전·위험 지향 접근이다. 플랑드르에서는 Opgroeien이 조직 차원에서 SoS를 도입하기로 정책 결정을 내렸고, 이 기관은 거의 모든 아동보호 조직의 주 재원이다. 따라서 SoS 사용 분포는 <strong>정책과 재정이 지식 사용을 어떻게 조향하는가</strong>를 보여주는 자연적 지표가 된다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">직무별 Signs of Safety 언급 비율 (Table 1)</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · Table 수치를 시각화</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 780 330" width="100%" style="max-width:780px" role="img" aria-label="직무별 Signs of Safety 언급 비율">
+      <g font-size="11.5" fill="#20262e" text-anchor="end">
+        <text x="250" y="34">사례관리자·컨설턴트</text>
+        <text x="250" y="68">지원 직무 (경로·품질 코디네이터 등)</text>
+        <text x="250" y="102">팀장</text>
+        <text x="250" y="136">가족·맥락 실천가</text>
+        <text x="250" y="170">사회복지사·심리사·교육학자</text>
+        <text x="250" y="204">관리·경영진</text>
+        <text x="250" y="238">아동생활지도원·상담원 (기준)</text>
+      </g>
+      <g>
+        <rect x="262" y="20" width="294" height="20" rx="3" fill="#2f6fa8"/>
+        <rect x="262" y="54" width="193" height="20" rx="3" fill="#2f6fa8"/>
+        <rect x="262" y="88" width="158" height="20" rx="3" fill="#3f86c4"/>
+        <rect x="262" y="122" width="130" height="20" rx="3" fill="#6cb0e4"/>
+        <rect x="262" y="156" width="118" height="20" rx="3" fill="#6cb0e4"/>
+        <rect x="262" y="190" width="103" height="20" rx="3" fill="#6cb0e4"/>
+        <rect x="262" y="224" width="96" height="20" rx="3" fill="#aab4c1"/>
+      </g>
+      <g font-size="11.5" font-weight="700" fill="#46505c">
+        <text x="562" y="35">58.8% ***</text><text x="461" y="69">38.5% **</text><text x="426" y="103">31.5% *</text>
+        <text x="398" y="137">25.9%</text><text x="386" y="171">23.5%</text><text x="371" y="205">20.5%</text><text x="364" y="239">19.1%</text>
+      </g>
+      <line x1="262" y1="256" x2="762" y2="256" stroke="#e6ebf1"/>
+      <text x="262" y="272" font-size="10" fill="#828d9b">0%</text><text x="762" y="272" font-size="10" fill="#828d9b" text-anchor="end">100%</text>
+      <rect x="560" y="60" width="200" height="130" rx="10" fill="#fff" stroke="#c78a1e" stroke-dasharray="4 3"/>
+      <text x="660" y="82" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c78a1e">기관 유형별로 보면</text>
+      <text x="574" y="106" font-size="11" fill="#46505c">OCJ·SDJ (Opgroeien 소속)</text>
+      <text x="574" y="124" font-size="11" fill="#2f6fa8" font-weight="700">68.2% ***</text>
+      <text x="574" y="148" font-size="11" fill="#46505c">안전거주시설 · 공공 폐쇄시설</text>
+      <text x="574" y="166" font-size="11" fill="#e0573e" font-weight="700">0.0%</text>
+      <text x="574" y="182" font-size="10" fill="#828d9b">교육·성별·연령 차이는 없음</text>
+      <text x="20" y="300" font-size="11" fill="#46505c">* p &lt; .05, ** p &lt; .01, *** p &lt; .001 (아동생활지도원·상담원 대비 두 비율 z-검정) · 전체 27.6%</text>
+      <text x="20" y="318" font-size="10.5" fill="#828d9b">OCJ: 청소년돌봄지원센터(Ondersteuningscentra Jeugdzorg) · SDJ: 소년법원 사회서비스(Sociale Dienst bij de Jeugdrechtbank)</text>
+    </svg>
+  </div>
+  <p class="fig-cap">출처: Oorlynck et al. (2026), Table 1 및 Findings. 본문은 거주시설 종사자의 SoS 사용률을 27.6%로 서술하는데, Table 1에서는 27.6%가 전체 비율 행에 해당하는 것으로 보인다. 원문 Table 확인 필요.</p>
+  <div class="fig-implies">
+    <b>📊 이 그림을 어떻게 읽는가.</b> 막대는 개방형 응답에서 SoS 관련 키워드를 언급한 비율이다. 기준 집단은 거주시설의 아동생활지도원·상담원이다.<br><br>
+    🎯 <b>이게 무슨 뜻인가.</b> SoS 사용은 교육 수준, 성별, 연령과는 무관했고 <b>직무와 기관</b>에 따라 크게 갈렸다. SoS를 도입하기로 결정한 Opgroeien 소속의 사례관리자와 OCJ·SDJ 종사자에게 집중되어 있고, 안전거주시설과 공공 폐쇄시설에서는 아무도 언급하지 않았다. 저자들은 이를 "SoS는 개인의 특성이 아니라 특정 직무와 조직 구조에 결합되어 있다"는 증거로 읽는다. 어떤 지식이 쓰이는가는 실천가가 무엇을 배웠는가보다 <b>어느 조직에 속해 있는가</b>에 더 크게 좌우될 수 있다는 것이다.
+  </div>
+</div>
+
+<div class="quote-box">
+  "This pattern suggests that SoS is primarily associated with specific professional roles and organizational structures, rather than with individual demographic characteristics."
+  <span class="attr">출처: Research findings</span>
+  <span class="trans"><strong>번역.</strong> 이 패턴은 SoS가 개인의 인구학적 특성보다는 <strong>특정 전문 직무와 조직 구조</strong>와 주로 결합되어 있음을 시사한다.<br><br>🧭 <b>길잡이.</b> "rather than" 구조로 두 설명(개인 특성 대 조직 구조)을 경쟁시키고, 교육·성별·연령 차이가 없다는 결과를 근거로 후자를 택한다. 유의하지 않은 결과가 논증에 쓰이는 방식이다.</span>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">여기서 조심할 것</span><br>
+  ⚠️ <b>이 연구는 SoS 자체를 평가하지 않았다.</b> 이 논문은 SoS가 누구에게서 언급되는지를 보여줄 뿐, SoS의 효과나 질을 측정하지 않았다. SoS가 사회적 차원과 제한적으로만 관여한다는 논의는 선행연구(Dewanckel et al., 2023; Decoene et al., 2024)에 기댄 것이다. "이 연구에서 SoS가 실천을 협소하게 만들었다"처럼 인용하지 않도록 주의하자.
+</div>
+<!-- 07 -->
+<div class="section-head" id="discussion">
+  <div class="section-num">07</div>
+  <div class="section-title-block"><h2>논의: 분포를 기제로 읽기</h2><p class="section-subtitle">실천지식의 보수성 · 교육의 한계 · 제도의 정당화</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">1</div>
+    <div class="cond-titles"><div class="cond-code">Mechanism 1</div><h3>실천기반 지식의 인식론적 보수성</h3><div class="cond-en">Practice-based knowledge and epistemological conservatism</div></div>
+    <span class="verdict promising">이론적으로 설득력</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">🧠 현장에서 쌓은 감은 소중하지만, 감은 대체로 지금 하던 방식을 정당화하는 쪽으로 작동한다.</div>
+    <p>실천기반 지식이 가장 널리 쓰인다는 결과(89.6%)를 저자들은 양면적으로 해석한다. 이런 지식은 복잡하고 역동적인 현장을 헤쳐 나가게 하지만, Howe(1996)의 지적처럼 비판적 검토보다 익숙함에 뿌리를 두기 때문에 기존 규범과 방식을 강화하는 경향이 있다. 또한 Polanyi(1966)가 말한 암묵지(tacit knowledge)의 성격 때문에 행위에 내재된 지식은 좀처럼 말로 표현되거나 질문받지 않는다.</p>
+    <div class="quote-box">
+      "This form of knowledge enables professionals to navigate complex and dynamic practice settings, yet it may also carry a risk of epistemological conservatism."
+      <span class="attr">출처: Discussion, Practice-based knowledge</span>
+      <span class="trans"><strong>번역.</strong> 이 형태의 지식은 전문가가 복잡하고 역동적인 실천 현장을 헤쳐 나가게 하지만, 동시에 <strong>인식론적 보수주의의 위험</strong>을 지닐 수 있다.<br><br>🧭 <b>길잡이.</b> "enables ..., yet it may also ..."로 장점을 먼저 인정하고 위험을 제시한다. 현장 지식을 폄하하지 않으면서 한계를 짚어야 할 때 쓰는 균형의 문장이다.</span>
+    </div>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">2</div>
+    <div class="cond-titles"><div class="cond-code">Mechanism 2</div><h3>교육은 레퍼토리를 넓히지만 실천을 바꾸지는 못한다</h3><div class="cond-en">Academization and de-intellectualization</div></div>
+    <span class="verdict mixed">부분적 지지</span>
+  </div>
+  <div class="condition-body">
+    <p>석사 학위자는 이론을 더 많이 쓰고(89.1% vs 80.3%), 이론의 중요성에 거의 만장일치로 동의했으며(99.2% vs 91.8%), 사회 지향 이론도 더 많이 언급했다. 그러나 절대 수준은 여전히 낮았다. 저자들은 이것을 교육 수준의 단순한 결과로 보지 않고 두 가지로 설명한다. 하나는 사회복지 교육 자체가 이론적 관여를 체계적으로 커리큘럼에 담지 못한다는 점이고, 다른 하나는 높은 업무량과 관리적 요구가 지속적인 이론적 성찰을 가로막는다는 점이다. 나아가 이론적·비판적 관점이 <strong>감독직과 관리직에 집중</strong>되어 있다는 결과는, 학문화가 오히려 인식론적 위계를 재생산할 수 있다는 역설을 보여준다.</p>
+    <div class="quote-box">
+      "This suggests that higher education may expand professionals' epistemological repertoire, but this does not necessarily translate into a widespread or systematic integration of critical theory in everyday CWP practice."
+      <span class="attr">출처: Discussion, Educational level and theoretical engagement</span>
+      <span class="trans"><strong>번역.</strong> 이는 고등교육이 전문가의 <strong>인식론적 레퍼토리를 넓힐 수는 있지만</strong>, 그것이 일상적 아동보호 실천에서 비판 이론의 광범위하고 체계적인 통합으로 <strong>반드시 이어지지는 않는다</strong>는 것을 시사한다.<br><br>🧭 <b>길잡이.</b> 석사 효과가 유의하다는 결과와 절대 수준이 낮다는 결과를 한 문장에 담았다. "does not necessarily translate into"가 두 결과를 잇는 연결부다.</span>
+    </div>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">3</div>
+    <div class="cond-titles"><div class="cond-code">Mechanism 3</div><h3>제도가 지식을 정당화한다</h3><div class="cond-en">Institutional embedding and the legitimation of knowledge</div></div>
+    <span class="verdict mixed">해석적 도약 있음</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">🏛️ 어떤 지식을 쓸지는 실천가 개인이 고르는 것 같지만, 실제로는 재원을 쥔 기관이 어떤 모형을 채택했는지가 크게 좌우한다.</div>
+    <p>논문의 가장 큰 주장은 여기서 나온다. SoS 같은 표준화 모형이 정부 기관 안에서 지배적이라는 사실은 정책 틀과 재정 구조가 지식 사용을 조향한다는 것을 보여주며, 이는 전문적 재량을 좁히고 비판적·해방적 접근을 밀어내는 신관리주의적 합리성을 반영한다는 것이다. 결론에서 저자들은 문제가 전문 역량이나 교육의 문제가 아니라 <strong>인식론의 문제</strong>, 즉 사회복지에서 지식이 어떻게 구성되고 승인되고 적용되는가의 문제라고 규정한다.</p>
+    <div class="quote-box">
+      "These dynamics reveal that the issue at stake is not merely one of professional competence or education, but one of epistemology; how knowledge in social work is constructed, authorized, and applied in ways that privilege certain forms of reasoning while marginalizing others."
+      <span class="attr">출처: Conclusion</span>
+      <span class="trans"><strong>번역.</strong> 이러한 역동은 문제의 핵심이 단지 전문 역량이나 교육이 아니라 <strong>인식론</strong>, 즉 사회복지에서 지식이 어떤 추론 형태는 특권화하고 다른 형태는 주변화하는 방식으로 <strong>구성되고, 승인되고, 적용되는가</strong>의 문제임을 드러낸다.<br><br>🧭 <b>길잡이.</b> "not merely X, but Y"로 문제의 층위를 개인(역량·교육)에서 구조(인식론)로 끌어올린다. 논문 전체의 논지가 이 한 문장에서 정점에 이른다.</span>
+    </div>
+    <p>이 해석은 서론의 이론적 진단과 잘 맞물리지만, 자료가 직접 보여주는 것은 <strong>분포</strong>다. "정책이 결정적 역할을 한다"는 주장은 SoS 사용이 정책 결정 기관에 집중되어 있다는 관찰로부터 추론된 것이며, 정책 도입 전후 비교나 기관 수준의 다층 분석으로 검증된 것은 아니다. 또한 사회 지향 이론의 저조함이 제도적 정당화 때문인지, 교육과정 때문인지, 혹은 측정 방식 때문인지를 이 설계는 분리하지 못한다. 이 부분은 설득력 있는 해석으로 읽되, 검증된 기제로 인용하지는 말아야 한다.</p>
+  </div>
+</div>
+
+<div class="subhead"><span class="code">+</span><h3>성별 차이에 대한 조심스러운 해석</h3><span class="en">A question of gender?</span></div>
+<div class="panel">
+  <p>남성 실천가(11.1%)가 여성(2.9%)보다 사회 지향 이론을 더 많이 언급했다는 결과에 대해, 저자들은 본질적·개인적 차이가 아니라 <strong>전문적 사회화, 조직 내 위치, 특정 문제 틀에 부여되는 인식론적 정당성의 차이</strong>로 이해하는 것이 더 타당하다고 쓰고, 이 관찰은 신중하게 해석되어야 하며 후속 연구의 과제라고 명시한다. 남성이 91명으로 작은 집단이고 직무 분포가 성별에 따라 다를 수 있다는 점을 고려하면, 이 조심스러운 태도는 적절하다. 결과를 과잉 해석하지 않으면서 가능한 설명의 방향을 제시하는 논의 절의 좋은 예다.</p>
+</div>
+
+<!-- 08 -->
+<div class="section-head" id="critique">
+  <div class="section-num">08</div>
+  <div class="section-title-block"><h2>비판적 읽기</h2><p class="section-subtitle">측정, 표본, 분석, 추론의 네 층위</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">1</div>
+    <div class="cond-titles"><div class="cond-code">Measurement</div><h3>"말하지 않은 것"은 "쓰지 않은 것"인가</h3><div class="cond-en">Unprompted open-ended mention as a measure of theory use</div></div>
+    <span class="verdict weak">핵심 한계</span>
+  </div>
+  <div class="condition-body">
+    <p>이론 지향은 개방형 질문에 대한 자발적 응답을 코딩해 측정되었다. 이 방식은 응답자가 <strong>이름을 붙여 말할 수 있는 이론</strong>만을 포착한다. 흥미롭게도 저자들 자신이 논의에서 실천지식은 암묵적이어서 좀처럼 명시되지 않는다고 강조한다. 같은 논리가 측정에도 적용된다. 빈곤을 고려해 개입 계획을 조정하는 실천가가 그것을 "구조적 사회복지 이론"이라고 명명하지 않았다면, 이 설계에서는 사회 지향 0으로 코딩된다. 5.1%는 "사회적 관점의 사용률"이라기보다 <strong>"사회적 관점을 이론의 이름으로 호명하는 비율"</strong>에 가깝다. 반대로 이 차이 자체가 저자들의 주장, 즉 사회적 관점이 이론적 언어로 정당화되지 못하고 있다는 주장을 뒷받침하는 증거로 읽힐 수도 있다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">2</div>
+    <div class="cond-titles"><div class="cond-code">Sampling</div><h3>비확률 표본과 선택적 탈락</h3><div class="cond-en">Mailing list and LinkedIn recruitment; 597 → 338</div></div>
+    <span class="verdict mixed">저자도 일부 인정</span>
+  </div>
+  <div class="condition-body">
+    <p>모집은 인가 기관 메일링 리스트와 연구자의 LinkedIn 네트워크를 통해 이루어져 응답률을 계산할 수 없고, 저자들이 "대표성과 강건성을 높였다"고 쓴 다양성 확보 노력도 확률 표본을 대체하지는 못한다. 최초 응답 597명 중 338명(약 57%)만 분석되었고, 개방형 문항 완료에 교육 수준이 작은 영향을 미쳤다. 저자들은 결측 지시변수 모형으로 이를 점검하고 해석상 주의를 당부했다. 또 표본 기술에서 여성 73.1%와 남성 26.1%, 석사 38.5%와 학사 이하 63.2%처럼 합이 100과 맞지 않는 수치가 있어, 보고 수치를 교차 확인하며 읽을 필요가 있다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">3</div>
+    <div class="cond-titles"><div class="cond-code">Analysis</div><h3>다중 비교, 작은 셀, 그리고 "인과"라는 단어</h3><div class="cond-en">Multiple z-tests, small cells, and causal wording</div></div>
+    <span class="verdict weak">주의</span>
+  </div>
+  <div class="condition-body">
+    <p>본문 분석은 기준 집단 대비 두 비율 z-검정을 반복한 이변량 교차표다. 여러 변수와 범주에 걸쳐 수십 번의 검정이 이루어졌지만 다중 비교 보정은 보고되지 않았고, 위탁가정(n = 5), 기타(n = 6), 안전거주시설(n = 11)처럼 셀이 매우 작은 범주도 비교에 포함되었다. 또한 보충자료의 로지스틱 회귀를 "인과관계를 평가하기 위한" 모형으로 소개하는데, 횡단 자기보고 자료에서 회귀분석은 통제된 연관을 보여줄 뿐 인과를 평가하지 못한다. 방법론 수업에서 바로 쓸 수 있는 교정 사례다.</p>
+    <div class="quote-box">
+      "Supplementary binary logistic regression models to assess causal relationships support the findings below and are provided in the supplementary material (not discussed in text)."
+      <span class="attr">출처: Strategy of data-analyses</span>
+      <span class="trans"><strong>번역.</strong> 인과관계를 평가하기 위한 보충적 이항 로지스틱 회귀모형이 아래 결과를 지지하며, 보충자료에 제시되어 있다(본문에서는 다루지 않음).<br><br>🧭 <b>길잡이.</b> 방법 절의 한 문장이지만 비판적으로 읽을 가치가 크다. 횡단 자기보고 자료의 로지스틱 회귀를 "to assess causal relationships"라고 소개하는 것은 설계가 허용하는 범위를 넘는 표현이다.</span>
+    </div>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">4</div>
+    <div class="cond-titles"><div class="cond-code">Contribution</div><h3>규범적 논쟁을 측정 가능한 질문으로</h3><div class="cond-en">Turning the de-intellectualization debate into an empirical map</div></div>
+    <span class="verdict promising">promising</span>
+  </div>
+  <div class="condition-body">
+    <p>이 한계들에도 불구하고 이 논문의 기여는 분명하다. 탈지성화, 기술관료화, 사회적인 것의 상실은 그동안 대부분 이론적 주장으로 다루어졌다. 이 논문은 이 주장들을 <strong>지식 유형 × 이론 지향 × 직무·기관</strong>이라는 측정 가능한 틀로 번역하고, 한 지역의 실천가 집단에서 그 분포를 처음으로 대규모로 그려냈다. 이론 지향을 미시·중시·거시 실천에 대응시킨 분석 틀은 다른 국가, 다른 영역에서 반복 측정할 수 있는 구조를 제공한다. 방법의 정교함보다 <strong>질문의 구조화</strong>가 이 논문의 가장 큰 자산이다.</p>
+  </div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트</span><br>
+  📏 <strong>이론 주도 논문에서 자료와 해석의 거리 재기.</strong> 비판 사회복지 전통의 경험 연구는 강한 이론적 틀을 먼저 세우고 자료를 그 틀에 비추어 읽는 경우가 많다. 이 자체는 정당한 연구 방식이다. 다만 읽는 사람은 각 주장에 대해 "이것은 자료가 직접 보여주는 것인가(예: 사회 지향 5.1%), 자료와 양립하는 해석인가(예: 기술관료적 지향의 반영), 자료 밖의 이론에서 온 것인가(예: 신자유주의적 거버넌스의 영향)"를 표시하며 읽어야 한다. 이 세 층위를 구분할 수 있으면, 이 논문처럼 설득력 있는 해석과 제한적인 자료가 결합된 논문을 공정하게 평가하고 인용할 수 있다.
+</div>
+
+<!-- 09 -->
+<div class="section-head" id="phrases">
+  <div class="section-num">09</div>
+  <div class="section-title-block"><h2>명문장</h2><p class="section-subtitle">비판적 논지를 영어로 정확하게 쓰는 법</p></div>
+</div>
+
+<div class="phrase-grid">
+  <div class="phrase">
+    <div class="en">"These approaches tend to focus on individual change, reducing complex social problems to individualized risk assessments and predefined procedural responses ..."</div>
+    <div class="kr">이러한 접근은 개인의 변화에 초점을 맞추어, 복잡한 사회문제를 개별화된 위험 사정과 사전 정의된 절차적 대응으로 환원하는 경향이 있다.</div>
+    <div class="why"><b>왜 유용한가.</b> "reducing X to Y"는 환원주의 비판의 가장 정확한 동사 구조다. 위험 사정 중심 실천이나 점수 기반 선별을 비판적으로 다루는 서론에 응용할 수 있다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"... an orientation towards restoring normative functioning by 'fixing the right people', rather than critically engaging with systemic power relations and social inequalities that perpetuate hardship."</div>
+    <div class="kr">고통을 지속시키는 체계적 권력관계와 사회적 불평등에 비판적으로 관여하기보다, "올바른 사람을 고침으로써" 규범적 기능을 회복하려는 지향.</div>
+    <div class="why"><b>왜 유용한가.</b> 짧은 인용구(fixing the right people)를 수사적 닻으로 삼고, "rather than"으로 대안적 관점을 대비시키는 구조다. 한 문장 안에서 비판과 대안을 동시에 제시한다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"... social workers are increasingly positioned as instrumental executors of policy, rather than as critical and analytical professionals who generate and apply knowledge in their practice."</div>
+    <div class="kr">사회복지사는 점점 더 실천 속에서 지식을 생산하고 적용하는 비판적·분석적 전문가가 아니라, 정책의 도구적 집행자로 위치 지어진다.</div>
+    <div class="why"><b>왜 유용한가.</b> "are positioned as"라는 수동 구조가 이것이 개인의 선택이 아니라 구조가 부여한 위치라는 점을 문법적으로 드러낸다. 전문직 정체성을 다루는 논문에 유용하다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"In absolute contrast, only a small proportion (5.1 percent) indicated familiarity with or use of societal-oriented frameworks."</div>
+    <div class="kr">이와 절대적으로 대조적으로, 사회 지향 프레임워크에 대한 친숙함이나 사용을 언급한 비율은 5.1%에 불과했다.</div>
+    <div class="why"><b>왜 유용한가.</b> 결과 절에서 대비를 극적으로 드러내는 전환어 "In absolute contrast"의 용례다. 다만 강한 표현이므로 차이가 실제로 극명할 때만 쓰는 것이 좋다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"This form of knowledge enables professionals to navigate complex and dynamic practice settings, yet it may also carry a risk of epistemological conservatism."</div>
+    <div class="kr">이 형태의 지식은 복잡하고 역동적인 실천 현장을 헤쳐 나가게 하지만, 동시에 인식론적 보수주의의 위험을 지닐 수 있다.</div>
+    <div class="why"><b>왜 유용한가.</b> "enables ..., yet it may also ..."는 대상의 장점을 먼저 인정한 뒤 위험을 제시하는 균형 잡힌 평가 문형이다. 현장 지식이나 실천가 판단을 다루는 질적 연구 논의에 적합하다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"... higher education may expand professionals' epistemological repertoire, but this does not necessarily translate into a widespread or systematic integration of critical theory in everyday CWP practice."</div>
+    <div class="kr">고등교육은 전문가의 인식론적 레퍼토리를 넓힐 수 있지만, 그것이 일상 실천에서 비판 이론의 광범위하고 체계적인 통합으로 반드시 이어지지는 않는다.</div>
+    <div class="why"><b>왜 유용한가.</b> 유의한 차이와 낮은 절대 수준을 동시에 서술하는 방법이다. "does not necessarily translate into"는 효과가 있지만 충분하지 않다는 결과를 정확히 전달한다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Rather than reflecting essential or individual differences, such variations are more plausibly understood in relation to processes of professional socialization, organizational positioning, and the differential epistemic legitimacy afforded to particular ways of framing social problems."</div>
+    <div class="kr">이러한 차이는 본질적·개인적 차이를 반영한다기보다, 전문적 사회화, 조직 내 위치, 그리고 사회문제를 틀 짓는 특정 방식에 부여되는 차별적 인식론적 정당성과 관련하여 이해하는 것이 더 타당하다.</div>
+    <div class="why"><b>왜 유용한가.</b> 인구학적 집단 차이를 본질화하지 않고 사회적 과정으로 해석하는 표준 문형이다. 성별, 지역, 계층 차이를 보고하는 모든 논문에서 과잉 해석을 피하는 데 쓸 수 있다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"... the issue at stake is not merely one of professional competence or education, but one of epistemology ..."</div>
+    <div class="kr">문제의 핵심은 단지 전문 역량이나 교육의 문제가 아니라 인식론의 문제다.</div>
+    <div class="why"><b>왜 유용한가.</b> "not merely X, but Y"로 문제의 층위를 한 단계 끌어올리는 결론부 문장이다. 개인 수준 설명을 구조적 설명으로 전환하는 논지의 정점에 배치하기 좋다.</div>
+  </div>
+  <div class="phrase span2">
+    <div class="en">"From this perspective, evidence-based reasoning should not be treated as a sufficient or neutral foundation for practice, but as one that requires critical and ethical deepening."</div>
+    <div class="kr">이 관점에서 근거기반 추론은 실천의 충분하거나 중립적인 토대로 취급되어서는 안 되며, 비판적·윤리적 심화를 필요로 하는 토대로 다루어져야 한다.</div>
+    <div class="why"><b>왜 유용한가.</b> EBP를 거부하지 않으면서 그 지위를 재조정하는 절제된 비판이다. "should not be treated as ..., but as ..." 구조는 양측 독자 모두를 설득해야 하는 논쟁적 주제의 결론에 특히 효과적이다.</div>
+  </div>
+</div>
+
+<!-- 10 -->
+<div class="section-head" id="ourstudy">
+  <div class="section-num">10</div>
+  <div class="section-title-block"><h2>AIR Lab 연구와의 연결</h2><p class="section-subtitle">ACEs 연구는 "사회적인 것"을 어떻게 다루고 있는가</p></div>
+</div>
+
+<div class="panel">
+  <p>이 논문은 AIR Lab에 불편하지만 중요한 거울을 제공한다. ACEs 연구와 트라우마 기반 실천은 모두 아동의 경험을 중심에 두는 개인 수준의 틀로 출발했다. ACEs 점수는 누적 위험을 간명하게 보여주지만, 그것이 선별 도구로 현장에 들어갈 때는 이 논문이 비판하는 <strong>"개별화된 위험 사정"</strong>의 한 형태가 될 수 있다. 반대로 AIR Lab이 다루는 아동기 역경 문항 상당수(가정 내 폭력, 부모의 부재, 경제적 곤란)는 본질적으로 사회적 조건과 얽혀 있다. 이 논문은 역경 연구가 그 사회적 층위를 분석과 해석에 어떻게 되돌려 놓을 수 있는가를 묻게 한다.</p>
+  <p>또 하나의 연결은 교육이다. 이 논문에서 석사 학위자는 이론을 더 많이 쓰고 사회 지향 관점도 더 많이 언급했지만, 여전히 소수였다. 대학원 저널클럽과 연구방법 수업이 바로 그 "석사 수준 교육"의 현장이다. 이론을 가르치는 것이 실천의 인식론을 바꾸려면 무엇이 더 필요한지, 이 논문은 교육자에게도 질문을 던진다. 한국 아동보호 현장에서 같은 분포가 나타나는지는 <strong>아직 경험적으로 확인되지 않은 질문</strong>이며, 이 논문의 설문 구조를 차용한 비교 연구의 여지가 있다.</p>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">AIR Lab이 주목해야 할 한 줄</span><br>
+  🎯 서론의 이 구절, <b>"reducing complex social problems to individualized risk assessments"</b>는 ACEs 점수가 선별 도구로 쓰일 때 받을 수 있는 비판을 미리 보여 준다. 역경 점수를 쓰는 연구일수록, 그 점수가 가리키는 사회적 조건(빈곤, 주거, 돌봄 공백)을 해석과 함의에서 어떻게 되살릴지 함께 설계해야 한다.
+</div>
+<table class="mini-table">
+  <thead><tr><th>AIR Lab 연구 요소</th><th>이 논문에서의 대응</th></tr></thead>
+  <tbody>
+    <tr><td>ACEs 누적 점수와 선별</td><td>"reducing complex social problems to individualized risk assessments" 비판: 점수 활용이 개별화로 귀결되지 않도록 하는 해석 틀 필요</td></tr>
+    <tr class="hi"><td>트라우마 기반 아동복지 실천</td><td>SoS 사례: 표준화 모형이 재정 기관의 정책 결정을 따라 확산되는 방식. TIC 역시 같은 경로로 제도화될 때 무엇이 남고 무엇이 빠지는가</td></tr>
+    <tr><td>Person-centered 방법 (LCA)</td><td>세 지식 유형 × 세 이론 지향의 이분 코딩 자료는 실천가 "인식론 프로파일"의 잠재계층분석에 적합한 구조</td></tr>
+    <tr><td>대학원 교육과 연구방법 수업</td><td>석사 교육의 효과는 유의하나 제한적: 이론 교육이 실천으로 이어지기 위한 조직적 조건에 대한 논의</td></tr>
+    <tr><td>한국 아동보호 체계 연구</td><td>설문 도구와 분석 틀(지식 유형, 미시·중시·거시 지향)의 국내 적용 및 비교 가능성</td></tr>
+  </tbody>
+</table>
+
+<div class="callout sky">
+  <span class="callout-label">💬 스터디 토론 질문</span><br>
+  <strong>Q1.</strong> 사회 지향 이론 5.1%라는 결과는 "실천가들이 사회적 관점을 갖고 있지 않다"는 뜻인가, 아니면 "사회적 관점을 이론의 언어로 표현할 기회나 정당성이 없다"는 뜻인가? 두 해석을 구분할 수 있는 측정 설계(예: 사례 비네트, 폐쇄형 목록)를 제안해 보자.<br>
+  <strong>Q2.</strong> ACEs 점수 기반 선별이나 트라우마 기반 실천 모형이 한국의 아동보호 체계에 제도적으로 도입될 때, SoS의 사례처럼 특정 직무와 기관에만 집중되는 현상이 나타날 가능성은 어떠한가? 그것을 어떻게 연구할 수 있을까?<br>
+  <strong>Q3.</strong> 이론 지향을 미시·중시·거시로 나눈 이 논문의 틀을 AIR Lab 연구에 적용한다면, 우리의 최근 논문들은 각각 어느 수준의 설명에 머물러 있는가? 거시 수준 변수를 추가한다면 무엇을 어떻게 측정할 수 있는가?
+</div>
+
+<!-- 11 -->
+<div class="section-head" id="worksheet">
+  <div class="section-num">11</div>
+  <div class="section-title-block"><h2>정리 활동</h2><p class="section-subtitle">입력한 내용은 이 브라우저에 자동 저장된다</p></div>
+</div>
+
+<div class="worksheet">
+  <h4>✍️ 1. 나의 지식 기반 점검</h4>
+  <div class="prompt">최근 본인이 수행한 연구나 실천 경험 하나를 떠올리고, 그때 사용한 지식을 이론적·실천기반·개인경험적 지식으로 나누어 적어 보자. 이론적 지식은 개인·집단·사회 중 어느 지향이었는가?</div>
+  <textarea data-key="ws1" placeholder="여기에 작성하세요"></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>✍️ 2. 자료, 해석, 이론 구분하기</h4>
+  <div class="prompt">이 논문의 결론 절에서 문장 세 개를 골라, 각각이 "자료가 직접 보여주는 것", "자료와 양립하는 해석", "자료 밖의 이론에서 온 것" 중 무엇인지 분류하고 이유를 적어 보자.</div>
+  <textarea data-key="ws2" placeholder="여기에 작성하세요"></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>✍️ 3. 거시 수준 문장 써 보기</h4>
+  <div class="prompt">본인 연구의 논의 절에 들어갈 수 있는, 개인 수준 결과를 사회·정책 수준의 함의로 연결하는 문장을 영어로 한 문장 써 보자. 이 논문의 명문장 구조 하나를 활용해도 좋다.</div>
+  <textarea data-key="ws3" placeholder="Write here"></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="closing">
+  <div class="closing-inner">
+    <h2>이 논문이 가르쳐 주는 것: 이론의 부재가 아니라 이론의 편재(偏在)</h2>
+    <p>"실천은 이론을 모른다"는 말은 사회복지 교육에서 오래 반복되어 왔다. 이 논문은 그 명제를 경험적으로 검토하고, 더 정확한 명제로 바꾼다. 실천가들은 이론을 안다. 다만 그 이론은 <strong>개인과 가족의 수준에 치우쳐 있고</strong>, 빈곤과 불평등과 정책을 다루는 이론은 거의 호명되지 않는다. 그리고 어떤 지식이 쓰이는가는 개인의 학습만큼이나 조직과 재정과 정책이 무엇을 승인하는가에 달려 있다.</p>
+    <p>이론이 성장하는 방식에 대해서도 이 논문은 교훈을 준다. 오랫동안 규범적 비판으로 존재하던 "탈지성화" 논쟁은 측정 가능한 틀로 번역되는 순간 반박되고, 정교화되고, 비교될 수 있는 대상이 된다. 동시에 이 논문은 강한 이론적 틀이 자료를 앞서 나갈 때 무엇을 조심해야 하는지도 보여준다. <strong>좋은 비판 연구는 자신이 비판하는 대상에 적용한 엄격함을 자신의 측정과 추론에도 똑같이 적용하는 연구</strong>이며, 이 논문의 다음 단계는 그 엄격함을 더하는 일이다.</p>
+    <div class="signature">Oorlynck, Willekens, &amp; Roose (2026), The British Journal of Social Work · AIR Lab Journal Club</div>
+  </div>
+</div>
+
+</main>
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(47,111,168,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#2f6fa8"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#2f6fa8"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<footer class="footer">
+  이 페이지는 충북대학교 아동복지학과 AIR Lab(ACEs-Informed Recovery Lab) 대학원 저널클럽의 교육용 자료입니다. 원문 인용은 교육 목적의 짧은 발췌입니다. 원문에는 Figure가 없으며, 본 페이지의 그림은 원문 Table과 본문 수치를 바탕으로 AIR Lab이 작성한 재구성입니다.
+</footer>
+<script>
+  const JC_PREFIX = 'jc_oorlynck2026_';
+  function jcGet(k){ try { return localStorage.getItem(JC_PREFIX + k); } catch(e){ return null; } }
+  function jcSet(k,v){ try { localStorage.setItem(JC_PREFIX + k, v); return true; } catch(e){ return false; } }
+  function flash(ta){
+    const s = ta.parentElement.querySelector('.save-status');
+    if(!s) return;
+    s.classList.add('show');
+    clearTimeout(s._t);
+    s._t = setTimeout(function(){ s.classList.remove('show'); }, 1400);
+  }
+  function saveAll(){
+    let ok = true;
+    document.querySelectorAll('textarea[data-key]').forEach(function(ta){
+      if(!jcSet(ta.dataset.key, ta.value)) ok = false;
+      flash(ta);
+    });
+    if(!ok) alert('이 브라우저에서는 자동 저장을 사용할 수 없습니다. 내용을 따로 복사해 두세요.');
+  }
+  document.querySelectorAll('textarea[data-key]').forEach(function(ta){
+    const saved = jcGet(ta.dataset.key);
+    if(saved !== null) ta.value = saved;
+    let timer;
+    ta.addEventListener('input', function(){
+      clearTimeout(timer);
+      timer = setTimeout(function(){ if(jcSet(ta.dataset.key, ta.value)) flash(ta); }, 600);
+    });
+  });
+</script>
+</body>
+</html>

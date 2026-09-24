@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MacRae 2026 저널클럽</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+
+  /* ════════ AIR Lab theme: navy → recovery-teal (synced with index) ════════ */
+  :root{ --sky:#2d6a9f; --sky-deep:#1f4e79; --sky-bright:#7fa9d1; --sky-soft:#e9eff6; --sky-soft2:#f4f7fb; --sky-soft-2:#f4f7fb; --mint:#3a9a8f; --mint-soft:#eaf5f2; --hover-bg:#eef3f9; }
+  .stripe{background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+  .stripe span{background:transparent!important}
+  .nav-logo-dot .d3{background:#3a9a8f}
+  .hero{isolation:isolate}
+  .hero::before{background:radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%), linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%)!important}
+  .overline{color:#9fd3ca!important}
+  .overline::before{background:#8cc7bd!important}
+  .hero h1{color:#fff!important}
+  .hero h1 em{color:#bfe6df!important}
+  .hero .citation{color:#b7c9da!important;border-left-color:#8cc7bd!important}
+  .hero .citation em{color:#d6e5f2!important}
+  .hero .citation a{color:#bfe6df!important}
+  .hero .subtitle{color:#d2e0ec!important}
+  .hero .subtitle strong,.hero .subtitle b{color:#fff!important}
+  .hero .subtitle em{color:#bfe6df}
+  .hero .stat{background:rgba(255,255,255,0.08)!important;border-color:rgba(255,255,255,0.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .hero .stat .num{color:#fff!important}
+  .hero .stat .lbl{color:#a9c1d6!important}
+  .paper-meta,.condition-header{background:linear-gradient(120deg,#1c4a73 0%,#22655f 100%)!important}
+  .section-num{background:linear-gradient(120deg,#1f4e79 0%,#2d7d78 100%)!important}
+</style>
+</head>
+<body id="top">
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#method">방법</a></li>
+      <li><a href="#values">가치와 원칙</a></li>
+      <li><a href="#principles">10개 원칙</a></li>
+      <li><a href="#model">통합 모형</a></li>
+      <li><a href="#critique">비판적 읽기</a></li>
+      <li><a href="#phrases">명문장</a></li>
+      <li><a href="#ourstudy">우리 연구</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">MacRae et al. 2026 · Journal Club</div>
+    <h1>모두가 쓰지만 아무도 정의하지 않은 말,<br><em>트라우마 기반 실천을 다시 세우다</em></h1>
+    <div class="citation">MacRae, A., O'Connor, A., Berkovic, D., Ryan, J., Woolford, M., Ayton, D., &amp; Morris, H. (2026). Understanding trauma-informed care across settings: A contemporary definition, values, model, and framework from an integrative review. <em>Trauma, Violence, &amp; Abuse</em>. Advance online publication. https://doi.org/10.1177/15248380261451829</div>
+    <p class="subtitle">이 논문은 새로운 경험적 효과를 보고하는 연구가 아니라 <strong>개념을 정리하는 연구</strong>다. 2001년 Harris와 Fallot 이후 25년 동안 TIC(trauma-informed care)는 정신건강, 교육, 아동가족서비스, 사법, 노인돌봄으로 번져 나갔고, 그 과정에서 같은 이름 아래 서로 다른 내용이 쌓였다. 저자들은 288개 문헌을 한꺼번에 펼쳐 놓고 <strong>무엇이 공통의 핵심인가</strong>를 묻는다. 읽을 때는 두 가지를 동시에 붙잡아야 한다. 하나는 이 논문이 제공하는 공통 언어의 쓸모이고, 다른 하나는 그 공통 언어가 어떤 방법적 선택 위에 세워졌는가이다.<br><br>아래 페이지는 원문의 논리 전개 순서를 따라가되, 각 단계마다 🧭 <strong>길잡이</strong>, 🍳 <strong>비유</strong>, 📊 <strong>그림 읽는 법</strong>, 🧪 <strong>용어 정리</strong>를 덧붙여 방법론 배경이 적은 학생도 따라올 수 있도록 구성했다.</p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">288편</span><div class="lbl">포함 문헌 (16,252건 검색)</div></div>
+      <div class="stat"><span class="num">10 · 10 · 28</span><div class="lbl">핵심가치 · 원칙 · 구성요소</div></div>
+      <div class="stat"><span class="num">12.15%</span><div class="lbl">10개 원칙을 모두 담은 문헌 비율</div></div>
+      <div class="stat"><span class="num">68.4%</span><div class="lbl">미국 발 문헌의 비중</div></div>
+      <div class="stat"><span class="num">257 → 28 → 10</span><div class="lbl">코드 → 구성요소 → 원칙</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>MacRae et al. (2026)</div>
+
+<!-- 01 -->
+<div class="section-head" id="paper">
+  <div class="section-num">01</div>
+  <div class="section-title-block"><h2>논문 소개</h2><p class="section-subtitle">어떤 전통에 서 있고, 무엇을 고치려 하는가</p></div>
+</div>
+
+<div class="panel">
+  <p>TIC라는 개념은 Harris와 Fallot(2001)이 정신건강 서비스 체계 안에서 폭력과 트라우마 경험을 가진 이용자를 어떻게 대할 것인가를 고민하며 처음 제안했다. 이들은 안전, 신뢰성, 선택, 협력, 역량강화라는 다섯 원칙을 내세웠고, 이후 미국 SAMHSA(2014)가 이를 확장하여 여러 영역에 적용할 수 있는 틀을 만들었다. 원문 서론의 정리에 따르면 SAMHSA는 TIC를 트라우마의 징후를 <strong>알아차리고(recognise)</strong>, 그 영향을 <strong>인식하며(realise)</strong>, 회복 경로를 이해하고, 재외상화에 <strong>저항하는 방식으로 대응하는(respond, resist re-traumatisation)</strong> 틀로 기술했으며, 여섯 개의 원칙을 제시했다. SAMHSA는 TIC가 트라우마 치료 자체는 아니라는 점도 분명히 했다.</p>
+  <p>문제는 그 이후다. TIC가 보건의료, 학교, 아동가족서비스로 확산되면서 영역마다 자체 모형과 프레임워크, 가이드라인, 툴킷이 만들어졌다. 서로 비슷하지만 조금씩 다른 설명이 누적되자, 정작 "TIC란 무엇인가"라는 질문에 합의된 답이 없는 상태가 되었다. 정책은 TIC를 요구하는데 무엇을 충족해야 TIC인지 기준이 없는 것이다.</p>
+  <p>이 논문은 이 공백을 메우기 위해 <strong>integrative review</strong>를 수행했다. 기존 리뷰들이 특정 영역(예: 보건의료, 학교)이나 특정 주제(예: 실행, 효과 측정)에 한정되었다면, 이 연구는 영역을 가리지 않고 TIC의 정의, 가치, 원칙, 구성요소를 전부 모아 하나의 통합 정의와 모형을 제안한다. 즉 이 논문의 기여는 새로운 사실의 발견이 아니라 <strong>흩어진 개념의 재조직</strong>에 있다.</p>
+</div>
+
+<div class="paper-meta">
+  <h3>Understanding Trauma-Informed Care Across Settings</h3>
+  <div class="sub">A Contemporary Definition, Values, Model, and Framework From an Integrative Review</div>
+  <div class="paper-meta-grid">
+    <div class="paper-meta-item"><div class="label">Journal</div><div class="value"><i>Trauma, Violence, &amp; Abuse</i> (SAGE), 2026 온라인 선게재<br>SSCI 등재</div></div>
+    <div class="paper-meta-item"><div class="label">Type</div><div class="value">Integrative review<br>rapid review 절차 + 내용분석 + 주제종합(thematic synthesis)<br>학술문헌·회색문헌 288편</div></div>
+    <div class="paper-meta-item"><div class="label">Core claim</div><div class="value">TIC는 10개 핵심가치를 토대로, 트라우마 이해를 조직 운영 전반에 통합하고 재외상·대리외상의 위험을 줄이는 조직·체계 차원의 접근이다</div></div>
+  </div>
+</div>
+
+<div class="quote-box">
+  "The evolution of trauma-informed care (TIC) since its inception has resulted in myriad models and frameworks across a variety of settings. However, there is a lack of a consistent definition and understanding of what constitutes TIC."
+  <span class="attr">출처: Abstract</span>
+  <span class="trans"><strong>번역.</strong> TIC는 등장 이후 여러 현장에서 <strong>수많은 모형과 프레임워크</strong>를 낳았다. 그러나 무엇이 TIC를 구성하는지에 대한 <strong>일관된 정의와 이해는 부재</strong>하다.<br><br>🧭 <b>길잡이.</b> 초록의 첫 두 문장이 곧 연구 문제다. 먼저 TIC의 확산을 성과로 인정하고, However 한 단어로 그 확산이 만든 공백을 문제로 전환한다. 개념 정리형 리뷰가 자기 필요성을 세우는 가장 경제적인 서두다.</span>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">이 논문을 이끄는 세 가지 질문</span><br>
+  <b>① 무엇이 쓰여 있는가.</b> 영역을 가로지르는 TIC 모형들은 정의, 가치, 원칙, 구성요소를 각각 어떻게 기술하는가.<br>
+  <b>② 무엇이 반복되는가.</b> 이 기술들을 종합했을 때 공통으로 되풀이되는 요소는 무엇인가.<br>
+  <b>③ 무엇으로 정리할 것인가.</b> 그 공통 요소로 어떤 현장에도 적용 가능한 통합 정의, 핵심가치, 모형, 프레임워크를 세울 수 있는가.<br><br>
+  🔑 세 질문은 각각 <b>수집(mapping)</b> · <b>종합(synthesis)</b> · <b>재구성(reconstruction)</b>에 대응한다. 흩어진 개념을 정리하는 리뷰가 거치는 전형적 3단계이기도 하다.
+</div>
+
+<!-- 02 -->
+<div class="section-head" id="intro">
+  <div class="section-num">02</div>
+  <div class="section-title-block"><h2>Introduction: 확산이 만든 개념의 공백</h2><p class="section-subtitle">왜 지금 TIC의 정의를 다시 물어야 하는가</p></div>
+</div>
+
+<div class="panel">
+  <p>저자들이 문제 삼는 것은 TIC의 효과가 아니라 <strong>TIC라는 개념의 경계</strong>다. 서론은 세 단계로 논리를 쌓는다. 먼저 트라우마 경험이 매우 흔하다는 점(정의와 측정 방식에 따라 평생 유병률이 최대 90%에 이른다는 보고)을 들어, 서비스 체계가 트라우마를 고려해야 할 이유를 확인한다. 다음으로 Harris와 Fallot에서 SAMHSA로 이어지는 개념의 계보를 정리한다. 마지막으로 확산 과정에서 정의가 분산되었고, 이것이 정책과 실행에 실제 비용을 초래한다고 주장한다.</p>
+  <p>세 번째 단계가 이 논문의 존재 이유다. 영국은 국가·지역 정책에 TIC를 포함했고, 미국은 2019년부터 전문요양시설(skilled nursing facilities)에 TIC를 의무화했으며, 호주는 노인돌봄 기준에 "trauma-aware and healing-informed" 실천을 명시했다. 그런데 저자들이 지적하듯 이런 요구에는 구체적인 지침이 따라오지 않았다. 역량 기준, 교육과정, 실행 전략을 만들어야 하는데 <strong>무엇을 기준점으로 삼을지</strong>가 비어 있는 것이다.</p>
+</div>
+
+<div class="quote-box">
+  "Currently, there is no consensus-based definition of TIC."
+  <span class="attr">출처: Introduction, Rationale for This Review</span>
+  <span class="trans"><strong>번역.</strong> 현재로서는 <strong>합의에 기반한 TIC의 정의가 존재하지 않는다</strong>.<br><br>🧭 <b>길잡이.</b> 짧은 단정문이지만 원문에서는 선행 문헌 세 편(Bargeman et al., 2022; Bendall et al., 2021; Hopper et al., 2010)으로 받쳐져 있다. 강한 주장을 짧게 쓸수록 인용으로 무게를 확보해야 한다.</span>
+</div>
+
+<div class="quote-box">
+  "Despite these mandates and recommendations, there is no specific guidance on what this should look like."
+  <span class="attr">출처: Discussion</span>
+  <span class="trans"><strong>번역.</strong> 이러한 의무화와 권고에도 불구하고, <strong>그것이 실제로 어떤 모습이어야 하는지에 대한 구체적 지침은 없다</strong>.</span>
+</div>
+
+<div class="plain-meaning">📜 정책은 "트라우마 기반으로 일하라"고 요구하는데, 무엇을 하면 트라우마 기반인지는 아무도 정해 주지 않았다. 이 논문은 그 기준점을 문헌에서 귀납적으로 끌어내려는 시도다.</div>
+
+<!-- 03 -->
+<div class="section-head" id="method">
+  <div class="section-num">03</div>
+  <div class="section-title-block"><h2>방법: 16,252건에서 288편으로</h2><p class="section-subtitle">Integrative review · rapid review 절차 · 내용분석 · 주제종합</p></div>
+</div>
+
+<div class="panel">
+  <p>검색은 두 개념 축, 즉 <strong>(a) trauma-informed care</strong>와 <strong>(b) models or frameworks</strong>의 교차로 설계되었다. 7개 데이터베이스(Medline, Embase, Emcare, PsycInfo, CENTRAL, CINAHL, Web of Science)와 Google Scholar를 데이터베이스 개시 시점부터 2024년 12월까지 검색했고, 현장 자료 상당수가 학술지 밖에 있다는 판단에서 Google 고급검색으로 회색문헌(실천 자료, 학위논문, 웹페이지)을 추가했다.</p>
+  <p>포함 기준은 두 가지다. <strong>독자적인(original) TIC 모형 또는 프레임워크를 기술</strong>하고, 영어 전문을 구할 수 있어야 한다. 여기서 "독자적"이란 이전에 발표되지 않았거나 기존 모형을 상당히 수정한 것을 뜻한다. 따라서 기존 모형(예: SAMHSA)을 그대로 가져다 쓴 문헌은 제외되었다. 이 선택은 뒤에서 결과를 해석할 때 중요한 의미를 갖는다.</p>
+  <p>분석은 Erlingsson과 Brysiewicz(2017)의 내용분석 절차로 의미 단위를 나누고 코드를 만든 뒤, Thomas와 Harden(2008)의 주제종합으로 코드를 묶어 상위 구성개념을 만드는 순서로 진행되었다. 그 결과 <span class="stat-inline">257개 개별 코드</span>가 <span class="stat-inline">28개 구성요소</span>로, 다시 <span class="stat-inline">10개 원칙</span>으로 조직되었다.</p>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">용어 정리</span><br>
+  🧪 <b>Integrative review</b>: 실험·관찰·질적 연구, 이론 문헌, 회색문헌처럼 서로 다른 방법의 자료를 함께 모아 한 주제에 대한 포괄적 이해를 만드는 리뷰. 효과 크기를 합산하는 메타분석과 달리 개념과 관점의 종합이 목적이다.<br>
+  🧪 <b>Rapid review</b>: 체계적 문헌고찰의 절차 일부(이중 선별, 질 평가 등)를 단순화하거나 생략해 시간과 자원을 줄인 리뷰.<br>
+  🧪 <b>회색문헌(grey literature)</b>: 학술지 동료심사를 거치지 않은 보고서, 실천 지침, 학위논문, 웹 자료.<br>
+  🧪 <b>Thematic synthesis</b>: Thomas와 Harden(2008)의 질적 종합 방법. 코드를 기술적 주제로 묶은 뒤 다시 분석적 주제로 끌어올린다.<br>
+  🧪 <b>재외상화(re-traumatisation)</b>: 서비스 과정 자체가 이용자의 과거 트라우마 반응을 다시 불러일으키는 것.<br>
+  🧪 <b>대리 외상(vicarious traumatisation)</b>: 트라우마 이야기를 반복해서 접하는 직원이 간접적으로 외상 반응을 겪는 것.
+</div>
+<div class="figure-block">
+  <div class="fig-title">Figure 1. PRISMA flow diagram selection process</div>
+  <span class="fig-tag orig">원문 Figure</span>
+  <div class="fig-orig">
+    <img src="https://journals.sagepub.com/cms/10.1177/15248380261451829/asset/cde68042-f2d5-4bab-8898-54cca3e03655/assets/images/large/10.1177_15248380261451829-fig1.jpg" alt="MacRae et al. (2026) Figure 1: PRISMA flow diagram" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+    <div style="display:none;font-size:13px;color:#828d9b;padding:20px;">원문 이미지를 불러오지 못했습니다. <a href="https://doi.org/10.1177/15248380261451829" target="_blank" rel="noopener">원문에서 Figure 1 보기</a></div>
+  </div>
+  <p class="fig-cap">출처: MacRae et al. (2026), Figure 1. 교육 목적의 인용이며 저작권은 원 출판사에 있다.</p>
+
+  <div class="fig-kr">
+    <span class="fig-tag kr">AIR Lab 재구성 · 한국어 주석</span>
+    <svg viewBox="0 0 760 490" width="100%" style="max-width:760px" role="img" aria-label="문헌 선별 흐름 한국어 재구성">
+      <defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fa8"/></marker></defs>
+      <!-- stage labels -->
+      <text x="20" y="62" font-size="11" fill="#828d9b" font-weight="600">식별</text>
+      <text x="20" y="196" font-size="11" fill="#828d9b" font-weight="600">선별</text>
+      <text x="20" y="410" font-size="11" fill="#828d9b" font-weight="600">포함</text>
+      <!-- identification -->
+      <rect x="70" y="30" width="250" height="62" rx="10" fill="#fff" stroke="#3f86c4"/>
+      <text x="195" y="55" text-anchor="middle" font-size="13" font-weight="700" fill="#20262e">데이터베이스 검색 15,884건</text>
+      <text x="195" y="76" text-anchor="middle" font-size="11" fill="#46505c">PsycInfo·CINAHL·Embase·Medline 등 8개</text>
+      <rect x="360" y="30" width="220" height="62" rx="10" fill="#fff" stroke="#3f86c4"/>
+      <text x="470" y="55" text-anchor="middle" font-size="13" font-weight="700" fill="#20262e">기타 출처 368건</text>
+      <text x="470" y="76" text-anchor="middle" font-size="11" fill="#46505c">인용 추적 231 · Google 137</text>
+      <line x1="195" y1="92" x2="195" y2="118" stroke="#2f6fa8" stroke-width="1.5"/>
+      <line x1="470" y1="92" x2="470" y2="118" stroke="#2f6fa8" stroke-width="1.5"/>
+      <line x1="195" y1="118" x2="470" y2="118" stroke="#2f6fa8" stroke-width="1.5"/>
+      <line x1="330" y1="118" x2="330" y2="136" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar1)"/>
+      <rect x="215" y="138" width="230" height="34" rx="8" fill="#e8f1fa" stroke="#3f86c4"/>
+      <text x="330" y="160" text-anchor="middle" font-size="12.5" fill="#2f6fa8" font-weight="600">합계 16,252건 → 중복 제거 8,204건</text>
+      <line x1="330" y1="172" x2="330" y2="192" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar1)"/>
+      <!-- screening -->
+      <rect x="215" y="194" width="230" height="40" rx="8" fill="#fff" stroke="#3f86c4"/>
+      <text x="330" y="219" text-anchor="middle" font-size="13" font-weight="700" fill="#20262e">제목·초록 선별 8,048건</text>
+      <line x1="445" y1="214" x2="490" y2="214" stroke="#e0573e" stroke-width="1.5" marker-end="url(#ar1)"/>
+      <rect x="492" y="196" width="250" height="36" rx="8" fill="#fdeee9" stroke="#e0573e"/>
+      <text x="617" y="219" text-anchor="middle" font-size="12" fill="#e0573e">제외 2,687건: TIC를 다루지 않음</text>
+      <line x1="330" y1="234" x2="330" y2="254" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar1)"/>
+      <rect x="215" y="256" width="230" height="40" rx="8" fill="#fff" stroke="#3f86c4"/>
+      <text x="330" y="281" text-anchor="middle" font-size="13" font-weight="700" fill="#20262e">전문 검토 5,361건</text>
+      <line x1="445" y1="276" x2="490" y2="276" stroke="#e0573e" stroke-width="1.5" marker-end="url(#ar1)"/>
+      <rect x="492" y="250" width="250" height="160" rx="8" fill="#fdeee9" stroke="#e0573e"/>
+      <text x="505" y="271" font-size="12" font-weight="700" fill="#e0573e">제외 5,073건</text>
+      <text x="505" y="292" font-size="11.5" fill="#46505c">① TIC를 기술하지 않음 2,013</text>
+      <rect x="500" y="300" width="236" height="22" rx="5" fill="#fff" stroke="#c78a1e" stroke-dasharray="3 2"/>
+      <text x="505" y="315" font-size="11.5" fill="#c78a1e" font-weight="700">② 기존 TIC 모형을 그대로 사용 1,872</text>
+      <text x="505" y="340" font-size="11.5" fill="#46505c">③ 치료·임상개입을 기술 557</text>
+      <text x="505" y="360" font-size="11.5" fill="#46505c">④ 원칙·구성요소 기술 없음 446</text>
+      <text x="505" y="380" font-size="11.5" fill="#46505c">⑤ 문헌 유형 부적합 115</text>
+      <text x="505" y="400" font-size="11.5" fill="#46505c">⑥ 전문·웹페이지 확보 불가 70</text>
+      <line x1="330" y1="296" x2="330" y2="382" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar1)"/>
+      <!-- included -->
+      <rect x="215" y="384" width="230" height="46" rx="10" fill="#2f6fa8"/>
+      <text x="330" y="412" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">최종 포함 288편</text>
+      <text x="330" y="452" text-anchor="middle" font-size="11" fill="#828d9b">검색 건수 대비 약 1.8% · 전문 검토 대비 약 5.4%</text>
+      <text x="330" y="474" text-anchor="middle" font-size="10.5" fill="#c78a1e">점선 상자: 결과 해석에 중요한 제외 사유</text>
+    </svg>
+  </div>
+  <div class="fig-implies">
+    <b>📊 이 그림을 어떻게 읽는가.</b> PRISMA 흐름도는 위에서 아래로 "얼마나 걸러졌는가"를 보여준다. 수치 자체보다 <b>제외 사유의 구성</b>을 보는 것이 핵심이다. 전문 검토에서 가장 많이 제외된 두 사유는 "TIC를 언급만 하고 기술하지 않음"(2,013)과 "기존 모형을 그대로 사용"(1,872)이다. 첫째는 저자들이 서론에서 지적한 개념의 공허함, 즉 이름만 TIC인 문헌이 많다는 사실을 수치로 보여준다. 둘째는 결과 해석의 전제를 바꾼다. 이 리뷰가 세는 빈도는 <b>현장에서 어떤 모형이 얼마나 쓰이는가</b>가 아니라 <b>독자적으로 만들어진 모형들 사이에서 어떤 요소가 얼마나 반복되는가</b>이다. 따라서 SAMHSA처럼 널리 재사용되는 모형은 빈도 계산에서 한 번만 등장한다.
+  </div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트</span><br>
+  ✂️ <strong>Rapid review의 절차적 단축을 읽어내기.</strong> 저자들은 방대한 문헌량 때문에 rapid review 절차를 택했고, 그 내용을 명시적으로 밝힌다. 선별과 자료추출은 <strong>1인 검토자</strong>(TIC 전문성과 트라우마 당사자 경험을 가진 제1저자)가 수행했고, <strong>질 평가(quality appraisal)는 생략</strong>했으며, 추출 범위는 현장과 상위 수준의 원칙·구성요소로 한정했다. 신뢰도 확인은 무작위로 뽑은 32편(전체의 약 11%)에 대해 다른 저자 4명이 독립적으로 추출·코딩하여 비교하는 방식이었고, 자료추출에서 불일치는 없었다고 보고한다. 개념 지도를 그리는 리뷰에서는 개별 연구의 효과 크기를 합산하지 않으므로 질 평가 생략이 치명적이지는 않다. 그러나 이는 이 리뷰가 제시하는 것이 <strong>"합의의 지도"이지 "근거의 위계"가 아니라는 뜻</strong>이기도 하다. 방법 절을 읽을 때는 항상 "어떤 단계가 생략되었고, 그 생략이 결론의 어떤 종류를 제한하는가"를 짝지어 읽어야 한다.
+</div>
+
+<!-- 04 -->
+<div class="section-head" id="values">
+  <div class="section-num">04</div>
+  <div class="section-title-block"><h2>가치와 원칙을 분리하다</h2><p class="section-subtitle">Values are the philosophy, principles are the enactment</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">V</div>
+    <div class="cond-titles">
+      <div class="cond-code">Conceptual move 1</div>
+      <h3>가치(철학)와 원칙(실행)의 층위 구분</h3>
+      <div class="cond-en">Values as philosophy, principles as enactment of values</div>
+    </div>
+    <span class="verdict new">new</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">🧩 "안전"은 믿음(가치)이기도 하고, 해야 할 일(원칙)이기도 하다. 이 논문은 두 층위를 섞지 말자고 제안한다.</div>
+    <p>이 논문에서 가장 먼저 눈여겨볼 개념적 결정은 용어의 층위를 정리한 것이다. 저자들은 기존 TIC 문헌에서 frameworks와 models, values와 principles가 뒤섞여 사용된다고 지적하고, 각각을 정의한다. 프레임워크는 여러 기술 범주로 이루어진 구조나 개요이고, 모형은 현상에 대한 의도적 단순화다. 가치는 개인·조직·사회의 행동에 영향을 주는 기준이나 신념이고, 원칙은 행동과 의사결정 체계의 토대가 되는 기본 개념으로서 <strong>가치의 조작화</strong>로 볼 수 있다.</p>
+    <p>이 구분이 실제로 작동하는 방식은 코딩 과정에서 드러난다. 예컨대 "trust"라는 코드는 가치로도 분류되었지만, 신뢰를 "구축하는 행위"는 안전 원칙 아래의 구성요소(2.2 신뢰와 신뢰성 구축)로 분류되었다. 같은 단어가 철학의 층위와 실행의 층위에 동시에 등장할 수 있다는 점을 명시적으로 처리한 것이다.</p>
+    <div class="quote-box">
+      "These terms are also conflated in the literature presenting TIC; however, we conceptualise that the values are the philosophy, and principles are the enactment of the values."
+      <span class="attr">출처: Methods, Definition of terms</span>
+      <span class="trans"><strong>번역.</strong> 이 용어들은 TIC 문헌에서 뒤섞여 쓰인다. 그러나 우리는 <strong>가치를 철학으로, 원칙을 그 가치의 실행으로</strong> 개념화한다.<br><br>🧭 <b>길잡이.</b> "these terms are also conflated"로 문헌의 혼란을 먼저 인정하고, "however, we conceptualise"로 자신의 정의를 선언한다. 개념이 혼용되는 분야에서 조작적 정의를 세울 때 그대로 빌려 쓸 수 있는 두 박자 구조다.</span>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <p>저자들은 SAMHSA의 여섯 원칙에 내재된 가치를 기준점으로 삼아 코드를 종합했고, 그 결과 SAMHSA의 가치를 포괄하면서 확장한 <strong>10개 핵심가치</strong>를 제시했다(Table 1). SAMHSA와 비교할 때 새로 부각된 가치는 <strong>연민과 공감</strong>, <strong>강점 기반과 인간 중심</strong>, <strong>전인적 안녕</strong>, <strong>지속적 학습과 적응</strong>이다.</p>
+</div>
+
+<div class="mod-grid">
+  <div class="mod-card protect"><h4>🛡️ 1. 안전</h4><div class="en">Safety</div><p>이용자와 직원 모두가 신체적·정서적·심리적·문화적·사회적으로 안전하다고 느끼도록 보장한다. 재외상 방지, 예측 가능하고 안정적인 환경을 포함한다.</p></div>
+  <div class="mod-card protect"><h4>🔍 2. 신뢰와 투명성</h4><div class="en">Trust and Transparency</div><p>정직, 명확한 소통, 일관성, 책무성을 통해 신뢰를 쌓는다. 의사결정과 서비스 절차의 투명성이 안정감의 핵심이다.</p></div>
+  <div class="mod-card"><h4>🕊️ 3. 존중과 존엄</h4><div class="en">Respect and Dignity</div><p>모든 개인의 고유한 가치를 인정하고 비심판적으로 상호작용하며 전문적 경계를 유지한다.</p></div>
+  <div class="mod-card"><h4>🗝️ 4. 역량강화와 선택</h4><div class="en">Empowerment and Choice</div><p>개인이 자신의 돌봄과 의사결정에 능동적으로 참여하도록 지원한다. 강점 인정, 자율성, 자기결정을 포함한다.</p></div>
+  <div class="mod-card"><h4>🤝 5. 협력과 상호성</h4><div class="en">Collaboration and Mutuality</div><p>이용자, 직원, 가족, 지역사회 간 파트너십을 만든다. 치유는 관계 속에서 일어난다는 인식에서 공동 의사결정과 동료지원을 우선한다.</p></div>
+  <div class="mod-card"><h4>💗 6. 연민과 공감</h4><div class="en">Compassion and Empathy</div><p>이해, 친절, 정서적 조율로 돌봄을 제공한다. 개인의 경험을 타당화하고 필요와 감정에 민감하게 반응한다.</p></div>
+  <div class="mod-card"><h4>🌈 7. 교차성과 포용</h4><div class="en">Intersectionality and Inclusion</div><p>다양한 배경, 정체성, 경험을 인정하고 존중한다. 문화적으로 안전하고 형평성 있는 서비스를 보장하며 체계적 불평등을 다룬다.</p></div>
+  <div class="mod-card"><h4>🌱 8. 강점 기반·인간 중심</h4><div class="en">Strengths-Based and Person-Centred</div><p>결손이나 병리보다 강점, 회복탄력성, 열망에 초점을 둔다. 사람을 트라우마 이상의 존재로 본다.</p></div>
+  <div class="mod-card"><h4>🧘 9. 전인적 안녕</h4><div class="en">Holistic Well-being</div><p>신체적·정서적·사회적·문화적·영적 측면에서 사람 전체를 고려한다. 여러 영역과 분야를 통합한 돌봄을 지향한다.</p></div>
+  <div class="mod-card"><h4>🔄 10. 지속적 학습과 적응</h4><div class="en">Continuous Learning and Adaptability</div><p>근거와 피드백에 따라 정책과 실천을 발전시켜 TIC가 새로운 근거와 다양한 필요에 맞게 유지되도록 한다.</p></div>
+</div>
+<p class="fig-cap">출처: MacRae et al. (2026), Table 1의 내용을 한국어로 요약. 번역은 AIR Lab.</p>
+
+<div class="callout sky">
+  <span class="callout-label">🍳 비유로 다시 읽기</span><br>
+  <b>집을 짓는 일로 생각해 보자.</b><br>
+  · <b>핵심가치</b> = 설계 철학. "이 집은 누구에게나 안전하고 편안해야 한다"는 건축가의 신념이다.<br>
+  · <b>원칙</b> = 설계 기준. 철학을 "모든 계단에 난간을 둔다", "누구나 드나들 수 있는 출입구를 만든다"처럼 구체적 규칙으로 옮긴 것이다.<br>
+  · <b>구성요소</b> = 실제 부품. 난간, 조명, 경사로처럼 기준을 충족시키는 개별 요소다.<br>
+  · <b>보편 전략</b> = 시공 지침. 어떤 현장에서든 부품을 설치할 때 따를 공통 절차다.<br><br>
+  🎯 이 논문의 기여는 새 집을 설계한 것이 아니라, 저마다 다른 도면으로 지어진 288채의 집에서 <b>공통된 설계 철학과 기준을 역으로 추출</b>한 데 있다. 현장별 시공(setting-specific strategies)은 각 현장이 당사자와 공동설계로 채워야 할 몫으로 남겨 두었다.
+</div>
+<!-- 05 -->
+<div class="section-head" id="principles">
+  <div class="section-num">05</div>
+  <div class="section-title-block"><h2>10개 원칙과 28개 구성요소</h2><p class="section-subtitle">무엇이 얼마나 자주 반복되는가</p></div>
+</div>
+
+<div class="panel">
+  <p>257개 코드는 28개 구성요소로, 다시 10개 주제로 묶였고 저자들은 이 주제를 "원칙"이라 부른다. 각 원칙 옆에는 그 원칙을 다룬 문헌의 수와 비율이 보고된다. 이 숫자를 읽을 때 기억할 것은 앞서 본 대로 <strong>"독자적 모형들 사이에서의 반복 빈도"</strong>라는 점이다. 빈도가 높다는 것은 여러 모형 개발자가 그 요소를 중요하다고 보았다는 뜻이지, 그 요소가 효과적이라는 증거는 아니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">원칙별 등장 비율 (288편 기준)</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 본문 보고 수치로 작성</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 800 400" width="100%" style="max-width:800px" role="img" aria-label="10개 원칙의 문헌 등장 비율 막대그래프">
+      <g font-size="12" fill="#20262e">
+        <text x="250" y="36" text-anchor="end">P2 모두의 안전을 보장하는 실천</text>
+        <text x="250" y="70" text-anchor="end">P6 트라우마 회복 지원</text>
+        <text x="250" y="104" text-anchor="end">P5 역량강화와 파트너십</text>
+        <text x="250" y="138" text-anchor="end">P9 조직 전체의 접근</text>
+        <text x="250" y="172" text-anchor="end">P1 트라우마 지식과 이해에 기반</text>
+        <text x="250" y="206" text-anchor="end">P4 맥락 속에서 사람 전체를 고려</text>
+        <text x="250" y="240" text-anchor="end">P3 회복적 관계에 기반</text>
+        <text x="250" y="274" text-anchor="end">P7 의사소통·대인관계 기술</text>
+        <text x="250" y="308" text-anchor="end">P10 지지적 환경 조성</text>
+        <text x="250" y="342" text-anchor="end" fill="#c78a1e" font-weight="700">P8 당사자의 권리 증진</text>
+      </g>
+      <g>
+        <rect x="262" y="22" width="436" height="20" rx="4" fill="#2f6fa8"/>
+        <rect x="262" y="56" width="413" height="20" rx="4" fill="#3f86c4"/>
+        <rect x="262" y="90" width="388" height="20" rx="4" fill="#3f86c4"/>
+        <rect x="262" y="124" width="378" height="20" rx="4" fill="#3f86c4"/>
+        <rect x="262" y="158" width="370" height="20" rx="4" fill="#3f86c4"/>
+        <rect x="262" y="192" width="353" height="20" rx="4" fill="#6cb0e4"/>
+        <rect x="262" y="226" width="330" height="20" rx="4" fill="#6cb0e4"/>
+        <rect x="262" y="260" width="313" height="20" rx="4" fill="#6cb0e4"/>
+        <rect x="262" y="294" width="248" height="20" rx="4" fill="#aab4c1"/>
+        <rect x="262" y="328" width="182" height="20" rx="4" fill="#c78a1e"/>
+      </g>
+      <g font-size="11.5" fill="#46505c" font-weight="600">
+        <text x="704" y="37">90.97% (262)</text>
+        <text x="681" y="71">86.11% (248)</text>
+        <text x="656" y="105">80.90% (233)</text>
+        <text x="646" y="139">78.82% (227)</text>
+        <text x="638" y="173">77.08% (222)</text>
+        <text x="621" y="207">73.61% (212)</text>
+        <text x="598" y="241">68.75% (198)</text>
+        <text x="581" y="275">65.28% (188)</text>
+        <text x="516" y="309">51.74% (149)</text>
+        <text x="450" y="343" fill="#c78a1e">37.85% (109)</text>
+      </g>
+      <line x1="262" y1="360" x2="742" y2="360" stroke="#e6ebf1"/>
+      <text x="262" y="380" font-size="10.5" fill="#828d9b">0%</text>
+      <text x="742" y="380" font-size="10.5" fill="#828d9b" text-anchor="end">100%</text>
+      <text x="502" y="394" font-size="10.5" fill="#828d9b" text-anchor="middle">해당 원칙을 다룬 문헌의 비율 · 막대 길이는 비율에 비례</text>
+    </svg>
+  </div>
+  <div class="fig-implies">
+    <b>📊 이 그림이 말하는 것.</b> 안전(P2)은 거의 모든 모형(91%)에 등장하는 TIC의 가장 단단한 핵이다. 그런데 이 리뷰의 더 흥미로운 사실은 반대편에 있다. <b>10개 원칙을 모두 포함한 문헌은 35편(12.15%)</b>에 불과했고, 60편은 다섯 개 이하의 원칙만 담고 있었다. 저자들은 빠진 원칙들 사이에서 <b>일정한 패턴을 찾지 못했다</b>고 보고한다. 즉 TIC 모형들은 "핵심 몇 개 + 나머지 선택"이라는 구조가 아니라 저마다 다른 조합으로 만들어져 있다. 이것이 서론에서 말한 개념 분산의 실증적 모습이다. 또 하나, 가장 적게 등장한 <b>권리 증진(P8, 38%)</b>을 저자들이 원칙으로 채택했다는 점은 이 모형이 단순한 빈도 컷오프가 아니라 저자들의 판단을 포함한 종합임을 보여준다.
+  </div>
+</div>
+
+<table class="mini-table">
+  <thead><tr><th>원칙</th><th>구성요소 (번호는 원문 체계)</th><th>문헌 수 (%)</th></tr></thead>
+  <tbody>
+    <tr><td>P1 지식과 이해</td><td>1.1 트라우마 이해 · 1.2 트라우마 이력 이해 · 1.3 지식의 실천 통합</td><td>222 (77.08)</td></tr>
+    <tr class="hi"><td>P2 모두의 안전</td><td>2.1 안전 보장 · 2.2 신뢰와 신뢰성 · 2.3 재외상 방지 · 2.4 돌봄의 연속성 · 2.5 트라우마 대응</td><td>262 (90.97)</td></tr>
+    <tr><td>P3 회복적 관계</td><td>3.1 회복적 관계 구축 · 3.2 연결과 소속감</td><td>198 (68.75)</td></tr>
+    <tr><td>P4 맥락 속 사람 전체</td><td>4.1 맥락 이해 · 4.2 사람을 알기 · 4.3 전인적 지원 · 4.4 맞춤형 지원</td><td>212 (73.61)</td></tr>
+    <tr><td>P5 역량강화·파트너십</td><td>5.1 역량강화 실천 · 5.2 협력적 실천 · 5.3 당사자 주도 실천</td><td>233 (80.90)</td></tr>
+    <tr><td>P6 회복 지원</td><td>6.1 외상 후 성장 지원 · 6.2 트라우마 회복 지원 · 6.3 정서 관리 지원</td><td>248 (86.11)</td></tr>
+    <tr><td>P7 의사소통·대인관계</td><td>7.1 의사소통 접근 · 7.2 대인관계 기술</td><td>188 (65.28)</td></tr>
+    <tr><td>P8 권리 증진</td><td>8.1 권리와 책임</td><td>109 (37.85)</td></tr>
+    <tr><td>P9 조직 전체 접근</td><td>9.1 프로그램 수준 실천 · 9.2 조직 지원 · 9.3 직원 안녕 · 9.4 교육훈련</td><td>227 (78.82)</td></tr>
+    <tr><td>P10 지지적 환경</td><td>10.1 환경 (안전하고 예측 가능하며 접근 가능한 물리적·서비스 환경)</td><td>149 (51.74)</td></tr>
+  </tbody>
+</table>
+<p class="fig-cap">출처: MacRae et al. (2026) 본문, Table 3, Figure 2. 구성요소 명칭의 한국어 번역은 AIR Lab.</p>
+
+<div class="callout danger">
+  <span class="callout-label">여기서 조심할 것</span><br>
+  ⚠️ <b>이 비율은 "현장에서 얼마나 실천되는가"가 아니다.</b> 원칙별 비율은 288개 독자적 모형의 <b>문서</b>에 그 원칙이 적혀 있는 비율이다. 기존 모형을 그대로 쓴 1,872편은 제외되었고, 실제 기관의 실천 수준은 측정되지 않았다. "TIC 기관의 91%가 안전을 실천한다"처럼 인용하지 않도록 <b>무엇에 대한 비율인지</b>를 반드시 확인하자.
+</div>
+<div class="subhead"><span class="code">P2</span><h3>안전: "안전한 것"과 "안전하다고 느끼는 것"</h3><span class="en">being safe vs. feeling safe</span></div>
+<div class="panel">
+  <p>안전 원칙의 설명에서 가장 가르칠 만한 대목은 <strong>안전의 이중성</strong>이다. 물리적 위협을 제거하는 것만으로는 충분하지 않고, 트라우마를 경험한 사람에게는 객관적 안전과 주관적 안전감 사이에 간극이 있을 수 있다는 것이다. 저자들은 안전을 정서·심리적, 문화적, 사회적, 학업적, 영적 차원으로 확장하고, 안전의 대상을 이용자뿐 아니라 <strong>직원</strong>에게까지 넓혀 이차 외상과 대리 외상의 예방을 포함시킨다.</p>
+  <div class="quote-box">
+    "Safety acknowledges the distinction between being safe and feeling safe, particularly for people who have experienced trauma."
+    <span class="attr">출처: Principle 2, Ensure Safety</span>
+    <span class="trans"><strong>번역.</strong> 안전은 특히 트라우마를 경험한 사람들에게 <strong>안전한 것과 안전하다고 느끼는 것의 차이</strong>를 인정한다.<br><br>🧭 <b>길잡이.</b> being과 feeling의 대구 하나로 객관적 조건과 주관적 경험 사이의 간극을 짚는다. TIC가 물리적 안전과 별도로 "안전감"을 다루는 이유가 이 한 문장에 담겨 있다.</span>
+  </div>
+</div>
+
+<div class="subhead"><span class="code">P1</span><h3>질문의 전환: 무엇이 잘못되었나에서 무슨 일이 있었나로</h3><span class="en">from "what is wrong" to "what has happened"</span></div>
+<div class="panel">
+  <p>트라우마 이력의 이해(1.2)는 120편(41.67%)에서 다루어졌다. 여기서 저자들은 TIC의 오래된 슬로건을 재확인하면서도, 동시에 신중한 단서를 붙인다. 9편의 문헌은 트라우마에 대해 직접 묻는 것이 도움이 될 수 있지만 고통을 유발할 수도 있다고 경고했고, 따라서 트라우마 이력에 대한 논의는 선택적이고 간결하며 위협적이지 않아야 하고, 훈련된 직원이 수행해야 하며, 서비스 제공에 목적이 있을 때만, 그리고 적절한 심리적 지원이 가능할 때만 이루어져야 한다고 정리한다.</p>
+  <div class="quote-box">
+    "Understanding the individual's trauma history ... shifts the focus from what is "wrong" with the person to what has happened to them."
+    <span class="attr">출처: Principle 1, Understanding the Trauma History</span>
+    <span class="trans"><strong>번역.</strong> 개인의 트라우마 이력을 이해하는 것은 초점을 그 사람에게 <strong>"무엇이 잘못되었는가"에서 그 사람에게 "무슨 일이 있었는가"로</strong> 옮긴다.</span>
+  </div>
+</div>
+
+<div class="subhead"><span class="code">P6</span><h3>TIC는 치료가 아니다</h3><span class="en">TIC is not a trauma treatment</span></div>
+<div class="panel">
+  <p>회복 지원 원칙(86.11%)에서 저자들은 TIC와 트라우마 치료의 경계를 분명히 한다. TIC는 임상적 자격을 요구하지 않으며, 대신 모든 현장이 할 수 있는 회복 지원 실천(심리교육, 정서 조절 지원, 적시 의뢰, 동료지원)을 포함한다. 이 경계 설정은 포함 기준에도 반영되어 있다. 트라우마 치료나 임상 개입을 기술한 문헌(557편)은 제외되었다.</p>
+  <div class="quote-box">
+    "TIC is not a trauma treatment and does not require clinical qualifications in trauma intervention, but it does incorporate practices that support trauma recovery."
+    <span class="attr">출처: Principle 6</span>
+    <span class="trans"><strong>번역.</strong> TIC는 <strong>트라우마 치료가 아니며</strong> 트라우마 개입에 대한 임상 자격을 요구하지 않는다. 그러나 트라우마 회복을 지원하는 실천은 포함한다.</span>
+  </div>
+</div>
+
+<div class="subhead"><span class="code">P9</span><h3>개인의 기술이 아니라 조직의 전환</h3><span class="en">whole-of-organisation approach</span></div>
+<div class="panel">
+  <p>조직 전체 접근(78.82%)은 TIC가 개별 실천가의 태도나 기법으로 환원되지 않는다는 점을 강조한다. 이사회 차원의 승인, 미션과 가치의 재정비, 조직 구조와 거버넌스의 조정, 변화 준비도 평가, 리더십의 지원, 충분한 자원, TIC 역량을 기준으로 한 채용, 내부 챔피언의 활용이 모두 여기에 포함된다. 직원의 안녕 지원(46.18%)이 별도 구성요소로 자리 잡은 것도 주목할 만하다. TIC는 이용자를 향한 태도인 동시에, 직원이 겪는 대리 외상과 소진을 조직이 책임지는 구조다.</p>
+  <div class="quote-box">
+    "TIC is not just an individual approach to service provision. It requires a fundamental shift across the entire organisation."
+    <span class="attr">출처: Principle 9</span>
+    <span class="trans"><strong>번역.</strong> TIC는 단지 서비스 제공의 개인적 접근이 아니다. <strong>조직 전체에 걸친 근본적 전환</strong>을 요구한다.</span>
+  </div>
+</div>
+
+<!-- 06 -->
+<div class="section-head" id="model">
+  <div class="section-num">06</div>
+  <div class="section-title-block"><h2>통합 정의와 통합 모형</h2><p class="section-subtitle">Proposed integrated definition · Figure 2</p></div>
+</div>
+
+<div class="panel">
+  <p>분석의 최종 산출물은 두 가지다. 하나는 어떤 현장에도 적용할 수 있도록 설계된 <strong>조작적 통합 정의</strong>이고, 다른 하나는 가치·원칙·구성요소를 위계적으로 배치한 <strong>통합 모형</strong>(Figure 2)과 원칙별 보편 전략을 정리한 <strong>프레임워크</strong>(Table 3)다. 정의는 두 문장으로 이루어져 있다. 첫 문장은 10개 핵심가치를 열거하고, 둘째 문장은 TIC가 무엇을 하는 접근인지를 세 가지 기능으로 규정한다.</p>
+</div>
+
+<div class="quote-box">
+  "Trauma-informed care is an organisation or system-wide approach that incorporates these values within a philosophy and set of practices that (a) is based on an understanding of the prevalence, impact, responses and paths for recovery from trauma, (b) integrates this knowledge into all aspects of organisational or systems operations and service delivery, and (c) reduces the risk of re-traumatisation or vicarious traumatisation of service users or staff."
+  <span class="attr">출처: Proposed Integrated Definition, Values, Model, and Framework for TIC</span>
+  <span class="trans"><strong>번역.</strong> 트라우마 기반 실천은 이러한 가치를 하나의 철학과 실천의 집합 안에 담아내는 <strong>조직 또는 체계 차원의 접근</strong>이며, 그 실천은 (a) 트라우마의 유병률, 영향, 반응, 회복 경로에 대한 이해에 기반하고, (b) 이 지식을 <strong>조직·체계 운영과 서비스 제공의 모든 측면</strong>에 통합하며, (c) 이용자 또는 직원의 <strong>재외상화나 대리 외상화의 위험</strong>을 줄인다.<br><br>🧭 <b>길잡이.</b> 정의가 (a) 지식, (b) 통합, (c) 위험 감소라는 세 기능으로 나뉘어 있다. 정의를 기능 단위로 쪼개 두면 각 기능이 곧 측정 영역과 평가 지표로 옮겨질 수 있다. 척도 개발을 염두에 둔 정의 설계다.</span>
+</div>
+
+<div class="plain-meaning">🔑 TIC는 (1) 트라우마를 알고, (2) 그 앎을 조직 곳곳에 심고, (3) 이용자와 직원 모두가 다시 다치지 않도록 하는, 조직 단위의 접근이다.</div>
+
+<div class="figure-block">
+  <div class="fig-title">Figure 2. Integrated model of trauma-informed care</div>
+  <span class="fig-tag orig">원문 Figure</span>
+  <div class="fig-orig">
+    <img src="https://journals.sagepub.com/cms/10.1177/15248380261451829/asset/585f17bf-6a30-434f-9fc6-d509498938b5/assets/images/large/10.1177_15248380261451829-fig2.jpg" alt="MacRae et al. (2026) Figure 2: Integrated model of trauma-informed care" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+    <div style="display:none;font-size:13px;color:#828d9b;padding:20px;">원문 이미지를 불러오지 못했습니다. <a href="https://doi.org/10.1177/15248380261451829" target="_blank" rel="noopener">원문에서 Figure 2 보기</a></div>
+  </div>
+  <p class="fig-cap">출처: MacRae et al. (2026), Figure 2. 원문 주석에 따르면 이 모형은 위에서 아래로 읽는 위계적 구성이다. 교육 목적의 인용이며 저작권은 원 출판사에 있다.</p>
+
+  <div class="fig-kr">
+    <span class="fig-tag kr">AIR Lab 재구성 · 한국어 주석</span>
+    <svg viewBox="0 0 780 600" width="100%" style="max-width:780px" role="img" aria-label="TIC 통합 모형 한국어 재구성">
+      <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fa8"/></marker></defs>
+      <!-- left principles band -->
+      <rect x="8" y="80" width="112" height="470" rx="12" fill="#e6f5f0" stroke="#3fa88a"/>
+      <text x="64" y="104" text-anchor="middle" font-size="12.5" font-weight="700" fill="#3fa88a">10개 원칙</text>
+      <g font-size="10.5" fill="#20262e">
+        <text x="18" y="132">P1 지식과 이해</text><text x="18" y="170">P2 모두의 안전</text><text x="18" y="208">P3 회복적 관계</text>
+        <text x="18" y="246">P4 맥락 속 전인</text><text x="18" y="284">P5 역량강화</text><text x="18" y="322">P6 회복 지원</text>
+        <text x="18" y="360">P7 의사소통</text><text x="18" y="398">P8 권리 증진</text><text x="18" y="436">P9 조직 전체</text><text x="18" y="474">P10 지지적 환경</text>
+      </g>
+      <text x="64" y="530" text-anchor="middle" font-size="10" fill="#3fa88a">모형 전체를</text>
+      <text x="64" y="543" text-anchor="middle" font-size="10" fill="#3fa88a">떠받치는 토대</text>
+      <!-- right values band -->
+      <rect x="660" y="170" width="112" height="250" rx="12" fill="#e6f5f0" stroke="#3fa88a"/>
+      <text x="716" y="194" text-anchor="middle" font-size="12.5" font-weight="700" fill="#3fa88a">10개 핵심가치</text>
+      <g font-size="10.5" fill="#20262e" text-anchor="middle">
+        <text x="716" y="218">안전</text><text x="716" y="236">신뢰·투명성</text><text x="716" y="254">존중·존엄</text><text x="716" y="272">역량강화·선택</text>
+        <text x="716" y="290">협력·상호성</text><text x="716" y="308">연민·공감</text><text x="716" y="326">교차성·포용</text><text x="716" y="344">강점·인간중심</text>
+        <text x="716" y="362">전인적 안녕</text><text x="716" y="380">학습·적응</text>
+      </g>
+      <text x="716" y="408" text-anchor="middle" font-size="10" fill="#3fa88a">나머지 모든 수준에 영향</text>
+      <path d="M 600 32 Q 716 32 716 166" fill="none" stroke="#3fa88a" stroke-width="1.8" marker-end="url(#ar2)"/>
+      <!-- level a -->
+      <text x="136" y="37" font-size="11" fill="#828d9b" font-weight="700">a</text>
+      <rect x="150" y="16" width="450" height="34" rx="9" fill="#2f6fa8"/>
+      <text x="375" y="38" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">트라우마 이론과 근거</text>
+      <line x1="375" y1="50" x2="375" y2="70" stroke="#2f6fa8" stroke-width="1.8" marker-end="url(#ar2)"/>
+      <!-- level b -->
+      <text x="136" y="92" font-size="11" fill="#828d9b" font-weight="700">b</text>
+      <rect x="210" y="72" width="160" height="32" rx="8" fill="#e8f1fa" stroke="#3f86c4"/>
+      <text x="290" y="93" text-anchor="middle" font-size="12" fill="#2f6fa8" font-weight="600">1.1 트라우마 이해</text>
+      <rect x="380" y="72" width="160" height="32" rx="8" fill="#e8f1fa" stroke="#3f86c4"/>
+      <text x="460" y="93" text-anchor="middle" font-size="12" fill="#2f6fa8" font-weight="600">1.3 지식의 통합</text>
+      <text x="600" y="93" font-size="10" fill="#828d9b">지식 기반</text>
+      <line x1="375" y1="104" x2="375" y2="126" stroke="#2f6fa8" stroke-width="1.8" marker-end="url(#ar2)"/>
+      <!-- level c -->
+      <text x="136" y="150" font-size="11" fill="#828d9b" font-weight="700">c</text>
+      <rect x="150" y="128" width="450" height="42" rx="10" fill="#fff" stroke="#2f6fa8" stroke-width="1.5"/>
+      <rect x="160" y="135" width="138" height="28" rx="6" fill="#e8f1fa"/><text x="229" y="154" text-anchor="middle" font-size="11.5" fill="#20262e">2.1 안전 보장</text>
+      <rect x="306" y="135" width="138" height="28" rx="6" fill="#e8f1fa"/><text x="375" y="154" text-anchor="middle" font-size="11.5" fill="#20262e">2.3 재외상 방지</text>
+      <rect x="452" y="135" width="138" height="28" rx="6" fill="#e8f1fa"/><text x="521" y="154" text-anchor="middle" font-size="11.5" fill="#20262e">2.5 트라우마 대응</text>
+      <text x="606" y="146" font-size="10" fill="#e0573e" font-weight="700">TIC의</text><text x="606" y="159" font-size="10" fill="#e0573e" font-weight="700">목표</text>
+      <line x1="229" y1="170" x2="229" y2="194" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <line x1="375" y1="170" x2="375" y2="194" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <line x1="521" y1="170" x2="521" y2="194" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <!-- level d -->
+      <text x="136" y="220" font-size="11" fill="#828d9b" font-weight="700">d</text>
+      <rect x="150" y="196" width="150" height="44" rx="8" fill="#3f86c4"/><text x="225" y="215" text-anchor="middle" font-size="11.5" fill="#fff" font-weight="600">9.2 조직 지원</text><text x="225" y="231" text-anchor="middle" font-size="11" fill="#fff">및 실행</text>
+      <rect x="300" y="196" width="150" height="44" rx="8" fill="#3f86c4"/><text x="375" y="215" text-anchor="middle" font-size="11.5" fill="#fff" font-weight="600">9.1 프로그램</text><text x="375" y="231" text-anchor="middle" font-size="11" fill="#fff">수준 실천</text>
+      <rect x="450" y="196" width="150" height="44" rx="8" fill="#3f86c4"/><text x="525" y="215" text-anchor="middle" font-size="11.5" fill="#fff" font-weight="600">개인 수준</text><text x="525" y="231" text-anchor="middle" font-size="11" fill="#fff">접근</text>
+      <text x="606" y="222" font-size="10" fill="#828d9b">실행의</text><text x="606" y="235" font-size="10" fill="#828d9b">세 층위</text>
+      <line x1="225" y1="240" x2="225" y2="266" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <line x1="375" y1="240" x2="375" y2="266" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <line x1="525" y1="240" x2="525" y2="266" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <!-- level e -->
+      <text x="136" y="296" font-size="11" fill="#828d9b" font-weight="700">e</text>
+      <rect x="150" y="268" width="72" height="50" rx="7" fill="#e8f1fa" stroke="#6cb0e4"/><text x="186" y="289" text-anchor="middle" font-size="10.5" fill="#20262e">9.4 교육</text><text x="186" y="304" text-anchor="middle" font-size="10.5" fill="#20262e">훈련</text>
+      <rect x="228" y="268" width="72" height="50" rx="7" fill="#e8f1fa" stroke="#6cb0e4"/><text x="264" y="289" text-anchor="middle" font-size="10.5" fill="#20262e">9.3 직원</text><text x="264" y="304" text-anchor="middle" font-size="10.5" fill="#20262e">안녕 지원</text>
+      <rect x="300" y="268" width="72" height="50" rx="7" fill="#e8f1fa" stroke="#6cb0e4"/><text x="336" y="289" text-anchor="middle" font-size="10.5" fill="#20262e">6.2 회복</text><text x="336" y="304" text-anchor="middle" font-size="10.5" fill="#20262e">지원</text>
+      <rect x="378" y="268" width="72" height="50" rx="7" fill="#e8f1fa" stroke="#6cb0e4"/><text x="414" y="289" text-anchor="middle" font-size="10.5" fill="#20262e">5.3 당사자</text><text x="414" y="304" text-anchor="middle" font-size="10.5" fill="#20262e">주도 실천</text>
+      <rect x="450" y="268" width="72" height="50" rx="7" fill="#e8f1fa" stroke="#6cb0e4"/><text x="486" y="289" text-anchor="middle" font-size="10.5" fill="#20262e">7.2 대인</text><text x="486" y="304" text-anchor="middle" font-size="10.5" fill="#20262e">관계 기술</text>
+      <rect x="528" y="268" width="72" height="50" rx="7" fill="#e8f1fa" stroke="#6cb0e4"/><text x="564" y="289" text-anchor="middle" font-size="10.5" fill="#20262e">7.1 의사</text><text x="564" y="304" text-anchor="middle" font-size="10.5" fill="#20262e">소통 접근</text>
+      <line x1="225" y1="318" x2="225" y2="346" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <line x1="375" y1="318" x2="375" y2="346" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <line x1="525" y1="318" x2="525" y2="346" stroke="#2f6fa8" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <!-- level f -->
+      <text x="136" y="400" font-size="11" fill="#828d9b" font-weight="700">f</text>
+      <rect x="150" y="348" width="146" height="150" rx="9" fill="#fff" stroke="#aab4c1"/>
+      <g font-size="10.5" fill="#46505c" text-anchor="middle"><text x="223" y="372">3.1 회복적 관계 구축</text><text x="223" y="394">3.2 연결과 소속감</text><text x="223" y="416">6.1 외상 후 성장</text><text x="223" y="438">6.3 정서 관리</text></g>
+      <rect x="302" y="348" width="146" height="150" rx="9" fill="#fff" stroke="#aab4c1"/>
+      <g font-size="10.5" fill="#46505c" text-anchor="middle"><text x="375" y="372">1.2 트라우마 이력 이해</text><text x="375" y="394">4.1 맥락 이해</text><text x="375" y="416">4.2 사람을 알기</text><text x="375" y="438">4.3 전인적 지원</text><text x="375" y="460">4.4 맞춤형 지원</text></g>
+      <rect x="454" y="348" width="146" height="150" rx="9" fill="#fff" stroke="#aab4c1"/>
+      <g font-size="10.5" fill="#46505c" text-anchor="middle"><text x="527" y="372">2.2 신뢰와 신뢰성</text><text x="527" y="394">2.4 돌봄의 연속성</text><text x="527" y="416">5.2 협력적 실천</text><text x="527" y="438">5.1 역량강화 실천</text><text x="527" y="460">8.1 권리와 책임</text></g>
+      <text x="375" y="522" text-anchor="middle" font-size="11" fill="#828d9b">실행을 뒷받침하는 지원 구성요소</text>
+      <!-- reading guide -->
+      <rect x="150" y="540" width="450" height="46" rx="9" fill="#fbf1dc"/>
+      <text x="375" y="560" text-anchor="middle" font-size="11" fill="#c78a1e" font-weight="700">읽는 순서: a 이론 → b 지식 → c 목표 → d 실행 층위 → e 핵심 수단 → f 지원 요소</text>
+      <text x="375" y="577" text-anchor="middle" font-size="10.5" fill="#46505c">화살표는 저자들의 위계적 종합이며, 경험적으로 검증된 인과 경로가 아니다</text>
+    </svg>
+  </div>
+  <div class="fig-implies">
+    <b>📊 이 그림을 어떻게 읽는가.</b> 원문 주석대로 위에서 아래로 읽는다. 맨 위 (a) 트라우마 이론과 근거가 오른쪽의 핵심가치에 영향을 주고, 가치는 모형의 나머지 모든 수준에 스며든다. (b) 트라우마에 대한 이해와 그 지식의 통합이 (c) TIC가 달성하려는 세 가지 목표, 즉 안전 보장, 재외상 방지, 트라우마 대응으로 이어진다. 이 목표는 (d) 조직, 프로그램, 개인이라는 세 실행 층위에서 구현되며, 각 층위는 (e) 교육훈련·직원 안녕, 회복 지원·당사자 주도 실천, 대인관계·의사소통 기술이라는 핵심 수단을 갖는다. (f) 맨 아래는 이 수단들이 작동하도록 돕는 지원 구성요소다. 왼쪽 원칙 띠는 모형 전체를 떠받친다.<br><br>
+    🎯 <b>이게 무슨 뜻인가.</b> 저자들은 이 배치를 "theory of change 모형과 유사한 위계적 과정"이라고 설명한다. 이 점이 중요하다. 이 그림은 요소들 사이의 <b>논리적 순서에 대한 제안</b>이지, "교육훈련이 안전을 높인다"와 같은 인과를 데이터로 확인한 결과가 아니다. 그림의 화살표는 앞으로 검증해야 할 가설의 목록으로 읽는 것이 정확하다. 또 한 가지, 안전 원칙(P2)의 구성요소 다섯 개가 c층(2.1, 2.3, 2.5)과 f층(2.2, 2.4)에 나뉘어 배치되어 있다. 원칙과 모형의 층위는 서로 다른 분류 축이라는 뜻이며, 원칙 목록과 모형 그림을 오가며 읽을 때 혼동하기 쉬운 부분이다.
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">S</div>
+    <div class="cond-titles">
+      <div class="cond-code">Conceptual move 2</div>
+      <h3>SAMHSA를 넘어서: 권리 기반 접근의 추가</h3>
+      <div class="cond-en">Incorporating and expanding the SAMHSA model</div>
+    </div>
+    <span class="verdict promising">promising</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">➕ 가장 많이 인용되는 SAMHSA 모형도 현재 문헌이 말하는 TIC의 전부를 담지는 못한다. 대표적으로 빠진 것이 "권리"다.</div>
+    <p>정의를 제시한 140편 중 76편은 아무런 출처도 인용하지 않았고, 나머지 64편에서 가장 많이 인용된 것은 SAMHSA(2014; 37회)였다. SAMHSA가 사실상의 표준이라는 뜻이다. 저자들은 그러나 종합된 원칙과 구성요소에 비추어 볼 때 SAMHSA가 현재의 이해를 모두 담지 못한다고 판단한다. 예로 든 것이 권리 기반 접근이다. SAMHSA 모형에서 권리는 핵심 구성요소로 명시되지 않지만, 포함 문헌 중 109편이 이를 다루었다.</p>
+    <div class="quote-box">
+      "... it is apparent that the SAMSHA [sic] model does not incorporate all contemporary understandings of the elements critical to TIC."
+      <span class="attr">출처: Discussion</span>
+      <span class="trans"><strong>번역.</strong> SAMHSA 모형은 TIC에 핵심적인 요소들에 대한 <strong>현대적 이해를 모두 포괄하지는 못한다</strong>는 점이 분명하다.<br><br>🧭 <b>길잡이.</b> 가장 널리 쓰이는 모형을 정면으로 부정하지 않고 "does not incorporate all"이라는 부분 부정으로 보완의 필요를 말한다. 선행 표준을 존중하면서 자기 기여를 세우는 표현이다.</span>
+    </div>
+    <p>이 주장은 흥미로운 긴장을 품고 있다. 권리 원칙은 10개 원칙 중 <strong>가장 적게 등장한 원칙(37.85%)</strong>이다. 즉 저자들은 빈도가 가장 낮은 요소를 근거로 가장 많이 쓰이는 모형을 보완한다. 이는 논리적으로 문제가 되지는 않는다. 트라우마가 흔히 권리 침해에서 비롯된다는 이론적 이유가 제시되어 있기 때문이다. 다만 이 사례는 통합 모형이 빈도의 기계적 집계가 아니라 <strong>이론적 판단이 개입된 종합</strong>이라는 점을 드러내며, 독자는 어느 부분이 빈도에서 나오고 어느 부분이 판단에서 나오는지를 구분해서 읽어야 한다.</p>
+  </div>
+</div>
+
+<!-- 07 -->
+<div class="section-head" id="critique">
+  <div class="section-num">07</div>
+  <div class="section-title-block"><h2>비판적 읽기: 이 종합은 어디까지 믿을 수 있는가</h2><p class="section-subtitle">저자들이 인정한 한계와 독자가 추가로 짚을 지점</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">1</div>
+    <div class="cond-titles"><div class="cond-code">Inference limit</div><h3>빈도는 합의이지 효과가 아니다</h3><div class="cond-en">Frequency of mention ≠ evidence of effectiveness</div></div>
+    <span class="verdict weak">주의</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">📈 많은 모형이 "안전"을 말한다는 것은 안전이 중요하다고 많은 사람이 생각한다는 뜻이다. 안전 요소가 결과를 바꾼다는 증거는 아니다.</div>
+    <p>이 리뷰의 원자료는 모형과 프레임워크의 <strong>기술(description)</strong>이다. 각 원칙의 등장 비율은 모형 개발자들이 무엇을 포함시켰는가를 보여줄 뿐, 그 요소가 이용자 결과를 개선하는지는 말해 주지 않는다. 저자들도 질 평가를 생략했고, 치료·개입 문헌을 제외했다. 따라서 이 모형은 "가장 널리 합의된 TIC의 모습"으로 읽어야 하며, "효과가 입증된 TIC의 모습"으로 읽어서는 안 된다. 저자들이 향후 과제로 모형의 현장별 적용·검증과 구성요소 기반 측정도구 개발을 제시하는 것도 이 때문이다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">2</div>
+    <div class="cond-titles"><div class="cond-code">Procedural limit</div><h3>1인 검토자와 부분적 교차 확인</h3><div class="cond-en">Single reviewer with verification on 32 of 288 sources</div></div>
+    <span class="verdict mixed">부분적으로 보완됨</span>
+  </div>
+  <div class="condition-body">
+    <p>선별과 자료추출을 한 명이 수행한 것은 rapid review의 전형적 단축이며, 저자들은 이것이 편향과 오류의 위험을 도입한다고 명시적으로 인정한다. 보완 장치로 32편에 대한 독립 추출·코딩과 합의 조정을 두었고, 추출 단계에서 불일치가 없었다고 보고한다. 다만 <strong>선별 단계</strong>(8,048건 및 5,361건)에 대한 이중 검토는 보고되지 않았으므로, 어떤 문헌이 들어오고 나갔는가의 판단은 한 사람의 판단에 크게 의존한다. 또한 코딩 일치도를 kappa 같은 지표로 수치화하지 않고 "합의까지 조정"했다고만 보고한 점도 함께 기억할 만하다.</p>
+    <div class="quote-box">
+      "While this approach increased efficiency, it also introduced a potential risk of bias and error."
+      <span class="attr">출처: Strengths and Limitations</span>
+      <span class="trans"><strong>번역.</strong> 이 접근은 효율성을 높였지만, 동시에 <strong>편향과 오류의 잠재적 위험</strong>을 도입했다.<br><br>🧭 <b>길잡이.</b> 효율(increased efficiency)과 위험(risk of bias and error)을 한 문장에 나란히 놓아 방법적 선택의 대가를 스스로 밝힌다. 한계 절에서 방어보다 투명성을 택하는 문장이다.</span>
+    </div>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">3</div>
+    <div class="cond-titles"><div class="cond-code">Generalizability</div><h3>"보편적 적용 가능성"과 미국 중심의 원자료</h3><div class="cond-en">Universal application vs. a predominantly US evidence base</div></div>
+    <span class="verdict mixed">열린 질문</span>
+  </div>
+  <div class="condition-body">
+    <p>288편 중 197편(68.40%)이 미국 문헌이고, 호주(32), 캐나다(25), 잉글랜드(18)가 뒤를 잇는다. 영어 전문만 포함했기 때문에 비영어권 모형은 구조적으로 배제되었다. 저자들은 2020년 이후 비서구 국가의 모형이 추가되었다는 점을 들어 통합 모형의 보편적 적용이 "feasible해 보인다"고 쓰지만, 그 근거가 된 비서구 문헌은 국가당 1~2편 수준이다. 이 논문이 제안한 가치 목록(예: 교차성과 포용, 문화적 안전)이 한국의 아동보호·학교·지역사회 현장에서 같은 의미로 작동하는지는 <strong>별도의 검증이 필요한 질문</strong>으로 남는다.</p>
+    <div class="quote-box">
+      "Whilst the synthesis of models and frameworks across settings, cultures, and time periods risks dilution of nuances within these contexts ..."
+      <span class="attr">출처: Strengths and Limitations</span>
+      <span class="trans"><strong>번역.</strong> 현장, 문화, 시기를 가로질러 모형과 프레임워크를 종합하는 일은 <strong>각 맥락 안의 미묘한 차이를 희석할 위험</strong>이 있다.</span>
+    </div>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">4</div>
+    <div class="cond-titles"><div class="cond-code">Contribution</div><h3>공통 언어와 측정의 출발점</h3><div class="cond-en">A shared vocabulary for policy, training, and measurement</div></div>
+    <span class="verdict promising">promising</span>
+  </div>
+  <div class="condition-body">
+    <p>이러한 한계에도 이 논문의 기여는 분명하다. 첫째, 가치·원칙·구성요소·전략이라는 <strong>네 층위의 어휘</strong>를 제공하여, 서로 다른 현장이 TIC를 이야기할 때 같은 층위의 개념끼리 비교할 수 있게 한다. 둘째, 28개 구성요소는 TIC 충실도(fidelity) 척도나 조직 자가진단 도구를 개발할 때 <strong>내용타당도의 출발점</strong>으로 쓸 수 있다. 셋째, 원칙마다 "보편 전략"을 제시해 현장별 전략을 공동설계(co-design)할 수 있는 틀을 마련했다. 저자들이 제안하는 다음 단계, 즉 현장별 적용을 통한 검증, 당사자 참여를 통한 전략 개발, 구성요소 기반 측정도구 개발은 모두 이 공통 언어가 있어야 가능한 작업이다.</p>
+  </div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트</span><br>
+  🔎 <strong>개념 리뷰를 읽는 세 가지 질문.</strong> 개념적 종합을 다루는 리뷰(integrative, scoping, concept analysis)를 읽을 때는 다음을 확인하자. (1) <strong>분석 단위가 무엇인가.</strong> 이 논문의 분석 단위는 "독자적 모형"이므로, 재사용된 모형은 한 번만 계산된다. (2) <strong>종합 규칙이 무엇인가.</strong> 어떤 요소가 빈도로 선택되었고 어떤 요소가 이론적 판단으로 포함되었는가. (3) <strong>산출물이 어떤 종류의 주장을 할 수 있는가.</strong> 정의와 모형은 기술적(descriptive)·규범적(normative) 주장이지, 인과적 주장이 아니다. 이 세 질문에 답할 수 있으면 리뷰의 결론을 과소평가하지도, 과대평가하지도 않게 된다.
+</div>
+
+<!-- 08 -->
+<div class="section-head" id="phrases">
+  <div class="section-num">08</div>
+  <div class="section-title-block"><h2>명문장</h2><p class="section-subtitle">영어 논문에 가져다 쓸 수 있는 문장과 그 수사적 기능</p></div>
+</div>
+
+<div class="phrase-grid">
+  <div class="phrase">
+    <div class="en">"The evolution of trauma-informed care (TIC) since its inception has resulted in myriad models and frameworks across a variety of settings. However, there is a lack of a consistent definition and understanding of what constitutes TIC."</div>
+    <div class="kr">TIC는 등장 이후 다양한 현장에서 수많은 모형과 프레임워크를 낳았다. 그러나 무엇이 TIC를 구성하는지에 대한 일관된 정의와 이해는 부재하다.</div>
+    <div class="why"><b>왜 유용한가.</b> "확산(성공)을 먼저 인정하고, However로 그 확산이 만든 공백을 지적"하는 두 문장 구조의 초록 오프닝이다. 개념 정리형 리뷰나 척도 개발 논문의 첫 문단에 그대로 차용할 수 있다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"We conceptualise that the values are the philosophy, and principles are the enactment of the values."</div>
+    <div class="kr">우리는 가치를 철학으로, 원칙을 그 가치의 실행으로 개념화한다.</div>
+    <div class="why"><b>왜 유용한가.</b> 문헌에서 혼용되는 두 용어를 한 문장으로 구분하는 조작적 정의의 모범이다. "We conceptualise X as ..., and Y as ..." 구조는 개념 구분이 필요한 모든 서론·방법 절에 쓸 수 있다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Safety acknowledges the distinction between being safe and feeling safe, particularly for people who have experienced trauma."</div>
+    <div class="kr">안전은 특히 트라우마를 경험한 사람들에게 안전한 것과 안전하다고 느끼는 것의 차이를 인정한다.</div>
+    <div class="why"><b>왜 유용한가.</b> 객관적 조건과 주관적 경험을 대비시키는 "being X and feeling X" 대구는 짧고 기억에 남는다. 지각된 안전, 지각된 지지 등 주관적 측정을 정당화하는 문장으로 활용 가능하다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"TIC is not a trauma treatment and does not require clinical qualifications in trauma intervention, but it does incorporate practices that support trauma recovery."</div>
+    <div class="kr">TIC는 트라우마 치료가 아니며 임상 자격을 요구하지 않지만, 트라우마 회복을 지원하는 실천은 포함한다.</div>
+    <div class="why"><b>왜 유용한가.</b> "is not ... but it does ..." 구조로 개념의 경계를 부정과 긍정으로 동시에 긋는다. 개입의 범위를 명확히 해야 하는 프로그램 논문이나 정책 논문에서 오해를 차단하는 데 효과적이다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"TIC is not just an individual approach to service provision. It requires a fundamental shift across the entire organisation."</div>
+    <div class="kr">TIC는 단지 서비스 제공의 개인적 접근이 아니다. 조직 전체에 걸친 근본적 전환을 요구한다.</div>
+    <div class="why"><b>왜 유용한가.</b> 분석 수준을 개인에서 조직으로 끌어올리는 전환 문장이다. 생태체계적 관점이나 다층 모형을 도입하는 논거로 쓸 수 있다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"The lack of an overarching conceptual framework for TIC poses the risk of inconsistent and haphazard development of TIC models that do not share a common language or implementation framework."</div>
+    <div class="kr">TIC를 아우르는 개념적 틀의 부재는 공통 언어나 실행 틀을 공유하지 않는 TIC 모형들이 일관성 없이 무계획적으로 개발될 위험을 낳는다.</div>
+    <div class="why"><b>왜 유용한가.</b> 개념적 공백이 왜 "실제 비용"을 갖는지를 설명하는 문장이다. 이론 정리 연구의 필요성을 정당화할 때 "poses the risk of ..." 구조를 활용할 수 있다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Despite these mandates and recommendations, there is no specific guidance on what this should look like."</div>
+    <div class="kr">이러한 의무화와 권고에도 불구하고, 그것이 실제로 어떤 모습이어야 하는지에 대한 구체적 지침은 없다.</div>
+    <div class="why"><b>왜 유용한가.</b> 정책과 실천 사이의 간극을 가장 간결하게 지적하는 문장이다. 한국 정책(예: 트라우마 기반 접근을 명시한 지침)을 다루는 논문의 연구 필요성 단락에 응용하기 좋다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Only 35 (12.15%) sources included all ten principles. ... There was no identified pattern in the principles that were not included in sources."</div>
+    <div class="kr">10개 원칙을 모두 포함한 문헌은 35편(12.15%)뿐이었다. 문헌에서 누락된 원칙들 사이에는 식별 가능한 패턴이 없었다.</div>
+    <div class="why"><b>왜 유용한가.</b> "없음(null pattern)"을 결과로 보고하는 방식의 예다. 패턴이 없다는 사실 자체가 개념 분산이라는 주장의 근거가 된다. 부정적 결과를 의미 있게 서술하는 연습에 좋다.</div>
+  </div>
+  <div class="phrase span2">
+    <div class="en">"Whilst the synthesis of models and frameworks across settings, cultures, and time periods risks dilution of nuances within these contexts, this review proposes a conceptual model and framework that represents the common components represented across settings and cultures."</div>
+    <div class="kr">현장, 문화, 시기를 가로질러 모형과 프레임워크를 종합하는 일은 각 맥락의 미묘한 차이를 희석할 위험이 있지만, 이 리뷰는 현장과 문화를 가로질러 나타나는 공통 구성요소를 대표하는 개념 모형과 프레임워크를 제안한다.</div>
+    <div class="why"><b>왜 유용한가.</b> "Whilst [한계], this review [기여]" 구조로 한계를 먼저 인정하고 기여로 넘어가는 한계 절의 전형이다. 종합 연구의 불가피한 trade-off를 방어적이지 않게 서술하는 문형으로 차용할 수 있다.</div>
+  </div>
+</div>
+
+<!-- 09 -->
+<div class="section-head" id="ourstudy">
+  <div class="section-num">09</div>
+  <div class="section-title-block"><h2>AIR Lab 연구와의 연결</h2><p class="section-subtitle">트라우마 기반 아동·청소년 복지 연구에 이 논문을 어떻게 쓸 것인가</p></div>
+</div>
+
+<div class="panel">
+  <p>AIR Lab의 연구 프로그램은 아동기 역경(ACEs)의 영향을 이해하는 데서 출발해, 트라우마를 고려한 아동·청소년 복지 실천으로 이어진다. 이 논문은 그 두 번째 축, 즉 <strong>"트라우마 기반"이라는 말을 연구 변수로 다룰 때 무엇을 측정해야 하는가</strong>라는 질문에 직접 답을 준다. 예컨대 아동보호기관이나 학교, 청소년 쉼터의 TIC 수준을 조사하려면 28개 구성요소가 문항 풀(item pool)의 출발점이 될 수 있고, 10개 원칙은 하위요인 구조의 초기 가설이 될 수 있다.</p>
+  <p>동시에 이 논문은 경계해야 할 점도 알려준다. 원칙들의 빈도 분포가 문헌마다 크게 달랐다는 사실은, 한국 현장에서 TIC 척도를 만들 때 원칙 10개가 곧 10개 요인으로 확인되리라고 가정해서는 안 된다는 뜻이다. 오히려 현장 유형에 따라 원칙들이 서로 다른 조합으로 묶일 가능성이 있으며, 이는 <strong>조직 단위의 잠재프로파일 분석</strong>으로 다룰 수 있는 질문이다.</p>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">AIR Lab이 주목해야 할 한 줄</span><br>
+  🎯 원문의 향후 과제 목록에 <b>"Development of TIC measures based on the components of the integrated TIC framework"</b>가 들어 있다(Table 4). 28개 구성요소 기반 척도 개발은 저자들이 명시적으로 열어 둔 후속 연구 자리이며, 한국 아동복지 현장의 기관 단위 TIC 척도는 그 자리에 정확히 들어맞는 과제다.
+</div>
+<table class="mini-table">
+  <thead><tr><th>AIR Lab 연구 요소</th><th>이 논문에서의 대응</th></tr></thead>
+  <tbody>
+    <tr><td>ACEs와 트라우마 경험의 높은 유병률</td><td>TIC의 전제인 "universal precaution": 누구든 트라우마를 경험했을 수 있다고 가정하는 프로그램 수준 실천(9.1)</td></tr>
+    <tr class="hi"><td>트라우마 기반 아동복지 실천의 측정</td><td>28개 구성요소와 원칙별 보편 전략(Table 3)을 문항 개발의 내용 영역으로 활용</td></tr>
+    <tr><td>Person-centered 방법 (LPA/LCA)</td><td>문헌마다 다른 원칙 조합(10개 모두 포함은 12.15%)은 기관 유형별 TIC 프로파일이라는 연구 질문으로 전환 가능</td></tr>
+    <tr><td>아동보호 현장의 실천가 소진과 대리 외상</td><td>직원 안녕 지원(9.3, 46.18%)과 모두의 안전 원칙(P2)이 직원을 명시적으로 포함</td></tr>
+    <tr><td>당사자 관점과 참여</td><td>당사자 주도 실천(5.3)과 공동설계(co-design)를 모형 검증의 다음 단계로 제시</td></tr>
+  </tbody>
+</table>
+
+<div class="callout sky">
+  <span class="callout-label">💬 스터디 토론 질문</span><br>
+  <strong>Q1.</strong> 이 논문은 "독자적 모형"만을 분석 단위로 삼았다. 만약 현장에서 실제로 사용되는 빈도(예: SAMHSA 모형을 채택한 기관 수)로 가중치를 주었다면 10개 원칙의 순위와 모형의 구성은 어떻게 달라졌을까?<br>
+  <strong>Q2.</strong> 권리 증진 원칙은 가장 적게 등장했지만 원칙으로 채택되었다. 한국의 아동보호 맥락에서 이 원칙은 어떤 실천(예: 아동의 의견 청취, 절차적 권리)으로 구체화될 수 있으며, TIC 논의에 이것이 빠지면 무엇을 놓치게 되는가?<br>
+  <strong>Q3.</strong> 28개 구성요소를 바탕으로 기관 단위 TIC 척도를 개발한다고 할 때, 내용타당도와 구성타당도를 확보하기 위해 어떤 단계(전문가 델파이, 당사자 인지면담, 확인적 요인분석 등)를 어떤 순서로 설계할 것인가?
+</div>
+
+<!-- 10 -->
+<div class="section-head" id="worksheet">
+  <div class="section-num">10</div>
+  <div class="section-title-block"><h2>정리 활동</h2><p class="section-subtitle">입력한 내용은 이 브라우저에 자동 저장된다</p></div>
+</div>
+
+<div class="worksheet">
+  <h4>✍️ 1. 가치와 원칙을 구분해 보기</h4>
+  <div class="prompt">본인이 관심 있는 현장(아동보호, 학교, 쉼터 등)을 하나 정하고, 10개 핵심가치 중 하나를 골라 그 가치가 원칙과 구체적 실천 전략으로 내려오는 경로를 세 줄로 적어 보자. (예: 가치 → 원칙 → 구성요소 → 현장 전략)</div>
+  <textarea data-key="ws1" placeholder="여기에 작성하세요"></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>✍️ 2. 빈도와 근거를 구분해 보기</h4>
+  <div class="prompt">이 논문의 결과 중 "빈도로부터 나온 주장"과 "저자의 이론적 판단으로부터 나온 주장"을 각각 하나씩 찾아 적고, 두 주장이 요구하는 검증 방법이 어떻게 다른지 설명해 보자.</div>
+  <textarea data-key="ws2" placeholder="여기에 작성하세요"></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>✍️ 3. 내 연구로 옮기기</h4>
+  <div class="prompt">이 논문의 통합 정의를 본인 연구의 서론에 인용한다고 가정하고, 그 인용이 뒷받침할 수 있는 주장과 뒷받침할 수 없는 주장을 한 문장씩 영어로 써 보자.</div>
+  <textarea data-key="ws3" placeholder="Write here"></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="closing">
+  <div class="closing-inner">
+    <h2>이 논문이 가르쳐 주는 것: 이론은 정리될 때도 자란다</h2>
+    <p>이론의 발전을 이야기할 때 우리는 흔히 새로운 기제의 발견이나 기존 가설의 반박을 떠올린다. 이 논문은 다른 종류의 성장을 보여준다. 개념이 빠르게 확산될수록 그 경계는 흐려지고, 어느 순간에는 같은 이름 아래 서로 다른 것들이 모여 대화가 불가능해진다. 이때 필요한 것은 새로운 이론이 아니라 <strong>기존 개념의 재조직</strong>이다. MacRae 등은 가치와 원칙을 분리하고, 원칙 아래 구성요소를, 구성요소 아래 전략을 배치함으로써 TIC를 다시 논의 가능한 대상으로 만들었다.</p>
+    <p>동시에 이 논문은 개념적 종합이 무엇을 할 수 없는지도 정직하게 보여준다. 빈도는 합의를 말할 뿐 효과를 말하지 않으며, 위계적 모형의 화살표는 검증된 경로가 아니라 검증을 기다리는 가설이다. 좋은 개념 리뷰는 논의를 끝내는 것이 아니라 <strong>다음 경험 연구가 무엇을 측정하고 검증해야 하는지를 명확히 해 주는 것</strong>이며, 이 논문이 남긴 가장 큰 과제는 바로 그 검증이다.</p>
+    <div class="signature">MacRae et al. (2026), Trauma, Violence, &amp; Abuse · AIR Lab Journal Club</div>
+  </div>
+</div>
+
+</main>
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(47,111,168,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#2f6fa8"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#2f6fa8"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<footer class="footer">
+  이 페이지는 충북대학교 아동복지학과 AIR Lab(ACEs-Informed Recovery Lab) 대학원 저널클럽의 교육용 자료입니다. 원문 인용은 교육 목적의 짧은 발췌이며, 원문 Figure의 저작권은 원 출판사(SAGE)에 있습니다. 한국어 재구성 그림과 해설은 AIR Lab이 작성하였습니다.
+</footer>
+<script>
+  const JC_PREFIX = 'jc_macrae2026_';
+  function jcGet(k){ try { return localStorage.getItem(JC_PREFIX + k); } catch(e){ return null; } }
+  function jcSet(k,v){ try { localStorage.setItem(JC_PREFIX + k, v); return true; } catch(e){ return false; } }
+  function flash(ta){
+    const s = ta.parentElement.querySelector('.save-status');
+    if(!s) return;
+    s.classList.add('show');
+    clearTimeout(s._t);
+    s._t = setTimeout(function(){ s.classList.remove('show'); }, 1400);
+  }
+  function saveAll(){
+    let ok = true;
+    document.querySelectorAll('textarea[data-key]').forEach(function(ta){
+      if(!jcSet(ta.dataset.key, ta.value)) ok = false;
+      flash(ta);
+    });
+    if(!ok) alert('이 브라우저에서는 자동 저장을 사용할 수 없습니다. 내용을 따로 복사해 두세요.');
+  }
+  document.querySelectorAll('textarea[data-key]').forEach(function(ta){
+    const saved = jcGet(ta.dataset.key);
+    if(saved !== null) ta.value = saved;
+    let timer;
+    ta.addEventListener('input', function(){
+      clearTimeout(timer);
+      timer = setTimeout(function(){ if(jcSet(ta.dataset.key, ta.value)) flash(ta); }, 600);
+    });
+  });
+</script>
+</body>
+</html>

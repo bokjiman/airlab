@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIR Lab Journal Club · Penninx et al. (2025) Immuno-metabolic depression</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+
+  /* ════════ AIR Lab theme: navy → recovery-teal (synced with index) ════════ */
+  :root{ --sky:#2d6a9f; --sky-deep:#1f4e79; --sky-bright:#7fa9d1; --sky-soft:#e9eff6; --sky-soft2:#f4f7fb; --sky-soft-2:#f4f7fb; --mint:#3a9a8f; --mint-soft:#eaf5f2; --hover-bg:#eef3f9; }
+  .stripe{background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+  .stripe span{background:transparent!important}
+  .nav-logo-dot .d3{background:#3a9a8f}
+  .hero{isolation:isolate}
+  .hero::before{background:radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%), linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%)!important}
+  .overline{color:#9fd3ca!important}
+  .overline::before{background:#8cc7bd!important}
+  .hero h1{color:#fff!important}
+  .hero h1 em{color:#bfe6df!important}
+  .hero .citation{color:#b7c9da!important;border-left-color:#8cc7bd!important}
+  .hero .citation em{color:#d6e5f2!important}
+  .hero .citation a{color:#bfe6df!important}
+  .hero .subtitle{color:#d2e0ec!important}
+  .hero .subtitle strong,.hero .subtitle b{color:#fff!important}
+  .hero .subtitle em{color:#bfe6df}
+  .hero .stat{background:rgba(255,255,255,0.08)!important;border-color:rgba(255,255,255,0.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .hero .stat .num{color:#fff!important}
+  .hero .stat .lbl{color:#a9c1d6!important}
+  .paper-meta,.condition-header{background:linear-gradient(120deg,#1c4a73 0%,#22655f 100%)!important}
+  .section-num{background:linear-gradient(120deg,#1f4e79 0%,#2d7d78 100%)!important}
+</style>
+</head>
+<body id="top">
+
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">문제 제기</a></li>
+      <li><a href="#m01">1. 면역대사 스트레스</a></li>
+      <li><a href="#m02">2. 닭이 먼저인가</a></li>
+      <li><a href="#m03">3. 누가 IMD인가</a></li>
+      <li><a href="#m04">4. 신경생물학</a></li>
+      <li><a href="#m05">5. 치료</a></li>
+      <li><a href="#m06">6. 남은 과제</a></li>
+      <li><a href="#phrases">명문장</a></li>
+      <li><a href="#ourstudy">우리 연구</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">Penninx et al. 2025 · In-depth Study</div>
+    <h1>우울증 진단명은 하나인데,<br>몸속에서 벌어지는 일은 <em>여러 가지다</em></h1>
+    <div class="citation">
+      Penninx, B. W. J. H., Lamers, F., Jansen, R., Berk, M., Khandaker, G. M., De Picker, L., &amp; Milaneschi, Y. (2025).
+      Immuno-metabolic depression: from concept to implementation. <em>The Lancet Regional Health &ndash; Europe, 48,</em> 101166.
+      https://doi.org/10.1016/j.lanepe.2024.101166
+    </div>
+    <p class="subtitle">
+      이 리뷰는 <strong>"우울증은 하나의 병인가"</strong>라는 질문에서 출발한다. 저자들은 우울증 환자의 약 20~30%에서
+      면역계 과활성과 대사 이상이 특정 증상군(과다수면, 식욕 증가, 피로, 무쾌감)과 함께 묶여 나타난다는 근거를 모아,
+      이를 <strong>면역대사형 우울증(Immuno-Metabolic Depression, IMD)</strong>이라는 생물-임상 차원으로 제안한다.
+      아래 페이지는 원문의 논리 전개 순서를 그대로 따라가되, 각 단계마다 🧭 길잡이, 🍳 비유, 📊 그림 읽는 법을 덧붙여
+      생물학 배경이 적은 학생도 따라올 수 있도록 구성했다.
+    </p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">20~30%</span><span class="lbl">IMD 추정 비율 (전체 우울증 중)</span></div>
+      <div class="stat"><span class="num">27%</span><span class="lbl">CRP &gt; 3 mg/L 저등급 염증 동반</span></div>
+      <div class="stat"><span class="num">r<sub>g</sub> = 0.53</span><span class="lbl">식욕·체중 증가형 우울증 ↔ BMI 유전상관</span></div>
+      <div class="stat"><span class="num">38,000,000+</span><span class="lbl">연간 우울증을 겪는 유럽인</span></div>
+      <div class="stat"><span class="num">Review</span><span class="lbl">서사적 리뷰 (Narrative Review)</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>Penninx et al. (2025)</div>
+
+<!-- ============ 01 논문 소개 ============ -->
+<div class="section-head" id="paper">
+  <div class="section-num">01</div>
+  <div class="section-title-block">
+    <h2>논문 소개: 이 논문은 어떤 전통 위에 서 있는가</h2>
+    <p class="section-subtitle">Introducing the paper and its place in the field</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>
+    이 논문은 정신의학의 두 가지 큰 흐름이 만나는 지점에 서 있다. 하나는 <strong>정밀정신의학(precision psychiatry)</strong> 흐름으로,
+    동일한 진단명 아래 묶인 이질적인 환자들을 생물학적 특징에 따라 더 동질적인 하위집단, 즉 '바이오타입(biotype)'으로 나누려는 시도이다.
+    다른 하나는 <strong>염증 가설(inflammation hypothesis)</strong> 흐름으로, 1990년대 이후 우울증 환자에게서 반복적으로 관찰된
+    면역계 활성화 소견을 설명하려는 연구 전통이다.
+  </p>
+  <p>
+    저자들이 수정하려는 통념은 명확하다. "우울증 환자는 대조군보다 염증 수치가 높다"는 평균 수준의 진술은 지난 20년간 수없이 반복되었지만,
+    이 논문은 그 평균이 <strong>일부 환자에게만 해당되는 이야기를 전체에 적용한 결과</strong>라고 본다. 그렇다면 그 '일부'는 누구이고,
+    어떻게 알아볼 수 있는가. 이것이 논문 전체를 관통하는 질문이다.
+  </p>
+  <p>
+    제1저자 Brenda Penninx는 네덜란드 NESDA 코호트를 이끄는 연구자로, 우울증 이질성 연구의 핵심 인물이다.
+    공저자 Michael Berk(호주), Golam Khandaker(영국), Livia De Picker(벨기에)는 각각 신경진행(neuroprogression), 면역정신의학,
+    임상시험 분야의 주요 연구자로, 이 리뷰는 사실상 유럽 면역정신의학 네트워크의 <strong>합의 문서에 가까운 성격</strong>을 지닌다.
+  </p>
+</div>
+
+<div class="paper-meta">
+  <h3>Immuno-metabolic depression: from concept to implementation</h3>
+  <div class="sub">Penninx, Lamers, Jansen, Berk, Khandaker, De Picker, &amp; Milaneschi (2025)</div>
+  <div class="paper-meta-grid">
+    <div class="paper-meta-item">
+      <div class="label">Journal &amp; Indexing</div>
+      <div class="value"><em>The Lancet Regional Health &ndash; Europe</em>, Vol 48 (Jan 2025), 101166.<br>
+      Online 18 Dec 2024. Open Access (CC BY-NC).<br>
+      색인: PubMed/MEDLINE 등재. Web of Science 세부 색인 구분(SCIE/SSCI)은 <b>확인 필요</b>.</div>
+    </div>
+    <div class="paper-meta-item">
+      <div class="label">Type / Design</div>
+      <div class="value">서사적 리뷰(Narrative Review).<br>
+      PubMed에서 "immune" / "immunometabolic" / "lipid metabolism" + "depression" 검색어로 2000년~2024년 5월 문헌을 수집하고,
+      저자들의 개인 문헌철을 추가했다. 영어 논문만 포함.</div>
+    </div>
+    <div class="paper-meta-item">
+      <div class="label">Core Claim</div>
+      <div class="value">우울증의 약 20~30%는 ① 비정형·에너지 관련 증상군, ② 전신 저등급 염증, ③ 대사 이상이
+      함께 묶인 하나의 <b>생물-임상 차원(bio-clinical dimension)</b>으로 볼 수 있으며, 이 집단은 표준 항우울제 반응이 상대적으로 나쁘다.</div>
+    </div>
+  </div>
+</div>
+
+<div class="quote-box">
+  "Major depressive disorder is a common, disabling mental disorder characterized by extensive etiological and phenotypic heterogeneity.
+  This heterogeneity makes treatment approaches imprecise and often ineffective."
+  <span class="attr">출처: Summary, 첫 두 문장 (Penninx et al., 2025)</span>
+  <span class="trans">
+    <strong>번역.</strong> 주요우울장애는 흔하고 기능을 크게 손상시키는 정신장애이며, 원인 면에서도 표현형 면에서도 이질성이 대단히 크다.
+    이 이질성 때문에 치료 접근은 정밀하지 못하고 종종 효과가 없다.
+    <br><br>
+    🧭 <b>길잡이.</b> 리뷰의 첫 두 문장이 곧 문제 제기이다. "이질성 → 치료 실패"라는 인과 고리를 먼저 못 박아 두고,
+    나머지 전체를 그 고리를 끊기 위한 시도로 배치하는 구성이다. 리뷰 논문을 쓸 때 참고할 만한 서두 설계이다.
+  </span>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">이 논문을 이끄는 세 가지 질문</span>
+  <b>① 무엇을 묶을 것인가.</b> 우울증 안에서 생물학적으로 더 동질적인 집단을 어떤 기준으로 잘라낼 수 있는가.<br>
+  <b>② 그것이 실재하는가.</b> 증상 프로파일과 면역·대사 지표의 묶임이 역학, 유전체, 신경영상에서 일관되게 재현되는가.<br>
+  <b>③ 그래서 달라지는 것이 있는가.</b> 그 집단을 알아보면 치료가 실제로 달라지는가, 아니면 흥미로운 분류에 그치는가.<br><br>
+  🔑 세 질문은 각각 <b>구성(construction)</b> · <b>타당화(validation)</b> · <b>임상적 유용성(clinical utility)</b>에 대응한다.
+  이는 정신의학에서 새로운 진단 구성개념이 살아남기 위해 통과해야 하는 고전적 3단계이기도 하다.
+</div>
+
+<!-- ============ 02 INTRODUCTION ============ -->
+<div class="section-head" id="intro">
+  <div class="section-num">02</div>
+  <div class="section-title-block">
+    <h2>배경: 왜 "우울증"이라는 이름으로는 부족한가</h2>
+    <p class="section-subtitle">Public health impact &amp; the need for a biology-based classification</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>
+    원문은 공중보건 수치에서 출발한다. 전 세계 인구의 약 5%가 1년 안에 우울 삽화를 경험하고, 유럽에서만 연간 3,800만 명 이상이 영향을 받는다.
+    주목할 지점은 <strong>부담이 줄지 않았다는 사실</strong>이다. 1990년부터 2021년 사이 우울증으로 인한 전 세계 장애 부담은 오히려 약 16% 증가했다.
+    네덜란드 NEMESIS 연구에서는 12개월 유병률이 2007~2009년 5.1%에서 2019~2021년 9.1%로 늘었는데, 저자들은 이것이 코로나19 팬데믹과 무관한 변화임을 강조한다.
+  </p>
+  <div class="plain-meaning">
+    치료법도 늘었고 항우울제 처방도 늘었는데 병의 부담은 오히려 커졌다. 뭔가 근본적으로 잘못 조준하고 있다는 신호이다.
+  </div>
+  <p>
+    그렇다면 무엇이 잘못 조준되었는가. 저자들은 <strong>진단 체계 자체</strong>를 지목한다. DSM의 우울증 진단 기준은 서로 정반대인 증상들을 같은 목록에 담고 있다.
+    불면과 과다수면, 정신운동 초조와 지체, 식욕/체중 감소와 증가가 모두 우울증의 증상으로 인정된다. 그 결과 기묘한 일이 벌어진다.
+  </p>
+
+  <div class="figure-block">
+    <div class="fig-tag kr">Lab-made · 한국어 도해</div>
+    <div class="fig-title">도해 A. 같은 진단명, 공통 증상 0개</div>
+    <div class="fig-kr">
+      <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="두 환자가 겹치는 증상 없이 같은 진단을 받는 구조">
+        <rect x="20" y="30" width="300" height="200" rx="14" fill="#fdeee9" stroke="#e0573e" stroke-width="1.5"/>
+        <text x="170" y="58" text-anchor="middle" font-size="15" font-weight="700" fill="#e0573e">환자 A</text>
+        <text x="170" y="88" text-anchor="middle" font-size="13.5" fill="#46505c">불면 (잠이 안 옴)</text>
+        <text x="170" y="112" text-anchor="middle" font-size="13.5" fill="#46505c">식욕 감소, 체중 감소</text>
+        <text x="170" y="136" text-anchor="middle" font-size="13.5" fill="#46505c">정신운동 초조</text>
+        <text x="170" y="160" text-anchor="middle" font-size="13.5" fill="#46505c">죄책감</text>
+        <text x="170" y="184" text-anchor="middle" font-size="13.5" fill="#46505c">집중 곤란</text>
+        <text x="170" y="212" text-anchor="middle" font-size="12" fill="#828d9b">→ 주요우울장애 진단 충족</text>
+
+        <rect x="380" y="30" width="300" height="200" rx="14" fill="#e6f5f0" stroke="#3fa88a" stroke-width="1.5"/>
+        <text x="530" y="58" text-anchor="middle" font-size="15" font-weight="700" fill="#3fa88a">환자 B</text>
+        <text x="530" y="88" text-anchor="middle" font-size="13.5" fill="#46505c">과다수면 (계속 잠)</text>
+        <text x="530" y="112" text-anchor="middle" font-size="13.5" fill="#46505c">식욕 증가, 체중 증가</text>
+        <text x="530" y="136" text-anchor="middle" font-size="13.5" fill="#46505c">정신운동 지체</text>
+        <text x="530" y="160" text-anchor="middle" font-size="13.5" fill="#46505c">납덩이 마비감</text>
+        <text x="530" y="184" text-anchor="middle" font-size="13.5" fill="#46505c">피로</text>
+        <text x="530" y="212" text-anchor="middle" font-size="12" fill="#828d9b">→ 주요우울장애 진단 충족</text>
+
+        <circle cx="350" cy="130" r="26" fill="#2f6fa8"/>
+        <text x="350" y="126" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">0</text>
+        <text x="350" y="142" text-anchor="middle" font-size="8.5" fill="#bcd6ee">겹침</text>
+        <text x="350" y="18" text-anchor="middle" font-size="12" fill="#2f6fa8" font-weight="600">공통 증상 없이도 같은 이름</text>
+      </svg>
+    </div>
+    <div class="fig-cap">도해 A는 AIR Lab이 원문 본문(Need for more homogeneous, biology-based depression classification 절)의 서술을 교육용으로 재구성한 것이다. 원문에 있는 그림이 아니다.</div>
+    <div class="fig-implies">
+      <b>이게 무슨 뜻인가.</b> 두 환자는 단 하나의 증상도 공유하지 않으면서 같은 진단을 받는다.
+      만약 이 두 사람의 몸에서 벌어지는 생물학적 과정이 서로 다르다면, 같은 약을 주고 같은 결과를 기대하는 것 자체가 무리이다.
+      원문에서 "1차 치료에 반응하지 않는 환자가 3분의 1을 넘는다"고 지적하는 것도 이 맥락에서 읽어야 한다.
+    </div>
+  </div>
+
+  <div class="callout warm">
+    <span class="callout-label">대학원생을 위한 방법론 포인트</span>
+    🍳 <b>비유로 정리하면.</b> "발열"이라는 증상만으로 환자를 묶어 놓고 모두에게 같은 해열제를 주는 상황과 비슷하다.
+    누군가는 세균 감염, 누군가는 바이러스, 누군가는 자가면역 질환일 수 있다. 발열은 <b>증후군 수준의 이름</b>이지 원인 수준의 이름이 아니다.
+    저자들은 현재의 우울증 진단이 딱 그 자리에 있다고 본다.<br><br>
+    <b>연구설계에 주는 함의.</b> 이질적인 집단을 하나로 묶어 평균을 내면, 하위집단에서 실재하는 큰 효과가 평균에서 희석되어 사라진다.
+    이것이 항염증제 임상시험들이 일관되지 않은 결과를 낸 이유에 대한 이 논문의 핵심 설명이다.
+    사회복지 개입연구에서도 동일한 논리가 적용된다. 개입 효과가 없다는 결론이 실제로는 <b>표본의 이질성을 통제하지 못한 결과</b>일 수 있다.
+  </div>
+</div>
+
+<!-- ============ IMD 개념 + Fig 1 ============ -->
+<div class="subhead">
+  <span class="code">핵심</span>
+  <h3>면역대사형 우울증(IMD)이라는 제안</h3>
+  <span class="en">Immuno-metabolic depression as a more homogeneous biotype</span>
+  <span class="verdict new">새 개념</span>
+</div>
+
+<div class="panel">
+  <p>
+    저자들이 내놓는 답은 이렇다. 우울증 안에는 <strong>면역계 만성 과활성과 포도당·지질·에너지 대사 이상이 함께 나타나는 집단</strong>이 있고,
+    이 생물학적 특징은 <strong>비정형·에너지 관련 증상</strong>이 두드러지는 환자에게 집중된다. 이 두 축이 맞물리는 지점을
+    면역대사형 우울증(IMD)이라 부르자는 것이다. 원문의 Fig. 1이 바로 이 세 요소를 한 장에 담은 그림이다.
+  </p>
+
+  <div class="figure-block">
+    <div class="fig-tag orig">원문 Figure 1</div>
+    <div class="fig-title">Fig. 1: Overview of the three key components of Immuno-Metabolic Depression (IMD)</div>
+    <div class="fig-orig">
+      <img src="https://www.thelancet.com/cms/10.1016/j.lanepe.2024.101166/asset/97ae4236-0b37-4735-ad48-8f8b50bea84a/main.assets/gr1_lrg.jpg"
+           alt="IMD의 세 구성요소: Depression profile, Immune profile, Metabolic profile을 나타낸 삼각 육각형 도해">
+    </div>
+    <div class="fig-cap">
+      출처: Penninx et al. (2025), <em>The Lancet Regional Health &ndash; Europe, 48,</em> 101166, Fig. 1.
+      본 논문은 CC BY-NC 라이선스 하에 공개되었으며, 본 페이지는 교육 목적의 인용이다.
+    </div>
+    <div class="fig-implies">
+      <b>📊 이 그림을 어떻게 읽는가.</b> 위쪽 붉은 육각형이 <b>임상 축(Depression profile)</b>, 아래 두 육각형이 <b>생물학 축</b>이다.
+      아래 왼쪽 주황색이 <b>면역 프로파일(Immune profile)</b>, 아래 오른쪽 노란색이 <b>대사 프로파일(Metabolic profile)</b>이다.
+      세 육각형이 맞물려 있다는 배치 자체가 주장이다. 셋 중 하나만으로는 IMD가 아니며, <b>세 개가 동시에 나타날 때</b> 비로소 하나의 차원으로 본다는 뜻이다.<br><br>
+      <b>각 칸의 내용을 풀면.</b><br>
+      🔴 <b>Depression profile</b>: hypersomnia(과다수면), increased appetite/weight(식욕과 체중 증가), leaden paralysis(사지가 납덩이처럼 무겁게 느껴지는 감각),
+      fatigue(피로), anhedonia(무쾌감). 공통점은 모두 <b>에너지를 아끼거나 끌어들이는 방향</b>의 증상이라는 점이다.<br>
+      🟠 <b>Immune profile</b>: CRP, IL-6, TNF-α, glycoprotein acetyls 같은 <b>전신 저등급 염증</b> 지표의 상승.
+      급성 감염 수준의 염증이 아니라 조용히 만성적으로 올라가 있는 상태를 가리킨다.<br>
+      🟡 <b>Metabolic profile</b>: 복부비만, 이상지질혈증, 인슐린 및 렙틴 저항성, 미토콘드리아 기능 이상.
+      즉 <b>몸이 에너지를 만들고 저장하고 쓰는 회로 전반의 문제</b>이다.<br><br>
+      <b>주의할 점.</b> 이 그림은 실증 결과가 아니라 <b>개념 지도</b>이다. 세 원이 겹치는 비율이나 인과 방향은 이 그림이 말해 주지 않는다.
+      그것은 Fig. 2와 본문의 역할이다.
+    </div>
+  </div>
+
+  <div class="plain-meaning">
+    "우울해서 기운이 없다"가 아니라 "몸이 에너지 위기 상태라고 잘못 판단해서 절전 모드에 들어갔고, 그것이 우울 증상으로 보인다"는 관점의 전환이다.
+  </div>
+</div>
+
+<!-- ============ 03 면역대사 스트레스 ============ -->
+<div class="section-head" id="m01">
+  <div class="section-num">03</div>
+  <div class="section-title-block">
+    <h2>면역과 대사는 왜 한 묶음인가</h2>
+    <p class="section-subtitle">Immuno-metabolic stress and depression</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">1</div>
+    <div class="cond-titles">
+      <div class="cond-code">Step 1 · Conceptual groundwork</div>
+      <h3>면역계와 대사계는 분리된 시스템이 아니다</h3>
+      <div class="cond-en">Immuno-metabolic pathways are highly integrated and exert reciprocal influences</div>
+    </div>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">
+      🔋 면역과 대사는 한 몸이다. 면역세포는 혈당을 먹고 움직이고, 대사 호르몬은 면역세포를 조절한다.
+      그래서 "면역대사 스트레스"라는 하나의 지표로 읽을 수 있다는 것이 이 절의 출발점이다.
+    </div>
+    <p>
+      원문은 사이토카인, 인슐린, 렙틴, GLP-1 같은 전령 물질들이 <strong>에너지 공급과 수요 사이의 불균형을 읽어 내는 계기판</strong> 역할을 한다고 설명한다.
+      이 표현이 중요하다. 저자들은 면역 지표와 대사 지표를 별개의 위험요인 목록으로 보지 않고, <strong>하나의 상태를 가리키는 서로 다른 눈금</strong>으로 재정의한다.
+    </p>
+    <p>
+      구체적 증거로는 두 가지가 제시된다. 첫째, 사이토카인이 췌장·간 같은 말초와 시상하부·섬엽 같은 중추에서 인슐린 수용체의 기능을 조절해
+      영양소와 포도당 흡수에 영향을 준다. 둘째, 지방조직이 분비하는 <strong>렙틴</strong>은 식욕과 에너지 소비를 조절하는 대사 호르몬이면서 동시에
+      T세포·B세포 증식과 사이토카인 생산에 관여하는 면역 조절자이기도 하다. 즉 같은 분자가 양쪽 시스템에 다리를 걸치고 있다.
+    </p>
+
+    <div class="callout sage">
+      <span class="callout-label">용어 정리</span>
+      🧪 <b>사이토카인(cytokine)</b>: 면역세포들이 서로 주고받는 신호 단백질. IL-6, TNF-α가 대표적이다.<br>
+      🧪 <b>CRP(C-reactive protein)</b>: 간이 염증에 반응해 만드는 단백질. 혈액검사로 쉽게 잴 수 있어 염증의 대리지표로 널리 쓰인다.<br>
+      🧪 <b>렙틴(leptin)</b>: 지방조직이 분비하는 호르몬. "에너지가 충분하다"는 신호를 뇌에 보내 식욕을 억제한다.<br>
+      🧪 <b>인슐린 저항성(insulin resistance)</b>: 인슐린이 분비되어도 세포가 잘 반응하지 않는 상태. 신호는 보내는데 수신이 안 되는 상황이다.<br>
+      🧪 <b>글리코프로틴 아세틸(glycoprotein acetyls, GlycA)</b>: NMR 대사체 분석으로 얻는 만성 전신 염증의 복합 지표.
+    </div>
+
+    <p>
+      이어서 저자들은 면역대사 경로가 우울증에 관여한다는 근거를 <strong>네 갈래 연구 라인</strong>으로 정렬한다.
+      리뷰 논문에서 여러 층위의 증거를 쌓아 올리는 전형적인 논증 구조이므로, 배열 방식 자체를 눈여겨볼 만하다.
+    </p>
+
+    <table class="mini-table">
+      <thead><tr><th style="width:15%">증거 층위</th><th style="width:45%">내용</th><th>이 층위가 기여하는 바</th></tr></thead>
+      <tbody>
+        <tr><td><b>① 실험</b></td><td>암 환자에 대한 인터페론 치료 등 사이토카인 투여가 우울증과 겹치는 질병행동(sickness behaviour) 증상을 일시적으로 유발하며, 항우울제로 완화된다</td><td>염증 → 증상의 <b>시간적 선후</b>와 조작 가능성</td></tr>
+        <tr><td><b>② 역학</b></td><td>중증 감염과 자가면역질환이 이후 우울증 발병 위험을 높인다</td><td>인구집단 수준의 <b>전향적 연관</b></td></tr>
+        <tr class="hi"><td><b>③ 메타분석</b></td><td>우울증 환자는 대조군에 비해 CRP, IL-6, TNF-α, BMI, 허리둘레, 중성지방, 혈당, 인슐린이 높다. 대사증후군 위험은 <span class="stat-inline">40% 증가</span></td><td>연관의 <b>크기와 재현성</b></td></tr>
+        <tr><td><b>④ 대사체학</b></td><td>최대 5만 명 규모 유럽 코호트에서 GlycA, isoleucine, 중성지방, VLDL 상승과 HDL 저하, 지방산 등 미토콘드리아 에너지 대사 산물 변화가 확인됨</td><td>단일 표지를 넘어선 <b>생물학적 서명(signature)</b></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warm">
+      <span class="callout-label">대학원생을 위한 방법론 포인트</span>
+      ⚖️ <b>증거의 사다리를 보라.</b> 실험(인과 조작 가능, 표본 작음) → 역학(대표성 높음, 인과 약함) → 메타분석(정밀도 높음, 이질성 문제) → 오믹스(정보 풍부, 해석 난이도 높음).
+      네 층위는 서로의 약점을 보완하도록 배열되어 있다. 이것이 <b>증거 삼각측량(evidence triangulation)</b>의 실제 사례이며,
+      질적·양적 방법을 병행하는 사회복지 연구에서도 그대로 응용할 수 있는 논증 전략이다.
+    </div>
+  </div>
+</div>
+
+<!-- ============ 04 닭이 먼저인가 ============ -->
+<div class="section-head" id="m02">
+  <div class="section-num">04</div>
+  <div class="section-title-block">
+    <h2>닭이 먼저인가 달걀이 먼저인가</h2>
+    <p class="section-subtitle">The 'chicken and egg' question</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">2</div>
+    <div class="cond-titles">
+      <div class="cond-code">Step 2 · Causal direction</div>
+      <h3>양방향이며, 부분적으로는 공유된 뿌리에서 나온다</h3>
+      <div class="cond-en">A vicious cycle, plus shared genetic and environmental antecedents</div>
+    </div>
+    <span class="verdict mixed">혼재</span>
+  </div>
+  <div class="condition-body">
+    <p>
+      면역대사 이상이 우울증을 부르는가, 아니면 우울증이 면역대사 이상을 부르는가. 저자들의 답은 <strong>둘 다</strong>이다.
+      실험 연구와 종단 역학 연구 모두 양방향 관계를 시사하며, 면역·심혈관·대사 질환은 이후 우울 삽화의 위험을 높이는 동시에 우울증의 결과이기도 하다.
+      저자들은 이를 <strong>서로를 증폭시키는 악순환(vicious cycle)</strong>으로 요약한다.
+    </p>
+
+    <div class="quote-box">
+      "This illustrates that the link between immuno-metabolic dysregulations and depression likely reflects a vicious cycle
+      in which both conditions impact on each other over time."
+      <span class="attr">출처: The 'chicken and egg' question 절 (Penninx et al., 2025)</span>
+      <span class="trans">
+        <strong>번역.</strong> 이는 면역대사 조절이상과 우울증의 연결이 시간이 흐르면서 두 상태가 서로에게 영향을 주는 악순환을 반영할 가능성이 높다는 점을 보여 준다.
+        <br><br>
+        🧭 <b>길잡이.</b> "likely reflects"라는 표현에 주목하라. 저자들은 단정하지 않고 <b>가능성의 언어</b>를 쓴다.
+        양방향 관계를 주장할 때 인과를 확정하지 않으면서도 논지를 진전시키는 전형적 표현이다.
+      </span>
+    </div>
+
+    <p>
+      다만 악순환만으로는 설명이 부족하다. 저자들은 여기에 <strong>공유된 뿌리</strong>라는 두 번째 설명을 덧붙인다. 유전과 환경 양쪽에서다.
+    </p>
+
+    <div class="mod-grid">
+      <div class="mod-card">
+        <h4>🧬 유전적 공유</h4>
+        <div class="en">Shared polygenic architecture</div>
+        <p>
+          우울증과 BMI, 허리둘레, HDL·LDL 콜레스테롤, 혈당, CRP 사이에 통계적으로 유의하지만 효과크기는 작은 유전상관이 관찰된다.
+          멘델 무작위화(Mendelian randomization) 분석은 BMI, 중성지방, IL-6 수준의 상승이 우울증 발생에 <b>인과적으로 기여할 가능성</b>을 시사하며,
+          반대 방향으로도 우울증 소인이 높은 BMI와 중성지방과 연결된다는 증거가 있다.
+        </p>
+        <span class="keynum">r<sub>g</sub> ≈ 0.1 ~ 0.2</span>
+      </div>
+      <div class="mod-card risk">
+        <h4>🌍 환경적 공유</h4>
+        <div class="en">Shared environmental antecedents</div>
+        <p>
+          우울증과 면역대사 이상은 선행 요인을 상당 부분 공유한다. 원문이 명시하는 것은 사회경제적 박탈 같은 <b>사회적 요인</b>,
+          신체활동 부족·고지방 식이·흡연·수면 부족 같은 <b>생활습관</b>, 그리고 <b>아동기 트라우마를 포함한 스트레스 생활사건</b>이다.
+          저자들은 서구식 고지방 식이와 좌식 생활이 늘어나는 추세를 근거로 IMD의 증가 가능성을 경고한다.
+        </p>
+        <span class="keynum">childhood trauma 명시</span>
+      </div>
+    </div>
+
+    <div class="callout sky">
+      <span class="callout-label">AIR Lab이 주목해야 할 한 줄</span>
+      🎯 원문은 우울증과 면역대사 이상이 공유하는 환경적 선행요인 목록에 <b>"(early) life stress &amp; trauma"</b>를 명시적으로 포함시킨다.
+      이는 ACEs 연구와 이 논문을 잇는 가장 직접적인 연결 고리이며, Fig. 2의 왼쪽 위험요인 기둥에도 그림으로 등장한다.
+      다만 이 리뷰는 그 연결을 <b>선언하는 수준</b>에 머물고 세부 기제를 다루지 않는다. 바로 그 공백이 우리 랩이 들어갈 자리이다.
+    </div>
+
+    <div class="callout warm">
+      <span class="callout-label">대학원생을 위한 방법론 포인트</span>
+      🔬 <b>멘델 무작위화(Mendelian randomization)란.</b> 유전변이는 수정 시점에 무작위로 배정되고 이후 생활습관의 영향을 받지 않는다.
+      이 성질을 이용해 유전변이를 <b>도구변수(instrumental variable)</b>로 삼아, 관찰연구에서 인과 방향을 추정하는 방법이다.
+      비유하자면 "자연이 이미 돌려 준 무작위 배정 실험"을 빌려 쓰는 셈이다.<br><br>
+      <b>한계도 함께 가르쳐야 한다.</b> ① 유전변이가 다른 경로를 통해 결과에 영향을 주면(수평적 다면발현) 추정이 편향된다.
+      ② 대부분의 분석이 유럽계 표본에 기반해 일반화가 제한된다. 원문도 "particularly in the European population"이라고 단서를 단다.
+      ③ 효과크기가 작다는 점(r<sub>g</sub> ≈ 0.1~0.2)은 유전적 공유가 <b>부분적</b>이라는 뜻이지 결정적이라는 뜻이 아니다.
+    </div>
+  </div>
+</div>
+
+<!-- ============ 05 누가 IMD인가 ============ -->
+<div class="section-head" id="m03">
+  <div class="section-num">05</div>
+  <div class="section-title-block">
+    <h2>그렇다면 누가 IMD인가</h2>
+    <p class="section-subtitle">Which depressed patients experience immuno-metabolic stress?</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>
+    이 절이 논문의 실질적 중심이다. 앞 절까지가 "면역대사와 우울증은 연결되어 있다"는 이야기였다면, 여기서부터는
+    <strong>"그런데 전부는 아니다"</strong>라는 반전이 시작된다.
+  </p>
+
+  <div class="quote-box">
+    "While depressed patients exhibit, on average, higher inflammation than controls, elevated inflammatory markers are only reported in a subset."
+    <span class="attr">출처: Which depressed patients experience immuno-metabolic stress? 절 첫 문장 (Penninx et al., 2025)</span>
+    <span class="trans">
+      <strong>번역.</strong> 우울증 환자는 평균적으로 대조군보다 염증 수준이 높지만, 염증 지표의 상승은 <b>일부 하위집단에서만</b> 보고된다.
+      <br><br>
+      🧭 <b>길잡이.</b> 이 한 문장이 지난 20년 염증 가설 연구의 방향을 되돌린다. "평균은 맞지만 평균이 아무도 대표하지 않는다"는 지적이다.
+      논문 전체에서 가장 중요한 문장 하나를 꼽으라면 이것이다.
+    </span>
+  </div>
+
+  <div class="figure-block">
+    <div class="fig-tag kr">Lab-made · 한국어 도해</div>
+    <div class="fig-title">도해 B. 평균의 함정: 왜 "우울증 = 염증"이 틀린 요약인가</div>
+    <div class="fig-kr">
+      <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="염증이 높은 소수 집단이 전체 평균을 끌어올리는 구조를 보여주는 도해">
+        <text x="360" y="24" text-anchor="middle" font-size="13" font-weight="600" fill="#2f6fa8">우울증 환자 100명의 CRP 분포 (개념 도식)</text>
+
+        <line x1="60" y1="230" x2="670" y2="230" stroke="#aab4c1" stroke-width="1.5"/>
+        <text x="60" y="250" font-size="11" fill="#828d9b">낮은 CRP</text>
+        <text x="640" y="250" font-size="11" fill="#828d9b">높은 CRP</text>
+
+        <rect x="80" y="150" width="46" height="80" fill="#cfe0f0"/>
+        <rect x="130" y="110" width="46" height="120" fill="#cfe0f0"/>
+        <rect x="180" y="80" width="46" height="150" fill="#a9cbe8"/>
+        <rect x="230" y="95" width="46" height="135" fill="#a9cbe8"/>
+        <rect x="280" y="130" width="46" height="100" fill="#cfe0f0"/>
+        <rect x="330" y="165" width="46" height="65" fill="#cfe0f0"/>
+        <rect x="380" y="185" width="46" height="45" fill="#f6c9bd"/>
+        <rect x="430" y="195" width="46" height="35" fill="#f0a894"/>
+        <rect x="480" y="200" width="46" height="30" fill="#e88c72"/>
+        <rect x="530" y="205" width="46" height="25" fill="#e0573e"/>
+        <rect x="580" y="210" width="46" height="20" fill="#e0573e"/>
+
+        <line x1="373" y1="60" x2="373" y2="235" stroke="#2f6fa8" stroke-width="2" stroke-dasharray="5,4"/>
+        <rect x="300" y="40" width="150" height="22" rx="11" fill="#2f6fa8"/>
+        <text x="375" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#fff">CRP = 3 mg/L 기준선</text>
+
+        <rect x="380" y="262" width="246" height="26" rx="13" fill="#fdeee9" stroke="#e0573e"/>
+        <text x="503" y="279" text-anchor="middle" font-size="12" font-weight="700" fill="#e0573e">이 구간 = 전체의 27%</text>
+
+        <rect x="80" y="262" width="246" height="26" rx="13" fill="#e8f1fa" stroke="#3f86c4"/>
+        <text x="203" y="279" text-anchor="middle" font-size="12" font-weight="700" fill="#2f6fa8">이 구간 = 전체의 73%</text>
+      </svg>
+    </div>
+    <div class="fig-cap">도해 B는 AIR Lab이 원문에 인용된 메타분석 수치(13,000명 이상 대상, CRP &gt; 3 mg/L가 27%)를 교육용으로 시각화한 개념 도식이다. 실제 분포 형태를 재현한 것이 아니다.</div>
+    <div class="fig-implies">
+      <b>이게 무슨 뜻인가.</b> 붉은 구간 27%의 환자가 전체 평균을 끌어올린다. 논문이 인용한 메타분석에서 13,000명 이상의 우울증 환자 중
+      CRP가 3 mg/L를 넘는 저등급 염증을 보인 사람은 <span class="stat-inline">27%</span>에 불과했다. 대사증후군 역시 우울증 환자의 최대 3분의 1에서 나타난다.<br><br>
+      🎯 <b>연구설계 함의.</b> 만약 항염증제 임상시험에 이 100명을 모두 등록한다면, 약이 효과를 볼 수 있는 대상은 27명뿐이고 나머지 73명은
+      효과를 희석시키는 잡음이 된다. 이것이 항염증제 시험 결과가 들쭉날쭉했던 이유에 대한 이 논문의 설명이다.
+    </div>
+  </div>
+
+  <div class="subhead">
+    <span class="code">3-A</span>
+    <h3>구별 기준은 "비정형·에너지 관련 증상"이다</h3>
+    <span class="en">Atypical, energy-related symptoms</span>
+    <span class="verdict promising">근거 일관</span>
+  </div>
+
+  <p>
+    그렇다면 그 27%를 어떻게 알아볼 수 있는가. 저자들의 답은 <strong>증상 프로파일</strong>이다.
+    식욕과 체중 증가, 수면 증가, 피로, 납덩이 마비감, 그리고 무쾌감과 동기 저하가 두드러지는 환자가 면역대사 스트레스와 가장 강하게 연결된다.
+  </p>
+
+  <table class="mini-table">
+    <thead><tr><th style="width:24%">연구 유형</th><th style="width:20%">규모</th><th>결과</th></tr></thead>
+    <tbody>
+      <tr><td>역학 (CRP 기준)</td><td>최대 약 150,000명</td><td>높은 CRP가 식욕 증가, 수면 증가, 기력 저하와 피로, 동기 손상과 연관</td></tr>
+      <tr><td>역학 (비만 지표 기준)</td><td>대규모 다중 코호트</td><td>BMI와 허리둘레가 식욕 증가, 납덩이 마비감, 기력·동기 저하와 연관</td></tr>
+      <tr class="hi"><td>잠재계층분석(LCA)</td><td>약 800명 MDD</td><td>비정형·에너지 관련 증상이 지배적인 계층에서 BMI, 대사증후군 유병률, 염증 지표가 모두 더 높음</td></tr>
+      <tr><td>대조 비교</td><td>다수 코호트</td><td>반대 증상 프로파일(식욕·체중 감소)이나 고전적 멜랑콜리아형에서는 면역대사 차이가 약하거나 없음</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warm">
+    <span class="callout-label">대학원생을 위한 방법론 포인트</span>
+    📐 <b>여기서 LCA/LPA가 등장한다.</b> 원문이 인용한 Lamers 등의 연구는 약 800명의 MDD 환자를 대상으로 자료 주도적
+    잠재계층분석을 수행해, 비정형 증상이 우세한 계층을 도출하고 그 계층에서 생물학적 지표가 다르다는 것을 보였다.<br><br>
+    <b>이것이 왜 강력한 설계인가.</b> 연구자가 미리 "비정형 우울증"을 정의하고 나누면 <b>확증 편향</b>의 위험이 있다.
+    반면 LCA는 증상 자료만으로 집단을 나눈 뒤, <b>분류에 쓰이지 않은 외부 변수</b>(BMI, CRP, 대사증후군)로 그 집단을 검증한다.
+    이렇게 외부 준거로 검증하는 절차를 <b>외적 타당화(external validation)</b>라 하며, 유형화 연구의 설득력은 거의 전적으로 이 단계에서 결정된다.
+    우리 랩의 ACEs 유형화 연구에서도 프로파일을 도출한 뒤 무엇으로 검증할 것인지를 사전에 정해 두어야 한다.
+  </div>
+
+  <div class="subhead">
+    <span class="code">3-B</span>
+    <h3>유전체 자료가 이 묶임을 확인해 준다</h3>
+    <span class="en">Confirmation at the genetic level</span>
+    <span class="verdict promising">강한 근거</span>
+  </div>
+
+  <p>
+    이 논문에서 가장 인상적인 숫자가 여기서 나온다. 우울증 전체와 BMI의 유전상관은 r<sub>g</sub> 약 0.1~0.2로 작다.
+    그런데 <strong>우울 삽화 동안 식욕이나 체중이 증가한 환자만</strong> 따로 떼어 내면, 그 값이 <strong>r<sub>g</sub> = 0.53</strong>까지 올라간다.
+    반대로 식욕 감소와 불면을 보이는 환자에게서는 면역대사 유전 소인이 관찰되지 않았다.
+  </p>
+
+  <div class="figure-block">
+    <div class="fig-tag kr">Lab-made · 한국어 도해</div>
+    <div class="fig-title">도해 C. 유전상관이 0.2에서 0.53으로: 하위집단을 나누자 신호가 살아났다</div>
+    <div class="fig-kr">
+      <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="전체 우울증과 식욕 증가형 우울증의 BMI 유전상관 비교 막대그래프">
+        <text x="350" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#2f6fa8">BMI와의 유전상관(r&#8348;) 비교</text>
+
+        <line x1="200" y1="200" x2="660" y2="200" stroke="#aab4c1" stroke-width="1.5"/>
+        <line x1="200" y1="60" x2="200" y2="200" stroke="#aab4c1" stroke-width="1.5"/>
+        <text x="185" y="205" text-anchor="end" font-size="11" fill="#828d9b">0</text>
+        <text x="185" y="135" text-anchor="end" font-size="11" fill="#828d9b">0.3</text>
+        <text x="185" y="65" text-anchor="end" font-size="11" fill="#828d9b">0.6</text>
+
+        <rect x="250" y="153" width="120" height="47" rx="4" fill="#a9cbe8"/>
+        <text x="310" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="#2f6fa8">0.1 ~ 0.2</text>
+        <text x="310" y="222" text-anchor="middle" font-size="12" fill="#46505c">우울증 전체</text>
+        <text x="310" y="238" text-anchor="middle" font-size="10.5" fill="#828d9b">(MDD, 전 증상 프로파일)</text>
+
+        <rect x="450" y="76" width="120" height="124" rx="4" fill="#2f6fa8"/>
+        <text x="510" y="68" text-anchor="middle" font-size="16" font-weight="800" fill="#2f6fa8">0.53</text>
+        <text x="510" y="222" text-anchor="middle" font-size="12" fill="#46505c">식욕·체중 증가형만</text>
+        <text x="510" y="238" text-anchor="middle" font-size="10.5" fill="#828d9b">(atypical, energy-related)</text>
+
+        <path d="M 385 120 Q 420 95 440 105" stroke="#3fa88a" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+        <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L7,3 z" fill="#3fa88a"/></marker></defs>
+        <text x="412" y="88" text-anchor="middle" font-size="11" font-weight="600" fill="#3fa88a">약 3배</text>
+      </svg>
+    </div>
+    <div class="fig-cap">도해 C는 AIR Lab이 원문 본문에 보고된 수치를 교육용으로 시각화한 것이다. 원문에 있는 그림이 아니다.</div>
+    <div class="fig-implies">
+      <b>이게 무슨 뜻인가.</b> 신호가 없었던 것이 아니라 <b>잘못된 단위로 묶어서 안 보였던 것</b>이다.
+      이질적인 집단을 하나로 평균 내면 진짜 신호가 희석되고, 올바른 기준으로 나누면 같은 자료에서 신호가 되살아난다.<br><br>
+      🎯 <b>이것이 바이오타입 논증의 핵심 증거다.</b> IMD가 연구자의 자의적 분류가 아니라 실재하는 구분이라면,
+      독립적인 자료원(여기서는 유전체)에서도 같은 경계를 따라 신호가 강해져야 한다. 실제로 그렇게 나타났다는 것이 이 절의 주장이다.
+    </div>
+  </div>
+
+  <div class="callout danger">
+    <span class="callout-label">저자들이 스스로 단 제동</span>
+    ⚠️ <b>비만만으로는 부족하다.</b> 원문은 Zwiep 등의 연구를 인용해, CRP가 높고 비정형·에너지 관련 증상이 높은 MDD 환자의 평균 BMI가 28.9,
+    둘 다 낮은 환자는 23.5였다고 보고한다. 차이는 분명하다. 그러나 저자들은 곧바로 덧붙인다.
+    "비만의 존재는 충분조건이 아니며, CRP가 높고 비정형 증상을 보이는 MDD 환자 중에서도 비만은 물론 과체중조차 일부에게만 나타난다."<br><br>
+    🧭 <b>읽는 법.</b> 자신의 논지를 강화해 주는 자료를 인용한 직후에 그 자료의 한계를 스스로 짚는 서술이다.
+    리뷰 논문에서 신뢰를 얻는 가장 효과적인 장치이며, 학생들이 문헌고찰을 쓸 때 반드시 배워야 할 태도이다.
+  </div>
+</div>
+
+<!-- ============ 06 신경생물학 + Fig 2 ============ -->
+<div class="section-head" id="m04">
+  <div class="section-num">06</div>
+  <div class="section-title-block">
+    <h2>몸에서 뇌로: 증상은 어떻게 만들어지는가</h2>
+    <p class="section-subtitle">Neurobiology of immuno-metabolic depression</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>
+    지금까지는 "함께 나타난다"는 이야기였다. 이 절은 <strong>"왜 함께 나타나는가"</strong>를 설명하려 한다.
+    저자들이 동원하는 핵심 개념은 <strong>질병행동(sickness behaviour)</strong>이다.
+  </p>
+
+  <div class="quote-box">
+    "Millenia ago, when humans faced many physical threats, social withdrawal and loss of pleasure typical of depression
+    helped redirect energy resources toward fighting infection and wound healing."
+    <span class="attr">출처: Neurobiology of immuno-metabolic depression 절 (Penninx et al., 2025)</span>
+    <span class="trans">
+      <strong>번역.</strong> 수천 년 전 인간이 많은 신체적 위협에 직면했을 때, 우울증의 전형적 특징인 사회적 위축과 즐거움의 상실은
+      에너지 자원을 감염과 싸우고 상처를 치유하는 쪽으로 돌리는 데 도움이 되었다.
+      <br><br>
+      🧭 <b>길잡이.</b> 증상을 결함이 아니라 <b>맥락이 바뀌어 버린 적응</b>으로 재해석하는 진화적 논법이다.
+      한 문장으로 진화적 시간과 현대적 맥락을 대비시키는 서술 기법이므로, 영어 논문의 도입부 설계에 참고할 만하다.
+    </span>
+  </div>
+
+  <div class="plain-meaning">
+    🤒 감기에 걸렸을 때를 떠올려 보라. 눕고 싶고, 입맛이 돌지 않거나 반대로 계속 자고 싶고, 아무것도 즐겁지 않다.
+    이것은 고장이 아니라 <b>몸이 에너지를 감염 퇴치에 몰아주기 위한 설계</b>이다. IMD는 감염이 없는데도 이 프로그램이 만성적으로 켜져 있는 상태로 이해된다.
+  </div>
+
+  <div class="figure-block">
+    <div class="fig-tag orig">원문 Figure 2</div>
+    <div class="fig-title">Fig. 2: A visual, simplified overview of risk and neurobiological mechanisms involved in the development of immuno-metabolic depression</div>
+    <div class="fig-orig">
+      <img src="https://www.thelancet.com/cms/10.1016/j.lanepe.2024.101166/asset/fe6ffe18-e85b-48a8-a973-8824dc4db128/main.assets/gr2_lrg.jpg"
+           alt="IMD의 위험요인과 신경생물학적 기제를 나타낸 도해. 왼쪽에 위험요인, 가운데에 인체 실루엣과 순환 화살표, 오른쪽에 증상 목록이 배치되어 있다.">
+    </div>
+    <div class="fig-cap">
+      출처: Penninx et al. (2025), <em>The Lancet Regional Health &ndash; Europe, 48,</em> 101166, Fig. 2.
+      본 논문은 CC BY-NC 라이선스 하에 공개되었으며, 본 페이지는 교육 목적의 인용이다.
+    </div>
+    <div class="fig-implies">
+      <b>📊 이 그림을 어떻게 읽는가.</b> 이 그림은 <b>왼쪽에서 오른쪽으로 읽는 동시에 가운데를 돌면서 읽어야 한다.</b>
+      세 구역으로 나누어 보면 길을 잃지 않는다.<br><br>
+
+      <b>① 왼쪽 회색 기둥 = 원위 위험요인 (distal risk factors).</b> 위에서부터
+      genetic vulnerability(유전적 취약성), socioeconomic deprivation(사회경제적 박탈), unhealthy lifestyle(건강하지 않은 생활습관),
+      poor somatic health(나쁜 신체 건강), 그리고 맨 아래 <b>(early) life stress &amp; trauma(생애 초기 스트레스와 트라우마)</b>이다.
+      사회복지학 관점에서 결정적인 것은 이 기둥의 다섯 항목 중 <b>세 개가 사회적 조건</b>이라는 점이다.<br><br>
+
+      <b>② 가운데 인체 실루엣 = 몸과 뇌를 잇는 순환 고리.</b> 여기가 그림의 심장부이다. 두 개의 굵은 화살표가 원을 그린다.<br>
+      · <b>아래에서 위로 (왼쪽 화살표, Interoceptive signaling)</b>: 몸에서 일어난 immuno-metabolic stress
+      (지방조직 증가, 면역 활성화, 이상지질혈증, 말초 인슐린 저항성, 미토콘드리아 기능 이상, 장내미생물 불균형)가
+      호르몬(insulin, GLP-1), 아디포카인(leptin, ghrelin), 사이토카인(IL-6, TNF-α)이라는 세 가지 전령을 통해 뇌로 보고된다.
+      이 몸 내부 상태의 감지를 <b>내수용감각(interoception)</b>이라 한다.<br>
+      · <b>위에서 아래로 (오른쪽 화살표, Energy saving/intake response)</b>: 뇌는 그 보고를 받아
+      altered neural connectivity, cytokines trafficking and signaling, central insulin/leptin resistance 상태가 되고,
+      그 결과 fatigue, leaden paralysis, increased appetite, hypersomnia, low motivation, anhedonia라는
+      <b>절전 및 에너지 섭취 반응</b>을 출력한다.<br><br>
+
+      <b>③ 오른쪽 목록 = 우리가 임상에서 보는 증상.</b> 이 여섯 가지가 곧 Fig. 1 맨 위 육각형의 내용이다.
+      즉 Fig. 2는 Fig. 1의 세 육각형이 <b>어떤 순서로 연결되는지</b>를 풀어 놓은 그림이다.<br><br>
+
+      🔁 <b>가장 중요한 포인트.</b> 이 고리는 닫혀 있다. 오른쪽 아래를 보면 절전 반응의 출력(식욕 증가, 활동 감소)이
+      다시 몸의 면역대사 스트레스를 키우는 방향으로 되돌아간다. 원문의 그림 설명은 이를
+      "setting up a self-sustaining detrimental cycle", 즉 <b>스스로를 유지하는 해로운 순환</b>이라고 표현한다.
+      시작점을 묻는 것이 의미가 없어지는 구조라는 뜻이다.<br><br>
+
+      ⚡ <b>그림 아래쪽의 배터리 아이콘.</b> 방전되고 빗금이 그어진 배터리는 몸의 에너지 항상성이 깨진 상태를 상징한다.
+      이 그림 전체가 <b>에너지 수지(energy budget)</b>라는 하나의 은유 위에 설계되어 있다는 점을 보여 주는 장치이다.
+    </div>
+  </div>
+
+  <div class="callout sky">
+    <span class="callout-label">🍳 비유로 다시 읽기</span>
+    <b>집의 난방 시스템으로 생각해 보자.</b><br>
+    · <b>온도 센서</b> = 내수용감각. 집(몸)이 추운지 더운지를 읽어 보일러(뇌)에 알린다.<br>
+    · <b>보일러</b> = 시상하부와 섬엽. 센서 신호를 받아 난방을 켜고 끈다.<br>
+    · <b>센서 고장</b> = 중추 인슐린·렙틴 저항성. 집이 이미 충분히 따뜻한데도 "춥다"는 잘못된 신호가 계속 올라간다.<br>
+    · <b>결과</b> = 보일러가 계속 돌아간다. 즉 몸은 에너지가 충분한데도 계속 "에너지를 아끼고 더 먹어라"는 명령을 내린다.
+    이것이 과다수면, 식욕 증가, 피로로 나타난다.<br>
+    · <b>악순환</b> = 난방을 계속 돌려 집이 더 더워지고, 고장 난 센서는 더 크게 오작동한다.<br><br>
+    원문의 표현으로 옮기면 "the interoceptive signals regarding body energy status are misread", 즉 <b>몸의 에너지 상태에 대한 신호가 잘못 읽힌다</b>는 것이다.
+  </div>
+
+  <div class="subhead">
+    <span class="code">4-A</span>
+    <h3>뇌 영상이 이 기제를 뒷받침하는가</h3>
+    <span class="en">Neuroimaging evidence</span>
+    <span class="verdict promising">유망</span>
+  </div>
+
+  <p>
+    저자들은 말초 염증이 뇌에 영향을 준다는 증거로 실험적 신경영상 연구를 인용한다. 백신이나 내독소(LPS)를 투여해 인위적으로 염증을 일으키면
+    섬엽(insula)과 배쪽 선조체(ventral striatum)의 활성이 달라지고, 안정 상태 기능적 연결성 연구에서는 염증 지표 수준과
+    <strong>동기 관련 뇌 회로의 연결성 저하</strong>가 일관되게 연관된다.
+  </p>
+  <p>
+    가장 정교한 증거는 Cosgrove 등의 연구이다. 현재 MDD 상태인 참여자 중 <strong>식욕 증가를 보이는 하위집단에서만</strong>
+    높은 CRP가 두 가지 패턴과 상관을 보였다. 첫째, 음식에 대한 쾌락 평정과 현저성 처리에 관여하는 전측 섬엽 활성 사이의 결합이 <strong>강해졌고</strong>,
+    둘째, 내수용감각 읽기에 주로 관여하는 중후측 섬엽과의 결합은 <strong>약해졌다</strong>. 식욕 증가가 없는 환자에게서는 이 패턴이 나타나지 않았다.
+  </p>
+
+  <div class="plain-meaning">
+    같은 섬엽인데 앞쪽과 뒤쪽이 반대 방향으로 움직였다. "몸 상태를 읽는 회로"는 둔해지고 "음식이 매력적으로 보이게 하는 회로"는 예민해진 것이다.
+    난방 비유로 돌아가면, 센서는 먹통이 되고 연료 주입 밸브는 더 열린 상태이다.
+  </div>
+
+  <div class="callout warm">
+    <span class="callout-label">대학원생을 위한 방법론 포인트</span>
+    🎯 <b>조절효과(moderation)를 보여 주는 방식에 주목하라.</b> 이 연구가 강력한 이유는 "CRP가 높으면 섬엽 활성이 달라진다"고 말하지 않기 때문이다.
+    <b>식욕 증가 여부에 따라 CRP와 뇌 활성의 관계가 달라진다</b>고 말한다. 즉 증상 프로파일이 조절변수 역할을 한다.<br><br>
+    <b>왜 이것이 중요한가.</b> IMD가 실재하는 하위집단이라면, 단순히 "IMD 집단의 평균이 다르다"는 것을 넘어
+    <b>생물학적 지표와 결과 사이의 관계 자체가 집단에 따라 달라져야</b> 한다. 조절효과의 존재는 단순 평균 차이보다 훨씬 강한 증거이다.
+    우리 랩의 ACEs 연구에서도 "ACE 유형에 따라 위험요인과 결과의 관계가 달라지는가"를 검증하는 것이 한 단계 높은 논증이 된다.
+  </div>
+
+  <div class="subhead">
+    <span class="code">4-B</span>
+    <h3>장내미생물이라는 세 번째 경로</h3>
+    <span class="en">The gut-microbiome-brain axis</span>
+    <span class="verdict mixed">탐색 단계</span>
+  </div>
+
+  <p>
+    마지막으로 저자들은 장내미생물 축을 덧붙인다. 대규모 인체 연구에서 혈장 대사산물의 개인 간 변이 중 최대 <span class="stat-inline">46%</span>가
+    장내미생물 구성으로 설명된다는 결과가 인용된다. MDD 환자에게서는 주로 에너지 및 지질 대사 경로에 걸친 미생물 관련 대사체 변화가 관찰되며,
+    중개연구(translational) 접근은 우울증과 연관된 장내미생물 재편이 증상 생성에 <strong>인과적 역할</strong>을 할 가능성을 시사한다.
+  </p>
+
+  <div class="callout danger">
+    <span class="callout-label">여기서 조심할 것</span>
+    ⚠️ 이 절의 근거 강도는 앞 절들보다 <b>확연히 약하다</b>. 원문의 서술도 "indicates", "may be true" 같은 조심스러운 표현으로 되어 있다.
+    46%라는 수치는 인상적이지만 그것은 <b>혈장 대사산물의 변이</b>에 대한 설명량이지 우울 증상에 대한 설명량이 아니다.
+    학생들이 이런 수치를 인용할 때 <b>무엇에 대한 설명량인지</b>를 반드시 확인하도록 지도해야 한다.
+  </div>
+</div>
+
+<!-- ============ 07 치료 ============ -->
+<div class="section-head" id="m05">
+  <div class="section-num">07</div>
+  <div class="section-title-block">
+    <h2>그래서 치료가 달라지는가</h2>
+    <p class="section-subtitle">Treatment of immuno-metabolic depression</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>
+    개념이 실재한다는 것과 그 개념이 쓸모 있다는 것은 다른 문제이다. 이 절은 IMD 개념의 <strong>임상적 유용성</strong>을 묻는다.
+    논리는 두 방향으로 전개된다. 첫째, IMD 환자는 기존 치료에 다르게 반응하는가. 둘째, IMD를 표적으로 하는 새로운 치료가 효과가 있는가.
+  </p>
+
+  <div class="condition">
+    <div class="condition-header">
+      <div class="num-circle weak">A</div>
+      <div class="cond-titles">
+        <div class="cond-code">Treatment line 1</div>
+        <h3>표준 항우울제: IMD 환자에게 덜 듣는다</h3>
+        <div class="cond-en">Poorer response to standard first-line pharmacotherapy</div>
+      </div>
+      <span class="verdict mixed">효과크기 작음</span>
+    </div>
+    <div class="condition-body">
+      <p>
+        네 건의 무작위대조시험을 통합 분석한 결과, 비정형·에너지 관련 증상과 CRP, BMI로 구성한 <strong>IMD 지수 점수가 높을수록
+        우울 증상 감소 폭이 유의하게 작았다</strong>. 다만 원문은 곧바로 "albeit with a low effect size", 즉 효과크기는 작았다고 덧붙인다.
+        사이토카인 중 IL-8 수준이 높으면 항우울제 반응이 나쁘다는 메타분석 결과도 있으나, 모든 염증 지표에서 일관되게 나타나지는 않았다.
+      </p>
+      <p>
+        반대 방향도 검토된다. 항우울제가 면역대사 기능에 어떤 영향을 주는가. 원문의 평가는 냉정하다.
+        관련 연구는 <strong>드물고, 규모가 작으며, 위약 대조가 없는 경우가 많아 해석이 어렵다</strong>.
+        다만 아미트립틸린, 미르타자핀, 노르트립틸린, 파록세틴은 체중 증가 위험이 높다는 메타분석 결과가 있어,
+        IMD 환자에게 이런 약을 쓰면 <strong>대사 프로파일을 악화시킬 수 있다</strong>는 임상적 함의가 도출된다.
+      </p>
+      <div class="callout sage">
+        <span class="callout-label">유망한 단서</span>
+        💊 <b>부프로피온(bupropion).</b> 다른 항우울제와 달리 체중을 감소시키며 비만 치료제로 FDA 승인을 받았다.
+        COMED 시험의 이차 분석에서 SSRI에 부프로피온을 추가한 조합은 <b>BMI가 35를 넘는 환자에게서만</b> 더 효과적이었고,
+        기저 CRP가 높을수록 그 조합의 치료 효과가 컸다. 저자들은 이를 "promising option"이라 평가하면서도
+        "requires more research"라는 단서를 잊지 않는다.
+      </div>
+    </div>
+  </div>
+
+  <div class="condition">
+    <div class="condition-header">
+      <div class="num-circle promising">B</div>
+      <div class="cond-titles">
+        <div class="cond-code">Treatment line 2</div>
+        <h3>항염증제와 지질저하제: 대상을 골라야 보인다</h3>
+        <div class="cond-en">Anti-inflammatory and lipid-lowering drugs</div>
+      </div>
+      <span class="verdict mixed">혼재</span>
+    </div>
+    <div class="condition-body">
+      <div class="plain-meaning">
+        항염증제 시험의 성적이 들쭉날쭉했던 이유는 약이 나빠서가 아니라 <b>염증이 없는 환자에게도 항염증제를 준 설계</b> 때문일 수 있다.
+        이것이 이 절 전체의 논지이다.
+      </div>
+      <p>
+        저자들이 제시하는 결정적 근거는 다음과 같다. 자가면역·염증성 질환 환자를 대상으로 한 생물학적 항염증제 무작위대조시험들의 메타분석에서,
+        이 약들은 <strong>신체 질환의 호전과 독립적으로</strong> 우울 증상을 개선시켰으며 효과크기는 <span class="stat-inline">SMD = 0.4</span>였다.
+        염증이 확실히 존재하는 집단에서는 항염증 치료가 우울 증상에 독립적인 효과를 낸다는 뜻이다.
+      </p>
+      <p>
+        그러나 층화(stratification) 기준을 찾는 작업은 아직 정리되지 않았다. 원문이 제시하는 결과들은 서로 엇갈린다.
+      </p>
+      <table class="mini-table">
+        <thead><tr><th style="width:22%">연구</th><th style="width:26%">층화 기준</th><th>결과</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td>Infliximab (사후분석)</td><td>기저 CRP</td><td>CRP가 높을수록 우울 증상 개선이 컸다</td></tr>
+          <tr><td>Minocycline (소규모)</td><td>CRP &gt; 3 mg/L</td><td>해당 집단에서만 우울 증상 감소</td></tr>
+          <tr><td>Minocycline (대규모)</td><td>CRP 약 1 mg/L</td><td>위 결과를 <b>재현하지 못함</b></td></tr>
+          <tr><td>Celecoxib + vortioxetine</td><td>기저 CRP</td><td>CRP가 치료 결과를 <b>예측하지 못함</b></td></tr>
+        </tbody>
+      </table>
+      <p>
+        저자들은 이 혼재를 솔직히 인정하며 "which biomarker(s) and cut-off(s) should be used"가 미해결 과제로 남아 있다고 쓴다.
+        현재 네덜란드의 inflaMED와 벨기에의 Insta-MD 등 충분한 표본을 갖춘 무작위대조시험이 진행 중이다.
+      </p>
+      <p>
+        지질저하제(스타틴) 역시 비슷한 그림이다. 일곱 건의 시험을 묶은 메타분석에서 유의한 항우울 효과가 확인되었고,
+        MDE가 확인된 환자 대상 7건의 무작위대조시험 메타분석에서도 항우울 효과와 지질 프로파일 개선이 함께 나타났다.
+        그러나 <strong>4건의 시험에서 반응률과 관해율은 집단 간 유사</strong>했고, 청소년 대상 한 시험에서는 위약 대비 효과가 없었다.
+      </p>
+      <div class="callout warm">
+        <span class="callout-label">대학원생을 위한 방법론 포인트</span>
+        📏 <b>"증상 점수 감소"와 "반응률·관해율"은 다른 결과변수이다.</b> 스타틴 연구에서 연속형 증상 점수로는 유의한 효과가 나왔지만
+        이분형 반응·관해 지표로는 차이가 없었다. 같은 자료에서 결과변수를 어떻게 정의하느냐에 따라 결론이 달라진 사례이다.<br><br>
+        <b>어느 쪽을 믿어야 하는가.</b> 연속형 지표는 통계적 검정력이 높지만 <b>임상적으로 의미 있는 변화인지</b>는 말해 주지 않는다.
+        이분형 지표는 임상적 해석이 명확하지만 검정력이 떨어진다. 정답은 없으며, 중요한 것은 <b>사전에 주 결과변수를 지정</b>하고
+        선택적 보고(selective reporting)를 피하는 것이다. 사회복지 개입연구에서도 동일하게 적용되는 원칙이다.
+      </div>
+      <div class="callout sage">
+        <span class="callout-label">당뇨병 치료제라는 새 후보</span>
+        💊 피오글리타존은 8건의 무작위대조시험 메타분석에서 유의한 치료 효과를, 4건의 메타분석에서 더 높은 관해율을 보였다.
+        메트포르민은 6건(총 2,638명)에서 대조군과 차이가 없었다. <b>GLP-1 수용체 작용제</b>는 5건의 무작위대조시험과 1건의 전향 코호트(총 2,071명)에서
+        작지만 유의한 우울 증상 감소 효과를 보였다. 다만 이 표본들은 제2형 당뇨병, 비만 수술 후 환자, 파킨슨병 환자 등 <b>이질적인 집단</b>이었고
+        정신과 임상 장면의 환자가 아니었다는 점을 반드시 함께 읽어야 한다.
+      </div>
+    </div>
+  </div>
+
+  <div class="condition">
+    <div class="condition-header">
+      <div class="num-circle promising">C</div>
+      <div class="cond-titles">
+        <div class="cond-code">Treatment line 3</div>
+        <h3>생활습관 개입: 운동과 영양</h3>
+        <div class="cond-en">Lifestyle interventions: exercise and nutrition</div>
+      </div>
+      <span class="verdict promising">유망</span>
+    </div>
+    <div class="condition-body">
+      <p>
+        운동은 렙틴을 약간 낮추고 CRP를 낮추는 효과가 있으며, 특히 BMI가 함께 감소할 때 그렇다.
+        전신 염증을 줄임으로써 도파민 전달을 촉진하고, <strong>보상을 위한 노력 기반 의사결정</strong>과 관련된 증상
+        (무쾌감, 피로, 인지 손상)을 특히 개선시킬 수 있다는 기제가 제시된다.
+        TREAD 연구에서는 기저 TNF-α가 높을수록 운동 개입에 따른 우울 증상 감소가 컸다.
+      </p>
+      <p>
+        특히 흥미로운 결과는 러닝 치료와 SSRI의 비교이다. <strong>정신건강 결과는 비슷했지만</strong>,
+        체중, 허리둘레, 염증, 대사 지표, 혈압, 심박수 같은 <strong>신체 건강 결과에서는 러닝 치료가 더 우월</strong>했다.
+      </p>
+      <div class="plain-meaning">
+        🏃 IMD 환자에게 운동은 "우울증에도 좋은 부가 활동"이 아니라 <b>병의 기제 자체를 겨냥하는 개입</b>일 수 있다.
+        우울과 대사 문제를 동시에 다루기 때문이다.
+      </div>
+      <p>
+        영양 개입도 같은 논리를 따른다. 친염증성 식이는 우울증 위험 증가와 일관되게 연관되며, 지중해식 식단을 촉진하는 개입은
+        5건의 무작위대조시험 메타분석에서 우울 증상을 감소시켰다. 임상적으로 우울한 표본을 대상으로 한 첫 연구(SMILES 시험)에서는
+        식이 개입이 사회적 지지 프로토콜보다 더 큰 효과크기를 보였다. 대규모 식품 관련 행동 개입 연구는 그 효과가
+        특히 <strong>신체 증상과 비정형 증상에 집중</strong>된다는 점을 시사했다.
+      </p>
+      <div class="callout sky">
+        <span class="callout-label">사회복지 실천에 주는 함의</span>
+        🏠 이 절은 사회복지 실천가에게 가장 직접적으로 다가오는 부분이다. 운동과 식이는 <b>약물 처방권이 없는 전문직도 개입할 수 있는 영역</b>이며,
+        동시에 접근성과 지속성이 사회경제적 조건에 크게 좌우되는 영역이기도 하다.
+        Fig. 2의 위험요인 기둥에 socioeconomic deprivation과 unhealthy lifestyle이 나란히 놓여 있다는 사실은,
+        생활습관을 개인의 선택으로만 다루면 안 된다는 점을 시사한다. 다만 <b>이 논문 자체는 그 사회적 층위를 본격적으로 다루지 않는다.</b>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 08 남은 과제 + Fig 3 ============ -->
+<div class="section-head" id="m06">
+  <div class="section-num">08</div>
+  <div class="section-title-block">
+    <h2>임상에 가져가기 전에 남은 세 가지 과제</h2>
+    <p class="section-subtitle">Next research steps before implementation</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>
+    이 절은 논문의 <strong>가장 정직한 부분</strong>이며, 대학원 세미나에서 반드시 함께 읽어야 할 대목이다.
+    저자들은 자신들이 제안한 개념이 아직 임상에 쓸 준비가 되지 않았다고 명시적으로 인정한다.
+  </p>
+
+  <div class="mod-grid">
+    <div class="mod-card">
+      <h4>① 경로를 더 알아야 한다</h4>
+      <div class="en">Breadth, complexity and causal chains</div>
+      <p>
+        (후성)유전체, 단백체·대사체, 미생물체, 뇌 기능을 아우르는 다중 오믹스 자료를 생활습관, 생애 역경, 신체 건강, 사회경제적 요인 자료와 통합해야 한다.
+        이를 위해서는 코호트 간 협력과 측정 도구의 조화(harmonization)가 필요하다.
+      </p>
+      <span class="keynum">Immunomind 프로젝트 (UKRI)</span>
+    </div>
+    <div class="mod-card risk">
+      <h4>② 인과인지 방관자인지 모른다</h4>
+      <div class="en">Driver or innocent bystander?</div>
+      <p>
+        면역대사 조절이상이 실제로 우울 증상을 만들어 내는지, 아니면 함께 나타날 뿐인 무고한 동반자인지가
+        여전히 핵심 미해결 문제라고 저자들은 쓴다. 멘델 무작위화, 동물모델, 인체 실험모델을 통한 증거 삼각측량이 필요하다.
+      </p>
+      <span class="keynum">'innocent' bystander 가능성</span>
+    </div>
+    <div class="mod-card risk">
+      <h4>③ 근거가 흩어져 있다</h4>
+      <div class="en">Too limited and scattered</div>
+      <p>
+        치료 시험들이 소규모이고, 각자 다른 면역대사 지표를 썼으며, 어떤 환자에게 가장 효과적인지를 체계적으로 검증하지 않았다.
+        개별 참여자 수준 자료 메타분석(IPD meta-analysis)을 통한 시험 간 협력이 필요하다.
+      </p>
+      <span class="keynum">Aspire 연구 (Wellcome)</span>
+    </div>
+    <div class="mod-card">
+      <h4>④ 척도가 부족하다</h4>
+      <div class="en">Measurement gap</div>
+      <p>
+        현재 우울증 임상시험의 주 결과변수로 쓰이는 복합 우울척도들은 <b>비정형 증상과 무쾌감을 제대로 포착하지 못한다</b>.
+        저자들은 이 증상들을 신뢰롭게 담아내는 평가도구의 개발과 활용이 필요하다고 명시한다.
+      </p>
+      <span class="keynum">측정 도구의 구성타당도 문제</span>
+    </div>
+  </div>
+
+  <div class="callout warm">
+    <span class="callout-label">대학원생을 위한 방법론 포인트</span>
+    📌 <b>네 번째 과제를 놓치지 말라.</b> 이것은 순수한 측정이론 문제이다. IMD의 핵심 증상이 비정형·에너지 관련 증상인데,
+    정작 임상시험의 결과 측정 도구가 그 증상을 잘 담지 못한다면 <b>효과가 있어도 측정되지 않는다</b>.
+    구성개념을 새로 제안하는 연구는 거의 항상 이 문제에 부딪힌다.<br><br>
+    <b>일반화하면 이렇다.</b> 새로운 구성개념을 제안할 때는 세 가지가 함께 가야 한다.
+    ① 개념 정의, ② 그 개념을 잴 도구, ③ 그 도구로 잰 값이 다른 것과 구별된다는 증거.
+    이 논문은 ①과 ③에는 상당한 진전을 이루었지만 ②가 아직 뒤처져 있다고 스스로 진단한다.
+    ACEs 연구에서 차원 모델 논쟁이 풀리지 않는 이유도 정확히 같은 자리에 있다.
+  </div>
+
+  <div class="figure-block">
+    <div class="fig-tag orig">원문 Figure 3</div>
+    <div class="fig-title">Fig. 3: Six key facts of the impact, burden, future research needs, and potential personalized treatment options for immuno-metabolic depression (IMD)</div>
+    <div class="fig-orig">
+      <img src="https://www.thelancet.com/cms/10.1016/j.lanepe.2024.101166/asset/04891354-25a8-4abf-88b1-3f8462a64c83/main.assets/gr3_lrg.jpg"
+           alt="IMD에 관한 여섯 가지 핵심 사실을 2열 3행의 카드 형태로 정리한 도해">
+    </div>
+    <div class="fig-cap">
+      출처: Penninx et al. (2025), <em>The Lancet Regional Health &ndash; Europe, 48,</em> 101166, Fig. 3.
+      본 논문은 CC BY-NC 라이선스 하에 공개되었으며, 본 페이지는 교육 목적의 인용이다.
+    </div>
+    <div class="fig-implies">
+      <b>📊 이 그림을 어떻게 읽는가.</b> 여섯 장의 카드가 2열 3행으로 배치되어 있고, 색이 위에서 아래로 주황 → 빨강 → 노랑으로 바뀐다.
+      이 색 변화는 <b>부담 → 기제 → 해결</b>이라는 논문 전체의 서사 구조를 그대로 반영한다.
+      좌우 두 열을 짝지어 읽으면 의미가 분명해진다.<br><br>
+
+      <b>1행 (주황, 문제의 규모).</b><br>
+      · 왼쪽: 우울증은 3,800만 명 이상의 유럽인에게 영향을 주며, 질병부담 기여도 1위의 정신건강 문제이고, 유럽에 연간 <b>920억 유로</b>의 비용을 발생시킨다.<br>
+      · 오른쪽: 면역·대사 조절이상은 <b>전체 우울증의 최대 30%</b>에서 역할을 한다. 이것이 IMD이다.<br>
+      → 두 카드를 합치면 "거대한 문제의 3분의 1 가까이가 하나의 기제로 설명될 수 있다"는 주장이 된다.<br><br>
+
+      <b>2행 (빨강, 왜 중요한가와 무엇이 필요한가).</b><br>
+      · 왼쪽: IMD는 <b>만성화, 낮은 웰빙, 신체 동반질환, 항우울제 무반응</b>이 특징이다. 즉 예후가 나쁜 집단이다.<br>
+      · 오른쪽: 기제를 밝히려면 풍부한 코호트, 임상시험, (전)임상 실험에서 <b>환경과 생물학을 통합하는 연구</b>가 필요하다.
+      아이콘에 DNA, 실험용 쥐, 집, 장, 뇌, 음식이 함께 놓인 것은 생물학적 요인과 사회환경적 요인을 <b>나란히</b> 다루겠다는 선언이다.<br><br>
+
+      <b>3행 (노랑, 해결의 방향).</b><br>
+      · 왼쪽: 면역 및 대사 조절 생활습관 개입과 약물 개입이 IMD를 개선한다는 <b>예비적(preliminary) 자료</b>가 있다.
+      "preliminary"라는 단어가 카드에 직접 들어가 있다는 점이 중요하다.<br>
+      · 오른쪽: 정밀정신의학의 원칙에 따라 IMD를 표적으로 하는 예방과 치료가 우울증의 질병부담을 줄일 수 있다.<br><br>
+
+      🧭 <b>이 그림의 수사학.</b> 여섯 개 카드는 논문의 요약이면서 동시에 <b>연구비 제안서의 논리 구조</b>이기도 하다.
+      문제의 크기 → 표적 집단의 존재 → 그 집단의 나쁜 예후 → 필요한 연구 인프라 → 예비 근거 → 기대 효과.
+      학생들이 연구계획서를 쓸 때 이 순서를 그대로 빌려 쓸 수 있다.
+    </div>
+  </div>
+</div>
+
+<!-- ============ 명문장 ============ -->
+<div class="section-head" id="phrases">
+  <div class="section-num">09</div>
+  <div class="section-title-block">
+    <h2>명문장: 영어 논문에 다시 쓸 수 있는 문장들</h2>
+    <p class="section-subtitle">Notable sentences for your own English manuscripts</p>
+  </div>
+</div>
+
+<div class="phrase-grid">
+
+  <div class="phrase span2">
+    <div class="en">"Depression has enormous etiological and phenotypic heterogeneity."</div>
+    <div class="kr">우울증은 원인 면에서도 표현형 면에서도 엄청난 이질성을 지닌다.</div>
+    <div class="why"><b>왜 유용한가.</b> 절의 첫 문장으로 쓰기 좋은 <b>단문 선언형</b>이다.
+    "etiological and phenotypic"이라는 두 형용사 병치로 원인과 표현이라는 서로 다른 층위를 한 번에 잡는다.
+    ACEs 논문에서 "Adverse childhood experiences show substantial definitional and measurement heterogeneity"처럼 변형해 쓸 수 있다.</div>
+  </div>
+
+  <div class="phrase span2">
+    <div class="en">"patients who differ in their unique symptom profile can all qualify for the same diagnosis, including profiles that have no single symptom in common"</div>
+    <div class="kr">고유한 증상 프로파일이 서로 다른 환자들이 모두 같은 진단을 충족할 수 있으며, 여기에는 단 하나의 증상도 공유하지 않는 프로파일까지 포함된다.</div>
+    <div class="why"><b>왜 유용한가.</b> 추상적 주장(이질성)을 <b>극단적 사례로 구체화</b>하는 문장이다.
+    "including ... that have no single ... in common"이라는 부가절이 주장의 강도를 단숨에 끌어올린다.
+    문제를 실감나게 만들 때 쓰는 전형적 수사이며, 서론에서 독자를 설득하는 데 효과적이다.</div>
+  </div>
+
+  <div class="phrase">
+    <div class="en">"While depressed patients exhibit, on average, higher inflammation than controls, elevated inflammatory markers are only reported in a subset."</div>
+    <div class="kr">우울증 환자는 평균적으로 대조군보다 염증 수준이 높지만, 염증 지표의 상승은 일부 하위집단에서만 보고된다.</div>
+    <div class="why"><b>왜 유용한가.</b> <b>"While A, B" 구조로 통념을 인정한 뒤 뒤집는</b> 가장 경제적인 문장이다.
+    상대의 근거를 부정하지 않으면서 해석만 바꾸기 때문에 공격적으로 읽히지 않는다. 논문의 전환점에서 쓰기 좋다.</div>
+  </div>
+
+  <div class="phrase">
+    <div class="en">"Unlike the 'one-size-fits-all' approach, a precision psychiatry approach requires standardized metrics that are specific for individual patients and are interpretable to clinicians."</div>
+    <div class="kr">'모두에게 같은 것' 접근과 달리, 정밀정신의학 접근은 개별 환자에게 특이적이면서 임상가가 해석할 수 있는 표준화된 지표를 요구한다.</div>
+    <div class="why"><b>왜 유용한가.</b> 새로운 접근을 제안할 때 <b>대조를 먼저 세우고 요건을 나열</b>하는 구조이다.
+    "specific for" 와 "interpretable to"라는 두 조건을 병치해 실현 가능성의 기준을 스스로 제시한다는 점이 특히 배울 만하다.</div>
+  </div>
+
+  <div class="phrase">
+    <div class="en">"This illustrates that the link ... likely reflects a vicious cycle in which both conditions impact on each other over time."</div>
+    <div class="kr">이는 그 연결이 시간이 흐르면서 두 상태가 서로에게 영향을 주는 악순환을 반영할 가능성이 높음을 보여 준다.</div>
+    <div class="why"><b>왜 유용한가.</b> 양방향 관계를 서술할 때의 <b>안전한 인과 표현</b>이다.
+    "illustrates" + "likely reflects"라는 이중 완충으로 단정을 피하면서도 논지를 전진시킨다.
+    횡단 자료로 종단적 주장을 암시해야 할 때 특히 유용하다.</div>
+  </div>
+
+  <div class="phrase">
+    <div class="en">"Millenia ago, when humans faced many physical threats, social withdrawal and loss of pleasure typical of depression helped redirect energy resources toward fighting infection and wound healing."</div>
+    <div class="kr">수천 년 전 인간이 많은 신체적 위협에 직면했을 때, 우울증의 전형적인 사회적 위축과 즐거움의 상실은 에너지 자원을 감염 퇴치와 상처 치유로 돌리는 데 도움이 되었다.</div>
+    <div class="why"><b>왜 유용한가.</b> <b>시간 부사구로 문장을 열어 서사적 거리감</b>을 만드는 기법이다.
+    증상을 결함이 아니라 적응으로 재해석하는 진화적 논법의 전형이며, 병리를 다루는 글에 깊이를 더할 때 응용할 수 있다.</div>
+  </div>
+
+  <div class="phrase">
+    <div class="en">"However, it also shows that the presence of obesity is not sufficient ..."</div>
+    <div class="kr">그러나 이는 비만의 존재가 충분조건이 아님도 함께 보여 준다.</div>
+    <div class="why"><b>왜 유용한가.</b> 자기 논지를 뒷받침하는 자료를 인용한 <b>직후에 그 한계를 스스로 밝히는</b> 문장이다.
+    "not sufficient"라는 논리학 용어를 써서 과잉해석을 정밀하게 차단한다. 심사자의 예상 반론을 미리 소진시키는 효과가 크다.</div>
+  </div>
+
+  <div class="phrase">
+    <div class="en">"To what extent exactly immuno-metabolic dysregulations are driving depressive symptom development ... or whether they are an 'innocent' bystander remains an important question."</div>
+    <div class="kr">면역대사 조절이상이 어느 정도까지 우울 증상의 발달을 이끄는지, 아니면 그것이 '무고한 방관자'에 불과한지는 여전히 중요한 질문으로 남아 있다.</div>
+    <div class="why"><b>왜 유용한가.</b> <b>미해결 과제를 선언하는 문장의 모범</b>이다.
+    "innocent bystander"라는 비유적 표현에 따옴표를 붙여 학술적 절제를 유지하면서도 기억에 남게 만든다.
+    Discussion의 한계 문단이나 Future directions에서 그대로 응용할 수 있다.</div>
+  </div>
+
+  <div class="phrase">
+    <div class="en">"the current evidence is too limited and scattered to lead to systematic implementation in clinical care"</div>
+    <div class="kr">현재의 근거는 임상 현장의 체계적 실행으로 이어지기에는 너무 제한적이고 흩어져 있다.</div>
+    <div class="why"><b>왜 유용한가.</b> <b>"too A and B to C" 구조</b>로 근거 부족을 판정하면서도 부정적으로만 들리지 않게 만든다.
+    "limited"(양의 문제)와 "scattered"(구조의 문제)를 구별한 것이 핵심이다. 두 문제는 해법이 다르기 때문이다.</div>
+  </div>
+
+  <div class="phrase">
+    <div class="en">"This remains a key outstanding task for the field."</div>
+    <div class="kr">이는 이 분야에 남아 있는 핵심 과제이다.</div>
+    <div class="why"><b>왜 유용한가.</b> 짧고 단정적인 <b>단락 마무리 문장</b>이다.
+    복잡한 논의를 길게 늘어놓은 뒤 한 문장으로 닫으면 독자에게 쉼표를 준다. 긴 문단 뒤에 배치할 때 리듬이 가장 잘 산다.</div>
+  </div>
+
+</div>
+
+<!-- ============ AIR Lab 연결 ============ -->
+<div class="section-head" id="ourstudy">
+  <div class="section-num">10</div>
+  <div class="section-title-block">
+    <h2>AIR Lab 연구와의 연결</h2>
+    <p class="section-subtitle">Linking to ACEs, person-centered methods, and trauma-informed practice</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>
+    이 논문은 정신의학 문헌이지만, 논증의 <strong>형식</strong>은 우리 랩의 문제의식과 거의 그대로 겹친다.
+    "하나의 이름 아래 이질적인 사람들이 묶여 있고, 그 이질성이 연구와 개입을 망가뜨린다"는 진단은
+    ACEs 연구가 지난 10년간 씨름해 온 문제와 동일하다. ACE 점수 4점인 두 사람이 서로 완전히 다른 경험을 했을 수 있다는 지적은,
+    이 논문이 우울증 진단에 대해 던지는 지적과 논리적으로 같은 구조이다.
+  </p>
+
+  <table class="mini-table">
+    <thead><tr><th style="width:34%">우리 연구 요소</th><th>이 논문에서의 대응</th></tr></thead>
+    <tbody>
+      <tr class="hi">
+        <td><b>ACE 누적점수의 한계</b></td>
+        <td>우울증 진단의 이질성 문제와 동형이다. 저자들의 해법은 점수를 버리는 것이 아니라 <b>증상 프로파일과 생물표지를 함께 묶어 차원을 구성</b>하는 것이었다. ACEs 연구에서도 누적점수 대신 무엇을 놓을지에 대한 참고가 된다.</td>
+      </tr>
+      <tr>
+        <td><b>LPA/LCA 유형화</b></td>
+        <td>원문이 인용한 Lamers 등의 연구는 약 800명 MDD 표본에서 잠재계층분석으로 비정형 증상 우세 계층을 도출하고, 분류에 쓰지 않은 BMI·CRP·대사증후군으로 외적 타당화를 수행했다. <b>유형화 이후 외부 준거 검증</b>이라는 절차의 모범 사례이다.</td>
+      </tr>
+      <tr>
+        <td><b>트라우마 정보기반 실천</b></td>
+        <td>Fig. 2의 원위 위험요인 기둥에 <b>"(early) life stress &amp; trauma"</b>가 명시되어 있다. 다만 이 리뷰는 그 경로를 목록에 올릴 뿐 기제를 전개하지 않는다. ACEs에서 면역대사 경로로 이어지는 구체적 매개 구조는 <b>비어 있는 자리</b>이다.</td>
+      </tr>
+      <tr>
+        <td><b>알로스타틱 부하(allostatic load)</b></td>
+        <td>원문은 이 용어를 직접 쓰지 않지만, "에너지 공급과 수요의 불균형이 누적되어 조절계가 망가진다"는 Fig. 2의 서술 구조는 알로스타틱 부하 모델과 개념적으로 인접하다. 두 문헌을 잇는 이론 통합은 <b>확인 필요이자 우리 랩의 다음 과제</b>이다.</td>
+      </tr>
+      <tr>
+        <td><b>심리 네트워크 분석</b></td>
+        <td>이 논문은 증상군과 생물표지의 묶임을 상관과 요인 구조로 다룬다. 증상과 생물표지를 하나의 네트워크 노드로 놓고 <b>교량 증상(bridge symptom)</b>을 찾는 접근은 아직 시도되지 않았다.</td>
+      </tr>
+      <tr>
+        <td><b>결과변수 조작화</b></td>
+        <td>저자들은 현재 우울척도가 비정형 증상과 무쾌감을 제대로 담지 못한다고 지적한다. 우리 연구에서도 결과변수가 <b>이론이 예측하는 증상을 실제로 측정하는지</b>를 사전에 점검해야 한다.</td>
+      </tr>
+      <tr>
+        <td><b>사회적 결정요인</b></td>
+        <td>socioeconomic deprivation이 위험요인으로 등장하지만 논문은 그것을 생물학적 경로의 입력값으로만 다룬다. <b>사회복지학이 기여할 수 있는 지점</b>이 바로 여기이다. 박탈이 어떤 경로로 면역대사 스트레스가 되는지는 사회역학의 질문이다.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout sky">
+    <span class="callout-label">스터디 토론 질문</span>
+    <b>Q1.</b> 이 논문은 "평균은 맞지만 아무도 대표하지 않는다"는 문제를 증상 프로파일로 해결했다.
+    ACEs 연구에서 같은 문제를 해결하려면 무엇을 증상 프로파일의 자리에 놓아야 하는가.
+    경험의 유형인가, 발달 시기인가, 만성성인가, 아니면 생물학적 반응 자체인가.<br><br>
+
+    <b>Q2.</b> 저자들은 면역대사 조절이상이 '무고한 방관자'일 가능성을 스스로 열어 둔다.
+    ACEs와 성인기 건강 결과 사이의 생물학적 매개변수(알로스타틱 부하 지표, 염증 표지 등)를 연구할 때,
+    우리가 그 매개변수를 '방관자'가 아니라 '기제'라고 주장하려면 어떤 설계가 필요한가.<br><br>
+
+    <b>Q3.</b> Fig. 2의 위험요인 기둥에는 사회경제적 박탈과 생애 초기 트라우마가 유전적 취약성과 나란히 놓여 있다.
+    이 배치는 사회적 요인을 진지하게 다루는 것인가, 아니면 <b>생물학적 모델에 사회적 요인을 흡수해 버리는 것</b>인가.
+    사회복지학은 이 그림에 어떻게 응답해야 하는가.
+  </div>
+</div>
+
+<!-- ============ 정리 활동 ============ -->
+<div class="section-head" id="worksheet">
+  <div class="section-num">11</div>
+  <div class="section-title-block">
+    <h2>정리 활동</h2>
+    <p class="section-subtitle">작성 내용은 브라우저에 자동 저장된다</p>
+  </div>
+</div>
+
+<div class="worksheet">
+  <h4>① 한 문단으로 요약하기</h4>
+  <div class="prompt">
+    이 논문의 핵심 주장을 <b>다섯 문장 이내</b>로, 생물학 용어를 최소한으로 써서 정리해 보자.
+    "이 논문은 ___라는 통념을 ___라는 근거로 수정하고, 그 대신 ___를 제안한다"는 틀을 써도 좋다.
+  </div>
+  <textarea data-key="jc_penninx2025_summary" placeholder="여기에 작성하세요."></textarea>
+  <div class="save-status">저장됨</div>
+</div>
+
+<div class="worksheet">
+  <h4>② 가장 약한 고리 찾기</h4>
+  <div class="prompt">
+    논문의 논증에서 <b>가장 근거가 약한 부분</b>은 어디라고 보는가. 왜 그렇게 판단했는지, 그 부분을 보강하려면
+    어떤 연구설계가 필요한지 함께 적어 보자. (힌트: 장내미생물 절, 치료 층화 기준의 불일치, 당뇨병 치료제 시험의 표본 이질성)
+  </div>
+  <textarea data-key="jc_penninx2025_weak" placeholder="여기에 작성하세요."></textarea>
+  <div class="save-status">저장됨</div>
+</div>
+
+<div class="worksheet">
+  <h4>③ 우리 연구로 옮기기</h4>
+  <div class="prompt">
+    이 논문의 논증 구조(이질성 진단 → 하위집단 구성 → 독립 자료원으로 타당화 → 임상적 유용성 검증)를
+    <b>ACEs 또는 PACEs 연구에 적용</b>한다면 각 단계에 무엇이 들어가야 하는가. 연구문제 형태로 한 단계씩 적어 보자.
+  </div>
+  <textarea data-key="jc_penninx2025_apply" placeholder="여기에 작성하세요."></textarea>
+  <div class="save-status">저장됨</div>
+</div>
+
+<!-- ============ CLOSING ============ -->
+<div class="closing">
+  <div class="closing-inner">
+    <h2>이 논문이 가르치는 것: 이론은 어떻게 교정되는가</h2>
+    <p>
+      이 리뷰가 세미나에서 가치 있는 이유는 면역대사형 우울증이라는 결론 때문이 아니다.
+      <strong>결론에 이르는 방식</strong> 때문이다. 저자들은 기존 연구를 부정하지 않는다.
+      "우울증 환자는 염증이 높다"는 수많은 연구 결과를 그대로 인정한 뒤, 그 평균이 누구를 대표하는지만 다시 묻는다.
+      그리고 그 질문 하나로 20년치 문헌의 의미가 재배열된다.
+    </p>
+    <p>
+      이것이 이론이 교정되는 전형적인 방식이다. <strong>새로운 자료가 아니라 새로운 분할선</strong>이 이론을 바꾼다.
+      유전상관이 0.2에서 0.53으로 뛰어오른 장면은 그 점을 가장 선명하게 보여 준다.
+      신호는 처음부터 자료 안에 있었지만, 잘못된 단위로 묶여 있었기 때문에 보이지 않았을 뿐이다.
+    </p>
+    <p>
+      동시에 이 논문은 개념의 <strong>한계를 스스로 선언하는 법</strong>도 보여 준다.
+      저자들은 자신들이 제안한 개념을 아직 임상에 쓸 수 없다고 명시하고, 면역대사 이상이 '무고한 방관자'일 가능성까지 열어 둔다.
+      제안과 유보를 동시에 수행하는 이 태도가 좋은 리뷰 논문의 조건이다.
+      <strong>ACEs 연구가 지금 서 있는 자리도 정확히 이 지점</strong>이며, 우리가 배워야 할 것도 결론이 아니라 이 태도이다.
+    </p>
+    <div class="signature">
+      Penninx, B. W. J. H., Lamers, F., Jansen, R., Berk, M., Khandaker, G. M., De Picker, L., &amp; Milaneschi, Y. (2025).
+      Immuno-metabolic depression: from concept to implementation. <em>The Lancet Regional Health &ndash; Europe, 48,</em> 101166.
+      &nbsp;·&nbsp; AIR Lab Journal Club
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(47,111,168,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#2f6fa8"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#2f6fa8"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<div class="footer">
+  본 페이지는 AIR Lab(ACEs-Informed Recovery Lab) 저널클럽의 <b>교육 목적 자료</b>이다.
+  원문은 CC BY-NC 라이선스 하에 공개된 오픈액세스 논문이며, 인용된 그림과 문장의 저작권은 원저자와 출판사에 있다.
+  한국어 해설, 도해 A~C, 비유와 부연설명은 AIR Lab이 교육 목적으로 작성한 것으로 원문의 일부가 아니다.
+  정확한 내용은 반드시 원문을 확인하기 바란다.
+</div>
+
+<script>
+(function () {
+  var PREFIX = 'jc_penninx2025_';
+  var areas = document.querySelectorAll('textarea[data-key]');
+
+  areas.forEach(function (ta) {
+    var key = ta.getAttribute('data-key');
+    try {
+      var saved = localStorage.getItem(key);
+      if (saved !== null) ta.value = saved;
+    } catch (e) {}
+
+    var timer = null;
+    ta.addEventListener('input', function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () { persist(ta); }, 600);
+    });
+  });
+
+  function persist(ta) {
+    var key = ta.getAttribute('data-key');
+    try {
+      localStorage.setItem(key, ta.value);
+      flash(ta);
+    } catch (e) {}
+  }
+
+  function flash(ta) {
+    var status = ta.parentElement.querySelector('.save-status');
+    if (!status) return;
+    status.classList.add('show');
+    setTimeout(function () { status.classList.remove('show'); }, 1400);
+  }
+
+  window.saveAll = function () {
+    areas.forEach(persist);
+  };
+})();
+</script>
+
+</body>
+</html>

@@ -6,18 +6,10 @@
 <title>AIR Lab · Journal Club · Lyons-Ruth (2025)</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-1Thin.ttf') format('truetype');font-weight:100;font-display:swap;}
-  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-2ExtraLight.ttf') format('truetype');font-weight:200;font-display:swap;}
-  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-3Light.ttf') format('truetype');font-weight:300;font-display:swap;}
-  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-4Regular.ttf') format('truetype');font-weight:400;font-display:swap;}
-  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-5Medium.ttf') format('truetype');font-weight:500;font-display:swap;}
-  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-6SemiBold.ttf') format('truetype');font-weight:600;font-display:swap;}
-  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-7Bold.ttf') format('truetype');font-weight:700;font-display:swap;}
-  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-8ExtraBold.ttf') format('truetype');font-weight:800;font-display:swap;}
-  @font-face{font-family:'Freesentation';src:url('fonts/Freesentation-9Black.ttf') format('truetype');font-weight:900;font-display:swap;}
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
   :root{
-    --font-display:'Freesentation','Inter',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-    --font-text:'Freesentation','Inter',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-display:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
     --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
     --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
     --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
@@ -228,6 +220,29 @@
   .videobox .vcap a:hover{text-decoration:underline}
   @media print{.videoframe{display:none}}
   @media (max-width:900px){.qgrid,.readgrid,.glossary{grid-template-columns:1fr}}
+
+  /* ════════ AIR Lab theme: navy → recovery-teal (synced with index) ════════ */
+  :root{ --sky:#2d6a9f; --sky-deep:#1f4e79; --sky-bright:#7fa9d1; --sky-soft:#e9eff6; --sky-soft2:#f4f7fb; --sky-soft-2:#f4f7fb; --mint:#3a9a8f; --mint-soft:#eaf5f2; --hover-bg:#eef3f9; }
+  .stripe{background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+  .stripe span{background:transparent!important}
+  .nav-logo-dot .d3{background:#3a9a8f}
+  .hero{isolation:isolate}
+  .hero::before{background:radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%), linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%)!important}
+  .overline{color:#9fd3ca!important}
+  .overline::before{background:#8cc7bd!important}
+  .hero h1{color:#fff!important}
+  .hero h1 em{color:#bfe6df!important}
+  .hero .citation{color:#b7c9da!important;border-left-color:#8cc7bd!important}
+  .hero .citation em{color:#d6e5f2!important}
+  .hero .citation a{color:#bfe6df!important}
+  .hero .subtitle{color:#d2e0ec!important}
+  .hero .subtitle strong,.hero .subtitle b{color:#fff!important}
+  .hero .subtitle em{color:#bfe6df}
+  .hero .stat{background:rgba(255,255,255,0.08)!important;border-color:rgba(255,255,255,0.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .hero .stat .num{color:#fff!important}
+  .hero .stat .lbl{color:#a9c1d6!important}
+  .paper-meta,.condition-header{background:linear-gradient(120deg,#1c4a73 0%,#22655f 100%)!important}
+  .section-num{background:linear-gradient(120deg,#1f4e79 0%,#2d7d78 100%)!important}
 </style>
 </head>
 <body id="top">
@@ -236,7 +251,7 @@
 
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="#top">
+    <a class="nav-logo" href="../index.html">
       <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
       AIR Lab · Journal Club
     </a>
@@ -279,6 +294,8 @@
 </header>
 
 <div class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>Lyons-Ruth (2025)</div>
 
 <!-- 01 논문 소개 -->
 <section id="paper">
@@ -1006,9 +1023,11 @@
 
 </div>
 
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(47,111,168,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#2f6fa8"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#2f6fa8"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
 <div class="footer">
   본 페이지는 AIR Lab(ACEs-Informed Recovery Lab) 저널클럽의 <strong>교육 목적</strong> 자료입니다. 인용은 짧은 발췌에 한하며 출처를 명시했습니다.<br>
-  <strong>그림 저작권 안내:</strong> Figure 1~7은 출판사(Taylor &amp; Francis) 서버의 이미지를 직접 참조하며, 캡션에 원 출처와 저작권 표기를 하였음을 밝힙니다ㅣ.
+  <strong>그림 저작권 안내:</strong> Figure 1~7은 출판사(Taylor &amp; Francis) 서버의 이미지를 직접 참조하며, 캡션에 원 출처와 저작권 표기를 실었습니다. Figure 4·5·6은 CC BY 계열이나 Figure 1·2·3은 Sage·British Psychological Society·Wiley의 개별 허락을 받아 재수록된 제3자 도판이므로, 공개 웹 게시 시에는 허락 범위를 확인하시기 바랍니다. 랩 내부·수업용 공유가 가장 안전합니다.
 </div>
 
 <script>

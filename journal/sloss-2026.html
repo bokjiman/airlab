@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sloss 2026 저널클럽</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+
+  /* ════════ AIR Lab theme: navy → recovery-teal (synced with index) ════════ */
+  :root{ --sky:#2d6a9f; --sky-deep:#1f4e79; --sky-bright:#7fa9d1; --sky-soft:#e9eff6; --sky-soft2:#f4f7fb; --sky-soft-2:#f4f7fb; --mint:#3a9a8f; --mint-soft:#eaf5f2; --hover-bg:#eef3f9; }
+  .stripe{background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+  .stripe span{background:transparent!important}
+  .nav-logo-dot .d3{background:#3a9a8f}
+  .hero{isolation:isolate}
+  .hero::before{background:radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%), linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%)!important}
+  .overline{color:#9fd3ca!important}
+  .overline::before{background:#8cc7bd!important}
+  .hero h1{color:#fff!important}
+  .hero h1 em{color:#bfe6df!important}
+  .hero .citation{color:#b7c9da!important;border-left-color:#8cc7bd!important}
+  .hero .citation em{color:#d6e5f2!important}
+  .hero .citation a{color:#bfe6df!important}
+  .hero .subtitle{color:#d2e0ec!important}
+  .hero .subtitle strong,.hero .subtitle b{color:#fff!important}
+  .hero .subtitle em{color:#bfe6df}
+  .hero .stat{background:rgba(255,255,255,0.08)!important;border-color:rgba(255,255,255,0.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .hero .stat .num{color:#fff!important}
+  .hero .stat .lbl{color:#a9c1d6!important}
+  .paper-meta,.condition-header{background:linear-gradient(120deg,#1c4a73 0%,#22655f 100%)!important}
+  .section-num{background:linear-gradient(120deg,#1f4e79 0%,#2d7d78 100%)!important}
+</style>
+</head>
+<body id="top">
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#method">방법</a></li>
+      <li><a href="#fig1">Facet 네트워크</a></li>
+      <li><a href="#rq1">RQ1 역경</a></li>
+      <li><a href="#rq2">RQ2 관계</a></li>
+      <li><a href="#critique">비판적 읽기</a></li>
+      <li><a href="#phrases">명문장</a></li>
+      <li><a href="#ourstudy">우리 연구</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">Sloss et al. 2026 · Journal Club</div>
+    <h1>증상의 네트워크에서 삶의 네트워크로:<br><em>역경은 지금의 스트레스와 관계를 거쳐 마음에 닿는다</em></h1>
+    <div class="citation">Sloss, I. M., Smith, J. A., Brosseau, K., &amp; Browne, D. T. (2026). Adversity, social systems, and mental health in a national Canadian sample: A person-context network analysis. <em>Social Psychiatry and Psychiatric Epidemiology</em>. Advance online publication. https://doi.org/10.1007/s00127-026-03096-2</div>
+    <p class="subtitle">심리 네트워크 분석은 지난 10여 년간 정신장애를 "증상들이 서로를 유지시키는 체계"로 보는 관점을 확산시켰다. 그런데 그 네트워크의 노드는 대부분 <strong>사람 안의 증상</strong>이었다. 이 논문은 두 가지를 네트워크 안으로 들여온다. 하나는 아동기 역경, 현재의 스트레스, 사회적 관계 같은 <strong>맥락 변수</strong>이고, 다른 하나는 정신병리와 별개의 차원으로서의 <strong>웰빙</strong>이다. 읽을 때는 방법의 확장이 이론의 어떤 주장을 가능하게 하는지, 그리고 횡단 자료의 편상관이 어디까지 말할 수 있는지를 함께 따라가 보자.<br><br>아래 페이지는 원문의 논리 전개 순서를 따라가되, 각 단계마다 🧭 <strong>길잡이</strong>, 🍳 <strong>비유</strong>, 📊 <strong>그림 읽는 법</strong>, 🧪 <strong>용어 정리</strong>를 덧붙여 방법론 배경이 적은 학생도 따라올 수 있도록 구성했다.</p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">n = 8,967</span><div class="lbl">캐나다 전국 대표 표본 (20세 이상)</div></div>
+      <div class="stat"><span class="num">3개 네트워크</span><div class="lbl">facet 1개 + item 2개 (웰빙·정신병리)</div></div>
+      <div class="stat"><span class="num">r<sub>partial</sub> = .47</span><div class="lbl">생활 스트레스와 정신병리의 편상관</div></div>
+      <div class="stat"><span class="num">r<sub>partial</sub> = .07</span><div class="lbl">아동기 역경과 정신병리의 편상관</div></div>
+      <div class="stat"><span class="num">OSF</span><div class="lbl">사전등록된 분석 계획</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>Sloss et al. (2026)</div>
+
+<!-- 01 -->
+<div class="section-head" id="paper">
+  <div class="section-num">01</div>
+  <div class="section-title-block"><h2>논문 소개</h2><p class="section-subtitle">네트워크 이론, 사회적 결정요인, 이중요인 모형의 교차점</p></div>
+</div>
+
+<div class="panel">
+  <p>이 논문은 세 개의 이론 전통이 만나는 지점에 서 있다. 첫째는 <strong>정신병리의 네트워크 이론</strong>으로, 정신장애를 잠재된 단일 원인의 표현이 아니라 증상들이 서로 영향을 주고받는 복합 체계로 본다. 둘째는 <strong>건강의 사회적 결정요인(SDoH)</strong> 틀로, 아동기 역경, 만성 스트레스, 사회적 고립 같은 맥락 요인이 정신건강을 형성한다고 본다. 셋째는 <strong>정신건강의 이중요인 모형(dual-factor model)</strong>으로, 정신병리와 웰빙이 하나의 연속선의 양 끝이 아니라 서로 관련되지만 구별되는 두 차원이라고 본다.</p>
+  <p>저자들이 지적하는 긴장은 이것이다. 네트워크 연구는 대부분 사람 <strong>안의</strong> 정신병리 지표만을 노드로 삼아 왔는데, 이는 정신건강 문제가 사람과 맥락의 상호작용에서 생긴다는 발달과학의 관점과 어긋난다. 또 네트워크 연구가 웰빙을 함께 모형화하는 경우는 드물었다. 이 논문은 맥락 변수와 웰빙을 모두 노드로 포함한 <strong>person-context network</strong>를 전국 대표 표본에서 추정한 연구다.</p>
+</div>
+
+<div class="paper-meta">
+  <h3>Adversity, social systems, and mental health</h3>
+  <div class="sub">in a national Canadian sample: a person-context network analysis</div>
+  <div class="paper-meta-grid">
+    <div class="paper-meta-item"><div class="label">Journal</div><div class="value"><i>Social Psychiatry and Psychiatric Epidemiology</i> (Springer), 2026<br>SSCI · SCIE 등재</div></div>
+    <div class="paper-meta-item"><div class="label">Type</div><div class="value">사전등록 횡단 연구 (OSF)<br>2022 Statistics Canada MHACS<br>혼합 그래프 모형(MGM) 네트워크 분석, 표본가중치 적용</div></div>
+    <div class="paper-meta-item"><div class="label">Core claim</div><div class="value">아동기 역경은 현재의 스트레스와 부정적 사회적 상호작용을 거쳐 정신병리와 연결되며, 긍정적 맥락은 웰빙과, 부정적 맥락은 정신병리와 더 강하게 연결된다</div></div>
+  </div>
+</div>
+
+<div class="quote-box">
+  "Results revealed that current stress and negative social interactions provided a link between childhood adversity and psychopathology. ... Positive contextual factors were more strongly associated with wellbeing, and negative factors with psychopathology."
+  <span class="attr">출처: Abstract, Results</span>
+  <span class="trans"><strong>번역.</strong> 결과는 <strong>현재의 스트레스와 부정적 사회적 상호작용</strong>이 아동기 역경과 정신병리를 잇는 연결고리임을 보여주었다. <strong>긍정적 맥락 요인은 웰빙과, 부정적 요인은 정신병리와</strong> 더 강하게 연관되었다.<br><br>🧭 <b>길잡이.</b> "provided a link"라는 동사를 눈여겨보자. 매개(mediate)라고 쓰지 않고 "연결고리를 제공했다"고 써서, 횡단 네트워크가 허용하는 수준의 주장에 머문다. 같은 논문의 결론 절 표현과 비교해 읽으면 좋다.</span>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">이 논문을 이끄는 두 가지 질문</span><br>
+  <b>① 역경은 어디에 닿는가.</b> 과거의 아동기 역경과 현재의 스트레스는 정신병리와 웰빙 각각과 어떻게 연결되는가.<br>
+  <b>② 관계는 어느 쪽으로 작동하는가.</b> 사회적 지지와 부정적 사회적 상호작용은 정신병리와 웰빙 중 어느 쪽과 더 강하게 연결되는가.<br>
+  <b>가설.</b> 역경은 낮은 웰빙과 높은 정신병리를, 높은 지지와 낮은 부정적 상호작용은 낮은 정신병리와 높은 웰빙에 대응할 것이다.<br><br>
+  🔑 두 질문은 네트워크 분석을 <b>사람 안(증상)</b>에서 <b>사람과 맥락 사이</b>로, <b>병리 한 축</b>에서 <b>병리와 웰빙 두 축</b>으로 넓히는 두 가지 확장에 각각 대응한다.
+</div>
+
+<!-- 02 -->
+<div class="section-head" id="intro">
+  <div class="section-num">02</div>
+  <div class="section-title-block"><h2>Introduction: 네트워크 이론의 두 가지 빈틈</h2><p class="section-subtitle">사람 안의 증상만 보는 네트워크, 병리만 보는 네트워크</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">1</div>
+    <div class="cond-titles"><div class="cond-code">Gap 1</div><h3>맥락이 빠진 네트워크</h3><div class="cond-en">Within-person symptom networks vs. person-context interaction</div></div>
+    <span class="verdict new">확장</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">🕸️ 지금까지의 네트워크 분석은 "우울 증상 A가 불안 증상 B와 연결된다"를 보여주었다. 이 논문은 "외로움이 슬픔과 연결된다"처럼 삶의 조건을 네트워크 안으로 들여온다.</div>
+    <p>저자들은 네트워크 이론의 출발점을 인정하면서도, 대부분의 연구가 진단 기준 같은 개인 내부 지표만을 노드로 삼는다는 점을 문제 삼는다. 이는 Lerner(2006)의 발달체계 이론이나 Sameroff(2010)의 통합 발달 이론처럼 개인과 맥락의 상호작용을 강조하는 발달과학의 핵심 관점, 그리고 사회적 결정요인 틀과 어긋난다. 서론은 기존 연구들이 이미 역경이 관계의 질을 거쳐 정신건강에 간접적으로 이어진다는 이론적 모형을 제시해 왔음을 정리하고, 이런 복합 경로를 네트워크 패러다임으로 명시적으로 모형화한 대규모 연구가 부족하다고 지적한다.</p>
+    <div class="quote-box">
+      "... the majority of psychometric network studies of mental "health" look at indicators of psychopathology (e.g., diagnostic criteria) within the person. However, this is somewhat at odds with influential perspectives around person-context interactions in the emergence of mental health problems ..."
+      <span class="attr">출처: Introduction</span>
+      <span class="trans"><strong>번역.</strong> 정신 "건강"에 대한 심리측정 네트워크 연구의 대다수는 <strong>사람 안의 정신병리 지표</strong>(예: 진단 기준)를 본다. 그러나 이는 정신건강 문제의 발생에서 <strong>개인과 맥락의 상호작용</strong>을 강조하는 영향력 있는 관점과 다소 어긋난다.<br><br>🧭 <b>길잡이.</b> 네트워크 연구 전체를 비판하면서도 "somewhat at odds"라는 완곡어를 쓴다. 기존 패러다임을 부정하지 않고 빈틈만 짚어 자기 연구의 자리를 여는 서론 전략이다.</span>
+    </div>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">2</div>
+    <div class="cond-titles"><div class="cond-code">Gap 2</div><h3>웰빙이 빠진 네트워크</h3><div class="cond-en">Dual-factor models: psychopathology and wellbeing as distinct dimensions</div></div>
+    <span class="verdict new">통합</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">⚖️ 아프지 않다는 것이 잘 지낸다는 뜻은 아니다. 그렇다면 무엇이 "아픔"을 줄이는지와 무엇이 "잘 지냄"을 키우는지는 서로 다를 수 있다.</div>
+    <p>두 번째 빈틈은 웰빙이다. Keyes의 정신건강 연속체 연구 이후 이중요인 모형은 정신병리와 웰빙이 서로 관련되지만 구별되는 차원이라고 주장해 왔다. 저자들이 인용한 체계적 문헌고찰(Magalhães, 2024)에서는 검토된 연구의 87.5%가 이중요인 개념화를 지지했다. 이 관점을 받아들이면, 정신병리를 줄이는 요인과 웰빙을 높이는 요인이 같다고 가정할 이유가 없다. 따라서 두 차원을 <strong>동시에</strong> 모형화해야 맥락 요인의 차별적 역할을 볼 수 있다.</p>
+    <div class="quote-box">
+      "This work highlights the importance of recognizing that the absence of psychopathology is not the same as flourishing."
+      <span class="attr">출처: Introduction, Concurrent examination of wellbeing and mental illness</span>
+      <span class="trans"><strong>번역.</strong> 이 연구들은 <strong>정신병리의 부재가 번영(flourishing)과 같지 않다</strong>는 점을 인식하는 것이 중요함을 강조한다.<br><br>🧭 <b>길잡이.</b> 이중요인 모형 전체를 한 문장으로 압축한 표현이다. 이 문장이 이후 설계 결정, 곧 웰빙을 별도의 네트워크로 추정하는 선택의 이론적 근거가 된다.</span>
+    </div>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="section-head" id="method">
+  <div class="section-num">03</div>
+  <div class="section-title-block"><h2>방법: 무엇을 노드로, 어떻게 연결했나</h2><p class="section-subtitle">MHACS 2022 · 혼합 그래프 모형 · 세 가지 중심성</p></div>
+</div>
+
+<div class="panel">
+  <p>자료는 Statistics Canada가 2022년 3월부터 7월까지 컴퓨터 보조 전화면접으로 수집한 <strong>Mental Health and Access to Care Survey(MHACS)</strong>다. 2021년 센서스 기준으로 대표성 있게 추출된 39,485명 중 9,861명이 응답했고(응답률 25%), 아동기 역경 문항에 응답하지 않은 20세 미만을 제외한 <strong>8,967명</strong>이 분석되었다. 낮은 응답률은 표본가중치로 보정했다. 연구 설계는 OSF에 사전등록되었다.</p>
+  <p>분석에는 연속형과 이분형 변수가 섞여 있기 때문에 R의 <strong>mgm 패키지로 혼합 그래프 모형(MGM)</strong>을 추정했고, EBIC 기반 lasso 정규화로 간결한 네트워크를 얻었다. 네트워크는 두 수준에서 추정되었다. <strong>facet 수준</strong>에서는 척도 평균점수와 이분형 정신건강 지표가 노드가 되고, <strong>item 수준</strong>에서는 개별 문항이 노드가 되며, 웰빙 네트워크와 정신병리 네트워크를 따로 추정했다. 결측은 random forest 기반 missForest로 대체했고, 1,000회 비모수 부트스트랩으로 간선과 중심성의 안정성을 평가했다(CS 계수 .25 초과를 해석 가능 기준으로 사용).</p>
+</div>
+
+<table class="mini-table">
+  <thead><tr><th>영역</th><th>측정</th><th>형태 · 신뢰도</th></tr></thead>
+  <tbody>
+    <tr><td>아동기 역경</td><td>16세 이전 부모 간 폭력 목격(1), 신체학대(3), 성학대(2), 아동보호기관 접촉(1)</td><td>빈도 5점 · α = .76</td></tr>
+    <tr><td>생활 스트레스</td><td>"대부분의 날이 얼마나 스트레스가 많은가" <strong>단일 문항</strong></td><td>5점</td></tr>
+    <tr><td>코로나 스트레스</td><td>신체건강, 가구 내 관계, 소득, 서비스 접근, 감염, 가까운 사람의 질병·사망, <strong>외로움·고립/정서적 고통</strong> 7개</td><td>예/아니오 · α = .61</td></tr>
+    <tr><td>사회적 지지</td><td>Social Provisions Scale 10문항</td><td>4점 · α = .93</td></tr>
+    <tr><td>부정적 사회적 상호작용</td><td>지난 한 달 타인의 과도한 요구, 비판, 무심함, 분노 4문항</td><td>4점 · α = .82</td></tr>
+    <tr><td>정신병리</td><td>K10 심리적 고통 10문항 + 지난 12개월 자살사고·우울·범불안·사회불안·알코올·약물 문제 6개 지표</td><td>K10 α = .88 · 지표는 이분형</td></tr>
+    <tr class="hi"><td>웰빙</td><td>행복, 흥미, 만족, 기여, 소속, 의미 등 14문항 (척도명은 본문에 명시되지 않음)</td><td>6점 · α = .90</td></tr>
+  </tbody>
+</table>
+<p class="fig-cap">출처: Sloss et al. (2026), Measures 및 Table 2를 한국어로 요약.</p>
+
+<div class="mod-grid">
+  <div class="mod-card"><h4>💪 강도 중심성</h4><div class="en">Strength</div><p>한 노드에 연결된 모든 간선 가중치의 절댓값 합. 네트워크 안에서 그 노드가 얼마나 많이, 강하게 연결되어 있는가.</p></div>
+  <div class="mod-card"><h4>🌉 다리 강도</h4><div class="en">Bridge strength</div><p>같은 측정 영역(커뮤니티)이 <strong>아닌</strong> 노드들과의 간선 가중치 합. 서로 다른 영역을 잇는 연결자의 역할을 나타낸다.</p></div>
+  <div class="mod-card"><h4>🎯 예측가능성</h4><div class="en">Predictability</div><p>이웃 노드들이 그 노드의 분산을 얼마나 설명하는가. 네트워크 안에서 그 노드가 얼마나 "설명되는" 위치에 있는가.</p></div>
+  <div class="mod-card"><h4>🔗 간선의 의미</h4><div class="en">Edge = partial correlation</div><p>두 노드 사이의 간선은 네트워크의 다른 모든 변수를 통제한 뒤의 조건부 연관(편상관)이다. 방향은 없다.</p></div>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">용어 정리</span><br>
+  🧪 <b>편상관(partial correlation)</b>: 다른 모든 변수를 통제한 뒤 두 변수 사이에 남는 상관.<br>
+  🧪 <b>혼합 그래프 모형(MGM)</b>: 연속형과 범주형 변수가 섞인 자료에서 네트워크를 추정하는 모형. 이 논문은 R의 mgm 패키지(Haslbeck &amp; Waldorp, 2020)를 사용했다.<br>
+  🧪 <b>EBIC lasso 정규화</b>: 작은 간선을 0으로 줄여 간결한 네트워크를 얻는 방법. EBIC는 그 강도를 고르는 모형 선택 기준이다.<br>
+  🧪 <b>CS 계수(correlation stability coefficient)</b>: 사례를 일부 제거해도 원래 중심성 순위와의 상관이 높게 유지되는 최대 제거 비율. 이 논문은 .25 초과를 해석 가능 기준으로 삼았다.<br>
+  🧪 <b>이중요인 모형(dual-factor model)</b>: 정신건강을 정신병리와 웰빙이라는 관련되지만 구별되는 두 차원으로 보는 모형.<br>
+  🧪 <b>스트레스 민감화(stress sensitization)</b>: 초기 역경이 이후 스트레스에 대한 반응성을 높인다는 가설. 저자들은 역경이 정서 조절과 관계 기능을 손상시켜 지속적 심리사회적 스트레스의 가능성을 높인다는 설명으로 인용한다.
+</div>
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트</span><br>
+  🗺️ <strong>편상관 네트워크는 "경로도"가 아니다.</strong> 네트워크의 간선은 방향이 없는 조건부 연관이다. A와 C 사이에 간선이 없고 A–B, B–C에 간선이 있다면, 이는 "B를 통제하면 A와 C가 조건부 독립"이라는 뜻이다. 이 구조는 매개(A→B→C)와도, 공통 원인(A←B→C)과도, 역방향 매개(C→B→A)와도 양립한다. 횡단 자료의 네트워크에서 "B가 A와 C를 잇는다"는 서술은 <strong>구조적 위치</strong>에 대한 서술이지 <strong>인과 경로</strong>에 대한 서술이 아니다. 이 구분이 이 논문 전체를 비판적으로 읽는 열쇠다.
+</div>
+
+<!-- 04 -->
+<div class="section-head" id="fig1">
+  <div class="section-num">04</div>
+  <div class="section-title-block"><h2>Facet 수준 네트워크: 한눈에 보는 전체 구조</h2><p class="section-subtitle">Figure 1. Network of Subscales</p></div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">Figure 1. Network of Subscales</div>
+  <span class="fig-tag orig">원문 Figure</span>
+  <div class="fig-orig">
+    <img src="https://media.springernature.com/full/springer-static/image/art%3A10.1007%2Fs00127-026-03096-2/MediaObjects/127_2026_3096_Fig1_HTML.png?as=webp" alt="Sloss et al. (2026) Figure 1: Network of Subscales" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+    <div style="display:none;font-size:13px;color:#828d9b;padding:20px;">원문 이미지를 불러오지 못했습니다. <a href="https://doi.org/10.1007/s00127-026-03096-2" target="_blank" rel="noopener">원문에서 Figure 1 보기</a></div>
+  </div>
+  <p class="fig-cap">출처: Sloss et al. (2026), Figure 1. 원문 주석: 굵고 진한 간선일수록 강한 연관. 빨간색은 부적, 초록색은 정적 연관. 회색은 한쪽 또는 양쪽 변수가 이분형인 경우. 교육 목적의 인용이며 저작권은 원 출판사에 있다.</p>
+
+  <div class="fig-kr">
+    <span class="fig-tag kr">AIR Lab 재구성 · 한국어 주석</span>
+    <svg viewBox="0 0 960 505" width="100%" style="max-width:960px" role="img" aria-label="facet 수준 네트워크 한국어 재구성">
+      <!-- edges: faint first -->
+      <g stroke="#aab4c1" stroke-width="1.6" fill="none" opacity="0.8">
+        <line x1="386" y1="177" x2="378" y2="54"/>
+        <line x1="386" y1="177" x2="314" y2="104"/>
+        <line x1="386" y1="177" x2="528" y2="118"/>
+        <line x1="386" y1="177" x2="324" y2="257"/>
+        <line x1="246" y1="402" x2="338" y2="449" stroke-width="5"/>
+      </g>
+      <line x1="525" y1="372" x2="699" y2="339" stroke="#9fd3c0" stroke-width="1.4"/>
+      <path d="M386,177 Q820,90 708,312" fill="none" stroke="#6fc2a4" stroke-width="1.4" stroke-dasharray="5 4"/>
+      <line x1="657" y1="215" x2="699" y2="339" stroke="#6fc2a4" stroke-width="2"/>
+      <line x1="657" y1="215" x2="528" y2="268" stroke="#6fc2a4" stroke-width="2"/>
+      <line x1="528" y1="268" x2="525" y2="372" stroke="#6fc2a4" stroke-width="2"/>
+      <line x1="657" y1="215" x2="525" y2="372" stroke="#9fd3c0" stroke-width="1.4"/>
+      <line x1="203" y1="187" x2="82" y2="268" stroke="#3fa88a" stroke-width="4.5"/>
+      <line x1="203" y1="187" x2="386" y2="177" stroke="#e0573e" stroke-width="3.5"/>
+      <line x1="386" y1="177" x2="657" y2="215" stroke="#3fa88a" stroke-width="4"/>
+      <line x1="386" y1="177" x2="528" y2="268" stroke="#3fa88a" stroke-width="5"/>
+      <line x1="386" y1="177" x2="525" y2="372" stroke="#3fa88a" stroke-width="3.2"/>
+      <!-- edge labels -->
+      <g font-size="12" font-weight="700">
+        <rect x="112" y="210" width="44" height="20" rx="10" fill="#fff" stroke="#3fa88a"/><text x="134" y="224" text-anchor="middle" fill="#3fa88a">.44</text>
+        <rect x="470" y="180" width="44" height="20" rx="10" fill="#fff" stroke="#3fa88a"/><text x="492" y="194" text-anchor="middle" fill="#3fa88a">.36</text>
+        <rect x="446" y="210" width="44" height="20" rx="10" fill="#fff" stroke="#3fa88a"/><text x="468" y="224" text-anchor="middle" fill="#3fa88a">.47</text>
+        <rect x="428" y="276" width="44" height="20" rx="10" fill="#fff" stroke="#3fa88a"/><text x="450" y="290" text-anchor="middle" fill="#3fa88a">.30</text>
+        <rect x="708" y="150" width="44" height="20" rx="10" fill="#fff" stroke="#6fc2a4" stroke-dasharray="3 2"/><text x="730" y="164" text-anchor="middle" fill="#3fa88a">.07</text>
+        <rect x="270" y="160" width="36" height="20" rx="10" fill="#fff" stroke="#e0573e"/><text x="288" y="174" text-anchor="middle" fill="#e0573e">−</text>
+      </g>
+      <!-- nodes -->
+      <g font-size="12.5" font-weight="700" text-anchor="middle">
+        <circle cx="386" cy="177" r="30" fill="#7fd0e8" stroke="#2f6fa8" stroke-width="2"/><text x="386" y="174" fill="#20262e">정신</text><text x="386" y="189" fill="#20262e">병리</text>
+        <circle cx="203" cy="187" r="28" fill="#7fd0e8" stroke="#46505c"/><text x="203" y="192" fill="#20262e">웰빙</text>
+        <circle cx="528" cy="118" r="22" fill="#7fd0e8" stroke="#46505c"/><text x="528" y="122" font-size="10.5" fill="#20262e">자살사고</text>
+        <circle cx="324" cy="257" r="22" fill="#7fd0e8" stroke="#46505c"/><text x="324" y="261" font-size="10.5" fill="#20262e">범불안</text>
+        <circle cx="314" cy="104" r="22" fill="#7fd0e8" stroke="#46505c"/><text x="314" y="100" font-size="10.5" fill="#20262e">우울</text><text x="314" y="113" font-size="10.5" fill="#20262e">증상</text>
+        <circle cx="378" cy="54" r="22" fill="#7fd0e8" stroke="#46505c"/><text x="378" y="50" font-size="10.5" fill="#20262e">사회</text><text x="378" y="63" font-size="10.5" fill="#20262e">불안</text>
+        <circle cx="246" cy="402" r="22" fill="#7fd0e8" stroke="#46505c"/><text x="246" y="398" font-size="10.5" fill="#20262e">알코올</text><text x="246" y="411" font-size="10.5" fill="#20262e">문제</text>
+        <circle cx="338" cy="449" r="22" fill="#7fd0e8" stroke="#46505c"/><text x="338" y="445" font-size="10.5" fill="#20262e">약물</text><text x="338" y="458" font-size="10.5" fill="#20262e">문제</text>
+        <circle cx="82" cy="268" r="28" fill="#fbef9c" stroke="#46505c"/><text x="82" y="264" font-size="11" fill="#20262e">사회적</text><text x="82" y="278" font-size="11" fill="#20262e">지지</text>
+        <circle cx="657" cy="215" r="28" fill="#fbef9c" stroke="#46505c"/><text x="657" y="211" font-size="11" fill="#20262e">부정적</text><text x="657" y="225" font-size="11" fill="#20262e">상호작용</text>
+        <circle cx="528" cy="268" r="30" fill="#f7c6f2" stroke="#2f6fa8" stroke-width="2"/><text x="528" y="264" font-size="11.5" fill="#20262e">생활</text><text x="528" y="279" font-size="11.5" fill="#20262e">스트레스</text>
+        <circle cx="525" cy="372" r="28" fill="#f7c6f2" stroke="#46505c"/><text x="525" y="368" font-size="11" fill="#20262e">코로나</text><text x="525" y="382" font-size="11" fill="#20262e">스트레스</text>
+        <circle cx="699" cy="339" r="28" fill="#f7c6f2" stroke="#46505c"/><text x="699" y="335" font-size="11" fill="#20262e">아동기</text><text x="699" y="349" font-size="11" fill="#20262e">역경</text>
+      </g>
+      <!-- legend -->
+      <g font-size="11.5">
+        <rect x="770" y="30" width="178" height="118" rx="8" fill="#dff4fb"/>
+        <text x="782" y="52" font-weight="700" fill="#20262e">정신건강</text>
+        <text x="782" y="72" fill="#46505c">웰빙 · 정신병리(K10)</text>
+        <text x="782" y="90" fill="#46505c">자살사고 · 우울 · 범불안</text>
+        <text x="782" y="108" fill="#46505c">사회불안 · 알코올 · 약물</text>
+        <text x="782" y="130" fill="#828d9b" font-size="10.5">자살사고~약물: 이분형</text>
+        <rect x="770" y="158" width="178" height="62" rx="8" fill="#fdf8d6"/>
+        <text x="782" y="180" font-weight="700" fill="#20262e">관계 체계</text>
+        <text x="782" y="200" fill="#46505c">사회적 지지 · 부정적 상호작용</text>
+        <rect x="770" y="230" width="178" height="78" rx="8" fill="#fbe6f8"/>
+        <text x="782" y="252" font-weight="700" fill="#20262e">맥락 변수(역경)</text>
+        <text x="782" y="272" fill="#46505c">생활·코로나 스트레스</text>
+        <text x="782" y="290" fill="#46505c">아동기 역경</text>
+        <line x1="782" y1="316" x2="818" y2="316" stroke="#3fa88a" stroke-width="4"/><text x="826" y="320" fill="#46505c">정적 편상관</text>
+        <line x1="782" y1="340" x2="818" y2="340" stroke="#e0573e" stroke-width="3.5"/><text x="826" y="344" fill="#46505c">부적 편상관</text>
+        <line x1="782" y1="364" x2="818" y2="364" stroke="#aab4c1" stroke-width="3"/><text x="826" y="368" fill="#46505c">이분형 포함(부호 없음)</text>
+        <line x1="782" y1="388" x2="818" y2="388" stroke="#9fd3c0" stroke-width="1.4" stroke-dasharray="5 4"/><text x="826" y="392" fill="#46505c">약한 직접 연관(.07)</text>
+        <text x="782" y="424" fill="#828d9b" font-size="10.5">숫자: 본문 보고 편상관 값</text>
+        <text x="782" y="440" fill="#828d9b" font-size="10.5">배치와 약한 간선은 원문 그림을</text>
+        <text x="782" y="456" fill="#828d9b" font-size="10.5">근사적으로 옮긴 것</text>
+        <text x="782" y="476" fill="#c78a1e" font-size="10.5">"우울 증상" 노드는 원문 범례에서</text>
+        <text x="782" y="490" fill="#c78a1e" font-size="10.5">5번이 누락되어 추정한 것</text>
+      </g>
+    </svg>
+  </div>
+  <div class="fig-implies">
+    <b>📊 이 그림을 어떻게 읽는가.</b> 노드의 색은 영역이다. 하늘색은 정신건강, 노란색은 관계 체계, 분홍색은 역경이다. 간선은 다른 모든 변수를 통제한 편상관이며, 굵을수록 강하다. 네트워크 그림에서 노드의 위치는 알고리즘이 정한 것이므로 "가깝다"는 시각적 인상보다 <b>간선의 유무와 굵기</b>를 읽어야 한다.<br><br>
+    🎯 <b>이게 무슨 뜻인가.</b> 세 가지 구조가 눈에 들어온다. 첫째, <b>정신병리(K10)가 허브</b>다. 생활 스트레스(.47), 부정적 상호작용(.36), 코로나 스트레스(.30)가 모두 정신병리에 직접 연결되어 있다. 둘째, <b>웰빙은 거의 사회적 지지(.44)를 통해서만</b> 맥락과 연결되고, 역경 노드들과는 직접 연결되지 않는다. 정신병리와 웰빙 사이에는 부적 간선이 있지만(원문에 수치는 본문 보고되지 않음), 둘은 네트워크 안에서 서로 다른 "이웃"을 갖는다. 이것이 이중요인 모형의 네트워크적 표현이다. 셋째, <b>아동기 역경</b>은 정신병리와의 직접 간선이 매우 약하고(.07), 주로 생활 스트레스, 코로나 스트레스, 부정적 상호작용 쪽에 붙어 있다. 저자들이 "현재의 스트레스와 관계가 역경과 정신병리를 잇는다"고 말하는 근거가 바로 이 배치다.
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="section-head" id="rq1">
+  <div class="section-num">05</div>
+  <div class="section-title-block"><h2>RQ1: 역경은 정신건강과 어떻게 연결되는가</h2><p class="section-subtitle">과거의 역경과 현재의 스트레스</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">1</div>
+    <div class="cond-titles"><div class="cond-code">Finding 1</div><h3>생활 스트레스와 외로움이 네트워크의 중심에 있다</h3><div class="cond-en">Perceived life stress and loneliness as the most central nodes</div></div>
+    <span class="verdict promising">견고한 패턴</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">🔥 여러 역경 변수 중에서 정신건강과 가장 촘촘하게 얽혀 있는 것은 오래전 일이 아니라 "지금 얼마나 버거운가"와 "지금 얼마나 외로운가"였다.</div>
+    <p>facet 수준에서 역경 노드의 강도 중심성은 생활 스트레스, 코로나 스트레스, 아동기 역경 순이었다. item 수준 네트워크에서는 코로나 스트레스 중 외로움 문항(COVID - Lonely)의 강도가 가장 높았고, 코로나 관련 관계 어려움, 코로나 관련 신체건강 문제, 신체학대 문항 2가 뒤를 이었다. 다리 강도는 두 item 네트워크 모두에서 생활 스트레스가 가장 높았고, 외로움과 코로나 관련 관계 어려움이 뒤따랐다. 즉 생활 스트레스는 <strong>역경 영역과 정신건강 영역을 잇는 가장 강한 다리</strong>였다.</p>
+    <p>구체적 간선을 보면, 정신병리 네트워크에서 외로움과 슬픔(r<sub>partial</sub> = .33), 생활 스트레스와 신경과민(.25), 외로움과 신경과민(.14)이 두드러졌고, 웰빙 네트워크에서는 생활 스트레스가 삶의 만족(−.15), 일상 책임 관리(−.13), 행복(−.10)과 부적으로 연결되었다.</p>
+    <div class="quote-box">
+      "Notably, these two variables were the most central nodes in the networks, meaning that they were strongly connected to the other nodes. In other words, they may act as a key mechanism linking adversity and social experiences with mental health."
+      <span class="attr">출처: Discussion</span>
+      <span class="trans"><strong>번역.</strong> 주목할 점은 이 두 변수가 네트워크에서 <strong>가장 중심적인 노드</strong>였다는 것이며, 이는 다른 노드들과 강하게 연결되어 있음을 뜻한다. 다시 말해 이들은 역경 및 사회적 경험과 정신건강을 잇는 <strong>핵심 기제로 작용할 수 있다</strong>.<br><br>🧭 <b>길잡이.</b> "In other words"로 통계적 서술(중심성)을 이론적 해석(기제)으로 옮기고, "may act as"로 그 해석의 강도를 조절한다. 결과를 해석으로 번역할 때 조동사가 하는 일을 보여 주는 예다.</span>
+    </div>
+    <p>저자들의 표현이 "may act as"로 조심스럽다는 점에 주목하자. 중심성은 연결의 양에 대한 기술이다. 중심 노드가 곧 원인이거나 가장 효과적인 개입 표적이라는 추론은 별도의 근거(종단 자료, 개입 연구)를 필요로 한다.</p>
+  </div>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">여기서 조심할 것</span><br>
+  ⚠️ <b>중심성이 곧 개입 표적은 아니다.</b> 저자들은 함의 절에서 생활 스트레스와 외로움을 줄이는 개입을 제안하면서도, 모형이 인과를 탐색하지 않았다고 명시한다. 가장 연결이 많은 노드가 가장 효과적인 개입 지점이라는 가정은 종단 자료나 개입 연구로 따로 검증해야 한다. 네트워크 결과를 실천 제안으로 옮길 때 가장 흔히 생기는 비약이다.
+</div>
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">2</div>
+    <div class="cond-titles"><div class="cond-code">Finding 2</div><h3>아동기 역경은 "간접적으로" 연결된다</h3><div class="cond-en">Childhood adversity linked to psychopathology through stress and social strain</div></div>
+    <span class="verdict mixed">해석에 주의</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">🔗 아동기 역경은 성인기 정신병리와 직접 묶여 있기보다, 지금의 스트레스와 갈등적 관계에 붙어 있다. 저자들은 이를 매개로 해석하지만, 횡단 자료가 그 해석을 확정해 주지는 않는다.</div>
+    <p>아동기 역경과 정신병리의 직접 편상관은 .07로 작았다. 저자들은 역경이 생활 스트레스와 부정적 상호작용을 통해 간접적으로 정신병리와 연결된다고 해석하고, 이를 <strong>스트레스 민감화(stress sensitization)</strong> 모형과 <strong>애착 이론</strong>에 연결한다. 초기 역경이 정서 조절과 관계 기능을 손상시켜 이후 지속적인 심리사회적 스트레스의 가능성을 높인다는 설명이다.</p>
+    <div class="quote-box">
+      "Therefore, the relationship between childhood adversity and psychopathology may be mediated by perceived stress and social interactions."
+      <span class="attr">출처: Discussion</span>
+      <span class="trans"><strong>번역.</strong> 따라서 아동기 역경과 정신병리의 관계는 지각된 스트레스와 사회적 상호작용에 의해 <strong>매개될 수 있다</strong>.<br><br>🧭 <b>길잡이.</b> "may be mediated"는 조심스러운 표현이지만 "매개"라는 인과 용어를 들여온다. 편상관 네트워크에서 이 단어가 어디까지 정당화되는지는 아래 본문에서 따져 본다.</span>
+    </div>
+    <p>이 해석은 이론적으로 설득력이 있지만, 자료가 허용하는 범위를 정확히 짚어야 한다. 편상관 네트워크에서 "아동기 역경–생활 스트레스–정신병리"의 배치는 매개 구조와 양립하지만, 정신병리가 높은 사람이 현재의 스트레스를 더 크게 지각하고 과거의 역경을 더 많이 보고하는 구조와도 양립한다. 저자들은 한계 절에서 횡단 설계가 인과적·시간적 결론을 배제한다고 명시하지만, 결론 절에서는 "primarily through"라는 더 강한 표현을 쓴다. 이 논문을 인용할 때는 <strong>"구조적으로 이어져 있다"</strong>는 수준에서 인용하는 것이 안전하다.</p>
+  </div>
+</div>
+
+<!-- 06 -->
+<div class="section-head" id="rq2">
+  <div class="section-num">06</div>
+  <div class="section-title-block"><h2>RQ2: 관계의 두 얼굴과 정신건강의 두 차원</h2><p class="section-subtitle">Figure 2 · Figure 3 · 유인가(valence)의 비대칭</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">3</div>
+    <div class="cond-titles"><div class="cond-code">Finding 3</div><h3>긍정은 웰빙과, 부정은 병리와</h3><div class="cond-en">Valence-specific links between context and mental health</div></div>
+    <span class="verdict new">이중요인 지지</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">🌓 좋은 관계가 많다고 해서 갈등의 해악이 상쇄되는 것이 아니고, 갈등이 없다고 해서 좋은 관계의 이익이 생기는 것도 아니다. 두 경로는 서로 다른 결과로 이어진다.</div>
+    <p>facet 수준에서 사회적 지지는 웰빙과(.44), 부정적 상호작용은 정신병리와(.36) 가장 강하게 연결되었다. item 수준에서도 같은 패턴이 이어졌다. 웰빙 네트워크에서는 집단 소속감 지지와 소속감(.15), 정서적 친밀 관계 지지와 따뜻한 관계(.09), 여가 동반자와 소속감(.08)이 연결되었다. 반면 관계 체계와 정신병리 문항 사이에 본문이 보고한 item 간선은 .02~.03 수준으로 매우 약했다(예: 부정적 상호작용 중 분노와 무가치감 .02).</p>
+    <p>저자들은 이를 이중요인 모형에 대한 지지로 해석하며, 개입도 <strong>촉진 경로(promotive pathway)와 위험 경로(risk-based pathway)를 따로 겨냥해야 한다</strong>고 제안한다. 한 방향의 개입이 다른 방향의 결과를 자동으로 개선하지 않을 수 있다는 뜻이다.</p>
+  </div>
+</div>
+
+<div class="mod-grid">
+  <div class="mod-card protect"><h4>🌱 촉진 경로</h4><div class="en">Social support → Wellbeing</div><p>사회적 지지는 웰빙 노드와 가장 강하게 연결되었다. 도구적·정서적 지지가 긍정적 대처를 돕고, 돌봄받고 이해받는다는 느낌을 준다는 기존 문헌과 일치한다.</p><span class="keynum">r<sub>partial</sub> = .44</span></div>
+  <div class="mod-card risk"><h4>⚡ 위험 경로</h4><div class="en">Negative social interactions → Psychopathology</div><p>부정적 상호작용은 정신병리와 가장 강하게 연결되었다. 부정 정서와 대인 갈등이 서로를 강화하는 악순환(Vize et al., 2024)과 연결되는 결과다.</p><span class="keynum">r<sub>partial</sub> = .36</span></div>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">🍳 비유로 다시 읽기</span><br>
+  <b>지하철 노선도로 생각해 보자.</b><br>
+  · <b>노드</b> = 역. 웰빙 문항, 증상 문항, 스트레스, 관계 문항 하나하나가 역이다.<br>
+  · <b>간선</b> = 두 역을 직접 잇는 선로. 다른 모든 노선을 고려하고도 남는 직접 연결만 그린다(편상관).<br>
+  · <b>커뮤니티</b> = 노선. 같은 색의 역들은 같은 척도에 속한다.<br>
+  · <b>다리 노드</b> = 환승역. 생활 스트레스는 역경 노선과 정신건강 노선이 만나는 가장 큰 환승역이다.<br><br>
+  🎯 다만 이 노선도에는 <b>열차의 진행 방향이 표시되어 있지 않다</b>. 환승역이 붐빈다는 사실만으로는 승객이 어느 쪽에서 어느 쪽으로 이동하는지 알 수 없다. 횡단 편상관 네트워크를 인과 경로로 읽으면 안 되는 이유다.
+</div>
+<div class="figure-block">
+  <div class="fig-title">Figure 2. Network of Wellbeing</div>
+  <span class="fig-tag orig">원문 Figure</span>
+  <div class="fig-orig">
+    <img src="https://media.springernature.com/full/springer-static/image/art%3A10.1007%2Fs00127-026-03096-2/MediaObjects/127_2026_3096_Fig2_HTML.png?as=webp" alt="Sloss et al. (2026) Figure 2: Network of Wellbeing" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+    <div style="display:none;font-size:13px;color:#828d9b;padding:20px;">원문 이미지를 불러오지 못했습니다. <a href="https://doi.org/10.1007/s00127-026-03096-2" target="_blank" rel="noopener">원문에서 Figure 2 보기</a></div>
+  </div>
+  <p class="fig-cap">출처: Sloss et al. (2026), Figure 2. 1~14 웰빙(하늘색), 15~24 사회적 지지(노랑), 25~28 부정적 상호작용(올리브), 29~35 코로나 스트레스(분홍), 36 생활 스트레스, 37~43 아동기 역경(보라). 교육 목적의 인용이며 저작권은 원 출판사에 있다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">Figure 3. Network of Psychopathology</div>
+  <span class="fig-tag orig">원문 Figure</span>
+  <div class="fig-orig">
+    <img src="https://media.springernature.com/full/springer-static/image/art%3A10.1007%2Fs00127-026-03096-2/MediaObjects/127_2026_3096_Fig3_HTML.png?as=webp" alt="Sloss et al. (2026) Figure 3: Network of Psychopathology" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+    <div style="display:none;font-size:13px;color:#828d9b;padding:20px;">원문 이미지를 불러오지 못했습니다. <a href="https://doi.org/10.1007/s00127-026-03096-2" target="_blank" rel="noopener">원문에서 Figure 3 보기</a></div>
+  </div>
+  <p class="fig-cap">출처: Sloss et al. (2026), Figure 3. 1~10 K10 문항(하늘색), 11~16 이분형 정신건강 지표(청록), 17~26 사회적 지지, 27~30 부정적 상호작용, 31~37 코로나 스트레스, 38 생활 스트레스, 39~45 아동기 역경. 교육 목적의 인용이며 저작권은 원 출판사에 있다.</p>
+
+  <div class="fig-kr">
+    <span class="fig-tag kr">AIR Lab 재구성 · 두 item 네트워크의 핵심 다리 비교</span>
+    <svg viewBox="0 0 900 430" width="100%" style="max-width:900px" role="img" aria-label="웰빙 네트워크와 정신병리 네트워크의 다리 구조 비교">
+      <text x="220" y="26" text-anchor="middle" font-size="14" font-weight="700" fill="#2f6fa8">Figure 2 · 웰빙 네트워크</text>
+      <text x="680" y="26" text-anchor="middle" font-size="14" font-weight="700" fill="#2f6fa8">Figure 3 · 정신병리 네트워크</text>
+      <line x1="450" y1="40" x2="450" y2="400" stroke="#e6ebf1" stroke-width="1.5"/>
+      <!-- LEFT: wellbeing -->
+      <ellipse cx="220" cy="100" rx="150" ry="46" fill="#dff4fb" stroke="#6cb0e4"/>
+      <text x="220" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="#20262e">웰빙 14문항</text>
+      <text x="140" y="108" text-anchor="middle" font-size="11" fill="#46505c">만족</text>
+      <text x="200" y="120" text-anchor="middle" font-size="11" fill="#46505c">관리</text>
+      <text x="260" y="108" text-anchor="middle" font-size="11" fill="#46505c">행복</text>
+      <text x="320" y="118" text-anchor="middle" font-size="11" fill="#46505c">소속</text>
+      <circle cx="120" cy="250" r="34" fill="#fbe6f8" stroke="#2f6fa8" stroke-width="2"/>
+      <text x="120" y="246" text-anchor="middle" font-size="11.5" font-weight="700" fill="#20262e">생활</text><text x="120" y="261" text-anchor="middle" font-size="11.5" font-weight="700" fill="#20262e">스트레스</text>
+      <circle cx="220" cy="330" r="30" fill="#fbe6f8" stroke="#46505c"/>
+      <text x="220" y="327" text-anchor="middle" font-size="11" fill="#20262e">코로나</text><text x="220" y="341" text-anchor="middle" font-size="11" fill="#20262e">외로움</text>
+      <ellipse cx="345" cy="260" rx="70" ry="40" fill="#fdf8d6" stroke="#c78a1e"/>
+      <text x="345" y="256" text-anchor="middle" font-size="11.5" font-weight="700" fill="#20262e">사회적 지지</text><text x="345" y="272" text-anchor="middle" font-size="10.5" fill="#46505c">집단 소속·친밀</text>
+      <line x1="130" y1="216" x2="140" y2="116" stroke="#e0573e" stroke-width="3"/>
+      <line x1="135" y1="218" x2="198" y2="126" stroke="#e0573e" stroke-width="2.6"/>
+      <line x1="140" y1="220" x2="256" y2="116" stroke="#e0573e" stroke-width="2.2"/>
+      <line x1="224" y1="300" x2="260" y2="116" stroke="#e0573e" stroke-width="1.5"/>
+      <line x1="345" y1="220" x2="320" y2="126" stroke="#3fa88a" stroke-width="3"/>
+      <g font-size="11" font-weight="700">
+        <text x="84" y="168" fill="#e0573e">−.15</text><text x="150" y="176" fill="#e0573e">−.13</text><text x="196" y="190" fill="#e0573e">−.10</text><text x="248" y="220" fill="#e0573e">−.06</text><text x="344" y="180" fill="#3fa88a">.15</text>
+      </g>
+      <rect x="40" y="370" width="360" height="40" rx="8" fill="#e6f5f0"/>
+      <text x="220" y="386" text-anchor="middle" font-size="11" fill="#3fa88a" font-weight="700">웰빙 쪽 다리 강도 1위: 부정적 상호작용 중 "과도한 요구"</text>
+      <text x="220" y="401" text-anchor="middle" font-size="10.5" fill="#46505c">이어서 집단 소속 지지, 무심함, 분노 순</text>
+      <!-- RIGHT: psychopathology -->
+      <ellipse cx="680" cy="100" rx="150" ry="46" fill="#dff4fb" stroke="#6cb0e4"/>
+      <text x="680" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="#20262e">K10 고통 문항 + 6개 지표</text>
+      <text x="596" y="110" text-anchor="middle" font-size="11" fill="#46505c">슬픔</text>
+      <text x="652" y="122" text-anchor="middle" font-size="11" fill="#46505c">신경과민</text>
+      <text x="708" y="108" text-anchor="middle" font-size="11" fill="#46505c">피로</text>
+      <text x="760" y="122" text-anchor="middle" font-size="11" fill="#46505c">힘겨움</text>
+      <text x="800" y="100" text-anchor="middle" font-size="11" fill="#46505c">안절부절</text>
+      <circle cx="560" cy="260" r="30" fill="#fbe6f8" stroke="#46505c"/>
+      <text x="560" y="257" text-anchor="middle" font-size="11" fill="#20262e">코로나</text><text x="560" y="271" text-anchor="middle" font-size="11" fill="#20262e">외로움</text>
+      <circle cx="700" cy="270" r="34" fill="#fbe6f8" stroke="#2f6fa8" stroke-width="2"/>
+      <text x="700" y="266" text-anchor="middle" font-size="11.5" font-weight="700" fill="#20262e">생활</text><text x="700" y="281" text-anchor="middle" font-size="11.5" font-weight="700" fill="#20262e">스트레스</text>
+      <ellipse cx="820" cy="300" rx="62" ry="36" fill="#eef0d8" stroke="#8a8a4a"/>
+      <text x="820" y="296" text-anchor="middle" font-size="11.5" font-weight="700" fill="#20262e">부정적</text><text x="820" y="312" text-anchor="middle" font-size="11" fill="#20262e">상호작용</text>
+      <line x1="562" y1="230" x2="600" y2="118" stroke="#3fa88a" stroke-width="5"/>
+      <line x1="570" y1="232" x2="655" y2="128" stroke="#3fa88a" stroke-width="2.6"/>
+      <line x1="696" y1="236" x2="665" y2="128" stroke="#3fa88a" stroke-width="4"/>
+      <line x1="705" y1="236" x2="708" y2="116" stroke="#3fa88a" stroke-width="2"/>
+      <line x1="712" y1="238" x2="758" y2="128" stroke="#3fa88a" stroke-width="2"/>
+      <line x1="812" y1="266" x2="802" y2="108" stroke="#9fd3c0" stroke-width="1.2"/>
+      <g font-size="11" font-weight="700" fill="#3fa88a">
+        <text x="548" y="170">.33</text><text x="618" y="200">.14</text><text x="660" y="190">.25</text><text x="720" y="190">.10</text><text x="742" y="196">.10</text><text x="812" y="200" fill="#6fc2a4">.02</text>
+      </g>
+      <rect x="500" y="370" width="360" height="40" rx="8" fill="#fdeee9"/>
+      <text x="680" y="386" text-anchor="middle" font-size="11" fill="#e0573e" font-weight="700">가장 강한 맥락 간선: 외로움–슬픔 (.33)</text>
+      <text x="680" y="401" text-anchor="middle" font-size="10.5" fill="#46505c">보고된 관계 체계–병리 문항 간선은 .02~.03 수준</text>
+    </svg>
+  </div>
+  <div class="fig-implies">
+    <b>📊 이 그림을 어떻게 읽는가.</b> 원문 Figure 2와 3은 40개가 넘는 노드를 담고 있어 한눈에 읽기 어렵다. 먼저 <b>같은 색 노드들이 뭉쳐 있는지</b>를 보자. 두 그림 모두에서 사회적 지지(노랑), 아동기 역경(보라), 코로나 스트레스(분홍), 정신건강 문항(하늘색)이 각자의 덩어리를 이룬다. 측정 영역 안의 연결이 영역 사이의 연결보다 훨씬 강하다는 뜻이다. 그다음 <b>덩어리와 덩어리를 잇는 노드</b>를 찾는다. 두 그림 모두에서 생활 스트레스(Figure 2의 36번, Figure 3의 38번)가 정신건강 덩어리 쪽으로 여러 간선을 뻗으며 다리 역할을 한다. 위의 재구성은 본문에 수치가 보고된 핵심 다리만을 골라 두 네트워크를 나란히 놓은 것이다.<br><br>
+    🎯 <b>이게 무슨 뜻인가.</b> 같은 생활 스트레스가 웰빙 네트워크에서는 <b>만족과 관리감을 깎는</b> 부적 간선으로, 정신병리 네트워크에서는 <b>신경과민과 피로를 높이는</b> 정적 간선으로 나타난다. 스트레스는 두 차원 모두에 닿는 공통 노드다. 반면 사회적 지지는 웰빙 쪽에서만 의미 있는 크기의 간선을 갖고, 정신병리 문항과의 간선은 거의 0에 가깝다. 이는 "지지를 늘리면 증상이 줄어든다"는 흔한 가정을 이 자료에서는 확인하기 어렵다는 뜻이며, 개입 설계에서 결과 지표를 무엇으로 삼을지에 대한 시사를 준다.
+  </div>
+</div>
+
+<table class="mini-table">
+  <thead><tr><th>중심성 지표</th><th>facet 네트워크</th><th>item 네트워크</th></tr></thead>
+  <tbody>
+    <tr><td>역경 노드 강도</td><td>생활 스트레스 &gt; 코로나 스트레스 &gt; 아동기 역경</td><td>코로나 외로움 &gt; 코로나 관계 &gt; 코로나 신체건강 &gt; 신체학대 2</td></tr>
+    <tr class="hi"><td>역경 노드 다리 강도</td><td>해당 없음</td><td>생활 스트레스 &gt; 코로나 외로움 &gt; 코로나 관계 (두 네트워크 공통)</td></tr>
+    <tr><td>관계 노드 강도</td><td>부정적 상호작용 &gt; 사회적 지지</td><td>조언 지지 &gt; 친밀 관계 &gt; 의사결정 지지</td></tr>
+    <tr><td>관계 노드 다리 강도</td><td>해당 없음</td><td>웰빙: 과도한 요구 &gt; 집단 소속 &gt; 무심함 &gt; 분노<br>병리: 과도한 요구 &gt; 분노 &gt; 무심함</td></tr>
+  </tbody>
+</table>
+<p class="fig-cap">출처: Sloss et al. (2026), Results. CS 계수 등 안정성 지표의 구체 수치는 보충자료에 있으며 본 페이지에서는 확인 필요.</p>
+
+<!-- 07 -->
+<div class="section-head" id="critique">
+  <div class="section-num">07</div>
+  <div class="section-title-block"><h2>비판적 읽기</h2><p class="section-subtitle">자료와 측정이 결론을 어디까지 지지하는가</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">1</div>
+    <div class="cond-titles"><div class="cond-code">Measurement</div><h3>"외로움" 노드는 정서적 고통을 함께 담고 있다</h3><div class="cond-en">Content overlap between a context node and symptom nodes</div></div>
+    <span class="verdict weak">주의</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">🔍 "외로움"으로 불린 노드의 실제 문항은 "외로움/고립감, 정서적 고통"을 겪었는가였다. 이것이 "슬픔"과 강하게 연결되는 것은 부분적으로 같은 내용을 두 번 잰 결과일 수 있다.</div>
+    <p>Table 2를 보면 COVID - Lonely 문항은 코로나19로 인해 "Feelings loneliness/isolation, Emotional distress"를 경험했는지를 묻는 이분형 문항이다. 즉 이 노드는 맥락 변수로 분류되었지만 내용상 정서적 고통, 곧 정신병리 영역과 겹친다. 네트워크 분석에서 내용이 겹치는 노드들은 인위적으로 강한 간선과 높은 중심성을 갖기 쉬우며(topological overlap 문제), 외로움과 슬픔 사이의 가장 강한 맥락 간선(.33)을 해석할 때 이 점을 고려해야 한다. 논의 절에서 이 노드가 "loneliness"로 요약되면서 정서적 고통이라는 구성요소가 드러나지 않는다는 점도 읽는 사람이 짚어야 할 부분이다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">2</div>
+    <div class="cond-titles"><div class="cond-code">Measurement</div><h3>가장 중심적인 노드가 단일 문항이다</h3><div class="cond-en">A single-item stress measure at the center of the network</div></div>
+    <span class="verdict mixed">저자도 인정</span>
+  </div>
+  <div class="condition-body">
+    <p>생활 스트레스는 "대부분의 날이 얼마나 스트레스가 많은가"라는 한 문항으로 측정되었다. 저자들은 이를 한계로 인정하면서도, 높은 중심성이 오히려 이 문항이 여러 스트레스 영역의 누적 효과를 포착했음을 시사한다고 해석한다. 그러나 이 해석은 양날의 칼이다. 포괄적인 문항일수록 여러 영역과 조금씩 겹치기 때문에 <strong>구성개념의 폭 자체가 중심성을 높일 수 있다</strong>. "스트레스가 핵심 기제"라는 결론과 "넓게 묻는 문항이 많은 것과 연결된다"는 측정적 설명을 이 자료만으로는 구분하기 어렵다.</p>
+    <div class="quote-box">
+      "Although life stress was measured with a single item, its high centrality indicates that it likely captured the cumulative effects of multiple stress domains ..."
+      <span class="attr">출처: Discussion<br><br>🧭 <b>길잡이.</b> 한계를 인정한 직후 "its high centrality indicates"로 그 한계를 강점처럼 재해석한다. 설득력 있는 수사이지만, 넓게 묻는 문항일수록 여러 노드와 겹친다는 측정적 설명도 가능하다는 점을 함께 읽어야 한다.</span>
+      <span class="trans"><strong>번역.</strong> 생활 스트레스는 단일 문항으로 측정되었지만, 그 높은 중심성은 이 문항이 <strong>여러 스트레스 영역의 누적 효과</strong>를 포착했을 가능성을 시사한다.</span>
+    </div>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">3</div>
+    <div class="cond-titles"><div class="cond-code">Inference</div><h3>횡단 편상관과 "매개"라는 언어</h3><div class="cond-en">Cross-sectional design and causal language</div></div>
+    <span class="verdict mixed">표현의 온도차</span>
+  </div>
+  <div class="condition-body">
+    <p>한계 절은 분명하다. 횡단 설계는 변수들 간의 인과적·시간적 관계에 대한 결론을 배제한다. 함의 절에서도 모형이 인과를 탐색하지 않았음을 밝히며 생활 스트레스와 외로움을 겨냥하면 연쇄 효과가 있을 "가능성"을 언급하는 데 그친다. 그러나 결론 절은 아동기 역경이 성인 정신건강과 "주로" 지각된 스트레스, 관계 긴장, 외로움을 "통해" 연관된다고 요약한다. 한 논문 안에서 인과적 표현의 강도가 절마다 다르다는 점은, 인용하는 쪽에서 가장 보수적인 표현을 기준으로 삼아야 하는 이유다.</p>
+    <div class="quote-box">
+      "Its cross-sectional design precludes conclusions about causal and cross-temporal relationships among variables."
+      <span class="attr">출처: Limitations<br><br>🧭 <b>길잡이.</b> 한계 절의 표준 문장이다. 결론 절의 "primarily through"와 나란히 놓아 보면, 한 논문 안에서도 인과 표현의 온도가 절마다 달라질 수 있음을 알 수 있다.</span>
+      <span class="trans"><strong>번역.</strong> 횡단 설계는 변수들 사이의 <strong>인과적·시간적 관계에 대한 결론을 배제</strong>한다.</span>
+    </div>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">4</div>
+    <div class="cond-titles"><div class="cond-code">Reporting</div><h3>세부 보고에서 확인할 점들</h3><div class="cond-en">Sampling, covariates, and a counting inconsistency</div></div>
+    <span class="verdict mixed">확인 필요</span>
+  </div>
+  <div class="condition-body">
+    <p>첫째, 응답률은 25%이며 가중치로 모집단 분포를 맞췄지만, 가중치는 관측된 인구학적 특성에 대해서만 보정한다. 둘째, 인구학적 변수는 네트워크에 포함되지 않았고, 공개 자료에 소득 정보가 없어 사회적 결정요인 틀의 핵심인 경제적 조건을 모형화하지 못했다. 저자들도 이를 한계로 적었다. 셋째, 방법 절은 아동기 역경을 "six forms"로 소개하지만 이어서 나열되는 것은 부모 간 폭력(1문항), 신체학대(3문항), 성학대(2문항), 아동보호기관 접촉(1문항)으로 <strong>네 영역, 일곱 문항</strong>이다. Table 2와 Figure 2·3에도 일곱 개의 역경 노드가 등장한다. 또 Figure 1의 범례는 정신건강 노드를 1~8번으로 표기하면서 5번을 빠뜨리고 있어, 5번 노드가 무엇인지(Measures 절의 여섯 개 지표로 보아 우울 증상으로 추정됨) 그림만으로는 확정할 수 없다. 사소해 보이지만 측정 서술과 분석 단위가 일치하는지 확인하는 습관을 기르기에 좋은 예다.</p>
+  </div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트</span><br>
+  ✅ <strong>네트워크 논문을 읽을 때 확인할 다섯 가지.</strong> (1) <strong>노드 선택</strong>: 노드들이 개념적으로 구별되는가, 내용이 겹치는 노드는 없는가. (2) <strong>측정 수준</strong>: 단일 문항, 척도 평균, 이분형 지표가 섞여 있다면 그 차이가 간선 크기에 어떤 영향을 주는가(이분형이 포함된 간선은 부호 없이 회색으로 표시되었다). (3) <strong>정규화</strong>: EBIC lasso는 작은 간선을 0으로 줄이므로, 간선의 부재가 곧 연관의 부재는 아니다. (4) <strong>안정성</strong>: CS 계수와 부트스트랩 신뢰구간이 보고되었는가(이 논문은 보충자료에 보고). (5) <strong>해석 언어</strong>: 중심성을 "원인"이나 "개입 표적"으로 번역하고 있지는 않은가. 이 다섯 질문은 AIR Lab의 네트워크 분석 원고를 쓸 때도 그대로 자기 점검 목록이 된다.
+</div>
+
+<!-- 08 -->
+<div class="section-head" id="phrases">
+  <div class="section-num">08</div>
+  <div class="section-title-block"><h2>명문장</h2><p class="section-subtitle">네트워크·역경 연구 원고에 옮겨 쓸 수 있는 문장</p></div>
+</div>
+
+<div class="phrase-grid">
+  <div class="phrase">
+    <div class="en">"Network theory suggests that psychopathology may be understood as a complex system of interacting parts, such as psychiatric symptoms."</div>
+    <div class="kr">네트워크 이론은 정신병리를 정신과적 증상과 같은 요소들이 상호작용하는 복합 체계로 이해할 수 있다고 제안한다.</div>
+    <div class="why"><b>왜 유용한가.</b> 네트워크 분석 논문의 서론 첫 문장으로 가장 간결한 이론 소개다. "may be understood as"라는 완곡한 동사가 이론을 과장하지 않으면서도 분명히 제시한다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"... psychopathology and wellbeing are not necessarily polarities of the same continuum, and therefore need to be examined concurrently."</div>
+    <div class="kr">정신병리와 웰빙은 반드시 같은 연속선의 양극은 아니며, 따라서 동시에 검토되어야 한다.</div>
+    <div class="why"><b>왜 유용한가.</b> 이론적 전제(두 차원)에서 설계 결정(동시 분석)을 끌어내는 "X, and therefore Y" 구조다. 변수 선택의 정당화를 한 문장에 담는 모범이다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"This work highlights the importance of recognizing that the absence of psychopathology is not the same as flourishing."</div>
+    <div class="kr">이 연구들은 정신병리의 부재가 번영과 같지 않다는 점을 인식하는 것이 중요함을 보여준다.</div>
+    <div class="why"><b>왜 유용한가.</b> "the absence of X is not the same as Y"는 결손 모형을 넘어서는 논지를 짧게 전달하는 문형이다. 강점 관점이나 회복 연구의 서론에 활용할 수 있다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"... this is somewhat at odds with influential perspectives around person-context interactions in the emergence of mental health problems ..."</div>
+    <div class="kr">이는 정신건강 문제의 발생에서 개인과 맥락의 상호작용을 강조하는 영향력 있는 관점과 다소 어긋난다.</div>
+    <div class="why"><b>왜 유용한가.</b> 기존 연구 흐름의 한계를 공격적이지 않게 지적하는 표현이다. "somewhat at odds with"는 선행연구를 존중하면서 연구 공백을 여는 부드러운 전환어로 쓸모가 크다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Hence, edges describe the association between two variables after accounting for all other bivariate relationships amongst variables in the network."</div>
+    <div class="kr">따라서 간선은 네트워크 내 다른 모든 관계를 고려한 뒤의 두 변수 간 연관을 나타낸다.</div>
+    <div class="why"><b>왜 유용한가.</b> 비전공 독자와 심사자를 위해 편상관 간선의 의미를 한 문장으로 풀어 주는 방법 절 문장이다. 네트워크 원고의 분석 절에 거의 그대로 응용할 수 있다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"In other words, they may act as a key mechanism linking adversity and social experiences with mental health."</div>
+    <div class="kr">다시 말해 이들은 역경 및 사회적 경험과 정신건강을 잇는 핵심 기제로 작용할 수 있다.</div>
+    <div class="why"><b>왜 유용한가.</b> 통계적 결과(중심성)를 이론적 의미(기제)로 번역하는 문장이다. "may act as"라는 조동사 선택이 횡단 자료에서 허용되는 주장의 강도를 지킨다는 점도 함께 배울 수 있다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Although the current model did not explore causation, it is possible that targeting these areas may have cascading effects on other domains in the network."</div>
+    <div class="kr">현재 모형은 인과를 탐색하지 않았지만, 이 영역들을 겨냥하는 것이 네트워크의 다른 영역에 연쇄 효과를 가져올 가능성이 있다.</div>
+    <div class="why"><b>왜 유용한가.</b> 한계를 먼저 인정하고 실천적 함의를 가능성으로 제시하는 "Although ..., it is possible that ..." 구조다. 횡단 연구의 함의 절에서 과잉 주장을 피하는 표준 문형이다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Its cross-sectional design precludes conclusions about causal and cross-temporal relationships among variables."</div>
+    <div class="kr">횡단 설계는 변수들 사이의 인과적·시간적 관계에 대한 결론을 배제한다.</div>
+    <div class="why"><b>왜 유용한가.</b> "precludes conclusions about"은 "cannot establish"보다 격식 있고 간결하다. 한계 절 첫 문장으로 그대로 쓸 수 있다.</div>
+  </div>
+  <div class="phrase span2">
+    <div class="en">"Findings illustrate the importance of multilevel policy and intervention efforts conceptualizing both psychopathology and wellbeing as an emergent property of complex person-context developmental systems ..."</div>
+    <div class="kr">이 결과는 정신병리와 웰빙을 모두 복합적인 개인-맥락 발달체계의 창발적 속성으로 개념화하는 다층적 정책·개입 노력의 중요성을 보여준다.</div>
+    <div class="why"><b>왜 유용한가.</b> "emergent property of complex systems"는 네트워크 이론과 발달체계 이론을 잇는 핵심 어휘다. 개인 수준 결과를 다층 정책 함의로 확장하는 결론부 문장으로 차용할 수 있다.</div>
+  </div>
+</div>
+
+<!-- 09 -->
+<div class="section-head" id="ourstudy">
+  <div class="section-num">09</div>
+  <div class="section-title-block"><h2>AIR Lab 연구와의 연결</h2><p class="section-subtitle">ACEs · 심리 네트워크 분석 · person-centered 방법</p></div>
+</div>
+
+<div class="panel">
+  <p>이 논문은 AIR Lab의 두 연구 축, 즉 <strong>아동기 역경의 장기적 영향</strong>과 <strong>심리 네트워크 분석</strong>을 한 설계 안에서 결합한다. 특히 역경 변수를 네트워크 바깥의 "예측변수"로 두지 않고 네트워크 안의 노드로 넣어 증상과 나란히 놓은 설계는, 청소년 패널 자료에서 아동학대 경험, 현재의 또래·가족 관계, 우울·불안·자해 관련 지표를 함께 모형화하려는 연구에 직접 참고할 수 있다.</p>
+  <p>동시에 이 논문은 person-centered 접근이 무엇을 보완할 수 있는지도 보여준다. 전체 표본의 편상관 네트워크는 평균적 구조를 보여줄 뿐이다. 아동기 역경이 높은 하위집단에서 스트레스와 관계의 다리 역할이 더 강한지, 웰빙과 정신병리가 모두 낮은 "languishing" 집단에서는 구조가 어떻게 다른지는 <strong>잠재프로파일로 집단을 먼저 나눈 뒤 집단별 네트워크를 비교</strong>하는 설계로 다룰 수 있다. 저자들 스스로도 인구학적 특성에 따른 패턴의 차이를 향후 과제로 제시했다.</p>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">AIR Lab이 주목해야 할 한 줄</span><br>
+  🎯 저자들은 한계 절에서 <b>"Future research should explore these patterns of association by sociodemographic characteristics."</b>라고 쓴다. 평균 네트워크가 집단마다 다를 수 있다는 이 과제는, 잠재프로파일로 하위집단을 나눈 뒤 네트워크를 비교하는 AIR Lab의 person-centered 설계가 직접 답할 수 있는 질문이다.
+</div>
+<table class="mini-table">
+  <thead><tr><th>AIR Lab 연구 요소</th><th>이 논문에서의 대응</th></tr></thead>
+  <tbody>
+    <tr><td>ACEs 측정과 누적 위험</td><td>7개 역경 문항을 개별 노드로 투입 (item 네트워크), 척도 평균으로 요약 (facet 네트워크): 두 수준의 결과 비교</td></tr>
+    <tr class="hi"><td>심리 네트워크 분석</td><td>MGM(mgm 패키지), EBIC lasso, 다리 강도, 예측가능성, 부트스트랩 안정성: 혼합 척도 자료의 표준 절차</td></tr>
+    <tr><td>Person-centered 방법 (LPA/LCA)</td><td>웰빙과 정신병리의 조합으로 이중요인 유형(예: 둘 다 양호, 웰빙만 낮음, 증상은 있으나 웰빙 유지, 둘 다 곤란)을 LPA로 도출한 뒤 집단별 네트워크 비교(NCT)로 확장 가능</td></tr>
+    <tr><td>청소년 정신건강과 자살·자해</td><td>facet 네트워크 그림에서 자살사고 지표는 주로 정신병리 노드와 약하게 연결되어 있음: 청소년 자료에서 관계 변수와의 직접 연결 여부를 검토할 가치</td></tr>
+    <tr><td>트라우마 기반 아동복지 실천</td><td>사회적 지지는 웰빙과, 부정적 상호작용은 병리와 연결: 보호체계 내 관계 개입의 결과 지표를 이중으로 설정할 근거</td></tr>
+  </tbody>
+</table>
+
+<div class="callout sky">
+  <span class="callout-label">💬 스터디 토론 질문</span><br>
+  <strong>Q1.</strong> "COVID - Lonely" 문항이 외로움과 정서적 고통을 함께 묻는다는 점을 고려할 때, 이 노드를 제거하거나 정신병리 커뮤니티로 재분류하면 중심성 결과는 어떻게 바뀔 것이라고 예상하는가? 이를 검증하는 민감도 분석을 설계해 보자.<br>
+  <strong>Q2.</strong> 아동기 역경과 정신병리의 직접 간선이 .07로 작다는 결과는 "ACEs의 영향이 작다"는 뜻인가, 아니면 "ACEs의 영향이 현재 변수들 속에 이미 흡수되어 있다"는 뜻인가? 편상관 네트워크의 성질에 근거해 두 해석을 비교해 보자.<br>
+  <strong>Q3.</strong> 같은 질문을 한국 청소년 패널 자료로 다룬다면, 종단 자료의 이점을 살려 어떤 네트워크 모형(예: panel graphical VAR, cross-lagged panel network)을 쓸 수 있으며, 그것이 이 논문의 어떤 한계를 해결하는가?
+</div>
+
+<!-- 10 -->
+<div class="section-head" id="worksheet">
+  <div class="section-num">10</div>
+  <div class="section-title-block"><h2>정리 활동</h2><p class="section-subtitle">입력한 내용은 이 브라우저에 자동 저장된다</p></div>
+</div>
+
+<div class="worksheet">
+  <h4>✍️ 1. 그림 읽기 연습</h4>
+  <div class="prompt">원문 Figure 1을 보고, 아동기 역경 노드가 직접 연결된 노드들을 모두 적어 보자. 그리고 그 배치가 "매개", "공통 원인", "역방향 설명" 각각과 어떻게 양립하는지 한 문장씩 써 보자.</div>
+  <textarea data-key="ws1" placeholder="여기에 작성하세요"></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>✍️ 2. 노드 선택 비판</h4>
+  <div class="prompt">본인이 네트워크 분석을 설계한다면 이 논문의 노드 중 무엇을 바꾸거나 빼거나 추가하겠는가? 개념적 중복, 측정 수준, 이론적 필요의 세 기준으로 근거를 적어 보자.</div>
+  <textarea data-key="ws2" placeholder="여기에 작성하세요"></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>✍️ 3. 결과를 영어로 보수적으로 서술하기</h4>
+  <div class="prompt">"아동기 역경은 현재 스트레스를 거쳐 정신병리에 영향을 준다"는 문장을, 횡단 편상관 네트워크 결과에 맞게 과잉 주장 없이 영어 한 문장으로 다시 써 보자.</div>
+  <textarea data-key="ws3" placeholder="Write here"></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="closing">
+  <div class="closing-inner">
+    <h2>이 논문이 가르쳐 주는 것: 방법의 경계를 넓히면 이론의 질문이 바뀐다</h2>
+    <p>심리 네트워크 분석은 증상들 사이의 관계를 보여주는 도구로 출발했다. 이 논문은 노드의 범위를 사람 바깥의 맥락과 병리 바깥의 웰빙으로 넓혔고, 그 결과 새로운 질문이 가능해졌다. 역경은 어디에 붙어 있는가, 스트레스는 어떤 영역들을 잇는가, 좋은 관계와 나쁜 관계는 같은 결과를 반대 방향으로 움직이는가, 아니면 서로 다른 결과를 움직이는가. <strong>이론의 확장은 때로 새로운 개념이 아니라 분석 단위의 확장에서 시작된다.</strong></p>
+    <p>동시에 이 논문은 확장된 방법이 새로운 함정도 함께 가져온다는 점을 보여준다. 맥락 변수가 증상과 내용이 겹치면 네트워크는 측정의 중복을 기제로 오인할 수 있고, 횡단 편상관은 매개라는 이론적 해석을 뒷받침할 수는 있어도 확정할 수는 없다. 이 논문을 제대로 읽는다는 것은 그 결과를 믿는 것도 버리는 것도 아니라, <strong>어떤 결과가 구조에 대한 기술이고 어떤 결과가 기제에 대한 해석인지를 구분</strong>하는 일이다.</p>
+    <div class="signature">Sloss et al. (2026), Social Psychiatry and Psychiatric Epidemiology · AIR Lab Journal Club</div>
+  </div>
+</div>
+
+</main>
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(47,111,168,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#2f6fa8"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#2f6fa8"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<footer class="footer">
+  이 페이지는 충북대학교 아동복지학과 AIR Lab(ACEs-Informed Recovery Lab) 대학원 저널클럽의 교육용 자료입니다. 원문 인용은 교육 목적의 짧은 발췌이며, 원문 Figure의 저작권은 원 출판사(Springer Nature)에 있습니다. 한국어 재구성 그림과 해설은 AIR Lab이 작성하였습니다.
+</footer>
+<script>
+  const JC_PREFIX = 'jc_sloss2026_';
+  function jcGet(k){ try { return localStorage.getItem(JC_PREFIX + k); } catch(e){ return null; } }
+  function jcSet(k,v){ try { localStorage.setItem(JC_PREFIX + k, v); return true; } catch(e){ return false; } }
+  function flash(ta){
+    const s = ta.parentElement.querySelector('.save-status');
+    if(!s) return;
+    s.classList.add('show');
+    clearTimeout(s._t);
+    s._t = setTimeout(function(){ s.classList.remove('show'); }, 1400);
+  }
+  function saveAll(){
+    let ok = true;
+    document.querySelectorAll('textarea[data-key]').forEach(function(ta){
+      if(!jcSet(ta.dataset.key, ta.value)) ok = false;
+      flash(ta);
+    });
+    if(!ok) alert('이 브라우저에서는 자동 저장을 사용할 수 없습니다. 내용을 따로 복사해 두세요.');
+  }
+  document.querySelectorAll('textarea[data-key]').forEach(function(ta){
+    const saved = jcGet(ta.dataset.key);
+    if(saved !== null) ta.value = saved;
+    let timer;
+    ta.addEventListener('input', function(){
+      clearTimeout(timer);
+      timer = setTimeout(function(){ if(jcSet(ta.dataset.key, ta.value)) flash(ta); }, 600);
+    });
+  });
+</script>
+</body>
+</html>
