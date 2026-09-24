@@ -21,25 +21,30 @@
 
   /* Legacy names kept so existing inline styles adopt the new palette */
   --white:    #ffffff;
-  --off:      #f4f7fb;   /* soft cool surface (alternating tiles, footer) */
-  --black:    #20262e;   /* ink — soft blue-charcoal, not pure black */
+  --off:      #faf8f4;   /* soft cool surface (alternating tiles, footer) */
+  --black:    #1c2430;   /* ink — soft blue-charcoal, not pure black */
   --mid:      #46505c;   /* body slate */
   --light:    #828d9b;   /* muted */
   --xlight:   #aab4c1;   /* x-light captions / overlines */
-  --rule:     #e6ebf1;   /* hairline */
+  --rule:     #e6e8ec;   /* hairline */
   --red:      #e0573e;   /* repurposed: warm coral for NEW / small alerts */
-  --navy:     #2f6fa8;   /* repurposed: deep sky — primary on white & fills */
-  --hover-bg: #eef5fc;   /* soft sky hover wash */
+  --navy:     #1f4e79;   /* repurposed: deep sky — primary on white & fills */
+  --hover-bg: #eef3f9;   /* soft sky hover wash */
 
   /* Sky scale */
-  --sky:        #3f86c4;  /* primary sky accent */
-  --sky-deep:   #2f6fa8;  /* deeper sky — text on white, button fills */
-  --sky-bright: #6cb0e4;  /* brighter sky — accents on dark / hover */
-  --sky-soft:   #e8f1fa;  /* soft sky tint — section surface */
-  --sky-soft-2: #f3f8fd;  /* faint sky tint */
+  --sky:        #2d6a9f;  /* primary sky accent */
+  --sky-deep:   #1f4e79;  /* deeper sky — text on white, button fills */
+  --sky-bright: #7fa9d1;  /* brighter sky — accents on dark / hover */
+  --sky-soft:   #e9eff6;  /* soft sky tint — section surface */
+  --sky-soft-2: #f4f7fb;  /* faint sky tint */
 
   /* Elevation (whisper-soft, cozy) */
-  --shadow-card: 0 1px 2px rgba(36,64,102,0.04), 0 10px 30px rgba(36,64,102,0.06);
+  --shadow-card: 0 1px 2px rgba(28,46,74,0.05), 0 10px 30px rgba(28,46,74,0.07);
+
+  /* Warm sand (Design A accents) */
+  --sand:      #a7834a;  /* section numbers, small academic accents */
+  --sand-soft: #faf7f1;  /* alternating section band */
+  --sand-rule: #ece5d8;
   --shadow-img:  0 6px 24px rgba(36,64,102,0.10);
 
   /* Radius */
@@ -126,7 +131,7 @@ nav {
 .ticker-track:hover { animation-play-state: paused; }
 .ticker-item {
   padding: 0.7rem 2.6rem; font-size: 0.8rem; letter-spacing: -0.01em;
-  color: var(--mid); border-right: 1px solid rgba(47,111,168,0.12);
+  color: var(--mid); border-right: 1px solid rgba(31,78,121,0.12);
 }
 .ticker-item strong { color: var(--sky-deep); font-weight: 600; }
 @keyframes ticker { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
@@ -373,12 +378,12 @@ nav {
 .badge-member { background: var(--sky-soft); color: var(--sky-deep); }
 .badge-study {
   background: linear-gradient(120deg, var(--sky-deep), var(--sky-bright));
-  color: #fff; box-shadow: 0 2px 10px rgba(63,134,196,0.4);
+  color: #fff; box-shadow: 0 2px 10px rgba(45,106,159,0.4);
   animation: badgePulse 2.6s ease-in-out infinite;
 }
 @keyframes badgePulse {
-  0%,100% { box-shadow: 0 2px 9px rgba(63,134,196,0.32); }
-  50%     { box-shadow: 0 2px 18px rgba(63,134,196,0.72); }
+  0%,100% { box-shadow: 0 2px 9px rgba(45,106,159,0.32); }
+  50%     { box-shadow: 0 2px 18px rgba(45,106,159,0.72); }
 }
 .badge-club {
   background: linear-gradient(120deg, #2e9e6b, #57c79a);
@@ -423,11 +428,11 @@ a.nc-link { text-decoration: none; color: inherit; cursor: pointer; }
   background: linear-gradient(120deg, var(--sky-deep), var(--sky));
   color: #fff; border-radius: var(--r-pill);
   font-weight: 600; font-size: 0.82rem; letter-spacing: 0.01em;
-  box-shadow: 0 4px 14px rgba(47,111,168,0.32);
+  box-shadow: 0 4px 14px rgba(31,78,121,0.32);
   transition: box-shadow 0.2s, transform 0.2s;
 }
 .nc-go::after { content: "→"; transition: transform 0.2s; }
-a.nc-link:hover .nc-go { box-shadow: 0 7px 20px rgba(47,111,168,0.5); transform: translateY(-1px); }
+a.nc-link:hover .nc-go { box-shadow: 0 7px 20px rgba(31,78,121,0.5); transform: translateY(-1px); }
 a.nc-link:hover .nc-go::after { transform: translateX(4px); }
 
 /* ── FEATURED news card (shiny "I just made this!" spotlight) ── */
@@ -440,12 +445,12 @@ a.nc-link:hover .nc-go::after { transform: translateX(4px); }
     radial-gradient(120% 140% at 100% 0%, rgba(224,87,62,0.10) 0%, rgba(224,87,62,0) 42%),
     linear-gradient(118deg, #e9f3fd 0%, #f4f9fe 46%, #fdeee9 100%);
   border: 1px solid #cfe4f7;
-  box-shadow: 0 10px 30px rgba(47,111,168,0.16), 0 2px 6px rgba(47,111,168,0.06);
+  box-shadow: 0 10px 30px rgba(31,78,121,0.16), 0 2px 6px rgba(31,78,121,0.06);
   animation: featGlow 4s ease-in-out infinite;
 }
 @keyframes featGlow {
-  0%,100% { box-shadow: 0 10px 30px rgba(47,111,168,0.14), 0 2px 6px rgba(47,111,168,0.06); }
-  50%     { box-shadow: 0 14px 40px rgba(63,134,196,0.28), 0 2px 8px rgba(224,87,62,0.10); }
+  0%,100% { box-shadow: 0 10px 30px rgba(31,78,121,0.14), 0 2px 6px rgba(31,78,121,0.06); }
+  50%     { box-shadow: 0 14px 40px rgba(45,106,159,0.28), 0 2px 8px rgba(224,87,62,0.10); }
 }
 /* diagonal shimmer sweep */
 .nc-featured::before {
@@ -486,7 +491,7 @@ a.nc-link:hover .nc-go::after { transform: translateX(4px); }
   background: transparent; color: var(--mid); cursor: pointer;
   font-family: var(--font-text); font-weight: 500; transition: all 0.18s;
 }
-.pfilt button.active { background: var(--sky-deep); color: var(--white); box-shadow: 0 1px 4px rgba(47,111,168,0.25); }
+.pfilt button.active { background: var(--sky-deep); color: var(--white); box-shadow: 0 1px 4px rgba(31,78,121,0.25); }
 .pfilt button:hover:not(.active) { color: var(--sky-deep); }
 
 .pub-list { margin-top: 2rem; }
@@ -780,7 +785,7 @@ footer {
   padding: 0.5rem 1.3rem; border: none; background: transparent; cursor: pointer;
   border-radius: var(--r-pill); transition: all 0.18s;
 }
-.lab-life-tab.active { color: var(--white); background: var(--sky-deep); box-shadow: 0 1px 4px rgba(47,111,168,0.25); }
+.lab-life-tab.active { color: var(--white); background: var(--sky-deep); box-shadow: 0 1px 4px rgba(31,78,121,0.25); }
 .lab-life-tab:hover:not(.active) { color: var(--sky-deep); }
 .lab-life-panel { display: none; }
 .lab-life-panel.active { display: block; }
@@ -869,6 +874,91 @@ footer {
   .nav-links a { white-space: nowrap; flex-shrink: 0; padding: 0.4rem 0; }
 }
 
+
+/* ── Design A: warm sand section labels + alternating bands ── */
+.sn { color: var(--sand) !important; }
+#lab-life, #experience, #awards {
+  background: var(--sand-soft);
+  box-shadow: 0 0 0 100vmax var(--sand-soft);
+  clip-path: inset(0 -100vmax);
+  border-bottom-color: var(--sand-rule);
+}
+.st { color: var(--black); }
+
+/* ════════ PREVIEW v2: 5 · 6 · 7 · 8 ════════ */
+/* 5. Impact strip (default font) */
+.impact-wrap { background: var(--sky-deep); color: #fff; }
+.impact { max-width: 1200px; margin: 0 auto; padding: 2.6rem 2.5rem; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+.impact-item { text-align: center; border-left: 1px solid rgba(255,255,255,0.16); padding: 0.2rem 0.5rem; }
+.impact-item:first-child { border-left: 0; }
+.impact-num { font-family: var(--font-display); font-size: clamp(2rem, 3.4vw, 2.7rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: #fff; }
+.impact-lbl { margin-top: 0.6rem; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #b9d0e8; font-weight: 600; }
+@media (max-width: 760px) { .impact { grid-template-columns: repeat(2, 1fr); row-gap: 1.8rem; padding: 2.2rem 1.5rem; } .impact-item:nth-child(odd) { border-left: 0; } }
+
+/* 6. Research theme cards */
+.theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.theme-card { background: #fff; border: 1px solid var(--rule); border-radius: var(--r-md); padding: 1rem 1.05rem 0.95rem; display: flex; flex-direction: column; gap: 0.45rem; transition: border-color .18s, box-shadow .18s, transform .18s; }
+.theme-card:hover { border-color: var(--sky-bright); box-shadow: var(--shadow-card); transform: translateY(-2px); }
+.theme-ico { width: 34px; height: 34px; border-radius: 10px; background: var(--sky-soft); color: var(--sky-deep); display: flex; align-items: center; justify-content: center; }
+.theme-ico svg { width: 19px; height: 19px; }
+.theme-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em; color: var(--black); line-height: 1.3; }
+.theme-desc { font-size: 0.78rem; color: var(--mid); line-height: 1.55; }
+.theme-kw { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.theme-kw span { font-size: 0.64rem; color: var(--sky-deep); background: var(--sky-soft-2); border: 1px solid var(--rule); border-radius: 980px; padding: 0.1rem 0.5rem; }
+.theme-rep { margin-top: auto; padding-top: 0.55rem; border-top: 1px dashed var(--rule); font-size: 0.72rem; line-height: 1.45; }
+.theme-rep .rl { display: block; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--xlight); font-weight: 600; margin-bottom: 0.15rem; }
+.theme-rep a { color: var(--sky-deep); text-decoration: none; font-weight: 500; }
+.theme-rep a:hover { text-decoration: underline; }
+.theme-rep em { color: var(--light); font-style: italic; }
+@media (max-width: 1024px) { .theme-grid { grid-template-columns: 1fr; } }
+
+/* 7. Scroll reveal (stronger, staggered) */
+.reveal .sh, .reveal .ri { opacity: 0; transform: translateY(46px); transition: opacity .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1); }
+.reveal.in .sh, .reveal.in .ri { opacity: 1; transform: none; }
+.reveal .st { position: relative; }
+.reveal .st::after { content: ''; position: absolute; left: 0; bottom: -0.55rem; height: 3px; width: 0; background: var(--sky); border-radius: 3px; transition: width 1s cubic-bezier(.2,.7,.2,1) .35s; }
+.reveal.in .st::after { width: 56px; }
+@media (prefers-reduced-motion: reduce) { .reveal .sh, .reveal .ri { opacity: 1; transform: none; transition: none; } .reveal .st::after { width: 56px; transition: none; } }
+
+/* 8. Publication year timeline */
+.pr-yeardiv { display: flex; align-items: center; gap: 0.9rem; margin: 2.1rem 0 0.6rem; }
+.pr-yeardiv:first-child { margin-top: 0.4rem; }
+.pr-yeardiv .yd-year { font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; letter-spacing: -0.02em; color: var(--sky-deep); line-height: 1; }
+.pr-yeardiv .yd-count { font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sky-deep); font-weight: 700; background: var(--sky-soft); padding: 0.18rem 0.6rem; border-radius: 980px; }
+.pr-yeardiv::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+/* ════════ VARIANT 3: ACEs → Recovery gradient ════════ */
+:root { --recover: #3a9a8f; --recover-soft: #eaf5f2; }
+.stripe { background: linear-gradient(90deg, #1f4e79 0%, #2d6a9f 45%, var(--recover) 100%); }
+.stripe span { background: transparent !important; }
+.hero-wordmark .wm-air { background: linear-gradient(100deg, #1f4e79 10%, #2d6a9f 50%, var(--recover) 95%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero-wordmark .wm-sep { color: #7fb7ae; }
+.hero-fullname-strip .fn-dot { background: var(--recover); }
+#hero::before { background: linear-gradient(180deg, #eaf1f8 0%, rgba(234,245,242,0.55) 45%, #ffffff 82%) !important; }
+.impact-wrap { background: linear-gradient(100deg, #1f4e79 0%, #25618e 50%, #2f8078 100%); }
+.impact-lbl { color: #c8e3dd; }
+.reveal .st::after { background: linear-gradient(90deg, #2d6a9f, var(--recover)); }
+.pr-yeardiv .yd-year { background: linear-gradient(100deg, #1f4e79, var(--recover)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* ════════ FINAL: gradient (3) + navy hero band (2) ════════ */
+.hero-identity { position: relative; isolation: isolate; border-bottom: 0; padding-top: 4.2rem; }
+.hero-identity::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); z-index: -1;
+  background:
+    radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%),
+    linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%);
+}
+.hero-identity-top { padding-bottom: 2.6rem; }
+.hero-wordmark .wm-air { background: linear-gradient(100deg, #ffffff 30%, #bfe6df 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero-wordmark .wm-sep { color: #8cc7bd; }
+.hero-wordmark .wm-lab { color: #d6e5f2; }
+.hero-fullname-strip .fn-part { color: #a9c1d6; }
+.hero-fullname-strip .fn-part.bold { color: #eef4f9; }
+.hero-fullname-strip .fn-dot { background: #8cc7bd; }
+.inst-univ { color: #ffffff; }
+.inst-dept { color: #d2e0ec; }
+.inst-loc { color: #9fbacd; }
+.hero-content { margin-top: 0.5rem; }
 </style>
 </head>
 <body>
@@ -967,20 +1057,25 @@ footer {
       </div>
       <div>
         <div class="blk-lbl">Research Interests</div>
-        <div class="tags">
-          <span class="tag">Adverse Childhood Experiences</span>
-          <span class="tag">Trauma &amp; Recovery</span>
-          <span class="tag">Youth Mental Health</span>
-          <span class="tag">Suicide / PTSD</span>
-          <span class="tag">Vulnerable Youth</span>
-          <span class="tag">Family Violence</span>
-          <span class="tag">ADHD</span>
-          <span class="tag">Social Work Practice</span>
+        <div class="theme-grid">
+          <div class="theme-card"><div class="theme-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg></div><div class="theme-title">Adverse Childhood Experiences &amp; Family Violence</div><div class="theme-desc">How early adversity and violence at home shape development across the life course.</div><div class="theme-kw"><span>ACEs</span><span>Family Violence</span><span>Child Maltreatment</span></div><div class="theme-rep" data-rep="Mapping the Structures of Adverse Childhood"><span class="rl">Key paper</span>–</div></div>
+          <div class="theme-card"><div class="theme-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3.2"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></svg></div><div class="theme-title">Youth Mental Health &amp; ADHD</div><div class="theme-desc">Depression, ADHD, and school adjustment among children and adolescents.</div><div class="theme-kw"><span>Youth Mental Health</span><span>ADHD</span><span>School Violence</span></div><div class="theme-rep" data-rep="Assessing the Link Between Attention Deficit"><span class="rl">Key paper</span>–</div></div>
+          <div class="theme-card"><div class="theme-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg></div><div class="theme-title">Suicide, Self-Harm &amp; PTSD</div><div class="theme-desc">Who is at risk, through which pathways, and how risk differs by sex and context.</div><div class="theme-kw"><span>Suicide</span><span>Self-Harm</span><span>PTSD</span></div><div class="theme-rep" data-rep="Patterns of Intimate Partner Sexual Violence"><span class="rl">Key paper</span>–</div></div>
+          <div class="theme-card"><div class="theme-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M12 10c0-3 2-5.5 6-6-.2 4-2.6 6-6 6z"/><path d="M12 13c0-2.6-1.8-4.6-5-5 .2 3.3 2.2 5 5 5z"/></svg></div><div class="theme-title">Recovery &amp; Social Work Practice</div><div class="theme-desc">Evidence-based interventions and recovery for vulnerable and runaway youth.</div><div class="theme-kw"><span>Trauma &amp; Recovery</span><span>Vulnerable Youth</span><span>Social Work Practice</span></div><div class="theme-rep" data-rep="Assessing the Effectiveness of TSL Program"><span class="rl">Key paper</span>–</div></div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- IMPACT STRIP (preview) -->
+<div class="impact-wrap"><div class="impact" id="impactStrip">
+  <div class="impact-item"><div class="impact-num" data-k="pub">–</div><div class="impact-lbl">Publications</div></div>
+  <div class="impact-item"><div class="impact-num" data-k="intl">–</div><div class="impact-lbl">SSCI · SCIE</div></div>
+  <div class="impact-item"><div class="impact-num" data-k="kci">–</div><div class="impact-lbl">KCI</div></div>
+  <div class="impact-item"><div class="impact-num" data-k="proj">–</div><div class="impact-lbl">PI Projects</div></div>
+  <div class="impact-item"><div class="impact-num" data-k="award">–</div><div class="impact-lbl">Awards</div></div>
+</div></div>
 
 <!-- NEWS -->
 <div id="news" class="sw">
@@ -1434,11 +1529,11 @@ footer {
       N20-1, Rm. 104 · Cheongju, Korea
       <div class="f-visitors" id="todayRow">
         <span class="vc-label">Today Visitors</span>
-        <span id="todayHits" style="font-size:0.72rem;font-weight:700;color:#2f6fa8;background:#e8f1fa;border-radius:5px;padding:2px 9px;line-height:14px;">–</span>
+        <span id="todayHits" style="font-size:0.72rem;font-weight:700;color:#1f4e79;background:#e9eff6;border-radius:5px;padding:2px 9px;line-height:14px;">–</span>
       </div>
       <div class="f-visitors" style="margin-top:0.45rem">
         <span class="vc-label">Total Visitors</span>
-        <img src="https://hits.sh/bokjiman.github.io/airlab.svg?style=flat-square&color=2f6fa8&labelColor=f4f7fb&label=" alt="Visitor count">
+        <img src="https://hits.sh/bokjiman.github.io/airlab.svg?style=flat-square&color=1f4e79&labelColor=f4f7fb&label=" alt="Visitor count">
       </div>
     </div>
   </footer>
@@ -1551,6 +1646,7 @@ const PUB_DATA = [
   { no:1,  year:2015, type:"KCI",  isNew:false, status:"published", title:"학교폭력 가해-피해 중복경험 청소년의 우울, 공격성, 자기통제력과 가정폭력 경험에 관한 연구", journal:"학교사회복지", authors:"김재엽, 성신명, 김준범", citation:"김재엽, 성신명, 김준범. (2015). 학교폭력 가해-피해 중복경험 청소년의 우울, 공격성, 자기통제력과 가정폭력 경험에 관한 연구. 학교사회복지, 31, 83-109.", doi:"" },
 
   // ── UNDER REVIEW ──
+  { no:null, year:2026, type:"SCIE", isNew:false, status:"review", reviewStage:"Under Review", title:"ADHD and Depressive Symptoms, Peer and Teacher Relationships, and Suicidality Among Female Adolescents: A Two-Part Analysis of Suicidality Presence and Severity", journal:"Child and Adolescent Psychiatry and Mental Health", authors:"Lee, M. S., Kim, J., Bargiel-Matusiewicz, K., & Kim, T.", citation:"Lee, M. S., Kim, J., Bargiel-Matusiewicz, K., & Kim, T. (under review). ADHD and Depressive Symptoms, Peer and Teacher Relationships, and Suicidality Among Female Adolescents: A Two-Part Analysis of Suicidality Presence and Severity. Child and Adolescent Psychiatry and Mental Health.", doi:"" },
   { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"Under Review", title:"Family Violence Typologies, Suicide Risk, and Role of Professional Support: A Latent Class Analysis of Korean Adolescents", journal:"Journal of Interpersonal Violence", authors:"Kim, J., Kim, D. H., & Kim, J. Y.", citation:"Kim, J., Kim, D. H., & Kim, J. Y. (under review). Family Violence Typologies, Suicide Risk, and Role of Professional Support: A Latent Class Analysis of Korean Adolescents. Journal of Interpersonal Violence.", doi:"" },
   { no:null, year:2025, type:"SSCI", isNew:false, status:"review", reviewStage:"2nd Round", title:"Exploring the Symptom Comorbidity Structure of PTSD, Depression, and Anxiety in North Korean Refugees: A Network Analysis Approach", journal:"Transcultural Psychiatry", authors:"Kim, J., & Son, S.", citation:"Kim, J., & Son, S. (under review). Exploring the Symptom Comorbidity Structure of PTSD, Depression, and Anxiety in North Korean Refugees. Transcultural Psychiatry.", doi:"" },
   { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"Resubmitted", title:"Sex-Specific Latent Typologies of Self-Harm Behaviors and Their Differential Associations with Suicidality in a National Sample", journal:"Clinical Social Work Journal", authors:"Kim, J., Lee, M. S., Jung, Y., & Kim, J. H.", citation:"Kim, J., Lee, M. S., Jung, Y., & Kim, J. H. (under review). Sex-Specific Latent Typologies of Self-Harm Behaviors. Clinical Social Work Journal.", doi:"" },
@@ -1607,7 +1703,7 @@ function renderNews() {
     const isAward = n.type === 'award' || isBigAward;
     const isMember = n.type === 'member';
     let rowStyle = '';
-    if (isAward) rowStyle = ' style="background:linear-gradient(to right,#f3f8fd,#ffffff);"';
+    if (isAward) rowStyle = ' style="background:linear-gradient(to right,#f4f7fb,#ffffff);"';
     if (isBigAward) rowStyle = ' style="background:linear-gradient(105deg,#fff8e6 0%,#fffdf7 45%,#ffffff 100%);"';
     if (isMember) rowStyle = ' style="background:linear-gradient(to right,#eaf2fa,#ffffff); border-left: 3px solid #9ec8e8; padding-left: 1rem;"';
     const subHtml = n.sub
@@ -1644,7 +1740,15 @@ function renderPubs(filter) {
   const isReviewMode = filter === 'review';
   document.getElementById('pubCount').textContent = `${filtered.length} papers`;
 
+  const yearCount = {};
+  filtered.forEach(p => { yearCount[p.year] = (yearCount[p.year] || 0) + 1; });
+  let prevYear = null;
   const rows = filtered.map(p => {
+    let yearDiv = '';
+    if (!isReviewMode && p.year !== prevYear) {
+      yearDiv = `<div class="pr-yeardiv"><span class="yd-year">${p.year}</span><span class="yd-count">${yearCount[p.year]} paper${yearCount[p.year] > 1 ? 's' : ''}</span></div>`;
+      prevYear = p.year;
+    }
     const cls  = isIntl(p.type) ? 'pb-intl' : 'pb-kci';
     const lbl  = isIntl(p.type) ? p.type : 'KCI';
     // Auto-determine NEW: prioritize pubDate-based 3-month window; fallback to manual isNew flag
@@ -1659,7 +1763,7 @@ function renderPubs(filter) {
     const yrDisplay = fmtYearMonth(p);
     const authorsHi = highlightPI(p.authors);
     const citationHi = highlightPI(p.citation);
-    return `
+    return yearDiv + `
       <div class="pr ${isReviewMode ? 'pr-review' : ''}" onclick="toggleDetail(this)">
         <div class="pr-head">
           <div class="pr-yr">${yrDisplay}${noLabel}</div>
@@ -1875,7 +1979,7 @@ const MEMBERS = {
   SYL: { photo:"images/SYL.jpg", en:"Seungyeon Lee", ko:"이승연", role:"Master's Student · Social Worker", affil:"Dept. of Child Welfare, Chungbuk National University", interests:["Child Welfare","Youth Welfare","Social Support","Mental Health"] },
   HYJ: { photo:"images/HYJ.jpg", en:"Hwayeong Jeong", ko:"정화영", role:"Master's Student", affil:"Dept. of Child Welfare, Chungbuk National University", interests:["Youth Mental Health","Suicide"] },
   HJC: { photo:"images/HJC.jpg", en:"Hyeonjeen Cho", ko:"조현진", role:"Master's Student · Youth Counselor", affil:"Dept. of Child Welfare, Chungbuk National University", interests:["Youth Welfare","Youth Counseling","Mental Health & Recovery","At-Risk Youth"] },
-  SKK: { photo:"images/SKK.jpg", en:"Seulki Kim", ko:"김슬기", role:"Master's Student", affil:"Dept. of Child Welfare, Chungbuk National University", interests:[] }
+  SKK: { photo:"images/SKK.jpg", en:"Seulki Kim", ko:"김슬기", role:"Master's Student", affil:"Dept. of Child Welfare, Chungbuk National University", interests:["Mental Health","Mental Disorders","Child & Youth Mental Health","Mental Health Services","Community Mental Health"] }
 };
 
 function openMember(key) {
@@ -1917,23 +2021,80 @@ document.querySelectorAll('.tr, .nc').forEach((el, i) => {
 });
 
 /* ── Today visitor counter ──
-   hitscounter.dev 배지(오늘/누적 형식)를 fetch해서 '오늘' 숫자만 추출해 표시.
-   (배지의 두 숫자 중 작은 쪽 = 오늘. CORS 등으로 실패하면 원래 배지 이미지로 대체) */
+   이전 방식은 fetch(1회 집계)가 CORS로 실패한 뒤 같은 주소의 배지 이미지를
+   다시 불러와(2회째 집계) 접속 1번에 2씩 올라갔음.
+   → 배지 이미지를 딱 한 번만 요청하도록 변경. */
 (function(){
   var el = document.getElementById('todayHits');
   if (!el) return;
-  var api = 'https://hitscounter.dev/api/hit?url=https%3A%2F%2Fbokjiman.github.io%2Fairlab&label=Today&color=%232f6fa8&style=flat-square';
-  fetch(api).then(function(r){ if(!r.ok) throw 0; return r.text(); }).then(function(svg){
-    var nums = (svg.match(/>([\d,]+)</g) || [])
-      .map(function(s){ return parseInt(s.replace(/[^\d]/g,''), 10); })
-      .filter(function(n){ return !isNaN(n); });
-    if (!nums.length) throw 0;
-    el.textContent = Math.min.apply(null, nums).toLocaleString();
-  }).catch(function(){
-    var img = document.createElement('img');
-    img.src = api; img.alt = 'Today visitor count'; img.style.height = '18px';
-    el.replaceWith(img);
+  var img = document.createElement('img');
+  img.src = 'https://hitscounter.dev/api/hit?url=https%3A%2F%2Fbokjiman.github.io%2Fairlab&label=Today&color=%231f4e79&style=flat-square';
+  img.alt = 'Today visitor count';
+  img.style.height = '18px';
+  el.replaceWith(img);
+})();
+/* ── PREVIEW v2: impact strip · key papers · scroll reveal ── */
+(function(){
+  var pub = PUB_DATA.filter(function(p){ return p.status === 'published'; });
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 5. Impact strip: counted live from the data on this page */
+  var vals = {
+    pub: pub.length,
+    intl: pub.filter(function(p){ return p.type === 'SSCI' || p.type === 'SCIE'; }).length,
+    kci: pub.filter(function(p){ return p.type === 'KCI'; }).length,
+    proj: document.querySelectorAll('.project-item').length,
+    award: document.querySelectorAll('.award-item').length
+  };
+  var nums = document.querySelectorAll('#impactStrip .impact-num');
+  function countUp(){
+    nums.forEach(function(n){
+      var target = vals[n.dataset.k] || 0;
+      if (reduce) { n.textContent = target; return; }
+      var t0 = null;
+      (function step(ts){ if(!ts){ requestAnimationFrame(step); return; } if(!t0) t0 = ts;
+        var k = Math.min((ts - t0) / 1300, 1); n.textContent = Math.round(target * (1 - Math.pow(1 - k, 3)));
+        if (k < 1) requestAnimationFrame(step); })();
+    });
+  }
+  var strip = document.getElementById('impactStrip');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ countUp(); io.disconnect(); } }); }, { threshold: 0.4 });
+    io.observe(strip);
+  } else countUp();
+
+  /* 6. Key paper per research theme (pulled from PUB_DATA) */
+  document.querySelectorAll('.theme-rep[data-rep]').forEach(function(box){
+    var key = box.getAttribute('data-rep').toLowerCase();
+    var p = pub.find(function(x){ return x.title.toLowerCase().indexOf(key) === 0; });
+    if (!p) { box.style.display = 'none'; return; }
+    var t = p.title.length > 72 ? p.title.slice(0, 70).replace(/\s+\S*$/, '') + '…' : p.title;
+    box.innerHTML = '<span class="rl">Key paper · ' + p.year + '</span>' +
+      (p.doi ? '<a href="' + p.doi + '" target="_blank">' + t + ' ↗</a>' : t) +
+      ' <em>' + p.journal + '</em>';
   });
+
+  /* 7. Scroll reveal: header rises, then items stagger in */
+  if (reduce || !('IntersectionObserver' in window)) return;
+  var ITEM_SEL = '.nc, .field-slider, .lab-life-tabs, .pub-filters, .pr, .pr-yeardiv, .tr, .award-item, .project-item, .subsection-label, .gallery-group, .edu-item';
+  var secs = document.querySelectorAll('.sw');
+  secs.forEach(function(sec){
+    sec.classList.add('reveal');
+    var items = sec.querySelectorAll(ITEM_SEL);
+    var i = 0;
+    items.forEach(function(el){
+      if (el.parentElement.closest('.ri')) return;
+      el.classList.add('ri');
+      el.style.transitionDelay = (0.18 + Math.min(i, 12) * 0.07) + 's';
+      i++;
+    });
+  });
+  var ro = new IntersectionObserver(function(es){ es.forEach(function(e){
+    if (e.isIntersecting) {
+      e.target.classList.add('in'); ro.unobserve(e.target);
+      setTimeout(function(){ e.target.querySelectorAll('.ri').forEach(function(el){ el.style.transitionDelay = ''; }); }, 2200);
+    } }); }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  secs.forEach(function(s){ ro.observe(s); });
 })();
 </script>
 </body>
