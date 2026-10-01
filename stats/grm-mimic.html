@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>우울을 재는 공평한 자 · GRM에서 MIMIC까지 | AIR Lab Statistics</title>
+<meta name="description" content="문항반응이론 기초, GRM, 변별도와 P0, DIF, 다집단 GRM 잠재평균, MIMIC을 예시 자료로 직접 조작하며 배우는 인터랙티브 해설">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<style>
+@font-face{font-family:'Freesentation';src:url('fonts/Freesentation-1Thin.ttf') format('truetype');font-weight:100;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('fonts/Freesentation-2ExtraLight.ttf') format('truetype');font-weight:200;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('fonts/Freesentation-3Light.ttf') format('truetype');font-weight:300;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('fonts/Freesentation-4Regular.ttf') format('truetype');font-weight:400;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('fonts/Freesentation-5Medium.ttf') format('truetype');font-weight:500;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('fonts/Freesentation-6SemiBold.ttf') format('truetype');font-weight:600;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('fonts/Freesentation-7Bold.ttf') format('truetype');font-weight:700;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('fonts/Freesentation-8ExtraBold.ttf') format('truetype');font-weight:800;font-display:swap;}
+@font-face{font-family:'Freesentation';src:url('fonts/Freesentation-9Black.ttf') format('truetype');font-weight:900;font-display:swap;}
+html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+
+/* Layout: AIR Lab Journal Club template (sky palette, pill section numbers, filled condition headers),
+   extended with a hand-drawn figure layer. Tokens first; dark values redefine the same names. */
+:root{
+  --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --font-text:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --font-en:'Inter','Pretendard Variable',system-ui,sans-serif;
+  --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#6f7a88; --xlight:#9aa5b3;
+  --rule:#e6ebf1; --coral:#c9472f; --coral-soft:#fdeee9;
+  --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+  --mint:#2f8f73; --mint-soft:#e6f5f0; --amber:#a8741a; --amber-soft:#fbf1dc;
+  --band-1:#2f6fa8; --band-2:#255d8f; --on-band:#ffffff; --on-band-soft:#dbe8f5; --band-accent:#9fd0f5;
+  --nav-bg:rgba(255,255,255,0.8);
+  --fig-ink:#20262e; --fig-fill:#f6f7f8; --fig-fill2:#dde3ea; --fig-acc:#2f6fa8; --fig-acc-soft:#d9e9f8;
+  --fig-water:#eef5fc; --fig-room:#fbfcfd; --fig-warn:#c9472f;
+  --c1:#2f6fa8; --c2:#e0573e; --c-mute:#b8c1cc;
+  --img-frame:#ffffff; --on-acc:#ffffff;
+  --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+  --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+  --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --white:#12161c; --off:#1a2029; --ink:#e8edf3; --mid:#bcc6d2; --light:#95a1b0; --xlight:#6f7b8a;
+    --rule:#28313c; --coral:#f0806a; --coral-soft:#3a221d;
+    --sky:#62a3dc; --sky-deep:#8cc0ec; --sky-bright:#a9d3f4; --sky-soft:#1a2939; --sky-soft2:#16212d;
+    --mint:#63c7a7; --mint-soft:#15302a; --amber:#e3ad4b; --amber-soft:#342915;
+    --band-1:#1d4a75; --band-2:#153a5d; --on-band:#ffffff; --on-band-soft:#c9dcef; --band-accent:#9fd0f5;
+    --nav-bg:rgba(18,22,28,0.82);
+    --fig-ink:#dfe6ee; --fig-fill:#1f262f; --fig-fill2:#333d4a; --fig-acc:#7db6ea; --fig-acc-soft:#1e3854;
+    --fig-water:#152233; --fig-room:#171d25; --fig-warn:#f0806a;
+    --c1:#4a90d0; --c2:#e5654b; --c-mute:#5a6574;
+    --img-frame:#f4f5f6; --on-acc:#0f1a26;
+    --shadow-card:0 1px 2px rgba(0,0,0,0.3),0 10px 30px rgba(0,0,0,0.25);
+    --shadow-soft:0 1px 2px rgba(0,0,0,0.25),0 4px 14px rgba(0,0,0,0.2);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --white:#12161c; --off:#1a2029; --ink:#e8edf3; --mid:#bcc6d2; --light:#95a1b0; --xlight:#6f7b8a;
+  --rule:#28313c; --coral:#f0806a; --coral-soft:#3a221d;
+  --sky:#62a3dc; --sky-deep:#8cc0ec; --sky-bright:#a9d3f4; --sky-soft:#1a2939; --sky-soft2:#16212d;
+  --mint:#63c7a7; --mint-soft:#15302a; --amber:#e3ad4b; --amber-soft:#342915;
+  --band-1:#1d4a75; --band-2:#153a5d; --on-band:#ffffff; --on-band-soft:#c9dcef; --band-accent:#9fd0f5;
+  --nav-bg:rgba(18,22,28,0.82);
+  --fig-ink:#dfe6ee; --fig-fill:#1f262f; --fig-fill2:#333d4a; --fig-acc:#7db6ea; --fig-acc-soft:#1e3854;
+  --fig-water:#152233; --fig-room:#171d25; --fig-warn:#f0806a;
+  --c1:#4a90d0; --c2:#e5654b; --c-mute:#5a6574;
+  --img-frame:#f4f5f6; --on-acc:#0f1a26;
+  --shadow-card:0 1px 2px rgba(0,0,0,0.3),0 10px 30px rgba(0,0,0,0.25);
+  --shadow-soft:0 1px 2px rgba(0,0,0,0.25),0 4px 14px rgba(0,0,0,0.2);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+  line-height:1.72;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--sky-bright);color:#fff}
+a{color:var(--sky-deep)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:6px}
+h1,h2,h3,h4{text-wrap:balance}
+.stripe{display:flex;height:3px;width:100%}
+.stripe span{flex:1}
+.stripe .s1,.stripe .s5{background:var(--sky-deep)}.stripe .s2,.stripe .s4{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+/* NAV */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:200;background:var(--nav-bg);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem}
+.nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0}
+.nav-logo-dot{display:flex;gap:3px;align-items:center}
+.nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+.nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+.nav-links{display:flex;gap:1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap;justify-content:flex-end}
+.nav-links a{font-size:.78rem;color:var(--mid);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--sky-deep)}
+/* HERO */
+.hero{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--sky-soft) 0%,var(--sky-soft2) 50%,var(--white) 88%)}
+.hero-inner{max-width:1180px;margin:0 auto;padding:48px 2rem 40px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:center}
+.overline{display:inline-flex;align-items:center;gap:.6rem;font-size:.66rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:18px}
+.overline::before{content:'';width:26px;height:1.5px;background:var(--sky)}
+.hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.2vw,46px);line-height:1.12;font-weight:600;letter-spacing:-.03em;color:var(--ink)}
+.hero h1 em{color:var(--sky-deep);font-style:normal}
+.hero .citation{margin-top:18px;color:var(--light);font-size:13px;border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6}
+.hero .subtitle{max-width:640px;margin-top:18px;color:var(--mid);font-size:16px;line-height:1.72}
+.hero .subtitle strong{color:var(--ink)}
+.hero-art{min-width:0}
+.hero-meta{max-width:1180px;margin:0 auto;padding:0 2rem 36px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.hero-meta .stat{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 16px;box-shadow:var(--shadow-soft)}
+.hero-meta .num{font-family:var(--font-display);font-size:20px;font-weight:650;color:var(--sky-deep);display:block;line-height:1.15;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.hero-meta .lbl{font-size:11.5px;color:var(--light);margin-top:4px;display:block;line-height:1.45}
+/* CONTAINER */
+.container{max-width:1180px;margin:0 auto;padding-inline:2rem;padding-block:8px 80px}
+.read{max-width:820px}
+.section-head{display:flex;align-items:flex-start;gap:16px;margin:68px 0 22px;padding-bottom:14px;border-bottom:1px solid var(--rule);scroll-margin-top:70px}
+.section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:var(--on-band);background:var(--band-1);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-variant-numeric:tabular-nums}
+.section-title-block{flex:1;min-width:0}
+.section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3}
+.section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-family:var(--font-en);font-style:italic}
+.panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:24px 28px;margin-bottom:16px;box-shadow:var(--shadow-soft)}
+.panel p{margin:0 0 12px}.panel p:last-child{margin-bottom:0}
+strong{color:var(--sky-deep);font-weight:600}
+/* VERDICT GRID */
+.verdicts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:18px 0}
+.vcard{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:16px;box-shadow:var(--shadow-soft);display:flex;flex-direction:column;gap:8px;min-width:0}
+.vcard h4{margin:0;font-family:var(--font-display);font-size:15px;font-weight:650;color:var(--ink)}
+.vcard p{margin:0;font-size:13px;line-height:1.6;color:var(--mid)}
+.pill{align-self:flex-start;font-size:11px;font-weight:650;padding:3px 11px;border-radius:var(--r-pill);letter-spacing:.02em}
+.pill.ok{background:var(--mint-soft);color:var(--mint)}
+.pill.issue{background:var(--amber-soft);color:var(--amber)}
+.pill.gap{background:var(--coral-soft);color:var(--coral)}
+.pill.ok::before{content:'✓ '}.pill.issue::before{content:'△ '}.pill.gap::before{content:'✕ '}
+/* CONDITION CARD */
+.condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:18px 0;box-shadow:var(--shadow-card)}
+.condition-header{background:linear-gradient(135deg,var(--band-1) 0%,var(--band-2) 100%);color:var(--on-band);padding:16px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.num-circle{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:17px;color:#fff;flex-shrink:0;background:var(--sky);box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.cond-titles{flex:1;min-width:0}
+.cond-code{font-family:var(--font-en);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--band-accent);text-transform:uppercase}
+.cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--on-band);letter-spacing:-.02em}
+.cond-en{font-family:var(--font-en);font-style:italic;font-size:12.5px;color:var(--on-band-soft)}
+.condition-body{padding:20px 24px}
+.condition-body>p{margin:0 0 12px}.condition-body>p:last-child{margin-bottom:0}
+.plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.55}
+.plain-meaning::before{content:'쉽게 풀면';display:block;font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px}
+/* QUOTE */
+.quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:15px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;color:var(--mid);font-size:14.5px;line-height:1.7}
+.quote-box .q{color:var(--ink);font-weight:500}
+.quote-box .attr{display:block;margin-top:8px;font-size:12px;color:var(--light)}
+.quote-box.en{font-family:var(--font-en);font-style:italic}
+.quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink)}
+.quote-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.quote-grid .quote-box{margin:0}
+/* CALLOUT */
+.callout{border-radius:var(--r-md);padding:15px 20px;margin:16px 0;font-size:14px;line-height:1.7}
+.callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky)}
+.callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber)}
+.callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral)}
+.callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint)}
+.callout strong{color:var(--ink)}
+.callout-label{display:table;font-size:10.5px;font-weight:650;letter-spacing:.08em;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);color:#fff}
+.sky .callout-label{background:var(--band-1)}.warm .callout-label{background:#a8741a}.danger .callout-label{background:#b9432d}.sage .callout-label{background:#2f8f73}
+/* FIGURE */
+.figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;margin:20px 0;box-shadow:var(--shadow-soft)}
+.fig-title{font-family:var(--font-display);font-size:14px;font-weight:650;color:var(--ink);margin-bottom:4px}
+.fig-tag{display:inline-block;font-size:10px;font-weight:650;letter-spacing:.1em;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px}
+.fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule)}
+.fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep)}
+.fig-tag.data{background:var(--mint-soft);color:var(--mint)}
+.fig-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.fig-scroll svg{display:block;width:100%;height:auto;min-width:560px}
+.fig-scroll.narrow svg{min-width:0}
+.chart-md svg{max-width:720px;margin:0 auto}
+.fig-orig{text-align:center;background:var(--img-frame);border:1px solid var(--rule);border-radius:var(--r-sm);padding:12px;margin:8px 0 4px}
+.fig-orig img{max-width:100%;height:auto;display:block;margin:0 auto}
+.fig-cap{font-size:12.5px;color:var(--light);line-height:1.6;margin:8px 2px 0}
+.fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:12px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid)}
+.fig-implies b{color:var(--sky-deep)}
+.two-fig{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.two-fig .figure-block{margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:12.5px;color:var(--mid);margin:4px 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.sw{display:inline-block;width:18px;height:4px;border-radius:2px}
+.sw.c1-bg{background:var(--c1)}.sw.c2-bg{background:var(--c2)}
+/* SVG drawing classes (all token-driven) */
+svg text{font-family:var(--font-text)}
+svg .ln{stroke:var(--fig-ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;fill:none}
+svg .ln.thin{stroke-width:1.8}
+svg .fl{fill:var(--fig-fill)} svg .fl2{fill:var(--fig-fill2)}
+svg rect.fl.ln,svg circle.fl.ln,svg path.fl.ln{fill:var(--fig-fill)}
+svg rect.fl2.ln,svg path.fl2.ln{fill:var(--fig-fill2)}
+svg rect.acc-soft.ln,svg circle.acc-soft.ln,svg path.acc-soft.ln{fill:var(--fig-acc-soft)}
+svg rect.room.ln{fill:var(--fig-room)}
+svg .acc-soft{fill:var(--fig-acc-soft)}
+svg .ink{fill:var(--fig-ink)} svg .ink-soft{fill:var(--xlight)}
+svg .acc-f{fill:var(--fig-acc)}
+svg .acc-ln{stroke:var(--fig-acc);stroke-width:2.6;fill:none;stroke-linecap:round}
+svg .warn-ln{stroke:var(--fig-warn);stroke-width:2.2;fill:none;stroke-linecap:round}
+svg .thick{stroke-width:4.5}
+svg .dash{stroke-dasharray:6 6}
+svg .dashbox{opacity:.55}
+svg .road{stroke:var(--fig-fill2);stroke-width:26;stroke-linecap:round}
+svg .water{fill:var(--fig-water)}
+svg .grid{stroke:var(--rule);stroke-width:1}
+svg .axis{stroke:var(--xlight);stroke-width:1.2}
+svg .t{fill:var(--mid)} svg .t-strong{fill:var(--ink);font-weight:600} svg .t-muted{fill:var(--light)}
+svg .t-acc{fill:var(--sky-deep)} svg .t-warn{fill:var(--coral)} svg .t-on{fill:var(--on-acc)}
+svg .c1-f{fill:var(--c1)} svg .c2-f{fill:var(--c2)} svg .mute-f{fill:var(--c-mute)}
+svg .c1-ln{stroke:var(--c1);stroke-width:2.2} svg .c2-ln{stroke:var(--c2);stroke-width:2.2}
+svg .ring{stroke:var(--white);stroke-width:2}
+svg .hit:hover path,svg .hit:hover circle.ring{opacity:.82}
+/* TABLE */
+.table-wrap{overflow-x:auto;margin:12px 0}
+.mini-table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:520px}
+.mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid)}
+.mini-table td{padding:9px 11px;border-bottom:1px solid var(--rule);vertical-align:top}
+.mini-table td.n{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.mini-table tr.hi td{background:var(--sky-soft2)}
+.lvl{display:inline-block;font-size:11px;font-weight:650;padding:2px 9px;border-radius:var(--r-pill);white-space:nowrap}
+.lvl.peer{background:var(--mint-soft);color:var(--mint)}
+.lvl.law{background:var(--sky-soft);color:var(--sky-deep)}
+.lvl.admin{background:var(--off);color:var(--mid);border:1px solid var(--rule)}
+.lvl.fgi{background:var(--amber-soft);color:var(--amber)}
+.lvl.calc{background:var(--coral-soft);color:var(--coral)}
+/* MOD GRID */
+.mod-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+.mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);min-width:0}
+.mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:650;color:var(--ink)}
+.mod-card .en{font-family:var(--font-en);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+.mod-card p{margin:0;font-size:13.5px;line-height:1.65}
+.mod-card .keynum{display:inline-block;margin-top:9px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill)}
+/* PHRASES */
+.phrase-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:8px 0}
+.phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);min-width:0}
+.phrase.span2{grid-column:1 / -1}
+.phrase .en{font-family:var(--font-en);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62}
+.phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500}
+.phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6}
+.phrase .why b{color:var(--mint)}
+/* CLOSING */
+.closing{background:linear-gradient(135deg,var(--band-1) 0%,var(--band-2) 100%);color:var(--on-band);border-radius:var(--r-lg);padding:34px 38px;margin-top:56px;position:relative;overflow:hidden;box-shadow:var(--shadow-card)}
+.closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18)}
+.closing-inner{position:relative;z-index:1;max-width:820px}
+.closing h2{font-family:var(--font-display);color:var(--band-accent);margin:0 0 14px;font-size:21px;font-weight:650}
+.closing p{color:var(--on-band-soft);font-size:15px;line-height:1.75;margin:0 0 12px}
+.closing p strong{color:var(--on-band)}
+.refs{font-size:13px;line-height:1.7;color:var(--mid);padding-left:1.3em;margin:8px 0}
+.refs li{margin-bottom:6px;padding-left:.2em}
+.refs a{word-break:break-all}
+.footer{text-align:center;padding:26px 16px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;line-height:1.7}
+/* RESPONSIVE */
+@media (max-width:980px){
+  .hero-inner{grid-template-columns:1fr}
+  .verdicts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nav-links{display:none}
+}
+@media (max-width:760px){
+  .nav-inner,.hero-inner,.hero-meta,.container{padding-inline:16px}
+  .hero-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two-fig,.mod-grid,.phrase-grid,.quote-grid{grid-template-columns:1fr}
+  .panel,.condition-body{padding:18px 18px}
+  .figure-block{padding:14px 14px}
+  .closing{padding:26px 22px}
+  .section-title-block h2{font-size:21px}
+}
+@media (max-width:480px){.verdicts{grid-template-columns:1fr}}
+
+:root{--font-display:'Freesentation','Pretendard Variable',Pretendard,'Inter',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;--font-text:'Freesentation','Pretendard Variable',Pretendard,'Inter',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+/* ---- GRM guide additions: group colors, controls, interactive blocks ---- */
+:root{
+  --g0:#2f6fa8; --g1:#8fb9de; --g2:#7a5fb0; --g3:#c9472f; --g4:#a8741a;
+  --male:#2f6fa8; --female:#c0567b; --male-soft:#e3eef9; --female-soft:#f9e7ee;
+  --som:#a8741a; --som-soft:#fbf1dc; --deep:#c9472f; --deep-soft:#fdeee9;
+  --ctl-bg:#ffffff; --ctl-on:#2f6fa8; --ctl-on-ink:#ffffff;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --g0:#7db6ea; --g1:#4f7fa8; --g2:#b394e0; --g3:#f0806a; --g4:#e3ad4b;
+    --male:#7db6ea; --female:#e88aac; --male-soft:#1a2939; --female-soft:#3a2230;
+    --som:#e3ad4b; --som-soft:#342915; --deep:#f0806a; --deep-soft:#3a221d;
+    --ctl-bg:#1a2029; --ctl-on:#7db6ea; --ctl-on-ink:#0f1a26;
+  }
+}
+:root[data-theme="dark"]{
+  --g0:#7db6ea; --g1:#4f7fa8; --g2:#b394e0; --g3:#f0806a; --g4:#e3ad4b;
+  --male:#7db6ea; --female:#e88aac; --male-soft:#1a2939; --female-soft:#3a2230;
+  --som:#e3ad4b; --som-soft:#342915; --deep:#f0806a; --deep-soft:#3a221d;
+  --ctl-bg:#1a2029; --ctl-on:#7db6ea; --ctl-on-ink:#0f1a26;
+}
+.hero-inner.single{grid-template-columns:minmax(0,1fr) minmax(0,.95fr)}
+.lead{font-size:16px;color:var(--mid);line-height:1.8}
+.lead b{color:var(--ink)}
+.kicker{font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--sky);text-transform:uppercase;margin-bottom:6px}
+/* controls */
+.ctl-row{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:4px 0 12px}
+.ctl-row .lab{font-size:12.5px;color:var(--light);font-weight:600}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:var(--r-pill);overflow:hidden;background:var(--ctl-bg)}
+.seg button{font:inherit;font-size:13px;border:0;background:transparent;color:var(--mid);padding:6px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ctl-on);color:var(--ctl-on-ink);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:12.5px;border:1px solid var(--rule);background:var(--ctl-bg);color:var(--mid);padding:4px 11px;border-radius:var(--r-pill);cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--ctl-on);background:var(--sky-soft);color:var(--sky-deep);font-weight:600}
+.chip.som{border-style:dashed}
+.btn{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--rule);background:var(--ctl-bg);color:var(--sky-deep);padding:6px 13px;border-radius:var(--r-pill);cursor:pointer}
+.btn:hover{border-color:var(--sky-bright)}
+input[type=range]{accent-color:var(--sky-deep);width:100%;max-width:340px}
+.slider{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--mid)}
+.slider b{font-variant-numeric:tabular-nums;color:var(--ink);min-width:48px;display:inline-block}
+.readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0 4px}
+.ro{background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:10px 14px;min-width:0}
+.ro .k{font-size:11.5px;color:var(--light);display:block}
+.ro .v{font-size:21px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1.3}
+.ro .s{font-size:11.5px;color:var(--mid);display:block;line-height:1.45}
+.ro.acc .v{color:var(--sky-deep)} .ro.warn .v{color:var(--coral)}
+/* response grid */
+.resp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center;margin:8px 0}
+.resp .it{font-size:13.5px;color:var(--ink);display:flex;gap:8px;align-items:center;min-width:0}
+.resp .it .tag{font-size:10.5px;padding:1px 7px;border-radius:var(--r-pill);background:var(--sky-soft);color:var(--sky-deep);flex-shrink:0}
+.resp .it .tag.som{background:var(--som-soft);color:var(--som)}
+.resp .it .tag.deep{background:var(--deep-soft);color:var(--deep)}
+.resp .opts{display:inline-flex;gap:4px}
+.resp .opts button{font:inherit;width:30px;height:28px;border-radius:8px;border:1px solid var(--rule);background:var(--ctl-bg);color:var(--mid);cursor:pointer;font-variant-numeric:tabular-nums;font-size:13px}
+.resp .opts button[aria-pressed="true"]{background:var(--ctl-on);border-color:var(--ctl-on);color:var(--ctl-on-ink);font-weight:700}
+.two-col{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:860px){.two-col{grid-template-columns:1fr}}
+/* ladder */
+.ladder{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
+.rung{border:1px solid var(--rule);border-radius:var(--r-md);padding:14px 16px;background:var(--white);box-shadow:var(--shadow-soft);min-width:0}
+.rung .st{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--sky)}
+.rung h4{margin:2px 0 6px;font-size:16px}
+.rung ul{margin:0;padding-left:0;list-style:none;font-size:13px;color:var(--mid)}
+.rung li{padding:2px 0}
+.rung li.y::before{content:'✓ ';color:var(--mint);font-weight:700}
+.rung li.n::before{content:'✕ ';color:var(--xlight);font-weight:700}
+.rung.best{border-color:var(--sky);background:var(--sky-soft2)}
+@media (max-width:760px){.ladder{grid-template-columns:1fr}}
+/* map table */
+.map td:first-child{white-space:nowrap;font-weight:600}
+/* quiz */
+.quiz{display:grid;gap:12px;margin:12px 0}
+.q{border:1px solid var(--rule);border-radius:var(--r-md);padding:16px 18px;background:var(--white);box-shadow:var(--shadow-soft)}
+.q h4{margin:0 0 10px;font-size:15px}
+.q .opts{display:flex;flex-wrap:wrap;gap:8px}
+.q .opts button{font:inherit;font-size:13px;border:1px solid var(--rule);background:var(--ctl-bg);color:var(--ink);border-radius:var(--r-sm);padding:7px 12px;cursor:pointer;text-align:left}
+.q .opts button.right{border-color:var(--mint);background:var(--mint-soft);color:var(--mint);font-weight:600}
+.q .opts button.wrong{border-color:var(--coral);background:var(--coral-soft);color:var(--coral)}
+.q .ex{margin-top:10px;font-size:13.5px;color:var(--mid);line-height:1.65}
+.formula{font-family:var(--font-en);background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:8px 14px;display:inline-block;font-size:14px;color:var(--ink);margin:4px 0}
+svg .g0-f{fill:var(--g0)} svg .g1-f{fill:var(--g1)} svg .g2-f{fill:var(--g2)} svg .g3-f{fill:var(--g3)} svg .g4-f{fill:var(--g4)}
+svg .g0-s{stroke:var(--g0)} svg .g1-s{stroke:var(--g1)} svg .g2-s{stroke:var(--g2)} svg .g3-s{stroke:var(--g3)} svg .g4-s{stroke:var(--g4)}
+svg .male-f{fill:var(--male)} svg .female-f{fill:var(--female)} svg .male-s{stroke:var(--male)} svg .female-s{stroke:var(--female)}
+svg .som-f{fill:var(--som)} svg .deep-f{fill:var(--deep)} svg .som-soft-f{fill:var(--som-soft)} svg .deep-soft-f{fill:var(--deep-soft)}
+svg .som-s{stroke:var(--som)} svg .deep-s{stroke:var(--deep)}
+svg .bg-f{fill:var(--white)} svg .off-f{fill:var(--off)} svg .sky-soft-f{fill:var(--sky-soft)}
+svg .curve{fill:none;stroke-width:3;stroke-linecap:round}
+svg .curve.ref{stroke:var(--xlight);stroke-width:2;stroke-dasharray:6 5}
+svg .acc-s{stroke:var(--sky-deep)}
+svg .kidbody{stroke:var(--fig-ink);stroke-width:2.6}
+.legend-row{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--mid);margin:6px 0}
+.legend-row span{display:inline-flex;align-items:center;gap:6px}
+.legend-row i{display:inline-block;width:14px;height:4px;border-radius:2px}
+.legend-row button{font:inherit;font-size:12.5px;border:1px solid var(--rule);background:var(--ctl-bg);color:var(--mid);border-radius:var(--r-pill);padding:3px 10px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.legend-row button[aria-pressed="false"]{opacity:.45}
+.note{font-size:12.5px;color:var(--light);line-height:1.6}
+[hidden]{display:none!important}
+#icc-svg svg,#dif-svg svg,#lat-dens svg,#mim-svg svg,#lat-dumb svg,#p0-svg svg{max-width:880px;margin:0 auto}
+.codebox{position:relative;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);margin:10px 0}
+.codebox pre{margin:0;padding:14px 16px;overflow-x:auto;font:12.5px/1.65 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink);white-space:pre}
+.codebox button{position:absolute;top:8px;right:8px;font:inherit;font-size:11.5px;border:1px solid var(--rule);background:var(--ctl-bg);color:var(--sky-deep);border-radius:var(--r-pill);padding:2px 10px;cursor:pointer}
+.eq{font-family:var(--font-en);background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:12px 16px;margin:10px 0;font-size:14.5px;line-height:1.9;color:var(--ink);overflow-x:auto}
+.eq .c{font-family:var(--font-text);font-size:12.5px;color:var(--light)}
+.concept{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:12px 0}
+.concept .cc{border:1px solid var(--rule);border-radius:var(--r-md);padding:14px 16px;background:var(--white);box-shadow:var(--shadow-soft);min-width:0}
+.concept .cc .h{font-weight:700;color:var(--ink);font-size:14.5px;margin-bottom:4px}
+.concept .cc p{margin:0;font-size:13.5px;color:var(--mid);line-height:1.65}
+.example{border-left:3px solid var(--mint);background:var(--mint-soft);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin:14px 0;font-size:14px;line-height:1.7}
+.example::before{content:'이 연구의 예시';display:block;font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--mint);margin-bottom:4px}
+.part{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--on-band);background:var(--band-1);padding:2px 10px;border-radius:var(--r-pill);margin:26px 0 8px}
+.mini-table.ctr th,.mini-table.ctr td,.mini-table.ctr td.n{text-align:center;vertical-align:middle}
+.mini-table th{vertical-align:middle}
+.defbox{background:var(--white);border:1px solid var(--rule);border-top:3px solid var(--sky-deep);border-radius:var(--r-md);padding:20px 24px;margin:6px 0 16px;box-shadow:var(--shadow-soft)}
+.defbox .dh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.defbox .lbl,.trybox .lbl{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--on-band);background:var(--band-1);padding:2px 10px;border-radius:var(--r-pill);align-self:center}
+.defbox h3{margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em}
+.defbox .en{font-family:var(--font-en);font-style:italic;font-size:13px;color:var(--light)}
+.defbox .def{background:var(--sky-soft);border-radius:var(--r-sm);padding:12px 16px;font-size:15.5px;font-weight:600;color:var(--sky-deep);line-height:1.65;margin:0 0 12px}
+.defbox p{margin:0 0 10px}.defbox p:last-child{margin-bottom:0}
+.defbox .eq{margin:12px 0 0}
+.defgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px}
+.defgrid>div{border:1px solid var(--rule);border-radius:var(--r-sm);padding:10px 14px;background:var(--off)}
+.defgrid b{color:var(--ink);font-size:14px}.defgrid p{margin:4px 0 0;font-size:13px;color:var(--mid);line-height:1.6}
+.trybox{display:flex;gap:12px;align-items:flex-start;background:var(--mint-soft);border-radius:var(--r-md);padding:14px 18px;margin:18px 0 10px}
+.trybox .lbl{background:var(--mint);flex-shrink:0;margin-top:3px}
+.trybox p{margin:0;font-size:14.5px;line-height:1.7;color:var(--ink)}
+.defbox + .concept{margin-top:0}
+.mini-table.ctr{table-layout:fixed}
+
+</style>
+</head>
+<body>
+
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+<nav><div class="nav-inner">
+  <a class="nav-logo" href="../index.html"><span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>AIR Lab Statistics · GRM에서 MIMIC까지</a>
+  <ul class="nav-links">
+    <li><a href="#q">큰 그림</a></li><li><a href="#s1">1 IRT 기초</a></li><li><a href="#s2">2 GRM</a></li><li><a href="#s3">3 P₀</a></li>
+    <li><a href="#s4">4 DIF</a></li><li><a href="#s5">5 잠재평균</a></li><li><a href="#s6">6 MIMIC</a></li><li><a href="#s7">정리·실습</a></li>
+  </ul>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="hero-inner single">
+    <div>
+      <div class="overline">AIR Lab Statistics · Item Response Theory</div>
+      <h1>우울을 재는 <em>공평한 자</em><br>GRM에서 MIMIC까지</h1>
+      <p class="citation">예시 자료: 한국청소년정책연구원 「10대 청소년의 정신건강 실태조사」(2021), 우울 척도 MHS:D 12문항, N=6,688<br>예시 변수: 스마트폰 이용유형(남 4개, 여 5개 잠재프로파일), 수면 부족(초등 9시간, 중·고 8시간 미만), 학교급</p>
+      <p class="subtitle">이 페이지의 주인공은 <strong>통계 개념</strong>입니다. 문항반응이론(IRT)의 기본 생각부터 등급반응모형(GRM), 변별도와 경계, P₀, 차별문항기능(DIF), 다집단 GRM의 잠재평균, 그리고 MIMIC까지 차례로 설명하고, 각 개념마다 실제 연구 결과를 <strong>예시</strong>로 붙였습니다. 그래프는 모두 클릭과 슬라이더로 직접 바꿔 볼 수 있어요.</p>
+    </div>
+    <div class="hero-art"><svg viewBox="0 0 560 330" role="img" aria-label="12문항 응답을 잠재 우울이라는 하나의 자 위에 놓는 그림. 왼쪽 아이는 우울이 낮고 오른쪽 아이는 높다"><rect x="30" y="250" width="500" height="34" rx="8" class="acc-soft ln"/><path class="ln thin" d="M40,250 L40,270"/><path class="ln thin" d="M64,250 L64,262"/><path class="ln thin" d="M88,250 L88,262"/><path class="ln thin" d="M112,250 L112,262"/><path class="ln thin" d="M136,250 L136,262"/><path class="ln thin" d="M160,250 L160,270"/><path class="ln thin" d="M184,250 L184,262"/><path class="ln thin" d="M208,250 L208,262"/><path class="ln thin" d="M232,250 L232,262"/><path class="ln thin" d="M256,250 L256,262"/><path class="ln thin" d="M280,250 L280,270"/><path class="ln thin" d="M304,250 L304,262"/><path class="ln thin" d="M328,250 L328,262"/><path class="ln thin" d="M352,250 L352,262"/><path class="ln thin" d="M376,250 L376,262"/><path class="ln thin" d="M400,250 L400,270"/><path class="ln thin" d="M424,250 L424,262"/><path class="ln thin" d="M448,250 L448,262"/><path class="ln thin" d="M472,250 L472,262"/><path class="ln thin" d="M496,250 L496,262"/><path class="ln thin" d="M520,250 L520,270"/><text x="40" y="300" class="t" style="font-size:12px" text-anchor="start"></text><text x="40" y="304" class="t-muted" style="font-size:12px" text-anchor="middle">−2</text><text x="160" y="300" class="t" style="font-size:12px" text-anchor="start"></text><text x="160" y="304" class="t-muted" style="font-size:12px" text-anchor="middle">−1</text><text x="280" y="300" class="t" style="font-size:12px" text-anchor="start"></text><text x="280" y="304" class="t-muted" style="font-size:12px" text-anchor="middle">0</text><text x="400" y="300" class="t" style="font-size:12px" text-anchor="start"></text><text x="400" y="304" class="t-muted" style="font-size:12px" text-anchor="middle">+1</text><text x="520" y="300" class="t" style="font-size:12px" text-anchor="start"></text><text x="520" y="304" class="t-muted" style="font-size:12px" text-anchor="middle">+2</text><text x="280" y="324" class="t-acc" style="font-size:13px;font-weight:700" text-anchor="middle">잠재 우울 θ</text><g transform="translate(100,248) scale(1.0)"><path class="ln" d="M-7,-32 L-7,0 M7,-32 L7,0 M-12,0 L-2,0 M2,0 L12,0"/><rect class="fl ln" x="-16" y="-72" width="32" height="42" rx="14"/><path class="ln" d="M-16,-62 L-6,-48 M16,-62 L6,-48"/><circle class="fl ln" cx="0" cy="-90" r="17"/><circle class="ink" cx="-6" cy="-92" r="2.2"/><circle class="ink" cx="6" cy="-92" r="2.2"/><path class="ln thin" d="M-6,-79 Q0,-75 6,-79"/></g><g transform="translate(290,248) scale(1.0)"><path class="ln" d="M-7,-32 L-7,0 M7,-32 L7,0 M-12,0 L-2,0 M2,0 L12,0"/><rect class="fl ln" x="-16" y="-72" width="32" height="42" rx="14"/><path class="ln" d="M-16,-62 L-6,-48 M16,-62 L6,-48"/><circle class="fl ln" cx="0" cy="-90" r="17"/><circle class="ink" cx="-6" cy="-92" r="2.2"/><circle class="ink" cx="6" cy="-92" r="2.2"/><path class="ln thin" d="M-6,-79 L6,-79"/></g><g transform="translate(450,248) scale(1.0)"><path class="ln" d="M-7,-32 L-7,0 M7,-32 L7,0 M-12,0 L-2,0 M2,0 L12,0"/><rect class="fl ln" x="-16" y="-72" width="32" height="42" rx="14"/><path class="ln" d="M-16,-62 L-6,-48 M16,-62 L6,-48"/><circle class="fl ln" cx="0" cy="-90" r="17"/><circle class="ink" cx="-6" cy="-92" r="2.2"/><circle class="ink" cx="6" cy="-92" r="2.2"/><path class="ln thin" d="M-6,-77 Q0,-82 6,-77"/></g><g transform="translate(330,46)"><rect class="bg-f ln thin" x="0" y="0" width="200" height="56" rx="14"/><text x="100" y="24" class="t-strong" style="font-size:13px" text-anchor="middle">같은 6점인데</text><text x="100" y="43" class="t-acc" style="font-size:13px;font-weight:700" text-anchor="middle">정말 같은 우울일까?</text></g><path class="ln thin" d="M380,102 L360,130"/><g transform="translate(40,40)"><rect class="bg-f ln thin" x="0" y="0" width="190" height="56" rx="14"/><text x="95" y="24" class="t-strong" style="font-size:13px" text-anchor="middle">문항마다 무게가 달라요</text><text x="95" y="43" class="t-acc" style="font-size:13px;font-weight:700" text-anchor="middle">→ GRM</text></g><path class="ln thin" d="M120,96 L108,130"/></svg></div>
+  </div>
+  <div class="hero-meta">
+    <div class="stat"><span class="num">6개 개념</span><span class="lbl">IRT 기초 · GRM · P₀ · DIF · 잠재평균 · MIMIC</span></div>
+    <div class="stat"><span class="num">9개 인터랙션</span><span class="lbl">응답 체험, 곡선, DIF 샌드박스, BH 보정 등</span></div>
+    <div class="stat"><span class="num">실제 예시</span><span class="lbl">MHS:D 12문항, 남 3,103명 · 여 3,585명</span></div>
+    <div class="stat"><span class="num">Stata 18</span><span class="lbl">개념별 실습 명령어와 확인 퀴즈</span></div>
+  </div>
+</header>
+
+<main class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../statistics.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Statistics</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>GRM에서 MIMIC까지</div>
+
+<section id="q">
+  <div class="section-head"><div class="section-num">00</div><div class="section-title-block"><h2>큰 그림: 모든 분석은 GRM이라는 자 위에 있다</h2><p class="section-subtitle">The big picture</p></div></div>
+  <div class="read"><p class="lead">우울 설문 12문항을 더한 <b>합산점수</b>는 모든 문항을 1점씩 똑같은 무게로 셉니다. ‘죽고 싶다’에 답한 2점과 ‘식욕이 늘었다’에 답한 2점이 같은 값이 되죠. <b>GRM</b>은 문항마다 무게를 따로 재서 우울 점수를 매기는 방법이고, 이 자가 한 번 만들어지면 그 위에서 집단 비교(다집단 GRM)와 회귀분석(MIMIC)까지 이어서 할 수 있습니다.</p></div>
+  <div class="table-wrap"><table class="mini-table map">
+    <tr><th>단계</th><th>하는 일</th><th>비유</th><th>예시에서 보는 결과</th></tr>
+    <tr><td>GRM</td><td>12문항이 우울을 얼마나 잘 재는지 문항별로 분석하고 우울 점수(θ)를 매김</td><td>자의 눈금이 정확한지 점검</td><td>문항별 변별도와 P₀</td></tr>
+    <tr><td>DIF</td><td>그 자가 모든 집단에 같은 방식으로 작동하는지 확인</td><td>자가 반마다 늘거나 줄지 않는지 확인</td><td>DIF 문항과 유형별 변별도</td></tr>
+    <tr><td>다집단 GRM</td><td>공평함을 확인한 자로 집단별 평균과 퍼짐을 비교</td><td>같은 자로 반별 평균 키 비교</td><td>유형별 d, μ, 잠재 SD</td></tr>
+    <tr><td>MIMIC</td><td>그 자로 잰 우울을 결과변수로 회귀분석</td><td>공평한 자로 잰 키가 무엇과 관련되나</td><td>유형별 수면 부족 기울기 γ</td></tr>
+  </table></div>
+  <div class="figure-block"><span class="fig-tag kr">예시 · 같은 6점, 다른 우울</span><div class="fig-scroll"><svg viewBox="0 0 760 330" role="img" aria-label="합산점수는 둘 다 6점이지만, 가람은 신체 문항에, 나래는 깊은 우울 문항에 응답했다"><g transform="translate(110,250) scale(1.15)"><path class="ln" d="M-7,-32 L-7,0 M7,-32 L7,0 M-12,0 L-2,0 M2,0 L12,0"/><rect class="fl ln" x="-16" y="-72" width="32" height="42" rx="14"/><path class="ln" d="M-16,-62 L-6,-48 M16,-62 L6,-48"/><circle class="fl ln" cx="0" cy="-90" r="17"/><circle class="ink" cx="-6" cy="-92" r="2.2"/><circle class="ink" cx="6" cy="-92" r="2.2"/><path class="ln thin" d="M-6,-79 L6,-79"/></g><text x="110" y="276" class="t-strong" style="font-size:14px" text-anchor="middle">가람</text><g transform="translate(170,60)"><rect class="room ln thin" x="0" y="0" width="150" height="110" rx="8" style="fill:var(--fig-room)"/><text x="12" y="20" class="t-strong" style="font-size:11.5px" text-anchor="start">우울 설문 12문항</text><text x="12" y="40" class="t-muted" style="font-size:11.5px" text-anchor="start">1~9 정서·인지 문항</text><text x="138" y="40" class="t-muted" style="font-size:11.5px" text-anchor="end">0</text><text x="12" y="60" class="t" style="font-size:11.5px;font-weight:600" text-anchor="start">10. 식욕 감소</text><text x="138" y="60" class="t-strong" style="font-size:11.5px;font-weight:700" text-anchor="end">2</text><text x="12" y="80" class="t" style="font-size:11.5px;font-weight:600" text-anchor="start">11. 식욕 증가</text><text x="138" y="80" class="t-strong" style="font-size:11.5px;font-weight:700" text-anchor="end">2</text><text x="12" y="100" class="t" style="font-size:11.5px;font-weight:600" text-anchor="start">12. 수면 곤란</text><text x="138" y="100" class="t-strong" style="font-size:11.5px;font-weight:700" text-anchor="end">2</text></g><g transform="translate(470,250) scale(1.15)"><path class="ln" d="M-7,-32 L-7,0 M7,-32 L7,0 M-12,0 L-2,0 M2,0 L12,0"/><rect class="fl ln" x="-16" y="-72" width="32" height="42" rx="14"/><path class="ln" d="M-16,-62 L-6,-48 M16,-62 L6,-48"/><circle class="fl ln" cx="0" cy="-90" r="17"/><circle class="ink" cx="-6" cy="-92" r="2.2"/><circle class="ink" cx="6" cy="-92" r="2.2"/><path class="ln thin" d="M-6,-77 Q0,-82 6,-77"/></g><text x="470" y="276" class="t-strong" style="font-size:14px" text-anchor="middle">나래</text><g transform="translate(530,60)"><rect class="room ln thin" x="0" y="0" width="150" height="110" rx="8" style="fill:var(--fig-room)"/><text x="12" y="20" class="t-strong" style="font-size:11.5px" text-anchor="start">우울 설문 12문항</text><text x="12" y="40" class="t-warn" style="font-size:11.5px;font-weight:600" text-anchor="start">7. 죽고 싶음</text><text x="138" y="40" class="t-strong" style="font-size:11.5px;font-weight:700" text-anchor="end">2</text><text x="12" y="60" class="t-warn" style="font-size:11.5px;font-weight:600" text-anchor="start">8. 덫에 걸린 느낌</text><text x="138" y="60" class="t-strong" style="font-size:11.5px;font-weight:700" text-anchor="end">2</text><text x="12" y="80" class="t-warn" style="font-size:11.5px;font-weight:600" text-anchor="start">9. 앞날 기대 없음</text><text x="138" y="80" class="t-strong" style="font-size:11.5px;font-weight:700" text-anchor="end">2</text><text x="12" y="100" class="t-muted" style="font-size:11.5px" text-anchor="start">나머지 9문항</text><text x="138" y="100" class="t-muted" style="font-size:11.5px" text-anchor="end">0</text></g><rect x="170" y="196" width="150" height="34" rx="10" class="off-f"/><text x="245" y="218" class="t-strong" style="font-size:13px" text-anchor="middle">합산점수 6점</text><rect x="530" y="196" width="150" height="34" rx="10" class="off-f"/><text x="605" y="218" class="t-strong" style="font-size:13px" text-anchor="middle">합산점수 6점</text><text x="380" y="222" class="t-strong" style="font-size:26px" text-anchor="middle">=</text><rect x="170" y="240" width="150" height="34" rx="10" class="sky-soft-f"/><text x="245" y="262" class="t-acc" style="font-size:13px;font-weight:700" text-anchor="middle">GRM θ = +0.09</text><rect x="530" y="240" width="150" height="34" rx="10" class="deep-soft-f"/><text x="605" y="262" class="t-warn" style="font-size:13px;font-weight:700" text-anchor="middle">GRM θ = +0.75</text><text x="380" y="266" class="t-warn" style="font-size:26px;font-weight:700" text-anchor="middle">≠</text><text x="380" y="312" class="t-muted" style="font-size:12px" text-anchor="middle">남학생 문항 모수로 계산한 값. 아래 1막에서 직접 바꿔 볼 수 있어요.</text></svg></div>
+    <div class="fig-implies"><b>핵심.</b> 문항마다 ‘우울을 얼마나 잘 반영하는지’가 다릅니다. 그 차이를 계산에 넣는 방법이 GRM입니다.</div></div>
+  <div class="figure-block"><span class="fig-tag kr">분석 지도</span><div class="fig-scroll"><svg viewBox="0 0 1000 230" role="img" aria-label="분석의 순서: 응답, GRM, DIF, 다집단 GRM, MIMIC"><defs><marker id="pa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="11" markerHeight="11" orient="auto"><path class="acc-f" d="M0,0 L10,5 L0,10 z"/></marker></defs><rect class="fl ln" x="10" y="40" width="168" height="104" rx="16"/><circle cx="36" cy="66" r="14" class="acc-f"/><text x="36" y="71" class="t-on" style="font-size:13px;font-weight:700" text-anchor="middle">①</text><text x="58" y="72" class="t-strong" style="font-size:15px;font-weight:700" text-anchor="start">12문항 응답</text><text x="94.0" y="104" class="t" style="font-size:11.5px" text-anchor="middle">0~4점 × 12</text><rect x="40" y="160" width="108" height="28" rx="14" class="off-f"/><text x="94.0" y="179" class="t-acc" style="font-size:12px;font-weight:700" text-anchor="middle">원자료</text><path class="acc-ln" d="M182,92 L207,92" marker-end="url(#pa)"/><rect class="acc-soft ln" x="211" y="40" width="168" height="104" rx="16"/><circle cx="237" cy="66" r="14" class="acc-f"/><text x="237" y="71" class="t-on" style="font-size:13px;font-weight:700" text-anchor="middle">②</text><text x="259" y="72" class="t-strong" style="font-size:15px;font-weight:700" text-anchor="start">GRM</text><text x="295.0" y="104" class="t" style="font-size:11.5px" text-anchor="middle">문항별 변별도 a · 경계 b</text><rect x="241" y="160" width="108" height="28" rx="14" class="off-f"/><text x="295.0" y="179" class="t-acc" style="font-size:12px;font-weight:700" text-anchor="middle">변별도 · P₀</text><path class="acc-ln" d="M383,92 L408,92" marker-end="url(#pa)"/><rect class="fl ln" x="412" y="40" width="168" height="104" rx="16"/><circle cx="438" cy="66" r="14" class="acc-f"/><text x="438" y="71" class="t-on" style="font-size:13px;font-weight:700" text-anchor="middle">③</text><text x="460" y="72" class="t-strong" style="font-size:15px;font-weight:700" text-anchor="start">DIF 검정</text><text x="496.0" y="104" class="t" style="font-size:11.5px" text-anchor="middle">모든 유형에 공평한 자인가</text><rect x="442" y="160" width="108" height="28" rx="14" class="off-f"/><text x="496.0" y="179" class="t-acc" style="font-size:12px;font-weight:700" text-anchor="middle">공평성 판정</text><path class="acc-ln" d="M584,92 L609,92" marker-end="url(#pa)"/><rect class="fl ln" x="613" y="40" width="168" height="104" rx="16"/><circle cx="639" cy="66" r="14" class="acc-f"/><text x="639" y="71" class="t-on" style="font-size:13px;font-weight:700" text-anchor="middle">④</text><text x="661" y="72" class="t-strong" style="font-size:15px;font-weight:700" text-anchor="start">다집단 GRM</text><text x="697.0" y="104" class="t" style="font-size:11.5px" text-anchor="middle">유형별 잠재평균 μ · SD</text><rect x="643" y="160" width="108" height="28" rx="14" class="off-f"/><text x="697.0" y="179" class="t-acc" style="font-size:12px;font-weight:700" text-anchor="middle">d · μ · SD</text><path class="acc-ln" d="M785,92 L810,92" marker-end="url(#pa)"/><rect class="fl ln" x="814" y="40" width="168" height="104" rx="16"/><circle cx="840" cy="66" r="14" class="acc-f"/><text x="840" y="71" class="t-on" style="font-size:13px;font-weight:700" text-anchor="middle">⑤</text><text x="862" y="72" class="t-strong" style="font-size:15px;font-weight:700" text-anchor="start">MIMIC</text><text x="898.0" y="104" class="t" style="font-size:11.5px" text-anchor="middle">잠재 우울을 결과로 한 회귀</text><rect x="844" y="160" width="108" height="28" rx="14" class="off-f"/><text x="898.0" y="179" class="t-acc" style="font-size:12px;font-weight:700" text-anchor="middle">기울기 γ</text><path class="acc-ln dash" d="M211,20 L982,20"/><text x="506.5" y="14" class="t-acc" style="font-size:12px;font-weight:700" text-anchor="middle">②에서 만든 자를 ③~⑤가 모두 이어서 사용</text></svg></div>
+    <p class="fig-cap">②에서 만든 GRM의 자를 ③~⑤가 모두 그대로 이어서 사용합니다.</p></div>
+</section>
+
+<section id="s1">
+  <div class="section-head"><div class="section-num">01</div><div class="section-title-block"><h2>IRT 기초: 합산점수에서 잠재특성으로</h2><p class="section-subtitle">Classical test theory vs. item response theory</p></div></div>
+  <div class="defbox"><div class="dh"><span class="lbl">개념</span><h3>문항반응이론</h3><span class="en">Item Response Theory, IRT</span></div><p class="def">관찰할 수 없는 잠재특성(θ)과 각 문항에 대한 응답 확률의 관계를 문항마다 수학적으로 모형화하는 측정 이론입니다.</p><p>합산점수에 기초한 전통적인 방법(고전검사이론)은 <b>‘응답의 합’</b>을 사람의 점수로 봅니다. 문항반응이론(IRT)은 관점을 뒤집어, 눈에 보이지 않는 <b>잠재특성 θ</b>(여기서는 우울)가 먼저 있고, 그 θ가 각 문항에 어떤 확률로 응답할지를 결정한다고 봅니다. 그래서 IRT의 핵심 산출물은 “θ가 이만큼인 사람이 이 문항에 이렇게 답할 확률”을 그린 <b>문항특성곡선</b>입니다.</p></div>
+  <div class="concept">
+    <div class="cc"><div class="h">시험으로 비유하면</div><p>합산점수는 ‘맞힌 문제 수’, IRT 점수는 ‘문제마다 난이도와 변별력을 따져 매긴 실력 점수’입니다. 쉬운 문제 10개를 맞힌 학생과 어려운 문제 10개를 맞힌 학생은 같은 10점이 아니죠.</p></div>
+    <div class="cc"><div class="h">잠재특성 θ</div><p>직접 관찰할 수 없는 우울 수준. 보통 기준 집단의 평균을 0, 표준편차를 1로 둡니다. θ=+1이면 평균보다 1 표준편차 높은 우울입니다.</p></div>
+    <div class="cc"><div class="h">가정 ① 단일차원성</div><p>12문항이 모두 ‘우울’이라는 하나의 θ를 잰다는 가정. 문항 간 상관행렬의 첫째 고유값이 둘째보다 훨씬 크면 지지됩니다.</p></div>
+    <div class="cc"><div class="h">가정 ② 지역독립성</div><p>θ가 같은 사람들 안에서는 문항 응답끼리 더 이상 관련이 없다는 가정. 문항들이 서로 관련된 이유가 θ 하나뿐이라는 뜻입니다.</p></div>
+  </div>
+  <div class="panel">
+    <div class="kicker">단일차원성 확인: 다분상관행렬의 고유값</div>
+    <div class="ctl-row"><span class="lab">성별</span><div class="seg" id="sc-sex"><button type="button" data-v="male" aria-pressed="true">남학생</button><button type="button" data-v="female" aria-pressed="false">여학생</button></div><span class="lab">첫째 ÷ 둘째 고유값</span><b id="scree-ratio"></b></div>
+    <div class="fig-scroll" id="scree-svg"></div>
+    <p class="note">0~4점 같은 순서형 응답은 보통의 상관(피어슨) 대신 다분상관(polychoric correlation)을 씁니다. 응답 뒤에 연속적인 정규분포가 있다고 보고 그 상관을 추정하는 방법이에요.</p>
+  </div>
+  <div class="example">첫째 고유값이 둘째의 약 6.7배(남 7.55 대 1.12, 여 8.01 대 1.21)였습니다. 12문항이 하나의 우울 차원을 잰다고 보고 GRM을 적용할 수 있다는 근거입니다.</div>
+
+  <div class="trybox"><span class="lbl">체험</span><p>가상의 청소년이 되어 12문항에 답해 보세요. 오른쪽에 <b>합산점수</b>와, 예시 자료로 추정한 GRM 문항 모수로 계산한 <b>θ</b>가 함께 나옵니다. 빠른 입력 버튼으로 같은 6점을 서로 다른 문항에 나눠 줘 보면 차이가 바로 보입니다.</p></div>
+  <div class="panel">
+    <div class="ctl-row"><span class="lab">문항 모수</span><div class="seg" id="r-sex"><button type="button" data-v="male" aria-pressed="true">남학생</button><button type="button" data-v="female" aria-pressed="false">여학생</button></div>
+      <span class="lab">빠른 입력</span><button class="btn" id="pre-zero" type="button">모두 0</button><button class="btn" id="pre-som" type="button">신체 3문항 2점씩</button><button class="btn" id="pre-mood" type="button">기분 3문항 2점씩</button><button class="btn" id="pre-deep" type="button">깊은 우울 3문항 2점씩</button></div>
+    <div class="two-col">
+      <div><div class="resp" id="resp"></div><p class="note">0 = 전혀 그렇지 않다, 4 = 매우 그렇다. 주황 꼬리표는 신체 문항, 붉은 꼬리표는 이 페이지에서 ‘깊은 우울’로 부르는 문항입니다.</p></div>
+      <div>
+        <div class="readouts">
+          <div class="ro"><span class="k">합산점수</span><span class="v" id="r-sum">0점</span><span class="s">12문항을 1점씩 똑같이 더함</span></div>
+          <div class="ro acc"><span class="k">GRM 잠재 우울 θ</span><span class="v" id="r-th">0</span><span class="s" id="r-se"></span></div>
+          <div class="ro"><span class="k">같은 성별 안에서의 위치</span><span class="v" id="r-pct">-</span><span class="s">θ를 정규분포 기준으로 환산</span></div>
+        </div>
+        <div class="fig-scroll narrow" id="r-gauge"></div>
+      </div>
+    </div>
+  </div>
+  <div class="condition">
+    <div class="condition-header"><div class="num-circle" style="background:var(--sky)">θ</div><div class="cond-titles"><div class="cond-code">How it works</div><h3>θ는 어떻게 계산되나</h3><div class="cond-en">Expected a posteriori (EAP)</div></div></div>
+    <div class="condition-body">
+      <div class="plain-meaning">“이런 응답 패턴이 나올 가능성이 가장 높은 우울 수준은 어디쯤인가”를 거꾸로 추정한 값입니다.</div>
+      <p>각 문항의 곡선(2장)을 이용해, 가능한 모든 θ에 대해 “이 사람의 12개 응답이 모두 나올 확률”을 계산하고(우도), 사전분포(정규분포)와 곱해 가장 그럴듯한 θ들의 평균을 구합니다. 그래서 <b>변별도가 큰 문항의 응답은 θ를 크게 움직이고, 변별도가 작은 신체 문항의 응답은 조금만 움직입니다.</b> 함께 나오는 ± 값은 이 추정이 얼마나 불확실한지(사후 표준편차)입니다.</p>
+      <p class="note">아무 문항에도 답하지 않으면 θ가 남학생 기준 −0.86 근처에서 멈춥니다. 우울이 아주 낮은 쪽은 문항들이 거의 구분하지 못하기 때문(바닥효과)입니다.</p>
+    </div>
+  </div>
+  <div class="example">신체 3문항에 2점씩 답하면 6점, θ=+0.09입니다. 깊은 우울 3문항(죽고 싶음, 덫에 걸린 느낌, 앞날 기대 없음)에 2점씩 답해도 6점이지만 θ=+0.75입니다(남학생 모수). 합산점수로는 같은 두 청소년이 GRM으로는 0.66 SD 차이가 납니다.</div>
+</section>
+
+<section id="s2">
+  <div class="section-head"><div class="section-num">02</div><div class="section-title-block"><h2>GRM: 순서형 응답을 위한 IRT 모형</h2><p class="section-subtitle">Graded response model (Samejima, 1969)</p></div></div>
+  <div class="defbox"><div class="dh"><span class="lbl">개념</span><h3>등급반응모형</h3><span class="en">Graded Response Model, GRM</span></div><p class="def">‘전혀 그렇지 않다’부터 ‘매우 그렇다’처럼 순서가 있는 응답에 대해, 각 응답 단계 이상으로 답할 확률을 잠재특성의 함수로 나타내는 IRT 모형입니다(Samejima, 1969).</p><p>‘맞다/틀리다’ 두 가지 응답이면 곡선이 하나면 되지만, 우울 문항은 0~4점의 다섯 단계입니다. GRM은 이 다섯 단계를 <b>네 개의 문턱</b>으로 나눠 생각합니다. “1점 이상인가”, “2점 이상인가”, “3점 이상인가”, “4점인가”. 문턱마다 곡선이 하나씩 있고, 네 곡선은 <b>같은 기울기(변별도 a)</b>를 공유하며 <b>위치(경계 b₁~b₄)</b>만 다릅니다.</p><div class="eq">P(Y ≥ k | θ) = 1 / {1 + exp[−a(θ − b<sub>k</sub>)]},  k = 1, 2, 3, 4<br>P(Y = k | θ) = P(Y ≥ k | θ) − P(Y ≥ k+1 | θ)<br><span class="c">첫 줄은 ‘k점 이상’으로 답할 누적확률, 둘째 줄은 ‘정확히 k점’일 확률입니다. 둘째 줄은 인접한 누적곡선의 차이로 계산됩니다.</span></div></div>
+  <div class="concept">
+    <div class="cc"><div class="h">변별도 a: 곡선의 가파름</div><p>a가 클수록 θ가 조금만 달라져도 응답 확률이 크게 바뀝니다. 우울한 사람과 아닌 사람을 날카롭게 가르는 문항이에요. 이론적으로 0부터 끝없이 커질 수 있고, 0이면 우울과 무관한 문항입니다. 해석은 절대 기준보다 <b>문항끼리의 상대 비교</b>가 중심입니다.</p></div>
+    <div class="cc"><div class="h">경계 b<sub>k</sub>: 곡선의 위치</div><p>‘k점 이상’으로 답할 확률이 50%가 되는 θ입니다. b₁이 크면 우울이 꽤 높아져야 ‘약간 그렇다’가 나오는 문항, 작으면 우울이 낮아도 흔히 나오는 문항입니다.</p></div>
+    <div class="cc"><div class="h">한계신뢰도</div><p>추정한 θ가 얼마나 정밀한지를 0~1로 요약한 값. 추정된 θ의 분산을, 그 분산과 추정 오차(사후분산)의 평균을 더한 값으로 나눕니다. 합산점수의 α와 비슷한 역할입니다.</p></div>
+  </div>
+  <div class="trybox"><span class="lbl">체험</span><p>문항을 바꿔 보세요. <b>누적 곡선</b>에서 진한 선은 ‘약간 그렇다(1점) 이상’, 옅은 선은 2·3·4점 이상입니다. <b>범주별 곡선</b>으로 바꾸면 θ에 따라 0~4점 각각이 나올 확률이 보입니다. 아래 줄의 아이들은 θ가 −2.5부터 +2.5인 친구들이고, 몸 색이 진할수록 1점 이상으로 답할 확률이 높아요. ‘직접 만들어 보기’에서는 a와 b를 마음대로 바꿀 수 있습니다.</p></div>
+  <div class="panel">
+    <div class="ctl-row"><span class="lab">성별</span><div class="seg" id="i-sex"><button type="button" data-v="male" aria-pressed="true">남학생</button><button type="button" data-v="female" aria-pressed="false">여학생</button></div>
+      <span class="lab">보기</span><div class="seg" id="i-mode"><button type="button" data-v="cum" aria-pressed="true">누적 곡선</button><button type="button" data-v="cat" aria-pressed="false">범주별 곡선</button></div></div>
+    <div class="chips" id="icc-items"></div>
+    <div class="ctl-row" id="icc-sand" hidden style="margin-top:12px">
+      <div class="slider"><span>변별도 a</span><input id="s-a" type="range" min="0.3" max="5" step="0.1" value="2.5" aria-label="변별도"><b id="s-av">2.5</b></div>
+      <div class="slider"><span>경계 b₁</span><input id="s-b" type="range" min="-1.5" max="2.5" step="0.05" value="0.8" aria-label="경계"><b id="s-bv">0.80</b></div>
+    </div>
+    <div class="fig-scroll" id="icc-svg" style="margin-top:10px"></div>
+    <div class="slider"><span>θ 위치 이동</span><input id="i-th" type="range" min="-3" max="3" step="0.1" value="0" aria-label="잠재 우울 위치"><b id="i-thv">0</b></div>
+    <div class="readouts">
+      <div class="ro"><span class="k">문항</span><span class="v" id="i-name" style="font-size:16px"></span><span class="s">회색 점선 = 울적함(비교 기준)</span></div>
+      <div class="ro acc"><span class="k">변별도 a</span><span class="v" id="i-a"></span><span class="s">클수록 곡선이 가파름</span></div>
+      <div class="ro"><span class="k">경계 b₁</span><span class="v" id="i-b"></span><span class="s">1점 이상 50% 지점</span></div>
+      <div class="ro warn"><span class="k">P₀ (θ=0일 때)</span><span class="v" id="i-p0"></span><span class="s">평균인 사람이 1점 이상 답할 확률</span></div>
+      <div class="ro"><span class="k">선택한 θ에서</span><span class="v" id="i-pt"></span><span class="s">1점 이상 확률</span></div>
+    </div>
+  </div>
+  <div class="example">정서·인지 9문항의 변별도는 1.90~5.02, 신체 3문항(식욕 감소, 식욕 증가, 수면 곤란)은 0.40~1.55였습니다. 신체 문항은 어느 이용유형에서나 정서 문항의 절반에 못 미쳤어요. 수면·식욕은 우울 외에도 사춘기의 수면 리듬, 생활습관 등으로 달라질 수 있기 때문입니다. 한계신뢰도는 남학생 .75, 여학생 .81이었습니다.</div>
+  <div class="condition">
+    <div class="condition-header"><div class="num-circle" style="background:var(--amber)">!</div><div class="cond-titles"><div class="cond-code">Worked example</div><h3>유형별 변별도, 어디까지 읽어도 되나</h3><div class="cond-en">reading group-specific discrimination</div></div></div>
+    <div class="condition-body">
+      <p>유형별 변별도는 다집단 GRM에서 <b>한 문항만 유형마다 따로 추정하고 나머지 11문항은 공통으로 고정</b>해 구한 값입니다. 예를 들어 울적함 문항은 이렇게 나왔습니다.</p>
+      <div class="table-wrap"><table class="mini-table ctr"><tr><th>성별</th><th>일반이용</th><th>저활용</th><th>오락·소통 몰입</th><th>위험콘텐츠 노출</th><th>고위험 다목적</th></tr><tr><td>남학생</td><td>2.77</td><td>2.76</td><td>-</td><td>2.57</td><td>3.22</td></tr><tr><td>여학생</td><td>3.35</td><td>3.14</td><td>3.09</td><td>3.14</td><td>2.13</td></tr></table></div>
+      <p>숫자대로 읽으면, 여학생 고위험 다목적군에서는 ‘울적하다’는 응답이 그 아이의 전체 우울 수준과 덜 붙어 다닌다는 뜻입니다. 우울이 그리 높지 않아도 울적하다고 하거나, 우울이 매우 높아도 울적함 응답이 그만큼 오르지 않는 아이들이 섞여 있다는 것이죠. 남학생 고위험군은 반대로 울적함이 우울을 더 잘 가른다는 뜻이 됩니다.</p>
+      <div class="plain-meaning">하지만 이 추세는 해석하지 않습니다. 울적함은 남녀 모두 DIF 검정에서 유의하지 않았고(4장), 여학생 고위험군은 74명뿐이라 값이 크게 흔들립니다.</div>
+      <p class="note" style="margin:0">유형별 변별도는 “신체 문항은 어느 유형에서나 낮다”는 공통점을 보는 용도입니다. 유형 간 차이가 의미 있는지는 반드시 DIF 검정으로 판단합니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="section-head"><div class="section-num">03</div><div class="section-title-block"><h2>P₀: a와 b를 하나의 직관적인 숫자로</h2><p class="section-subtitle">Endorsement probability at the mean</p></div></div>
+  <div class="defbox"><div class="dh"><span class="lbl">개념</span><h3>평균 수준에서의 응답확률 P₀</h3><span class="en">endorsement probability at θ = 0</span></div><p class="def">잠재특성이 기준 집단의 평균(θ=0)인 사람이 해당 문항에 첫째 범주 이상, 즉 ‘약간 그렇다’ 이상으로 응답할 확률입니다.</p><p>a와 b를 따로 보면 문항의 성격이 잘 그려지지 않습니다. 그래서 둘을 합쳐 <b>“우울이 딱 평균(θ=0)인 사람이 그 문항에 ‘약간 그렇다’(1점) 이상으로 답할 확률”</b>을 계산할 수 있습니다. 누적확률 공식에 θ=0, k=1을 넣으면 됩니다.</p><div class="eq">P₀ = P(Y ≥ 1 | θ = 0) = 1 / {1 + exp(a × b₁)}<br><span class="c">2장 그림의 붉은 점이 P₀입니다. a×b₁이 클수록(가파르고 오른쪽에 있는 곡선일수록) P₀는 0에 가까워집니다.</span></div></div>
+  <div class="concept">
+    <div class="cc"><div class="h">P₀가 낮은 문항</div><p>평균인 사람은 거의 답하지 않고 우울이 깊어져야 나오는 문항. 이런 문항에 답했다면 우울이 높은 수준이라는 신호입니다.</p></div>
+    <div class="cc"><div class="h">P₀가 높은 문항</div><p>우울하지 않아도 흔히 나오는 문항. 합산점수에서는 우울과 무관한 이유의 응답이 섞여 들어오는 통로가 됩니다.</p></div>
+    <div class="cc"><div class="h">주의: 기준점</div><p>θ=0은 그 모형의 기준 집단 평균입니다. 남녀를 따로 추정했다면 각자 성별의 평균이 기준이므로, P₀로 남녀의 우울 수준을 비교할 수는 없습니다.</p></div>
+  </div>
+  <div class="figure-block"><span class="fig-tag data">예시 · 문항별 P₀ (성별 단일집단 GRM)</span>
+    <div class="legend"><span><i style="background:var(--male);width:18px;height:6px;display:inline-block;border-radius:2px"></i>남학생</span><span><i style="background:var(--female);width:18px;height:6px;display:inline-block;border-radius:2px"></i>여학생</span><span>붉은 띠 = 깊은 우울 4문항, 굵은 이름 = 신체 3문항</span></div>
+    <div class="fig-scroll" id="p0-svg"></div></div>
+  <div class="example">덫에 걸린 느낌은 평균인 남학생 100명 중 1명(1.1%), 여학생 100명 중 2명(2.2%)만 답했습니다. 반대로 식욕 증가는 평균인 청소년도 4명 중 1명(남 25.1%, 여 27.1%)이 답했어요. 남녀 모두 같은 네 문항(덫, 죽고 싶음, 앞날 기대 없음, 삶이 무가치)이 가장 낮은 P₀를 보였다는 점이 핵심입니다. 울적함의 P₀가 여학생 20.0%, 남학생 8.1%로 다른 것은 각자 성별 평균에 있는 청소년의 응답 경향 차이입니다.</div>
+</section>
+
+<section id="s4">
+  <div class="section-head"><div class="section-num">04</div><div class="section-title-block"><h2>DIF: 이 자는 모든 집단에 공평한가</h2><p class="section-subtitle">Differential item functioning</p></div></div>
+  <div class="defbox"><div class="dh"><span class="lbl">개념</span><h3>차별문항기능</h3><span class="en">Differential Item Functioning, DIF</span></div><p class="def">잠재특성 수준이 같은 응답자들 사이에서, 소속 집단에 따라 특정 문항에 응답할 확률이 체계적으로 다른 현상입니다.</p><p>집단끼리 우울을 비교하려면, 자가 모든 집단에서 같은 방식으로 작동해야 합니다. <b>우울 수준(θ)이 같은데도 집단에 따라 특정 문항에 답할 확률이 다르다면</b>, 그 문항은 차별문항기능(DIF)이 있다고 합니다. 시험으로 말하면 실력이 같은데 반에 따라 정답률이 다른 ‘불공평한 문제’예요. 집단의 평균 우울이 다른 것은 DIF가 아닙니다. DIF는 반드시 <b>‘같은 θ에서’</b> 비교합니다.</p><div class="defgrid"><div><b>균일 DIF</b><p>경계 b만 집단 간에 다른 경우. 모든 θ에서 한 집단이 일관되게 더(덜) 응답합니다.</p></div><div><b>비균일 DIF</b><p>변별도 a가 집단 간에 다른 경우. θ에 따라 차이의 크기나 방향이 달라집니다.</p></div><div><b>DIF가 아닌 것</b><p>집단 간 실제 평균 우울이 다른 것은 DIF가 아닙니다. DIF는 반드시 같은 θ에서 비교합니다.</p></div></div></div>
+  <div class="figure-block"><span class="fig-tag kr">개념 · 같은 키, 다른 응답</span><div class="fig-scroll"><svg viewBox="0 0 760 300" role="img" aria-label="우울 수준이 같은 두 아이인데 한 집단 아이만 수면 곤란 문항에 그렇다고 답할 확률이 높다면 그 문항은 공평하지 않다"><path class="acc-ln dash" d="M60,108 L700,108"/><text x="700" y="100" class="t-acc" style="font-size:12px;font-weight:700" text-anchor="end">같은 잠재 우울 θ</text><g transform="translate(200,250) scale(1.6)"><path class="ln" d="M-7,-32 L-7,0 M7,-32 L7,0 M-12,0 L-2,0 M2,0 L12,0"/><rect class="fl ln" x="-16" y="-72" width="32" height="42" rx="14"/><path class="ln" d="M-16,-62 L-6,-48 M16,-62 L6,-48"/><circle class="fl ln" cx="0" cy="-90" r="17"/><circle class="ink" cx="-6" cy="-92" r="2.2"/><circle class="ink" cx="6" cy="-92" r="2.2"/><path class="ln thin" d="M-6,-79 L6,-79"/></g><text x="200" y="280" class="t-strong" style="font-size:14px" text-anchor="middle">A 유형</text><g transform="translate(246,120)"><rect x="0" y="0" width="150" height="70" rx="14" class="sky-soft-f ln thin"/><text x="75" y="26" class="t-strong" style="font-size:12.5px" text-anchor="middle">“잠들기 어려워요”</text><text x="75" y="52" class="t-acc" style="font-size:13px;font-weight:700" text-anchor="middle">그렇다 확률 23%</text></g><g transform="translate(520,250) scale(1.6)"><path class="ln" d="M-7,-32 L-7,0 M7,-32 L7,0 M-12,0 L-2,0 M2,0 L12,0"/><rect class="fl ln" x="-16" y="-72" width="32" height="42" rx="14"/><path class="ln" d="M-16,-62 L-6,-48 M16,-62 L6,-48"/><circle class="fl ln" cx="0" cy="-90" r="17"/><circle class="ink" cx="-6" cy="-92" r="2.2"/><circle class="ink" cx="6" cy="-92" r="2.2"/><path class="ln thin" d="M-6,-79 L6,-79"/></g><text x="520" y="280" class="t-strong" style="font-size:14px" text-anchor="middle">B 유형</text><g transform="translate(566,120)"><rect x="0" y="0" width="150" height="70" rx="14" class="deep-soft-f ln thin"/><text x="75" y="26" class="t-strong" style="font-size:12.5px" text-anchor="middle">“잠들기 어려워요”</text><text x="75" y="52" class="t-warn" style="font-size:13px;font-weight:700" text-anchor="middle">그렇다 확률 29%</text></g></svg></div></div>
+  <div class="panel">
+    <div class="kicker">DIF 샌드박스: 두 집단의 곡선을 직접 어긋나게 해 보기</div>
+    <div class="ctl-row">
+      <div class="slider"><span>B 집단 변별도 차이 Δa</span><input id="ds-a" type="range" min="-1.5" max="1.5" step="0.1" value="0" aria-label="변별도 차이"><b id="ds-av">0</b></div>
+      <div class="slider"><span>B 집단 경계 차이 Δb</span><input id="ds-b" type="range" min="-1" max="1" step="0.05" value="0.4" aria-label="경계 차이"><b id="ds-bv">+0.40</b></div>
+    </div>
+    <div class="legend-row"><span><i style="background:var(--g0)"></i>A 집단</span><span><i style="background:var(--g3)"></i>B 집단</span><span>붉은 면 = 같은 θ에서의 응답 확률 차이</span></div>
+    <div class="fig-scroll" id="dsand-svg"></div>
+    <div class="plain-meaning" id="dsand-type" style="margin:8px 0 0"></div>
+  </div>
+  <div class="condition">
+    <div class="condition-header"><div class="num-circle" style="background:var(--sky)">LR</div><div class="cond-titles"><div class="cond-code">How it is tested</div><h3>IRT-LR-DIF: 한 문항씩 풀어 보는 우도비 검정</h3><div class="cond-en">likelihood-ratio test with anchor items</div></div></div>
+    <div class="condition-body">
+      <ol style="margin:0 0 12px;padding-left:20px;line-height:1.9">
+        <li><b>묶은 모형:</b> 모든 문항의 a, b를 집단 간에 같게 묶고 추정합니다.</li>
+        <li><b>푼 모형:</b> 검사할 문항 하나만 집단마다 따로 추정하고, 나머지 11문항은 묶어 둡니다. 묶어 둔 문항이 <b>앵커</b>예요. 앵커가 자의 눈금을 고정해 주기 때문에 집단 간 θ가 같은 척도 위에 놓입니다.</li>
+        <li><b>비교:</b> LR = 2 × (푼 모형의 로그우도 − 묶은 모형의 로그우도). 자유도는 풀린 모수의 수입니다. GRM 문항 하나는 a 1개와 b 4개, 모두 5개 모수를 가지므로 자유도는 5 × (집단 수 − 1)입니다.</li>
+        <li><b>다중검정 보정:</b> 12문항을 하나씩 검정하므로 Benjamini-Hochberg(BH)로 보정합니다(아래 표).</li>
+        <li><b>확인과 최종 모형:</b> 유의한 문항은 비유의 문항만을 앵커로 다시 검정하고, 최종 모형에서는 그 문항만 집단별로 따로 추정합니다. 이것을 <b>부분 측정동일성</b> 모형이라고 합니다.</li>
+      </ol>
+      <div class="plain-meaning">LR 검정은 a와 b를 함께 풀기 때문에 균일 DIF와 비균일 DIF를 모두 잡아냅니다.</div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="kicker">BH 보정은 이렇게 작동합니다 (예시 자료의 실제 p값)</div>
+    <div class="ctl-row"><div class="seg" id="bh-sex"><button type="button" data-v="male" aria-pressed="false">남학생 (χ² 자유도 15)</button><button type="button" data-v="female" aria-pressed="true">여학생 (χ² 자유도 20)</button></div></div>
+    <p class="note" style="margin-top:0">p값을 작은 순으로 줄 세운 뒤 i번째 p값을 .05 × i / 12와 비교합니다. 12번 검정하면 우연히 유의한 결과가 하나쯤 나오기 쉬운데, BH는 ‘유의하다고 판정한 것 중 거짓의 비율’을 5% 이하로 관리합니다. BH 보정 p는 이 비교를 p값 단위로 바꾼 값입니다.</p>
+    <div class="table-wrap"><table class="mini-table ctr" id="bh-table"></table></div>
+  </div>
+  <div class="panel">
+    <div class="kicker">예시: 여학생 DIF 문항의 유형별 곡선</div>
+    <div class="chips" id="dif-items"></div>
+    <div class="legend-row" id="dif-legend" style="margin-top:10px"></div>
+    <div class="fig-scroll" id="dif-svg"></div>
+    <div class="slider"><span>θ 위치 이동</span><input id="d-th" type="range" min="-2" max="3" step="0.1" value="0.5" aria-label="잠재 우울 위치"><b id="dif-thv">+0.50</b></div>
+    <div class="readouts" id="dif-ro"></div>
+    <p class="note">세로선 위에서 유형별 확률이 다르면 같은 θ에서 응답이 다르다는 뜻입니다. 곡선은 부분 측정동일성 모형의 유형별 모수로 그린 1점 이상 확률입니다.</p>
+  </div>
+  <div class="condition">
+    <div class="condition-header"><div class="num-circle" style="background:var(--mint)">Σ</div><div class="cond-titles"><div class="cond-code">Effect size</div><h3>DTF: DIF가 점수에 얼마나 영향을 주나</h3><div class="cond-en">differential test functioning</div></div></div>
+    <div class="condition-body">
+      <p>DIF가 통계적으로 유의해도 실제 점수에 미치는 영향은 작을 수 있습니다. 차별검사기능(DTF)은 같은 θ에서 DIF 문항들의 <b>기대점수</b>가 집단 간 얼마나 다른지를 계산하고, 그 집단의 θ 분포에 대해 평균한 값입니다. 합산점수와 같은 단위(점)로 나오기 때문에 실제 크기를 가늠하기 좋습니다.</p>
+    </div>
+  </div>
+  <div class="example">남학생은 12문항 모두 BH 보정 후 유의하지 않아 완전 측정동일성이 지지되었습니다. 여학생은 불안·과민, 삶이 무가치, 죽고 싶음, 식욕 증가, 수면 곤란 5문항이 유의했고(χ²(20)=37.32~71.39, pBH≤.026), 비유의 문항만 앵커로 한 재검정에서도 유의했습니다. 그러나 DTF는 −0.03~0.38점(0~48점 척도)으로 작았습니다.</div>
+</section>
+
+<section id="s5">
+  <div class="section-head"><div class="section-num">05</div><div class="section-title-block"><h2>다집단 GRM과 잠재평균 μ</h2><p class="section-subtitle">Multiple-group GRM</p></div></div>
+  <div class="defbox"><div class="dh"><span class="lbl">개념</span><h3>다집단 GRM과 잠재평균</h3><span class="en">multiple-group GRM, latent mean</span></div><p class="def">여러 집단을 하나의 GRM에서 함께 추정하면서 문항 모수는 집단 간 같게(DIF 문항만 다르게) 두고, 집단마다 잠재특성 분포의 평균과 표준편차를 추정하는 방법입니다. 잠재평균 μ는 기준 집단과의 평균 차이를 표준편차 단위로 나타낸 값입니다.</p><p>다집단 GRM은 여러 집단을 하나의 모형에 넣고, 문항 모수(a, b)는 공평성을 확인한 대로 묶어 둔 채 <b>집단마다 θ 분포의 평균과 표준편차</b>를 추정합니다. 이때 척도의 원점과 단위를 정해야 하므로 <b>기준 집단의 평균을 0, 표준편차를 1로 고정</b>합니다. 그러면 다른 집단의 평균 μ는 “기준 집단보다 몇 표준편차 높은가”, 잠재 SD는 “기준 집단보다 얼마나 더(덜) 퍼져 있는가”로 읽습니다.</p></div>
+  <div class="concept">
+    <div class="cc"><div class="h">왜 묶어 둔 문항이 필요한가</div><p>모든 문항의 모수를 집단마다 풀어 버리면 집단마다 자가 따로 만들어져 평균을 비교할 수 없습니다. 묶인 문항(앵커)이 집단들을 같은 척도로 이어 줍니다.</p></div>
+    <div class="cc"><div class="h">잠재평균 μ</div><p>공평한 자로 잰 평균 차이. 표준편차 단위라 효과크기처럼 읽습니다.</p></div>
+    <div class="cc"><div class="h">잠재 SD</div><p>1보다 크면 그 집단 안에 우울이 아주 낮은 사람과 아주 높은 사람이 기준 집단보다 넓게 섞여 있다는 뜻. 평균만 보면 놓치는 정보입니다.</p></div>
+  </div>
+  <div class="read"><p>집단 차이를 보고할 때는 합산점수 효과크기 d와 잠재평균 μ를 나란히 제시할 수 있습니다. 둘의 차이는 <b>몇 가지를 보정했는가</b>입니다.</p></div>
+  <div class="ladder">
+    <div class="rung"><div class="st">STEP 1</div><h4>합산점수 M</h4><ul><li class="n">단위 통일</li><li class="n">문항별 무게 반영</li><li class="n">측정 동일성 확인</li></ul><p class="note" style="margin:8px 0 0">0~48점의 원점수 평균</p></div>
+    <div class="rung"><div class="st">STEP 2</div><h4>합산점수 효과크기 d</h4><ul><li class="y">단위 통일 (기준 집단 SD로 나눔)</li><li class="n">문항별 무게 반영</li><li class="n">측정 동일성 확인</li></ul><p class="note" style="margin:8px 0 0">(M집단 − M기준) ÷ SD기준</p></div>
+    <div class="rung best"><div class="st">STEP 3</div><h4>잠재평균 μ</h4><ul><li class="y">단위 통일 (SD 단위)</li><li class="y">문항별 무게 반영 (GRM)</li><li class="y">측정 동일성 확인 (DIF 보정)</li></ul><p class="note" style="margin:8px 0 0">다집단 GRM, 부분 측정동일성</p></div>
+  </div>
+  <div class="callout sky"><span class="callout-label">비유</span>두 반의 키를 비교하는데 한 반은 신발을 신고, 다른 반은 맨발로 쟀다면 평균 키 차이를 믿을 수 없습니다. 합산점수는 신발 굽(우울이 아닌 이유로 올라가는 수면·식욕 응답)까지 키에 넣어 잰 것이고, 잠재평균은 신발을 벗기고 자가 공평한지까지 확인한 뒤 잰 평균 키입니다.</div>
+  <div class="panel">
+    <div class="kicker">예시: 이용유형별 d와 μ, 잠재 분포</div>
+    <div class="ctl-row"><span class="lab">성별</span><div class="seg" id="l-sex"><button type="button" data-v="male" aria-pressed="true">남학생</button><button type="button" data-v="female" aria-pressed="false">여학생</button></div></div>
+    <div class="fig-title">d(빈 원)에서 μ(채운 원)로: 보정하면 차이가 어떻게 바뀌나</div>
+    <div class="fig-scroll" id="lat-dumb"></div>
+    <div class="fig-title" style="margin-top:14px">유형별 잠재 우울 분포 (이름을 누르면 강조)</div>
+    <div class="legend-row" id="lat-legend"></div>
+    <div class="fig-scroll" id="lat-dens"></div>
+    <div class="table-wrap"><table class="mini-table ctr" id="lat-table"></table></div>
+  </div>
+  <div class="example">여학생 오락·소통 몰입군은 d=0.20이었지만 μ=0.09로, 보정 후 차이가 절반 이하로 줄었습니다. 남학생 고위험 다목적군은 d=0.44로 가장 컸지만 μ=−0.01로 일반이용군과 같았고, 대신 잠재 SD가 1.58로 넓었습니다. 위험콘텐츠 노출군은 d와 μ가 모두 높아(남 0.32/0.38, 여 0.68/0.60) 어떤 방법으로 재도 우울이 높은 집단이었습니다.</div>
+</section>
+
+<section id="s6">
+  <div class="section-head"><div class="section-num">06</div><div class="section-title-block"><h2>MIMIC: 공평한 자로 잰 우울을 회귀분석하기</h2><p class="section-subtitle">Multiple Indicators, Multiple Causes</p></div></div>
+  <div class="defbox"><div class="dh"><span class="lbl">개념</span><h3>다중지표 다중원인 모형</h3><span class="en">Multiple Indicators Multiple Causes, MIMIC</span></div><p class="def">여러 관찰 지표로 측정되는 잠재변수와, 그 잠재변수를 예측하는 여러 설명변수의 관계를 하나의 모형에서 동시에 추정하는 구조방정식 모형입니다.</p><p>MIMIC은 이름 그대로 <b>여러 지표(Multiple Indicators)</b>로 잠재변수를 재고, 그 잠재변수를 <b>여러 원인(Multiple Causes)</b>이 설명하는 모형입니다. 여기서 지표는 우울 12문항, 원인은 이용유형·수면 부족·학교급입니다. 핵심은 <b>합산하지도, 점수를 먼저 뽑아 두지도 않는다</b>는 점이에요. 측정모형(GRM)과 구조모형(회귀)을 하나의 우도함수로 <b>동시에</b> 추정합니다.</p><div class="eq">구조모형:  θ<sub>i</sub> = γ<sub>유형</sub> + γ<sub>수면</sub>·수면부족<sub>i</sub> + γ<sub>유형×수면</sub>·(유형 × 수면부족)<sub>i</sub> + γ<sub>학교급</sub> + ζ<sub>i</sub>,  ζ<sub>i</sub> ~ N(0, 1)<br>측정모형:  P(Y<sub>ij</sub> ≥ k) = 1 / {1 + exp[−a<sub>j</sub>(θ<sub>i</sub> − b<sub>jk</sub>)]}<br><span class="c">구조모형은 “각 청소년의 잠재 우울 평균이 그 청소년의 특성에 따라 달라진다”는 회귀식이고, 측정모형은 2장의 GRM 그대로입니다. γ는 θ와 같은 표준편차 단위로 읽습니다.</span></div></div>
+  <div class="figure-block"><span class="fig-tag kr">구조 · 측정모형 + 구조모형</span><div class="fig-scroll"><svg viewBox="0 0 900 360" role="img" aria-label="MIMIC: 이용유형, 수면 부족, 상호작용, 학교급이 잠재 우울을 설명하고, 잠재 우울이 12문항 응답을 낳는 구조를 한 번에 추정한다"><defs><marker id="ma" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path class="ink" d="M0,0 L10,5 L0,10 z"/></marker></defs><rect x="16" y="14" width="868" height="330" rx="20" class="ln thin dash" style="fill:none"/><text x="450" y="38" class="t-acc" style="font-size:13px;font-weight:700" text-anchor="middle">하나의 모형으로 동시에 추정 (합산점수도, 미리 뽑은 점수도 쓰지 않음)</text><rect x="40" y="76" width="190" height="44" rx="10" class="fl ln"/><text x="135" y="103" class="t-strong" style="font-size:13.5px;font-weight:600" text-anchor="middle">이용유형</text><path class="ln thin" d="M230,98 L388,190" marker-end="url(#ma)"/><rect x="40" y="140" width="190" height="44" rx="10" class="fl ln"/><text x="135" y="167" class="t-strong" style="font-size:13.5px;font-weight:600" text-anchor="middle">수면 부족</text><path class="ln thin" d="M230,162 L388,190" marker-end="url(#ma)"/><rect x="40" y="204" width="190" height="44" rx="10" class="fl ln"/><text x="135" y="231" class="t-strong" style="font-size:13.5px;font-weight:600" text-anchor="middle">이용유형 × 수면 부족</text><path class="ln thin" d="M230,226 L388,190" marker-end="url(#ma)"/><rect x="40" y="268" width="190" height="44" rx="10" class="fl ln"/><text x="135" y="295" class="t-strong" style="font-size:13.5px;font-weight:600" text-anchor="middle">학교급</text><path class="ln thin" d="M230,290 L388,190" marker-end="url(#ma)"/><text x="300" y="330" class="t" style="font-size:12px" text-anchor="middle">구조모형: 잠재 우울의 평균이 무엇과 관련되는가</text><ellipse cx="460" cy="190" rx="72" ry="46" class="acc-soft ln"/><text x="460" y="186" class="t-strong" style="font-size:15px;font-weight:700" text-anchor="middle">잠재 우울</text><text x="460" y="206" class="t-acc" style="font-size:14px;font-weight:700" text-anchor="middle">θ</text><path class="ln thin" d="M532,190 L700,68.0" marker-end="url(#ma)"/><rect x="704" y="58.0" width="150" height="20" rx="6" class="fl ln thin"/><text x="712" y="72.0" class="t" style="font-size:11px" text-anchor="start">1. 울적함</text><path class="ln thin" d="M532,190 L700,90.5" marker-end="url(#ma)"/><rect x="704" y="80.5" width="150" height="20" rx="6" class="fl ln thin"/><text x="712" y="94.5" class="t" style="font-size:11px" text-anchor="start">2. 즐겁지 않음</text><path class="ln thin" d="M532,190 L700,113.0" marker-end="url(#ma)"/><rect x="704" y="103.0" width="150" height="20" rx="6" class="fl ln thin"/><text x="712" y="117.0" class="t" style="font-size:11px" text-anchor="start">3. 불안·과민</text><path class="ln thin" d="M532,190 L700,135.5" marker-end="url(#ma)"/><rect x="704" y="125.5" width="150" height="20" rx="6" class="fl ln thin"/><text x="712" y="139.5" class="t" style="font-size:11px" text-anchor="start">4. 말·움직임 싫음</text><path class="ln thin" d="M532,190 L700,158.0" marker-end="url(#ma)"/><rect x="704" y="148.0" width="150" height="20" rx="6" class="fl ln thin"/><text x="712" y="162.0" class="t" style="font-size:11px" text-anchor="start">5. 삶이 무가치</text><path class="ln thin" d="M532,190 L700,180.5" marker-end="url(#ma)"/><rect x="704" y="170.5" width="150" height="20" rx="6" class="fl ln thin"/><text x="712" y="184.5" class="t" style="font-size:11px" text-anchor="start">6. 집중력 저하</text><path class="ln thin" d="M532,190 L700,203.0" marker-end="url(#ma)"/><rect x="704" y="193.0" width="150" height="20" rx="6" class="fl ln thin"/><text x="712" y="207.0" class="t" style="font-size:11px" text-anchor="start">7. 죽고 싶음</text><path class="ln thin" d="M532,190 L700,225.5" marker-end="url(#ma)"/><rect x="704" y="215.5" width="150" height="20" rx="6" class="fl ln thin"/><text x="712" y="229.5" class="t" style="font-size:11px" text-anchor="start">8. 덫에 걸린 느낌</text><path class="ln thin" d="M532,190 L700,248.0" marker-end="url(#ma)"/><rect x="704" y="238.0" width="150" height="20" rx="6" class="fl ln thin"/><text x="712" y="252.0" class="t" style="font-size:11px" text-anchor="start">9. 앞날 기대 없음</text><path class="ln thin" d="M532,190 L700,270.5" marker-end="url(#ma)"/><rect x="704" y="260.5" width="150" height="20" rx="6" class="fl ln thin"/><text x="712" y="274.5" class="t" style="font-size:11px" text-anchor="start">10. 식욕 감소</text><path class="ln thin" d="M532,190 L700,293.0" marker-end="url(#ma)"/><rect x="704" y="283.0" width="150" height="20" rx="6" class="fl ln thin"/><text x="712" y="297.0" class="t" style="font-size:11px" text-anchor="start">11. 식욕 증가</text><path class="ln thin" d="M532,190 L700,315.5" marker-end="url(#ma)"/><rect x="704" y="305.5" width="150" height="20" rx="6" class="fl ln thin"/><text x="712" y="319.5" class="t" style="font-size:11px" text-anchor="start">12. 수면 곤란</text><text x="690" y="340" class="t" style="font-size:12px" text-anchor="middle">측정모형: GRM (변별도·경계 그대로)</text></svg></div></div>
+  <div class="concept">
+    <div class="cc"><div class="h">왜 합산점수 회귀가 아닌가</div><p>합산점수는 문항 무게를 반영하지 못하고, 측정오차를 그대로 담고 있습니다. MIMIC은 GRM이 만든 θ 척도 위에서 회귀계수를 추정합니다.</p></div>
+    <div class="cc"><div class="h">왜 점수를 먼저 뽑지 않나</div><p>θ 점수를 먼저 계산해 회귀에 넣으면, 그 점수가 추정값이라는 불확실성이 회귀 단계에서 사라집니다. 동시 추정은 측정과 회귀를 한 번에 다룹니다.</p></div>
+    <div class="cc"><div class="h">상호작용과 유형별 기울기</div><p>‘유형 × 수면 부족’이 있어야 유형마다 기울기를 따로 구할 수 있습니다. k 유형의 기울기 = γ<sub>수면</sub> + γ<sub>유형k×수면</sub>. 표준오차는 두 계수의 분산과 공분산을 합치는 델타법으로 계산합니다.</p></div>
+    <div class="cc"><div class="h">상호작용의 전체 검정</div><p>상호작용항을 넣은 모형과 뺀 모형의 우도비 검정. 자유도는 상호작용 계수의 수(집단 수 − 1)입니다. 유의하면 “유형마다 기울기가 다르다”고 말합니다.</p></div>
+  </div>
+  
+  <div class="panel">
+    <div class="ctl-row"><span class="lab">성별</span><div class="seg" id="m-sex"><button type="button" data-v="male" aria-pressed="true">남학생</button><button type="button" data-v="female" aria-pressed="false">여학생</button></div><span class="lab">상호작용 전체 검정(우도비)</span><b id="mim-lr"></b></div>
+    <div class="fig-scroll" id="mim-svg"></div>
+    <div class="callout sky" style="margin-bottom:0"><span class="callout-label">읽는 법</span><span id="mim-msg"></span></div>
+  </div>
+  <div class="example">남학생은 상호작용이 유의했습니다(χ²(3)=9.35, p=.025). 일반이용(γ=0.31)과 저활용(γ=0.27)은 수면 부족이 높은 잠재 우울과 관련되었지만, 위험콘텐츠 노출군(γ=−0.06)과 고위험 다목적군(γ=0.05)은 관련이 없었습니다. 위험콘텐츠 노출군은 수면이 충분해도 잠재 우울이 0.61 SD 높았어요. 여학생은 상호작용이 유의하지 않았습니다(χ²(4)=2.41, p=.661). 여학생 모형에는 DIF 5문항에 대한 이용유형의 직접효과를 넣어 측정의 불공평이 결과에 섞이지 않게 했습니다.</div>
+  <div class="callout warm"><span class="callout-label">보고할 때</span>횡단자료이므로 “수면 부족이 우울을 높인다”가 아니라 “수면 부족과 관련된다”로 씁니다. 읽는 순서는 ① 상호작용 전체 검정 → ② 유형별 기울기 → ③ 수면이 충분할 때의 유형 차이(주효과)입니다.</div>
+</section>
+
+<section id="s7">
+  <div class="section-head"><div class="section-num">07</div><div class="section-title-block"><h2>정리와 실습</h2><p class="section-subtitle">Summary, Stata 18 commands, quiz</p></div></div>
+  <div class="table-wrap"><table class="mini-table map">
+    <tr><th>개념</th><th>방법 요약</th><th>예시 자료의 결과</th></tr>
+    <tr><td>IRT 기초</td><td>단일차원성은 다분상관행렬의 고유값으로 확인</td><td>고유값 비 약 6.7 (남 7.55/1.12, 여 8.01/1.21)</td></tr>
+    <tr><td>GRM</td><td>문항별 변별도와 범주 경계 추정, 한계신뢰도</td><td>정서·인지 a 1.90~5.02, 신체 a 0.40~1.55, 한계신뢰도 .75/.81</td></tr>
+    <tr><td>P₀</td><td>P₀ = 1/{1+exp(a×b₁)}</td><td>깊은 우울 4문항 1.1~5.5%, 신체 문항 17~27%</td></tr>
+    <tr><td>DIF</td><td>IRT-LR-DIF, 앵커, BH 보정, 부분 동일성, DTF</td><td>남 0문항, 여 5문항, DTF −0.03~0.38점</td></tr>
+    <tr><td>다집단 GRM</td><td>기준 집단 평균 0·SD 1 고정, d와 μ</td><td>오락·소통 몰입(여) d 0.20 → μ 0.09, 위험콘텐츠 노출 μ 남 0.38 · 여 0.60</td></tr>
+    <tr><td>MIMIC</td><td>측정·회귀 동시 추정, 상호작용, 우도비 검정, 델타법</td><td>상호작용 남 χ²(3)=9.35, p=.025 · 여 χ²(4)=2.41, p=.661</td></tr>
+  </table></div>
+  <div class="callout sage"><span class="callout-label">한 문장으로</span>GRM이 문항마다 무게를 매긴 ‘자’를 만들고, DIF가 그 자의 공평성을 확인하며, 다집단 GRM은 그 자로 집단 평균을 비교하고, MIMIC은 그 자로 잰 우울을 결과변수로 회귀분석합니다. <b>모든 분석이 GRM 하나 위에 쌓여 있습니다.</b></div>
+
+  <div class="subhead" style="margin-top:34px"><span class="code">Stata 18</span><h3>직접 해보기</h3><span class="en">commands for each step</span></div>
+  <p class="note">변수명은 예시 자료 기준입니다(우울 문항 Q4A1~Q4A12, 남학생 이용유형 male_gr, 수면 부족 short_sleep, 학교급 age). gsem은 대문자로 시작하는 이름을 잠재변수로 보므로 <code>latent(Theta) nocapslatent</code>를 꼭 붙입니다.</p>
+  <div class="codebox"><button type="button">복사</button><pre>* 1. 단일차원성: 다분상관 고유값 (ssc install polychoric)
+polychoric Q4A1-Q4A12 if sex==1
+matrix R = r(R)
+matrix symeigen V L = R
+matrix list L
+
+* 2. 단일집단 GRM
+irt grm Q4A1-Q4A12 if sex==1
+estat report
+irtgraph icc Q4A1 Q4A11            // 문항특성곡선 비교</pre></div>
+  <div class="codebox"><button type="button">복사</button><pre>* 4. DIF: 1번 문항만 유형별로 풀어 우도비 검정
+irt grm Q4A1-Q4A12 if sex==1, group(male_gr)
+estimates store constrained
+irt (grm Q4A2-Q4A12) (0: grm Q4A1) (1: grm Q4A1) (2: grm Q4A1) (3: grm Q4A1) if sex==1, group(male_gr)
+estimates store dif1
+lrtest constrained dif1
+
+* 5. 다집단 GRM: 유형별 잠재평균과 분산
+irt grm Q4A1-Q4A12 if sex==1, group(male_gr)
+estat greport</pre></div>
+  <div class="codebox"><button type="button">복사</button><pre>* 6. MIMIC: 잠재 우울 ← 유형 × 수면 부족 + 학교급
+gsem (Theta -> Q4A1-Q4A12, ologit) ///
+     (Theta <- i.male_gr##i.short_sleep i.age) if sex==1, ///
+     var(e.Theta@1) latent(Theta) nocapslatent
+estimates store full
+lincom _b[Theta:1.short_sleep] + _b[Theta:2.male_gr#1.short_sleep]   // 위험콘텐츠 노출군의 기울기
+
+gsem (Theta -> Q4A1-Q4A12, ologit) ///
+     (Theta <- i.male_gr i.short_sleep i.age) if sex==1, ///
+     var(e.Theta@1) latent(Theta) nocapslatent
+estimates store reduced
+lrtest full reduced                                                 // 상호작용 전체 검정</pre></div>
+  <p class="note">Stata의 irt와 gsem은 기본 적분점 수가 적어 소수점 셋째 자리 정도의 차이가 날 수 있습니다. 정밀하게 맞추려면 <code>intpoints(30)</code> 같은 옵션을 더합니다.</p>
+
+  <div class="subhead" style="margin-top:34px"><span class="code">Quiz</span><h3>확인 퀴즈</h3><span class="en">click an answer</span></div>
+  <div class="quiz">
+    <div class="q"><h4>1. IRT가 합산점수와 가장 다른 점은?</h4><div class="opts"><button type="button" data-ok="0">표본 수가 더 많이 필요 없다</button><button type="button" data-ok="1">응답의 합이 아니라, 잠재특성 θ가 문항 응답 확률을 결정한다고 본다</button><button type="button" data-ok="0">문항 수가 적어도 된다</button></div><p class="ex" hidden>정답. 그래서 문항마다 θ와 응답 확률의 관계(문항특성곡선)를 추정합니다.</p></div>
+    <div class="q"><h4>2. GRM에서 0~4점 문항 하나가 가지는 모수는 몇 개인가?</h4><div class="opts"><button type="button" data-ok="0">2개 (a, b)</button><button type="button" data-ok="1">5개 (a 1개, b₁~b₄ 4개)</button><button type="button" data-ok="0">12개</button></div><p class="ex" hidden>정답. 그래서 DIF 검정에서 문항 하나를 풀면 집단당 5개 모수가 늘어나고, 자유도는 5 × (집단 수 − 1)이 됩니다.</p></div>
+    <div class="q"><h4>3. 덫에 걸린 느낌 문항의 P₀가 남학생 1.1%라는 것은?</h4><div class="opts"><button type="button" data-ok="1">우울이 평균인 남학생 100명 중 약 1명만 1점 이상으로 답한다</button><button type="button" data-ok="0">남학생의 1.1%가 우울하다</button><button type="button" data-ok="0">이 문항은 쓸모가 없다</button></div><p class="ex" hidden>정답. 평균인 사람은 거의 답하지 않으므로, 답했다면 우울이 이미 깊다는 신호입니다.</p></div>
+    <div class="q"><h4>4. DIF가 있다는 것은?</h4><div class="opts"><button type="button" data-ok="0">두 집단의 평균 우울이 다르다</button><button type="button" data-ok="1">우울 수준이 같은데도 집단에 따라 그 문항에 답할 확률이 다르다</button><button type="button" data-ok="0">그 문항의 변별도가 낮다</button></div><p class="ex" hidden>정답. 평균이 다른 것은 정상적인 집단 차이이고, ‘같은 θ에서’ 응답이 다른 것이 DIF입니다.</p></div>
+    <div class="q"><h4>5. 같은 집단 비교에서 d와 μ가 다르게 나오는 이유는?</h4><div class="opts"><button type="button" data-ok="0">d는 남학생, μ는 여학생 결과라서</button><button type="button" data-ok="1">μ는 단위 통일에 더해 문항별 무게와 측정 동일성까지 반영했기 때문</button><button type="button" data-ok="0">μ는 가중치를 적용했기 때문</button></div><p class="ex" hidden>정답. d는 합산점수 차이를 SD 단위로 바꾼 것이고, μ는 다집단 GRM으로 잰 잠재 우울의 차이입니다.</p></div>
+    <div class="q"><h4>6. MIMIC에서 잠재 우울은 회귀분석에 어떻게 들어가나?</h4><div class="opts"><button type="button" data-ok="0">12문항을 합산해 종속변수로 넣는다</button><button type="button" data-ok="0">GRM 점수를 먼저 뽑아 종속변수로 넣는다</button><button type="button" data-ok="1">측정(12문항 ← θ)과 회귀(θ ← 설명변수)를 한 모형에서 동시에 추정한다</button></div><p class="ex" hidden>정답. 그래서 회귀계수도 GRM과 같은 θ 척도(SD 단위)로 읽습니다.</p></div>
+  </div>
+
+  <div class="subhead" style="margin-top:34px"><span class="code">용어</span><h3>용어 정리</h3></div>
+  <div class="table-wrap"><table class="mini-table">
+    <tr><th>용어</th><th>뜻</th></tr>
+    <tr><td>IRT (문항반응이론)</td><td>잠재특성과 문항 응답 확률의 관계를 모형화하는 측정 이론</td></tr>
+    <tr><td>GRM (등급반응모형)</td><td>순서형 응답(0~4점)을 위한 IRT 모형. 문항마다 변별도 a와 범주 경계 b₁~b₄ (Samejima, 1969)</td></tr>
+    <tr><td>잠재특성 θ</td><td>직접 관찰할 수 없는 우울 수준. 기준 집단 평균 0, 표준편차 1</td></tr>
+    <tr><td>문항특성곡선</td><td>θ에 따른 응답 확률을 그린 곡선</td></tr>
+    <tr><td>EAP</td><td>사후분포의 평균으로 개인의 θ를 추정하는 방법</td></tr>
+    <tr><td>한계신뢰도</td><td>θ 추정의 정밀도를 0~1로 요약한 값</td></tr>
+    <tr><td>P₀</td><td>θ=0인 사람이 1점 이상으로 답할 확률. 1/{1+exp(a×b₁)}</td></tr>
+    <tr><td>DIF / 균일·비균일</td><td>같은 θ에서 집단에 따라 응답 확률이 다른 현상 (Woods, 2009). b만 다르면 균일, a가 다르면 비균일</td></tr>
+    <tr><td>앵커 문항</td><td>DIF 검정 때 집단 간 같다고 묶어 두는 문항. 척도를 연결</td></tr>
+    <tr><td>BH 보정</td><td>여러 번 검정할 때 거짓 발견 비율을 관리하는 방법 (Benjamini &amp; Hochberg, 1995)</td></tr>
+    <tr><td>부분 측정동일성</td><td>DIF 문항만 집단별로 따로 추정하고 나머지는 묶은 모형</td></tr>
+    <tr><td>DTF</td><td>DIF가 합산점수에 미치는 영향을 점수 단위로 나타낸 값</td></tr>
+    <tr><td>d / μ / 잠재 SD</td><td>합산점수 차이를 SD로 나눈 값 / 다집단 GRM의 잠재평균 차이 / 집단 내 θ의 퍼짐</td></tr>
+    <tr><td>MIMIC</td><td>측정모형과 구조모형을 동시에 추정하는 모형. 여기서는 GRM + 회귀</td></tr>
+    <tr><td>γ (감마)</td><td>MIMIC 구조모형의 계수. θ와 같은 SD 단위</td></tr>
+    <tr><td>델타법 / 우도비 검정</td><td>계수 조합의 표준오차 계산 / 두 중첩 모형의 적합도 비교</td></tr>
+  </table></div>
+
+  <div class="closing"><div class="closing-inner">
+    <h2>오늘 가져갈 것</h2>
+    <p>합산점수는 편리하지만 <strong>모든 문항을 같은 무게로 더한다</strong>는 가정을 숨기고 있습니다. GRM은 그 가정을 풀어 문항마다 무게를 재고, DIF는 그 무게가 집단마다 같은지 확인합니다. 그렇게 만든 공평한 자 위에서야 집단 비교와 회귀분석의 숫자를 안심하고 읽을 수 있어요.</p>
+    <p>예시 자료에서는 그 덕분에 <strong>오락·소통을 많이 쓰는 여학생의 우울 차이 가운데 상당 부분이 합산점수 방식에서 비롯되었다는 것</strong>과, <strong>위험콘텐츠를 보는 남학생에게는 잠보다 다른 무엇이 우울과 얽혀 있다는 것</strong>을 구분해 낼 수 있었습니다.</p>
+  </div></div>
+</section>
+<div style="text-align:center;margin:3rem 0 1rem;"><a href="../statistics.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:var(--white);border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(47,111,168,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#2f6fa8"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#6cb0e4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#2f6fa8"/></svg></span>Statistics 페이지의 다른 모듈 보기</a></div>
+
+</main>
+
+<div class="footer">AIR Lab · 충북대학교 아동복지학과 · 예시 자료: 한국청소년정책연구원 「10대 청소년의 정신건강 실태조사」(2021) · 우울 척도: 한국형 정신건강 선별도구: 우울(MHS:D; 윤서원 외, 2018)<br>모든 수치는 예시 자료의 분석 결과이며, 1장의 θ는 성별 단일집단 GRM 문항 모수로 계산한 EAP 점수입니다.</div>
+
+<script>window.GRMDATA={"male": {"par": [[2.918, 0.833, 1.678, 2.235, 2.762], [2.794, 0.773, 1.589, 2.12, 2.633], [3.143, 0.774, 1.467, 2.014, 2.628], [2.527, 0.897, 1.582, 2.127, 2.586], [3.405, 1.028, 1.684, 2.115, 2.404], [2.392, 0.862, 1.704, 2.345, 2.912], [2.911, 1.291, 1.967, 2.356, 2.759], [3.629, 1.251, 1.813, 2.305, 2.733], [3.369, 1.102, 1.68, 2.156, 2.489], [1.349, 1.173, 2.055, 2.834, 3.418], [0.57, 1.921, 3.471, 4.968, 6.187], [1.408, 1.022, 1.775, 2.387, 2.925]], "pga": [[2.77, 2.76, 2.57, 3.22], [2.76, 2.37, 2.54, 2.53], [2.97, 2.78, 2.89, 3.29], [2.34, 2.39, 2.7, 2.24], [3.08, 3.08, 3.41, 4.54], [2.12, 2.45, 2.28, 2.6], [2.71, 2.31, 3.16, 2.42], [3.5, 3.21, 3.18, 3.46], [3.09, 3.41, 3.32, 3.11], [1.2, 1.44, 1.55, 1.41], [0.46, 0.69, 0.61, 0.7], [1.3, 1.44, 1.49, 1.32]], "lat": {"n": [1887, 616, 417, 183], "M": [3.96, 3.25, 5.86, 6.55], "d": [0.0, -0.12, 0.32, 0.44], "mu": [0.0, -0.18, 0.38, -0.01], "sd": [1.0, 1.04, 1.05, 1.58], "dtf": [0.0, 0.0, 0.0, 0.0]}, "mim": {"LR": 9.35, "df": 3, "p": 0.025, "main": [0.0, -0.11, 0.61, 0.41], "slope": [0.31, 0.27, -0.06, 0.05], "se": [0.057, 0.098, 0.117, 0.178], "p_each": [0.0, 0.006, 0.615, 0.777]}, "eig": [7.552, 1.121, 0.747, 0.576, 0.398, 0.331, 0.311, 0.239, 0.223, 0.205, 0.167, 0.13], "dif": {"LR": [22.05, 13.73, 14.84, 16.6, 23.76, 10.64, 13.76, 4.78, 18.35, 24.44, 24.28, 20.38], "p": [0.1065, 0.546, 0.4629, 0.3432, 0.0694, 0.7776, 0.5441, 0.9939, 0.2446, 0.058, 0.0605, 0.1579], "pbh": [0.3195, 0.6551, 0.6551, 0.5883, 0.2774, 0.8482, 0.6551, 0.9939, 0.4893, 0.2774, 0.2774, 0.3789]}}, "female": {"par": [[3.442, 0.402, 1.287, 1.755, 2.294], [2.868, 0.557, 1.475, 1.955, 2.597], [3.103, 0.472, 1.209, 1.718, 2.288], [2.433, 0.604, 1.379, 1.897, 2.42], [3.924, 0.738, 1.369, 1.724, 2.159], [2.644, 0.642, 1.425, 1.972, 2.467], [3.572, 0.861, 1.468, 1.848, 2.195], [3.93, 0.96, 1.529, 1.939, 2.273], [3.589, 0.79, 1.397, 1.816, 2.198], [1.293, 1.185, 2.128, 2.855, 3.447], [0.647, 1.533, 3.411, 4.657, 5.947], [1.408, 0.826, 1.659, 2.24, 2.734]], "pga": [[3.35, 3.14, 3.09, 3.14, 2.13], [2.6, 2.7, 2.72, 2.47, 3.6], [2.85, 3.29, 2.69, 2.17, 5.02], [2.36, 2.34, 1.9, 2.44, 2.48], [3.75, 3.66, 3.42, 3.14, 19.01], [2.64, 2.26, 2.28, 1.99, 3.33], [3.47, 3.5, 2.87, 3.44, 3.21], [3.96, 3.98, 3.23, 3.04, 2.96], [3.52, 3.05, 3.15, 3.34, 3.66], [1.1, 1.31, 1.15, 1.36, 1.34], [0.7, 0.47, 0.4, 0.77, 1.15], [1.4, 1.4, 1.09, 1.08, 1.29]], "lat": {"n": [1432, 980, 931, 168, 74], "M": [5.15, 3.97, 6.68, 10.27, 9.58], "d": [0.0, -0.16, 0.2, 0.68, 0.59], "mu": [0.0, -0.28, 0.09, 0.6, 0.36], "sd": [1.0, 1.07, 1.17, 1.05, 1.33], "dtf": [0.0, -0.03, 0.13, 0.38, 0.16]}, "mim": {"LR": 2.41, "df": 4, "p": 0.661, "main": [0.0, -0.29, 0.09, 0.65, 0.47], "slope": [0.15, 0.28, 0.2, 0.06, 0.1], "se": [0.067, 0.08, 0.08, 0.168, 0.26], "p_each": [0.024, 0.0, 0.012, 0.722, 0.709]}, "difc": {"Q4A3": [{"a": 2.825, "b": [0.467, 1.319, 1.88, 2.639]}, {"a": 3.273, "b": [0.482, 1.281, 1.825, 2.561]}, {"a": 2.641, "b": [0.514, 1.274, 1.811, 2.332]}, {"a": 2.142, "b": [0.517, 1.384, 2.021, 2.624]}, {"a": 5.579, "b": [0.625, 1.221, 1.953, 2.439]}], "Q4A5": [{"a": 3.73, "b": [0.748, 1.535, 1.885, 2.392]}, {"a": 3.627, "b": [0.799, 1.382, 1.793, 2.403]}, {"a": 3.376, "b": [0.786, 1.451, 1.849, 2.292]}, {"a": 3.179, "b": [0.855, 1.569, 2.036, 2.454]}, {"a": 18.632, "b": [1.045, 1.516, 1.898, 2.121]}], "Q4A7": [{"a": 3.441, "b": [0.866, 1.611, 1.961, 2.382]}, {"a": 3.508, "b": [0.948, 1.519, 2.038, 2.472]}, {"a": 2.873, "b": [0.961, 1.671, 2.128, 2.483]}, {"a": 3.389, "b": [0.923, 1.519, 1.805, 2.183]}, {"a": 3.28, "b": [1.038, 1.214, 2.004, 2.199]}], "Q4A11": [{"a": 0.696, "b": [1.434, 3.471, 4.831, 6.372]}, {"a": 0.476, "b": [2.253, 5.021, 6.937, 8.102]}, {"a": 0.395, "b": [2.304, 4.989, 6.659, 8.512]}, {"a": 0.762, "b": [1.238, 2.301, 2.942, 4.39]}, {"a": 1.169, "b": [0.913, 1.506, 2.93, 3.824]}], "Q4A12": [{"a": 1.396, "b": [0.853, 1.74, 2.325, 2.943]}, {"a": 1.409, "b": [0.761, 1.733, 2.628, 2.999]}, {"a": 1.08, "b": [1.021, 1.985, 2.5, 3.154]}, {"a": 1.083, "b": [0.827, 1.679, 2.48, 2.92]}, {"a": 1.351, "b": [1.116, 1.622, 2.355, 2.591]}]}, "eig": [8.012, 1.206, 0.688, 0.433, 0.33, 0.31, 0.231, 0.211, 0.184, 0.154, 0.137, 0.106], "dif": {"LR": [30.69, 23.26, 37.72, 23.73, 40.24, 31.94, 37.32, 22.14, 26.13, 29.67, 71.39, 43.81], "p": [0.0594, 0.2764, 0.0096, 0.2542, 0.0047, 0.0439, 0.0107, 0.3327, 0.1615, 0.0753, 0.0, 0.0016], "pbh": [0.1019, 0.3015, 0.0257, 0.3015, 0.0186, 0.0878, 0.0257, 0.3327, 0.2153, 0.113, 0.0, 0.0096]}}};</script>
+<script>(function(){
+'use strict';
+var D = window.GRMDATA;
+var ITEMS = ['울적함','즐겁지 않음','불안·과민','말·움직임 싫음','삶이 무가치','집중력 저하','죽고 싶음','덫에 걸린 느낌','앞날 기대 없음','식욕 감소','식욕 증가','수면 곤란'];
+var SOM = [9,10,11], DEEP = [4,6,7,8];
+var GNAME = {male:['일반이용','저활용','위험콘텐츠 노출','고위험 다목적'], female:['일반이용','저활용','오락·소통 몰입','위험콘텐츠 노출','고위험 다목적']};
+var GPCT = {male:[60.8,19.9,13.4,5.9], female:[39.9,27.3,26.0,4.7,2.1]};
+var SEXK = {male:'남학생', female:'여학생'};
+
+function $(id){return document.getElementById(id);}
+function sig(x){return 1/(1+Math.exp(-x));}
+function f2(x){var s=(Math.abs(x)<0.005?0:x).toFixed(2); return s.replace('-','−');}
+function sg2(x){return (x>0.004?'+':'')+f2(x);}
+function pct(x){return (x*100).toFixed(1)+'%';}
+function txt(x,y,s,cls,size,anchor,weight){return '<text x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" class="'+(cls||'t')+'" style="font-size:'+(size||12)+'px'+(weight?';font-weight:'+weight:'')+'" text-anchor="'+(anchor||'start')+'">'+s+'</text>';}
+function phi(z){var t=1/(1+0.2316419*Math.abs(z)),d=0.3989423*Math.exp(-z*z/2),p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return z>0?1-p:p;}
+function seg(el, cb){
+  var bs=el.querySelectorAll('button');
+  bs.forEach(function(b){b.addEventListener('click',function(){bs.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});cb(b.dataset.v);});});
+}
+function kid(x,y,s,mood,bodyStyle,extra){
+  var m = mood>0 ? 'M-6,-79 Q0,-75 6,-79' : (mood<0 ? 'M-6,-77 Q0,-82 6,-77' : 'M-6,-79 L6,-79');
+  return '<g transform="translate('+x.toFixed(1)+','+y.toFixed(1)+') scale('+s+')"'+(extra||'')+'>'+
+    '<path class="ln" d="M-7,-32 L-7,0 M7,-32 L7,0 M-12,0 L-2,0 M2,0 L12,0"/>'+
+    '<rect class="ln" x="-16" y="-72" width="32" height="42" rx="14" style="'+bodyStyle+'"/>'+
+    '<path class="ln" d="M-16,-62 L-6,-48 M16,-62 L6,-48"/>'+
+    '<circle class="fl ln" cx="0" cy="-90" r="17"/>'+
+    '<circle class="ink" cx="-6" cy="-92" r="2.2"/><circle class="ink" cx="6" cy="-92" r="2.2"/>'+
+    '<path class="ln thin" d="'+m+'"/></g>';
+}
+// GRM probabilities
+function cumP(p,th){var a=p[0];return [1,sig(a*(th-p[1])),sig(a*(th-p[2])),sig(a*(th-p[3])),sig(a*(th-p[4])),0];}
+var TH=[],PRI=[];for(var t=-4;t<=4.0001;t+=0.05){TH.push(t);PRI.push(Math.exp(-t*t/2));}
+function eap(par,resp){
+  var w=[],sw=0;
+  for(var i=0;i<TH.length;i++){var L=PRI[i];for(var j=0;j<12;j++){var c=cumP(par[j],TH[i]);L*=Math.max(c[resp[j]]-c[resp[j]+1],1e-300);}w.push(L);sw+=L;}
+  var m=0;for(i=0;i<TH.length;i++)m+=w[i]/sw*TH[i];
+  var v=0;for(i=0;i<TH.length;i++)v+=w[i]/sw*(TH[i]-m)*(TH[i]-m);
+  return [m,Math.sqrt(v)];
+}
+
+/* ================= 1. 응답 체험: 합산점수 vs 잠재 우울 ================= */
+var R={sex:'male',resp:[0,0,0,0,0,0,0,0,0,0,0,0]};
+function buildResp(){
+  var h='';
+  for(var j=0;j<12;j++){
+    var tag = SOM.indexOf(j)>=0?'<span class="tag som">신체</span>':(DEEP.indexOf(j)>=0?'<span class="tag deep">깊은 우울</span>':'<span class="tag">정서·인지</span>');
+    h+='<div class="it">'+tag+'<span>'+(j+1)+'. '+ITEMS[j]+'</span></div><div class="opts" role="group" aria-label="'+ITEMS[j]+' 응답">';
+    for(var k=0;k<5;k++) h+='<button type="button" data-j="'+j+'" data-k="'+k+'" aria-pressed="'+(k===0)+'">'+k+'</button>';
+    h+='</div>';
+  }
+  $('resp').innerHTML=h;
+  $('resp').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){R.resp[+b.dataset.j]=+b.dataset.k;drawResp();});});
+}
+function setPreset(arr){R.resp=arr.slice();drawResp();}
+function drawResp(){
+  $('resp').querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',R.resp[+b.dataset.j]===+b.dataset.k?'true':'false');});
+  var sum=R.resp.reduce(function(a,b){return a+b;},0);
+  var e=eap(D[R.sex].par,R.resp), th=e[0];
+  $('r-sum').textContent=sum+'점';
+  $('r-th').textContent=sg2(th);
+  $('r-se').textContent='± '+e[1].toFixed(2)+' (추정의 불확실성)';
+  $('r-pct').textContent='상위 '+(100-phi(th)*100).toFixed(0)+'%';
+  // gauge svg
+  var W=520,H=210,L=40,Rr=500;
+  var sx=function(v){return L+(v/48)*(Rr-L);}, tx=function(v){return L+((v+3)/6)*(Rr-L);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="합산점수와 잠재 우울의 위치">';
+  s+=txt(L,22,'합산점수 (0~48점)','t-strong',12.5);
+  s+='<rect x="'+L+'" y="32" width="'+(Rr-L)+'" height="12" rx="6" class="off-f"/>';
+  for(var v=0;v<=48;v+=12){s+=txt(sx(v),62,v,'t-muted',11,'middle');}
+  s+='<circle cx="'+sx(sum)+'" cy="38" r="9" class="acc-f ring"/>';
+  s+=txt(L,104,'GRM 잠재 우울 θ ('+SEXK[R.sex]+' 평균 = 0)','t-strong',12.5);
+  // normal density strip
+  var path='M'+tx(-3)+',138';
+  for(var z=-3;z<=3.001;z+=0.1){path+=' L'+tx(z).toFixed(1)+','+(138-26*Math.exp(-z*z/2)).toFixed(1);}
+  path+=' L'+tx(3)+',138 Z';
+  s+='<path d="'+path+'" class="sky-soft-f"/><path d="M'+L+',138 L'+Rr+',138" class="axis"/>';
+  for(z=-3;z<=3;z++){s+=txt(tx(z),156,(z>0?'+':'')+String(z).replace('-','−'),'t-muted',11,'middle');}
+  var x=tx(Math.max(-3,Math.min(3,th)));
+  s+='<path d="M'+x+',112 L'+x+',138" class="acc-ln"/>';
+  s+=kid(x,206,0.42,th<-0.3?1:(th>0.6?-1:0),'fill:var(--fig-acc-soft)');
+  s+='</svg>';
+  $('r-gauge').innerHTML=s;
+}
+
+/* ================= 2. 변별도·경계 체험 ================= */
+var I={sex:'male',item:0,th:0,sand:false,a:2.5,b:0.8,mode:'cum'};
+var KCOL=['var(--xlight)','var(--sky-bright)','var(--sky)','var(--sky-deep)','var(--coral)'];
+function itemPar(){ if(I.sand) return [I.a,I.b,I.b+0.7,I.b+1.2,I.b+1.7]; return D[I.sex].par[I.item]; }
+function buildIcc(){
+  var h='';
+  for(var j=0;j<12;j++) h+='<button type="button" class="chip'+(SOM.indexOf(j)>=0?' som':'')+'" data-j="'+j+'" aria-pressed="'+(j===0)+'">'+ITEMS[j]+'</button>';
+  h+='<button type="button" class="chip" data-j="sand" aria-pressed="false">직접 만들어 보기</button>';
+  $('icc-items').innerHTML=h;
+  $('icc-items').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){
+    $('icc-items').querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+    if(b.dataset.j==='sand'){I.sand=true;$('icc-sand').hidden=false;} else {I.sand=false;I.item=+b.dataset.j;$('icc-sand').hidden=true;}
+    drawIcc();});});
+}
+function drawIcc(){
+  var p=itemPar(), ref=D[I.sex].par[0];
+  var W=720,H=420,L=56,Rr=690,T=24,B=232;
+  var sx=function(v){return L+(v+3)/6*(Rr-L);}, sy=function(v){return B-v*(B-T);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="잠재 우울 수준에 따른 응답 확률 곡선">';
+  for(var q=0;q<=1.001;q+=0.25){s+='<path d="M'+L+','+sy(q)+' L'+Rr+','+sy(q)+'" class="grid"/>'+txt(L-8,sy(q)+4,(q*100)+'%','t-muted',11,'end');}
+  for(var z=-3;z<=3;z++){s+=txt(sx(z),B+18,(z>0?'+':'')+String(z).replace('-','−'),'t-muted',11,'middle');}
+  s+='<path d="M'+sx(0)+','+T+' L'+sx(0)+','+B+'" class="axis dash"/>'+txt(sx(0)+6,T+12,'θ=0 (성별 평균)','t-muted',11);
+  function curve(pp,cls){var d='';for(var t=-3;t<=3.001;t+=0.05){d+=(d?' L':'M')+sx(t).toFixed(1)+','+sy(sig(pp[0]*(t-pp[1]))).toFixed(1);}return '<path d="'+d+'" class="curve '+cls+'"/>';}
+  if(I.mode==='cat'){
+    for(var kk=0;kk<5;kk++){var dd='',bx=-3,bv=-1;for(var t2=-3;t2<=3.001;t2+=0.05){var c=cumP(p,t2),v=c[kk]-c[kk+1];if(v>bv){bv=v;bx=t2;}dd+=(dd?' L':'M')+sx(t2).toFixed(1)+','+sy(v).toFixed(1);}
+      s+='<path d="'+dd+'" class="curve" style="stroke:'+KCOL[kk]+'"/>'+txt(sx(bx),sy(bv)-8,kk+'점','t-strong',12,'middle',700);}
+  } else {
+    if(I.sand||I.item!==0) s+=curve(ref,'ref');
+    s+=curve(p,'acc-s');
+    for(var kb=2;kb<=4;kb++){var dd2='';for(var t3=-3;t3<=3.001;t3+=0.05){dd2+=(dd2?' L':'M')+sx(t3).toFixed(1)+','+sy(sig(p[0]*(t3-p[kb]))).toFixed(1);}s+='<path d="'+dd2+'" class="curve" style="stroke:var(--sky-bright);stroke-width:1.6;opacity:.7"/>';}
+  }
+  var p0=sig(-p[0]*p[1]), pt=sig(p[0]*(I.th-p[1]));
+  if(I.mode==='cum') s+='<circle cx="'+sx(0)+'" cy="'+sy(p0)+'" r="6" class="c2-f ring"/>'+txt(sx(0)+10,sy(p0)-8,'P₀ '+pct(p0),'t-warn',12,'start',700);
+  if(I.mode==='cum'&&p[1]>-3&&p[1]<3){s+='<path d="M'+sx(p[1])+','+sy(0.5)+' L'+sx(p[1])+','+B+'" class="axis"/>'+txt(sx(p[1]),B-6,'b₁','t-acc',11,'middle',700);}
+  s+='<path d="M'+sx(I.th)+','+T+' L'+sx(I.th)+','+B+'" class="acc-ln" style="opacity:.5"/>'+(I.mode==='cum'?'<circle cx="'+sx(I.th)+'" cy="'+sy(pt)+'" r="6" class="acc-f ring"/>':'');
+  s+=txt((L+Rr)/2,B+38,'잠재 우울 θ  (왼쪽: 우울 낮음 · 오른쪽: 우울 높음)','t',12,'middle');
+  // kid row
+  for(var k=0;k<11;k++){
+    var t=-2.5+k*0.5, pk=sig(p[0]*(t-p[1])), x=sx(t);
+    s+=kid(x,H-8,0.62,t<-0.8?1:(t>0.8?-1:0),'fill:var(--fig-acc);fill-opacity:'+(0.08+0.9*pk).toFixed(2));
+    if(pk>=0.5) s+='<g><rect x="'+(x-22)+'" y="'+(H-104)+'" width="44" height="18" rx="9" class="bg-f" style="stroke:var(--fig-acc);stroke-width:1.4"/>'+txt(x,H-91,'그렇다','t-acc',10.5,'middle',700)+'</g>';
+  }
+  s+='</svg>';
+  $('icc-svg').innerHTML=s;
+  $('i-a').textContent=p[0].toFixed(2);
+  $('i-b').textContent=f2(p[1]);
+  $('i-p0').textContent=pct(p0);
+  $('i-pt').textContent=pct(pt);
+  $('i-thv').textContent=sg2(I.th);
+  $('i-name').textContent=I.sand?'직접 만든 문항':ITEMS[I.item];
+}
+
+/* ================= 3. P0 막대 ================= */
+function drawP0(){
+  var M=D.male.par.map(function(p){return 100*sig(-p[0]*p[1]);}), F=D.female.par.map(function(p){return 100*sig(-p[0]*p[1]);});
+  var ord=[0,1,2,3,4,5,6,7,8,9,10,11].sort(function(a,b){return (M[a]+F[a])-(M[b]+F[b]);});
+  var W=720,L=150,Rr=640,rh=28,H=30+12*rh+30;
+  var sx=function(v){return L+v/30*(Rr-L);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="문항별 P0">';
+  for(var v=0;v<=30;v+=5){s+='<path d="M'+sx(v)+',20 L'+sx(v)+','+(H-28)+'" class="grid"/>'+txt(sx(v),H-10,v+'%','t-muted',11,'middle');}
+  ord.forEach(function(j,r){
+    var y=30+r*rh, som=SOM.indexOf(j)>=0, deep=DEEP.indexOf(j)>=0;
+    if(deep) s+='<rect x="4" y="'+(y-12)+'" width="'+(W-8)+'" height="26" rx="7" class="deep-soft-f"/>';
+    s+=txt(L-10,y+5,(j+1)+'. '+ITEMS[j],som?'t-strong':'t',12.5,'end',som||deep?700:400);
+    s+='<rect x="'+L+'" y="'+(y-8)+'" width="'+(sx(M[j])-L).toFixed(1)+'" height="8" rx="3" class="male-f"/>';
+    s+='<rect x="'+L+'" y="'+(y+1)+'" width="'+(sx(F[j])-L).toFixed(1)+'" height="8" rx="3" class="female-f"/>';
+    s+=txt(Math.max(sx(M[j]),sx(F[j]))+6,y+5,'남 '+M[j].toFixed(1)+' · 여 '+F[j].toFixed(1),'t-muted',11);
+  });
+  s+='</svg>';
+  $('p0-svg').innerHTML=s;
+}
+
+/* ================= 4. DIF 곡선 (여학생) ================= */
+var DF={item:'Q4A12',th:0.5,on:[true,true,true,true,true]};
+var DIFITEMS=[['Q4A3','불안·과민'],['Q4A5','삶이 무가치'],['Q4A7','죽고 싶음'],['Q4A11','식욕 증가'],['Q4A12','수면 곤란']];
+function buildDif(){
+  var h='';DIFITEMS.forEach(function(x){h+='<button type="button" class="chip" data-v="'+x[0]+'" aria-pressed="'+(x[0]===DF.item)+'">'+x[1]+'</button>';});
+  $('dif-items').innerHTML=h;
+  $('dif-items').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){$('dif-items').querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});DF.item=b.dataset.v;drawDif();});});
+  var lg='';GNAME.female.forEach(function(n,k){lg+='<button type="button" data-k="'+k+'" aria-pressed="true"><i style="background:var(--g'+k+')"></i>'+n+'</button>';});
+  $('dif-legend').innerHTML=lg;
+  $('dif-legend').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){var k=+b.dataset.k;DF.on[k]=!DF.on[k];b.setAttribute('aria-pressed',DF.on[k]?'true':'false');drawDif();});});
+}
+function drawDif(){
+  var C=D.female.difc[DF.item];
+  var W=720,H=290,L=56,Rr=690,T=20,B=240;
+  var sx=function(v){return L+(v+2)/5*(Rr-L);}, sy=function(v){return B-v*(B-T);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="같은 잠재 우울에서 유형별 응답 확률">';
+  for(var q=0;q<=1.001;q+=0.25){s+='<path d="M'+L+','+sy(q)+' L'+Rr+','+sy(q)+'" class="grid"/>'+txt(L-8,sy(q)+4,(q*100)+'%','t-muted',11,'end');}
+  for(var z=-2;z<=3;z++){s+=txt(sx(z),B+18,(z>0?'+':'')+String(z).replace('-','−'),'t-muted',11,'middle');}
+  s+=txt((L+Rr)/2,B+40,'잠재 우울 θ (여학생 일반이용군 평균 = 0)','t',12,'middle');
+  var rows='';
+  C.forEach(function(p,k){
+    if(!DF.on[k]) return;
+    var d='';for(var t=-2;t<=3.001;t+=0.05){d+=(d?' L':'M')+sx(t).toFixed(1)+','+sy(sig(p.a*(t-p.b[0]))).toFixed(1);}
+    s+='<path d="'+d+'" class="curve g'+k+'-s" style="stroke-width:2.6"/>';
+    var pt=sig(p.a*(DF.th-p.b[0]));
+    s+='<circle cx="'+sx(DF.th)+'" cy="'+sy(pt)+'" r="5" class="g'+k+'-f ring"/>';
+    rows+='<div class="ro"><span class="k"><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--g'+k+')"></i> '+GNAME.female[k]+'</span><span class="v">'+pct(pt)+'</span></div>';
+  });
+  s+='<path d="M'+sx(DF.th)+','+T+' L'+sx(DF.th)+','+B+'" class="acc-ln dash"/>'+txt(sx(DF.th)+6,T+12,'모두 같은 θ','t-acc',11.5,'start',700);
+  s+='</svg>';
+  $('dif-svg').innerHTML=s;$('dif-ro').innerHTML=rows;$('dif-thv').textContent=sg2(DF.th);
+}
+
+/* ================= 5. d와 μ, 잠재 분포 ================= */
+var LT={sex:'male',hl:-1};
+function drawLat(){
+  var Lt=D[LT.sex].lat, G=Lt.mu.length, names=GNAME[LT.sex];
+  // dumbbell
+  var W=720,L=170,Rr=680,rh=50,H=58+(G-1)*rh+36;
+  var sx=function(v){return L+(v+0.4)/1.2*(Rr-L);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="합산점수 d와 잠재평균 μ 비교">';
+  for(var v=-0.4;v<=0.801;v+=0.2){s+='<path d="M'+sx(v)+',26 L'+sx(v)+','+(H-26)+'" class="grid"/>'+txt(sx(v),H-8,f2(v),'t-muted',11,'middle');}
+  s+='<path d="M'+sx(0)+',22 L'+sx(0)+','+(H-26)+'" class="axis"/>'+txt(sx(0),14,'일반이용군 = 0','t-muted',11,'middle');
+  for(var k=1;k<G;k++){
+    var y=58+(k-1)*rh, d=Lt.d[k], m=Lt.mu[k];
+    s+=txt(L-12,y+5,names[k],'t-strong',13,'end');
+    s+='<path d="M'+sx(d)+','+y+' L'+sx(m)+','+y+'" class="g'+k+'-s" style="stroke-width:3;opacity:.45"/>';
+    s+='<circle cx="'+sx(d)+'" cy="'+y+'" r="7" class="bg-f g'+k+'-s" style="stroke-width:2.5"/>';
+    s+='<circle cx="'+sx(m)+'" cy="'+y+'" r="7.5" class="g'+k+'-f ring"/>';
+    s+=txt(sx(d),y-12,'d '+f2(d),'t-muted',11,'middle');
+    s+=txt(sx(m),y+22,'μ '+f2(m),'t-strong',11.5,'middle');
+  }
+  s+='</svg>';
+  $('lat-dumb').innerHTML=s;
+  // densities
+  W=720;H=260;L=40;Rr=690;var B=210,T=20;
+  var tx=function(v){return L+(v+4)/8*(Rr-L);};
+  var s2='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="유형별 잠재 우울 분포">';
+  for(var z=-4;z<=4;z++){s2+=txt(tx(z),B+18,(z>0?'+':'')+String(z).replace('-','−'),'t-muted',11,'middle');}
+  s2+='<path d="M'+L+','+B+' L'+Rr+','+B+'" class="axis"/>';
+  var maxd=0.4;
+  for(k=0;k<G;k++){
+    var mu=Lt.mu[k],sd=Lt.sd[k],dd='';
+    for(var t=-4;t<=4.001;t+=0.05){var dens=Math.exp(-0.5*Math.pow((t-mu)/sd,2))/(sd*2.5066);dd+=(dd?' L':'M')+tx(t).toFixed(1)+','+(B-dens/maxd*(B-T)).toFixed(1);}
+    var op=(LT.hl<0||LT.hl===k)?1:0.18;
+    s2+='<path d="'+dd+'" class="curve g'+k+'-s" style="stroke-width:'+(LT.hl===k?3.6:2.4)+';opacity:'+op+'"/>';
+  }
+  s2+=txt(tx(0),B+38,'잠재 우울 θ','t',12,'middle')+'</svg>';
+  $('lat-dens').innerHTML=s2;
+  var lg='';names.forEach(function(n,k){lg+='<button type="button" data-k="'+k+'" aria-pressed="'+(LT.hl<0||LT.hl===k)+'"><i style="background:var(--g'+k+')"></i>'+n+' (SD '+Lt.sd[k].toFixed(2)+')</button>';});
+  $('lat-legend').innerHTML=lg;
+  $('lat-legend').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){var k=+b.dataset.k;LT.hl=(LT.hl===k?-1:k);drawLat();});});
+  // table
+  var tb='<tr><th>유형</th><th>비율</th><th>합산점수 M</th><th>d</th><th>μ</th><th>잠재 SD</th></tr>';
+  for(k=0;k<G;k++) tb+='<tr'+(k===0?' class="hi"':'')+'><td>'+names[k]+'</td><td class="n">'+GPCT[LT.sex][k]+'%</td><td class="n">'+Lt.M[k].toFixed(2)+'</td><td class="n">'+(k?f2(Lt.d[k]):'0 (기준)')+'</td><td class="n">'+(k?f2(Lt.mu[k]):'0 (기준)')+'</td><td class="n">'+(k?Lt.sd[k].toFixed(2):'1 (기준)')+'</td></tr>';
+  $('lat-table').innerHTML=tb;
+}
+
+/* ================= 6. MIMIC ================= */
+var MM={sex:'male'};
+function drawMim(){
+  var m=D[MM.sex].mim, names=GNAME[MM.sex], G=m.main.length;
+  var W=720,H=330,L=60,Rr=700,T=24,B=250;
+  var lo=-0.4,hi=1.0, sy=function(v){return B-(v-lo)/(hi-lo)*(B-T);};
+  var gw=(Rr-L)/G;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="유형별 수면 충분·부족 시 잠재 우울">';
+  for(var v=-0.4;v<=1.001;v+=0.2){s+='<path d="M'+L+','+sy(v)+' L'+Rr+','+sy(v)+'" class="grid"/>'+txt(L-8,sy(v)+4,f2(v),'t-muted',11,'end');}
+  s+='<path d="M'+L+','+sy(0)+' L'+Rr+','+sy(0)+'" class="axis"/>';
+  for(var k=0;k<G;k++){
+    var x0=L+k*gw+gw*0.18, bw=gw*0.28, a=m.main[k], b=m.main[k]+m.slope[k];
+    s+='<rect x="'+x0+'" y="'+Math.min(sy(a),sy(0))+'" width="'+bw+'" height="'+Math.max(2,Math.abs(sy(a)-sy(0)))+'" rx="4" class="g'+k+'-f" style="opacity:.35"/>';
+    s+='<rect x="'+(x0+bw+6)+'" y="'+Math.min(sy(b),sy(0))+'" width="'+bw+'" height="'+Math.max(2,Math.abs(sy(b)-sy(0)))+'" rx="4" class="g'+k+'-f"/>';
+    s+='<path d="M'+(x0+bw/2)+','+sy(a)+' L'+(x0+bw*1.5+6)+','+sy(b)+'" class="ln thin dash"/>';
+    var star=m.p_each[k]<.001?'***':(m.p_each[k]<.01?'**':(m.p_each[k]<.05?'*':''));
+    s+=txt(x0+bw+3,Math.min(sy(a),sy(b))-10,'γ '+sg2(m.slope[k])+star,star?'t-strong':'t-muted',12,'middle',700);
+    s+=txt(x0+bw+3,B+18,names[k],'t-strong',12,'middle');
+    s+=txt(x0+bw/2,B+34,'충분','t-muted',10.5,'middle')+txt(x0+bw*1.5+6,B+34,'부족','t-muted',10.5,'middle');
+  }
+  s+=txt(L,H-6,'세로축: 일반이용군·수면 충분 청소년 대비 잠재 우울(SD).  *p<.05, **p<.01, ***p<.001','t-muted',11);
+  s+='</svg>';
+  $('mim-svg').innerHTML=s;
+  $('mim-lr').textContent='χ²('+m.df+')='+m.LR.toFixed(2)+', p='+m.p.toFixed(3).replace(/^0/,'');
+  $('mim-msg').innerHTML = MM.sex==='male'
+    ? '남학생은 유형마다 기울기가 <b>유의하게 다릅니다</b>. 일반이용·저활용은 잠이 부족하면 잠재 우울이 약 0.3 SD 높지만, 위험콘텐츠 노출군은 잠이 충분해도 이미 0.61 SD 높고 수면 부족이 더하는 몫이 없습니다.'
+    : '여학생은 유형 간 기울기 차이가 <b>유의하지 않습니다</b>. 대부분 유형에서 수면 부족이 잠재 우울과 관련되고, 위험 관련 두 유형은 인원이 적어(168명, 74명) 차이를 가려낼 힘이 부족할 수 있습니다.';
+}
+
+/* ================= 7. 퀴즈 ================= */
+function buildQuiz(){
+  document.querySelectorAll('.q').forEach(function(q){
+    var bs=q.querySelectorAll('.opts button'), ex=q.querySelector('.ex');
+    bs.forEach(function(b){b.addEventListener('click',function(){
+      bs.forEach(function(x){x.classList.remove('right','wrong');});
+      b.classList.add(b.dataset.ok==='1'?'right':'wrong');
+      if(b.dataset.ok==='1'){ex.hidden=false;} else {ex.hidden=true;}
+    });});
+  });
+}
+
+
+/* ================= 기초: 고유값 스크리 ================= */
+var SC={sex:'male'};
+function drawScree(){
+  var ev=D[SC.sex].eig; if(!ev) return;
+  var W=720,H=260,L=56,Rr=690,T=20,B=210;
+  var sx=function(i){return L+(i+0.5)/12*(Rr-L);}, sy=function(v){return B-v/9*(B-T);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="다분상관행렬의 고유값">';
+  for(var v=0;v<=9;v+=3){s+='<path d="M'+L+','+sy(v)+' L'+Rr+','+sy(v)+'" class="grid"/>'+txt(L-8,sy(v)+4,v,'t-muted',11,'end');}
+  s+='<path d="M'+L+','+sy(1)+' L'+Rr+','+sy(1)+'" class="warn-ln dash" style="stroke-width:1.4"/>'+txt(Rr,sy(1)-6,'고유값 1','t-warn',11,'end');
+  for(var i=0;i<12;i++){var bw=(Rr-L)/12*0.6;s+='<rect x="'+(sx(i)-bw/2)+'" y="'+sy(ev[i])+'" width="'+bw+'" height="'+(B-sy(ev[i]))+'" rx="4" class="'+(i===0?'acc-f':'mute-f')+'"/>'+txt(sx(i),B+16,i+1,'t-muted',11,'middle');
+    if(i<2) s+=txt(sx(i),sy(ev[i])-6,ev[i].toFixed(2),'t-strong',12,'middle',700);}
+  s+=txt((L+Rr)/2,B+36,'요인 번호 (첫째 요인이 압도적이면 단일차원)','t',12,'middle')+'</svg>';
+  $('scree-svg').innerHTML=s;
+  $('scree-ratio').textContent=(ev[0]/ev[1]).toFixed(1)+'배';
+}
+/* ================= DIF 샌드박스 ================= */
+var DS={da:0,db:0.4};
+function drawDifSand(){
+  var W=720,H=260,L=56,Rr=690,T=20,B=210, a=2.2,b=0.4;
+  var sx=function(v){return L+(v+3)/6*(Rr-L);}, sy=function(v){return B-v*(B-T);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="두 집단의 문항 곡선 비교">';
+  for(var q=0;q<=1.001;q+=0.5){s+='<path d="M'+L+','+sy(q)+' L'+Rr+','+sy(q)+'" class="grid"/>'+txt(L-8,sy(q)+4,(q*100)+'%','t-muted',11,'end');}
+  var dA='',dB='',area='';
+  for(var t=-3;t<=3.001;t+=0.05){dA+=(dA?' L':'M')+sx(t).toFixed(1)+','+sy(sig(a*(t-b))).toFixed(1);dB+=(dB?' L':'M')+sx(t).toFixed(1)+','+sy(sig((a+DS.da)*(t-(b+DS.db)))).toFixed(1);}
+  var back='';for(t=3;t>=-3.001;t-=0.05){back+=' L'+sx(t).toFixed(1)+','+sy(sig((a+DS.da)*(t-(b+DS.db)))).toFixed(1);}
+  s+='<path d="'+dA+back+' Z" style="fill:var(--coral-soft);opacity:.8"/>';
+  s+='<path d="'+dA+'" class="curve" style="stroke:var(--g0)"/><path d="'+dB+'" class="curve" style="stroke:var(--g3)"/>';
+  for(var z=-3;z<=3;z++){s+=txt(sx(z),B+18,(z>0?'+':'')+String(z).replace('-','−'),'t-muted',11,'middle');}
+  s+=txt((L+Rr)/2,B+38,'잠재 우울 θ (두 집단 모두 같은 자)','t',12,'middle')+'</svg>';
+  $('dsand-svg').innerHTML=s;
+  var type = (Math.abs(DS.da)<0.05&&Math.abs(DS.db)<0.03)?'DIF 없음: 두 곡선이 겹칩니다':(Math.abs(DS.da)<0.05?'균일(uniform) DIF: 경계 b만 다름. 모든 θ에서 한 집단이 일관되게 더(덜) 답함':'비균일(non-uniform) DIF: 변별도 a가 다름. θ에 따라 차이의 크기나 방향이 달라짐');
+  $('dsand-type').textContent=type;
+}
+/* ================= BH 표 ================= */
+var BH={sex:'female'};
+function drawBH(){
+  var dd=D[BH.sex].dif, n=12, idx=[0,1,2,3,4,5,6,7,8,9,10,11].sort(function(a,b){return dd.p[a]-dd.p[b];});
+  var df=BH.sex==='male'?15:20;
+  var h='<tr><th>순위 i</th><th>문항</th><th>LR χ²('+df+')</th><th>원래 p</th><th>BH 기준 .05×i/12</th><th>BH 보정 p</th><th>판정</th></tr>';
+  idx.forEach(function(j,r){var thr=0.05*(r+1)/n, sig=dd.pbh[j]<0.05;
+    h+='<tr'+(sig?' class="hi"':'')+'><td class="n">'+(r+1)+'</td><td>'+(j+1)+'. '+ITEMS[j]+'</td><td class="n">'+dd.LR[j].toFixed(2)+'</td><td class="n">'+(dd.p[j]<0.001?'<.001':dd.p[j].toFixed(3).replace(/^0/,''))+'</td><td class="n">'+thr.toFixed(4).replace(/^0/,'')+'</td><td class="n">'+(dd.pbh[j]<0.001?'<.001':dd.pbh[j].toFixed(3).replace(/^0/,''))+'</td><td>'+(sig?'<b style="color:var(--coral)">DIF</b>':'-')+'</td></tr>';});
+  $('bh-table').innerHTML=h;
+}
+/* ================= 코드 복사 ================= */
+function buildCopy(){
+  document.querySelectorAll('.codebox button').forEach(function(b){b.addEventListener('click',function(){
+    var pre=b.parentElement.querySelector('pre'), t=pre.textContent;
+    function fb(){var r=document.createRange();r.selectNodeContents(pre);var sel=window.getSelection();sel.removeAllRanges();sel.addRange(r);b.textContent='선택됨, Ctrl+C';}
+    try{navigator.clipboard.writeText(t).then(function(){b.textContent='복사됨';setTimeout(function(){b.textContent='복사';},1500);},fb);}catch(e){fb();}
+  });});
+}
+
+/* init */
+function init(){
+  buildResp(); drawResp();
+  seg($('r-sex'),function(v){R.sex=v;drawResp();});
+  $('pre-zero').addEventListener('click',function(){setPreset([0,0,0,0,0,0,0,0,0,0,0,0]);});
+  $('pre-som').addEventListener('click',function(){setPreset([0,0,0,0,0,0,0,0,0,2,2,2]);});
+  $('pre-deep').addEventListener('click',function(){setPreset([0,0,0,0,0,0,2,2,2,0,0,0]);});
+  $('pre-mood').addEventListener('click',function(){setPreset([2,2,2,0,0,0,0,0,0,0,0,0]);});
+  buildIcc(); drawIcc();
+  seg($('i-sex'),function(v){I.sex=v;drawIcc();});
+  $('i-th').addEventListener('input',function(e){I.th=+e.target.value;drawIcc();});
+  $('s-a').addEventListener('input',function(e){I.a=+e.target.value;$('s-av').textContent=I.a.toFixed(1);drawIcc();});
+  $('s-b').addEventListener('input',function(e){I.b=+e.target.value;$('s-bv').textContent=f2(I.b);drawIcc();});
+  drawP0();
+  buildDif(); drawDif();
+  $('d-th').addEventListener('input',function(e){DF.th=+e.target.value;drawDif();});
+  drawLat(); seg($('l-sex'),function(v){LT.sex=v;LT.hl=-1;drawLat();});
+  drawMim(); seg($('m-sex'),function(v){MM.sex=v;drawMim();});
+  buildQuiz();
+  drawScree(); seg($('sc-sex'),function(v){SC.sex=v;drawScree();});
+  seg($('i-mode'),function(v){I.mode=v;drawIcc();});
+  drawDifSand();
+  $('ds-a').addEventListener('input',function(e){DS.da=+e.target.value;$('ds-av').textContent=sg2(DS.da);drawDifSand();});
+  $('ds-b').addEventListener('input',function(e){DS.db=+e.target.value;$('ds-bv').textContent=sg2(DS.db);drawDifSand();});
+  drawBH(); seg($('bh-sex'),function(v){BH.sex=v;drawBH();});
+  buildCopy();
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+</script>
+
+</body>
+</html>
