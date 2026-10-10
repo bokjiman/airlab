@@ -914,10 +914,10 @@ footer {
 
 /* 7. Scroll reveal (stronger, staggered) */
 .reveal .sh, .reveal .ri { opacity: 0; transform: translateY(46px); transition: opacity .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1); }
-.reveal.in .sh, .reveal.in .ri { opacity: 1; transform: none; }
+.reveal .sh.in, .reveal .ri.in { opacity: 1; transform: none; }
 .reveal .st { position: relative; }
 .reveal .st::after { content: ''; position: absolute; left: 0; bottom: -0.55rem; height: 3px; width: 0; background: var(--sky); border-radius: 3px; transition: width 1s cubic-bezier(.2,.7,.2,1) .35s; }
-.reveal.in .st::after { width: 56px; }
+.reveal .sh.in .st::after { width: 56px; }
 @media (prefers-reduced-motion: reduce) { .reveal .sh, .reveal .ri { opacity: 1; transform: none; transition: none; } .reveal .st::after { width: 56px; transition: none; } }
 
 /* 8. Publication year timeline */
@@ -1646,13 +1646,14 @@ const PUB_DATA = [
   { no:1,  year:2015, type:"KCI",  isNew:false, status:"published", title:"학교폭력 가해-피해 중복경험 청소년의 우울, 공격성, 자기통제력과 가정폭력 경험에 관한 연구", journal:"학교사회복지", authors:"김재엽, 성신명, 김준범", citation:"김재엽, 성신명, 김준범. (2015). 학교폭력 가해-피해 중복경험 청소년의 우울, 공격성, 자기통제력과 가정폭력 경험에 관한 연구. 학교사회복지, 31, 83-109.", doi:"" },
 
   // ── UNDER REVIEW ──
-  { no:null, year:2026, type:"SCIE", isNew:false, status:"review", reviewStage:"Under Review", title:"Where Inflammation Matters: Allostatic Load and Suicide Risk Across the Income Gradient", journal:"Journal of Affective Disorders", authors:"Jheon, J., Kim, J., & Lee, M. S.", citation:"Jheon, J., Kim, J., & Lee, M. S. (under review). Where Inflammation Matters: Allostatic Load and Suicide Risk Across the Income Gradient. Journal of Affective Disorders.", doi:"" },
-  { no:null, year:2026, type:"SCIE", isNew:false, status:"review", reviewStage:"Under Review", title:"ADHD and Depressive Symptoms, Peer and Teacher Relationships, and Suicidality Among Female Adolescents: A Two-Part Analysis of Suicidality Presence and Severity", journal:"Child and Adolescent Psychiatry and Mental Health", authors:"Lee, M. S., Kim, J., Bargiel-Matusiewicz, K., & Kim, T.", citation:"Lee, M. S., Kim, J., Bargiel-Matusiewicz, K., & Kim, T. (under review). ADHD and Depressive Symptoms, Peer and Teacher Relationships, and Suicidality Among Female Adolescents: A Two-Part Analysis of Suicidality Presence and Severity. Child and Adolescent Psychiatry and Mental Health.", doi:"" },
+  { no:null, year:2026, type:"KCI",  isNew:false, status:"review", reviewStage:"Under Review", title:"청소년의 스마트폰 이용유형에 따른 우울과 수면 부족의 관련성: 등급반응모형을 활용한 성별 비교", journal:"청소년복지연구", authors:"이승연, 김준범, 김태호", citation:"이승연, 김준범, 김태호. (under review). 청소년의 스마트폰 이용유형에 따른 우울과 수면 부족의 관련성: 등급반응모형을 활용한 성별 비교. 청소년복지연구.", doi:"" },
+  { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"Resubmitted", title:"Where Inflammation Matters: Allostatic Load and Suicide Risk Across the Income Gradient", journal:"Social Psychiatry and Psychiatric Epidemiology", authors:"Jheon, J., Kim, J., & Lee, M. S.", citation:"Jheon, J., Kim, J., & Lee, M. S. (under review). Where Inflammation Matters: Allostatic Load and Suicide Risk Across the Income Gradient. Social Psychiatry and Psychiatric Epidemiology.", doi:"" },
+  { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"Resubmitted", title:"ADHD and Depressive Symptoms, Peer and Teacher Relationships, and Suicidality Among Female Adolescents: A Two-Part Analysis of Suicidality Presence and Severity", journal:"School Mental Health", authors:"Lee, M. S., Kim, J., Bargiel-Matusiewicz, K., & Kim, T.", citation:"Lee, M. S., Kim, J., Bargiel-Matusiewicz, K., & Kim, T. (under review). ADHD and Depressive Symptoms, Peer and Teacher Relationships, and Suicidality Among Female Adolescents: A Two-Part Analysis of Suicidality Presence and Severity. School Mental Health.", doi:"" },
   { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"Under Review", title:"Family Violence Typologies, Suicide Risk, and Role of Professional Support: A Latent Class Analysis of Korean Adolescents", journal:"Journal of Interpersonal Violence", authors:"Kim, J., Kim, D. H., & Kim, J. Y.", citation:"Kim, J., Kim, D. H., & Kim, J. Y. (under review). Family Violence Typologies, Suicide Risk, and Role of Professional Support: A Latent Class Analysis of Korean Adolescents. Journal of Interpersonal Violence.", doi:"" },
   { no:null, year:2025, type:"SSCI", isNew:false, status:"review", reviewStage:"2nd Round", title:"Exploring the Symptom Comorbidity Structure of PTSD, Depression, and Anxiety in North Korean Refugees: A Network Analysis Approach", journal:"Transcultural Psychiatry", authors:"Kim, J., & Son, S.", citation:"Kim, J., & Son, S. (under review). Exploring the Symptom Comorbidity Structure of PTSD, Depression, and Anxiety in North Korean Refugees. Transcultural Psychiatry.", doi:"" },
   { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"Resubmitted", title:"Sex-Specific Latent Typologies of Self-Harm Behaviors and Their Differential Associations with Suicidality in a National Sample", journal:"Clinical Social Work Journal", authors:"Kim, J., Lee, M. S., Jung, Y., & Kim, J. H.", citation:"Kim, J., Lee, M. S., Jung, Y., & Kim, J. H. (under review). Sex-Specific Latent Typologies of Self-Harm Behaviors. Clinical Social Work Journal.", doi:"" },
   { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"1st Round", title:"The Vicious Cycle of Maltreatment: Reciprocal Relationship between Child Maltreatment and Depression in Children with Disabilities", journal:"Child Abuse Review", authors:"Kim, D. H., & Kim, J.", citation:"Kim, D. H., & Kim, J. (under review). The Vicious Cycle of Maltreatment. Child Abuse Review.", doi:"" },
-  { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"1st Round", title:"The Moderating Role of Sleep Duration in the Link between Child Maltreatment Typology and Adolescent Depression: A Quantile Regression Approach", journal:"Children and Youth Services Review", authors:"Kim, J., Lee, J., & Yi, J.", citation:"Kim, J., Lee, J., & Yi, J. (under review). The Moderating Role of Sleep Duration in the Link between Child Maltreatment Typology and Adolescent Depression. Children and Youth Services Review.", doi:"" },
+  { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"Resubmitted", title:"The Moderating Role of Sleep Duration in the Link between Child Maltreatment Typology and Adolescent Depression: A Quantile Regression Approach", journal:"Child Psychiatry & Human Development", authors:"Kim, J., Lee, J., & Yi, J.", citation:"Kim, J., Lee, J., & Yi, J. (under review). The Moderating Role of Sleep Duration in the Link between Child Maltreatment Typology and Adolescent Depression. Child Psychiatry & Human Development.", doi:"" },
   { no:null, year:2026, type:"KCI",  isNew:false, status:"review", reviewStage:"Under Review", title:"알로스타틱 부하 유형과 사회적 불리에 관한 연구: 국민건강영양조사를 활용한 사회적 결정요인과의 용량-반응 관계를 중심으로", journal:"보건사회연구", authors:"김준범, 김태호, 김정현", citation:"김준범, 김태호, 김정현. (under review). 알로스타틱 부하 유형과 사회적 불리에 관한 연구: 국민건강영양조사를 활용한 사회적 결정요인과의 용량-반응 관계를 중심으로. 보건사회연구.", doi:"" },
   { no:null, year:2026, type:"KCI",  isNew:false, status:"review", reviewStage:"Under Review", title:"아동학대 피해 청소년의 잠재유형과 상담 선호방식에 따른 우울수준 비교: 개인 및 집단별 대면·비대면 상담 유형을 중심으로", journal:"한국사회복지학", authors:"조현진, 김준범, 권영희, 정화영", citation:"조현진, 김준범, 권영희, 정화영. (under review). 아동학대 피해 청소년의 잠재유형과 상담 선호방식에 따른 우울수준 비교: 개인 및 집단별 대면·비대면 상담 유형을 중심으로. 한국사회복지학.", doi:"" },
 
@@ -2075,27 +2076,34 @@ document.querySelectorAll('.tr, .nc').forEach((el, i) => {
       ' <em>' + p.journal + '</em>';
   });
 
-  /* 7. Scroll reveal: header rises, then items stagger in */
+  /* 7. Scroll reveal (per item): each header/item rises when IT enters the viewport.
+     Items entering together are staggered. Works for very long sections (Publications)
+     and for rows re-rendered by the filter buttons. */
   if (reduce || !('IntersectionObserver' in window)) return;
-  var ITEM_SEL = '.nc, .field-slider, .lab-life-tabs, .pub-filters, .pr, .pr-yeardiv, .tr, .award-item, .project-item, .subsection-label, .gallery-group, .edu-item';
-  var secs = document.querySelectorAll('.sw');
-  secs.forEach(function(sec){
-    sec.classList.add('reveal');
-    var items = sec.querySelectorAll(ITEM_SEL);
-    var i = 0;
-    items.forEach(function(el){
-      if (el.parentElement.closest('.ri')) return;
-      el.classList.add('ri');
-      el.style.transitionDelay = (0.18 + Math.min(i, 12) * 0.07) + 's';
-      i++;
+  var ITEM_SEL = '.nc, .field-slider, .lab-life-tabs, .pr, .pr-yeardiv, .tr, .award-item, .project-item, .subsection-label, .gallery-group';
+  var ro = new IntersectionObserver(function(es){
+    var k = 0;
+    es.forEach(function(e){
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      el.style.transitionDelay = (Math.min(k, 8) * 0.07) + 's';
+      el.classList.add('in'); ro.unobserve(el); k++;
+      setTimeout(function(){ el.style.transitionDelay = ''; }, 1600);
     });
+  }, { threshold: 0, rootMargin: '0px 0px -6% 0px' });
+  function tag(root){
+    root.querySelectorAll(ITEM_SEL).forEach(function(el){
+      if (el.classList.contains('ri')) return;
+      if (el.parentElement && el.parentElement.closest('.ri')) return;
+      el.classList.add('ri'); ro.observe(el);
+    });
+  }
+  document.querySelectorAll('.sw').forEach(function(sec){
+    sec.classList.add('reveal');
+    var h = sec.querySelector('.sh'); if (h) ro.observe(h);
+    tag(sec);
+    new MutationObserver(function(){ tag(sec); }).observe(sec, { childList: true, subtree: true });
   });
-  var ro = new IntersectionObserver(function(es){ es.forEach(function(e){
-    if (e.isIntersecting) {
-      e.target.classList.add('in'); ro.unobserve(e.target);
-      setTimeout(function(){ e.target.querySelectorAll('.ri').forEach(function(el){ el.style.transitionDelay = ''; }); }, 2200);
-    } }); }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-  secs.forEach(function(s){ ro.observe(s); });
 })();
 </script>
 </body>
