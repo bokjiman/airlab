@@ -393,11 +393,11 @@ function renderFilters(){
   bar.innerHTML = `<button class="filter-pill${active==='all'?' active':''}" onclick="setTheme('all')">전체<span class="fp-n">${REVIEWS.length}</span></button>` +
     THEMES.map(t => `<button class="filter-pill${active===t.id?' active':''}" onclick="setTheme('${t.id}')">${t.ko}<span class="fp-n">${count(t.id)}</span></button>`).join('');
 }
-function card(r){
+function card(r, showTheme){
   const t = T[r.theme] || THEMES[0];
   return `<a class="jc-card${r.coming?' coming':''}" style="--tc:${t.color}" href="${r.href}">
       <div class="jc-top">
-        <span class="jc-venue">${method(r.venue)}</span>
+        <span class="jc-venue">${showTheme ? t.ko + ' · ' : ''}${method(r.venue)}</span>
         ${r.isNew ? '<span class="jc-badge">New</span>' : `<span class="jc-date">${r.date || ''}</span>`}
       </div>
       <div class="jc-title">${r.title}</div>
@@ -406,8 +406,17 @@ function card(r){
       <div class="jc-cta">${r.coming ? 'Coming soon' : '리뷰 열기'}</div>
     </a>`;
 }
+function byNewest(a, b){ return String(b.date || '').localeCompare(String(a.date || '')); }
 function renderSections(){
-  const list = active === 'all' ? THEMES : THEMES.filter(t => t.id === active);
+  if (active === 'all') {
+    const items = REVIEWS.map((r, i) => ({ r, i })).sort((x, y) => byNewest(x.r, y.r) || x.i - y.i).map(x => x.r);
+    wrap.innerHTML = `<section class="jc-sec" style="--tc:var(--sky-deep)">
+      <div class="jc-sec-head"><span class="bar"></span><h2>전체 리뷰</h2><span class="en">Latest first</span><span class="n">${items.length}편 · 최신순</span></div>
+      <div class="jc-grid">${items.map(r => card(r, true)).join('')}</div>
+    </section>`;
+    return;
+  }
+  const list = THEMES.filter(t => t.id === active);
   wrap.innerHTML = list.map(t => {
     const items = REVIEWS.filter(r => r.theme === t.id);
     if (!items.length) return '';
