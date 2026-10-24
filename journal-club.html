@@ -97,6 +97,34 @@ footer { max-width:1200px; margin:0 auto; padding:3rem 2.5rem; display:grid; gri
   .page-head p{color:#d2e0ec!important}
   .filter-bar{padding-top:2.2rem!important}
   .jc-venue{color:#2d7d78!important}
+
+/* ════════ Journal Club: themed layout ════════ */
+.theme-overview { max-width:1200px; margin:0 auto; padding:2.4rem 2.5rem 0.4rem; display:grid; grid-template-columns:repeat(5,1fr); gap:0.8rem; }
+.th-tile { text-align:left; font-family:var(--font-text); background:#fff; border:1px solid var(--rule); border-top:3px solid var(--tc); border-radius:var(--r-md); padding:1rem 1rem 0.95rem; cursor:pointer; transition:box-shadow .18s, transform .18s, background .18s; display:flex; flex-direction:column; gap:0.35rem; }
+.th-tile:hover { box-shadow:var(--shadow-card); transform:translateY(-2px); }
+.th-tile.on { background:color-mix(in srgb, var(--tc) 7%, #fff); box-shadow:0 0 0 1.5px var(--tc) inset; }
+.th-tile .th-ico { width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center; color:var(--tc); background:color-mix(in srgb, var(--tc) 12%, #fff); }
+.th-tile .th-ico svg { width:17px; height:17px; }
+.th-tile .th-ko { font-family:var(--font-display); font-weight:700; font-size:0.95rem; color:var(--black); letter-spacing:-0.01em; line-height:1.3; }
+.th-tile .th-en { font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--tc); font-weight:700; }
+.th-tile .th-desc { font-size:0.76rem; color:var(--mid); line-height:1.55; }
+.th-tile .th-n { margin-top:auto; padding-top:0.4rem; font-size:0.72rem; font-weight:700; color:var(--tc); }
+.filter-bar { padding-top:1.6rem !important; }
+.filter-pill .fp-n { opacity:.6; margin-left:.3rem; font-weight:600; }
+.jc-sections { max-width:1200px; margin:0 auto; padding:0 2.5rem 6rem; }
+.jc-sec { margin-top:2.6rem; scroll-margin-top:70px; }
+.jc-sec:first-child { margin-top:0.6rem; }
+.jc-sec-head { display:flex; align-items:baseline; gap:0.75rem; flex-wrap:wrap; padding-bottom:0.8rem; margin-bottom:1.1rem; border-bottom:1px solid var(--rule); }
+.jc-sec-head .bar { width:5px; height:1.3rem; border-radius:3px; background:var(--tc); align-self:center; }
+.jc-sec-head h2 { font-family:var(--font-display); font-size:1.35rem; font-weight:700; letter-spacing:-0.02em; color:var(--black); }
+.jc-sec-head .en { font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; font-weight:700; color:var(--tc); }
+.jc-sec-head .n { margin-left:auto; font-size:0.74rem; color:var(--light); font-weight:600; }
+.jc-sec-desc { font-size:0.86rem; color:var(--mid); margin:-0.4rem 0 1.1rem; line-height:1.65; }
+.jc-sections .jc-grid { max-width:none; margin:0; padding:0; }
+.jc-card { border-left:3px solid var(--tc) !important; }
+.jc-card .jc-venue { color:var(--tc) !important; }
+@media (max-width:1024px) { .theme-overview { grid-template-columns:repeat(3,1fr); } }
+@media (max-width:640px) { .theme-overview { grid-template-columns:1fr 1fr; padding:2rem 1.5rem 0; } .jc-sections { padding:0 1.5rem 4rem; } .th-tile .th-desc { display:none; } }
 </style>
 </head>
 <body>
@@ -128,9 +156,11 @@ footer { max-width:1200px; margin:0 auto; padding:3rem 2.5rem; display:grid; gri
   <p>대학원 세미나에서 함께 읽은 논문들의 심층 리뷰입니다. 각 리뷰는 원문의 핵심 주장·방법·그림을 한글로 재구성하고, 우리 연구와의 연결점까지 정리했습니다.</p>
 </div>
 
+<div class="theme-overview" id="themeOverview"></div>
+
 <div class="filter-bar" id="filterBar"></div>
 
-<div class="jc-grid" id="jcGrid"></div>
+<div class="jc-sections" id="jcSections"></div>
 
 <div class="footer-wrap">
   <footer>
@@ -154,6 +184,39 @@ footer { max-width:1200px; margin:0 auto; padding:3rem 2.5rem; display:grid; gri
 /* 리뷰 추가: 아래 REVIEWS 배열에 객체 하나만 추가하면 카드가 자동 생성됩니다. */
 const REVIEWS = [
   {
+    title: "Luo & Li (2026)",
+    titleKo: "역경을 세지 말고 구별하라: 어떤 상처에는 어떤 버팀목이 맞는가",
+    venue: "ACEs · Empirical",
+    journal: "The British Journal of Social Work (SSCI)",
+    date: "2026.10",
+    desc: "아동기 역경을 몇 개 겪었는지 세는 대신, 어떤 역경이 함께 묶이는지를 잠재계층분석으로 찾고 노년기 건강을 여섯 영역의 궤적으로 그립니다. 성인기의 배우자 관계와 일이 역경의 종류에 따라 다르게 보호한다는 'matching principle'을 제안합니다.",
+    href: "journal/luo-2026.html",
+    theme: "ace",
+    isNew: true
+  },
+  {
+    title: "Porter & Handley (2026)",
+    titleKo: "역경은 상처만 남기는가, 환경에 맞춘 기술도 남기는가",
+    venue: "Adversity · Systematic Review",
+    journal: "Development and Psychopathology (SSCI)",
+    date: "2026.10",
+    desc: "아동기 역경 연구를 지배해 온 결손 모델에 맞서, 역경 경험자의 '숨은 재능(hidden talents)' 틀을 경험적으로 점검한 첫 체계적 문헌고찰입니다. 저자들 스스로 'promising yet mixed'라고 결론 내린 근거의 범위와 한계를 함께 읽습니다.",
+    href: "journal/porter-2026.html",
+    theme: "protect",
+    isNew: true
+  },
+  {
+    title: "Leotti et al. (2026)",
+    titleKo: "돌봄의 언어는 무엇을 하는가: 외상기반 실천이 클라이언트와 사회복지사를 만들어내는 방식",
+    venue: "Trauma-Informed Care · Discourse",
+    journal: "The British Journal of Social Work (SSCI)",
+    date: "2026.10",
+    desc: "외상기반 실천(TIC)이 효과가 있는가가 아니라, TIC라는 말이 사회복지 문헌 안에서 무엇을 하는가를 묻는 비판적 담론분석입니다. 누구를 취약한 사람으로, 누구를 전문가로 세우는지, 그 과정에서 무엇이 보이지 않게 되는지를 따라갑니다.",
+    href: "journal/leotti-2026.html",
+    theme: "tic",
+    isNew: true
+  },
+  {
     title: "Noam-Rosenthal et al. (2026)",
     titleKo: "보호요인 목록을 넘어, 아이가 직접 말하는 좋은 어린 시절",
     venue: "BCEs · Qualitative",
@@ -161,6 +224,7 @@ const REVIEWS = [
     date: "2026.10",
     desc: "성인의 회고로 만들어진 BCEs(Benevolent Childhood Experiences) 척도를 11~14세 아동에게 직접 보여 주고, '무엇이 좋은 어린 시절을 만드는가'를 아이들의 언어로 다시 정의한 연구입니다. 결과는 자기(the self)와 관계라는 두 주제로 정리됩니다.",
     href: "journal/noam-rosenthal-2026.html",
+    theme: "protect",
     isNew: true
   },
   {
@@ -171,6 +235,7 @@ const REVIEWS = [
     date: "2026.10",
     desc: "아동보호 사회복지사의 이직을 인력 관리의 문제가 아니라 아동 보호(safeguarding)의 문제로 다시 정의합니다. 보호종료 청년, 부모, 위탁부모, 옹호단체의 경험을 바탕으로 정리한 CARERS 프레임워크를 따라갑니다.",
     href: "journal/maclochlainn-2026.html",
+    theme: "practice",
     isNew: true
   },
   {
@@ -181,6 +246,7 @@ const REVIEWS = [
     date: "2026.09",
     desc: "벨기에 플랑드르 아동보호 실천가 대다수는 이론을 쓴다고 답했지만, 빈곤·불평등·정책을 다루는 사회적·구조적 이론을 언급한 비율은 5.1%에 그쳤습니다. '실천이 이론에서 멀어졌다'는 탄식을 '특정 종류의 이론에서만 멀어졌다'는 명제로 바꾸고, 그 분포를 제도적 기제로 설명하는 논문입니다.",
     href: "journal/oorlynck-2026.html",
+    theme: "practice",
     isNew: true
   },
   {
@@ -191,6 +257,7 @@ const REVIEWS = [
     date: "2026.09",
     desc: "캐나다 전국 표본(n = 8,967)에서 아동기 역경, 현재 스트레스, 사회적 관계 같은 맥락 변수와 웰빙을 증상과 함께 하나의 네트워크에 넣은 person-context 네트워크 분석입니다. 역경이 어떤 경로로 정신건강에 닿는지, 횡단 편상관이 어디까지 말할 수 있는지를 함께 읽습니다.",
     href: "journal/sloss-2026.html",
+    theme: "ace",
     isNew: true
   },
   {
@@ -201,6 +268,7 @@ const REVIEWS = [
     date: "2026.09",
     desc: "288편의 문헌을 통합해 트라우마 기반 돌봄(TIC)의 현대적 정의·가치·모델·프레임워크를 제시한 통합적 리뷰입니다. 정신건강, 교육, 아동가족서비스, 사법, 노인돌봄 현장을 가로지르는 공통 언어와 그 방법적 한계를 함께 봅니다.",
     href: "journal/macrae-2026.html",
+    theme: "tic",
     isNew: true
   },
   {
@@ -211,6 +279,7 @@ const REVIEWS = [
     date: "2026.09",
     desc: "염증과 대사 이상이 함께 나타나는 '면역대사 우울(immuno-metabolic depression)' 아형을 개념에서 실제 적용까지 정리한 리뷰입니다. 하나의 우울증 진단 안에 서로 다른 생물학적 경로가 있다는 관점과 그 임상적 함의를 따라갑니다.",
     href: "journal/penninx-2025.html",
+    theme: "bio",
     isNew: true
   },
   {
@@ -221,6 +290,7 @@ const REVIEWS = [
     date: "2026.08",
     desc: "아동기 역경을 몇 개의 사건이 있었는지로 세는 방식의 개념적·방법론적 한계를 짚고, 같은 사건도 아동이 부여하는 의미와 발달 맥락에 따라 다른 결과를 낳는다는 관점을 제안합니다. ACEs 연구 설계를 근본에서 다시 보게 하는 리뷰입니다.",
     href: "journal/pollak-2026.html",
+    theme: "ace",
     isNew: true
   },
   {
@@ -231,6 +301,7 @@ const REVIEWS = [
     date: "2026.08",
     desc: "정신건강 서비스 이용을 계획된 행동이론(TPB)에 기반해 태도·규범·통제감이 의도를 거쳐 실제 이용으로 이어지는 통합 모델(IBM-HS)로 정리합니다. 도움추구를 왜/언제 하는지 개입 지점을 짚어주는 이론 논문입니다.",
     href: "journal/hammer-2024.html",
+    theme: "practice",
     isNew: true
   },
   {
@@ -241,6 +312,7 @@ const REVIEWS = [
     date: "2026.07",
     desc: "아동기 외상(CT)의 흔적은 특정 진단명에 갇히지 않고 분자·신경생물·심리사회·행동 네 층위에 동시에 남아 정신질환과 신체질환을 함께 만든다. modality를 가로지르는(transdiagnostic) 통합 경로를, 원문 Figure 1~2와 절별 '쉽게 풀면' 요약으로 따라갑니다.",
     href: "journal/pasteuning-2025.html",
+    theme: "ace",
     isNew: true
   },
   {
@@ -251,6 +323,7 @@ const REVIEWS = [
     date: "2026.07",
     desc: "자살행동은 진단과 별개로 신경염증이라는 생물학적 취약성을 가진다. 부검 증거(OFC·미세아교세포)부터 IDO–키뉴레닌–NMDA 경로, 그리고 '사회적 거절 = 염증'이라는 새로운 각도까지, 187편을 종합한 모델을 원문 Figure 2 한글 재구성 도식과 함께 정리했습니다.",
     href: "journal/courtet-2016.html",
+    theme: "bio",
     isNew: true
   },
   {
@@ -261,6 +334,7 @@ const REVIEWS = [
     date: "2026.07",
     desc: "역경·정신병리 차원 모델(DMAP)은 방임을 박탈로, 학대를 위협으로 나눕니다. 이 논문은 그 이분법에 발달의 시간축을 더해 순서를 뒤집습니다. 생애 초기에는 돌봄의 부재 자체가 가장 절박한 위협이라는 주장을, MIND 코호트(모–영아 181쌍, 영아 뇌 MRI 57건)와 원문 Figure 1~7로 따라갑니다.",
     href: "journal/LyonsRuth-2025.html",
+    theme: "ace",
     isNew: true
   },
   {
@@ -271,41 +345,85 @@ const REVIEWS = [
     date: "2026.07",
     desc: "기술이용과 수면의 관계는 양방향이며 조절요인에 따라 조건적이다. 핵심 질문은 how much가 아니라 for whom·which mechanisms라는 이론적 리뷰를, 원문 그림과 명문장, 그리고 우리 스마트폰-수면-우울 연구와의 연결점까지 정리했습니다.",
     href: "journal/bauducco-2024.html",
+    theme: "bio",
     isNew: true
   }
 ];
 
-const grid = document.getElementById('jcGrid');
+/* 주제(theme) 정의: 새 리뷰는 REVIEWS에 theme 키(ace/protect/tic/practice/bio)만 넣으면 자동 분류됩니다. */
+const ICON = {
+  ace: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg>',
+  protect: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M12 10c0-3 2-5.5 6-6-.2 4-2.6 6-6 6z"/><path d="M12 13c0-2.6-1.8-4.6-5-5 .2 3.3 2.2 5 5 5z"/></svg>',
+  tic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg>',
+  practice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.4"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M14.5 20a4 4 0 0 1 6.5-3.1"/></svg>',
+  bio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4c0 4 6 4 6 8s-6 4-6 8"/><path d="M15 4c0 4-6 4-6 8s6 4 6 8"/><path d="M9.5 8h5M9.5 16h5"/></svg>'
+};
+const THEMES = [
+  { id:'ace', ko:'아동기 역경과 발달', en:'ACEs & Early Adversity', color:'#1f4e79',
+    desc:'아동기 역경을 어떻게 개념화하고 측정할 것인가, 그리고 그 흔적이 발달과 건강에 어떤 경로로 남는가.' },
+  { id:'protect', ko:'보호요인과 회복', en:'BCEs & Resilience', color:'#2f8f84',
+    desc:'결손의 시선에서 벗어나 긍정적 아동기 경험(BCEs), 숨은 재능, 회복을 만드는 조건을 묻는다.' },
+  { id:'tic', ko:'트라우마 기반 실천', en:'Trauma-Informed Care', color:'#2d6a9f',
+    desc:'트라우마 기반 실천(TIC)은 무엇이며, 그 언어가 현장에서 무엇을 하는가.' },
+  { id:'practice', ko:'아동보호와 사회복지 실천', en:'Child Welfare & Practice', color:'#8a6a2f',
+    desc:'아동보호 인력, 실천 이론, 서비스 이용(도움추구)까지, 제도와 현장의 문제.' },
+  { id:'bio', ko:'정신건강의 생물학적 경로', en:'Biological Pathways', color:'#6b5aa0',
+    desc:'염증, 면역대사, 수면처럼 마음의 고통이 몸에 새겨지는 기제.' }
+];
+const T = Object.fromEntries(THEMES.map(t => [t.id, t]));
+const ov = document.getElementById('themeOverview');
 const bar = document.getElementById('filterBar');
-const cats = ['All', ...new Set(REVIEWS.map(r => r.venue))];
-let activeCat = 'All';
+const wrap = document.getElementById('jcSections');
+let active = 'all';
 
-function renderFilters() {
-  bar.innerHTML = cats.map(c =>
-    `<button class="filter-pill${c === activeCat ? ' active' : ''}" onclick="setCat('${c}')">${c}</button>`
-  ).join('');
+function count(id){ return REVIEWS.filter(r => r.theme === id).length; }
+function method(v){ const p = (v || '').split('·'); return (p[1] || p[0] || '').trim(); }
+
+function renderOverview(){
+  ov.innerHTML = THEMES.map(t => `
+    <button class="th-tile${active===t.id?' on':''}" style="--tc:${t.color}" onclick="setTheme('${t.id}', true)">
+      <span class="th-ico">${ICON[t.id]}</span>
+      <span class="th-en">${t.en}</span>
+      <span class="th-ko">${t.ko}</span>
+      <span class="th-desc">${t.desc}</span>
+      <span class="th-n">${count(t.id)}편 →</span>
+    </button>`).join('');
 }
-function setCat(c) { activeCat = c; renderFilters(); renderGrid(); }
-
-function renderGrid() {
-  const list = REVIEWS.filter(r => activeCat === 'All' || r.venue === activeCat);
-  if (!list.length) { grid.innerHTML = '<div class="grid-empty">이 분류의 리뷰가 아직 없습니다.</div>'; return; }
-  grid.innerHTML = list.map(r => `
-    <a class="jc-card${r.coming ? ' coming' : ''}" href="${r.href}">
+function renderFilters(){
+  bar.innerHTML = `<button class="filter-pill${active==='all'?' active':''}" onclick="setTheme('all')">전체<span class="fp-n">${REVIEWS.length}</span></button>` +
+    THEMES.map(t => `<button class="filter-pill${active===t.id?' active':''}" onclick="setTheme('${t.id}')">${t.ko}<span class="fp-n">${count(t.id)}</span></button>`).join('');
+}
+function card(r){
+  const t = T[r.theme] || THEMES[0];
+  return `<a class="jc-card${r.coming?' coming':''}" style="--tc:${t.color}" href="${r.href}">
       <div class="jc-top">
-        <span class="jc-venue">${r.venue}</span>
+        <span class="jc-venue">${method(r.venue)}</span>
         ${r.isNew ? '<span class="jc-badge">New</span>' : `<span class="jc-date">${r.date || ''}</span>`}
       </div>
       <div class="jc-title">${r.title}</div>
       <div class="jc-title-ko">${r.titleKo}</div>
       <div class="jc-desc">${r.desc}<br><span style="color:var(--xlight);font-size:0.8rem;">${r.journal || ''}</span></div>
       <div class="jc-cta">${r.coming ? 'Coming soon' : '리뷰 열기'}</div>
-    </a>
-  `).join('');
+    </a>`;
 }
-
-renderFilters();
-renderGrid();
+function renderSections(){
+  const list = active === 'all' ? THEMES : THEMES.filter(t => t.id === active);
+  wrap.innerHTML = list.map(t => {
+    const items = REVIEWS.filter(r => r.theme === t.id);
+    if (!items.length) return '';
+    return `<section class="jc-sec" id="th-${t.id}" style="--tc:${t.color}">
+      <div class="jc-sec-head"><span class="bar"></span><h2>${t.ko}</h2><span class="en">${t.en}</span><span class="n">${items.length}편</span></div>
+      <p class="jc-sec-desc">${t.desc}</p>
+      <div class="jc-grid">${items.map(card).join('')}</div>
+    </section>`;
+  }).join('') || '<div class="grid-empty">이 분류의 리뷰가 아직 없습니다.</div>';
+}
+function setTheme(id, scroll){
+  active = (scroll && active === id) ? 'all' : id;
+  renderOverview(); renderFilters(); renderSections();
+  if (scroll) bar.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+renderOverview(); renderFilters(); renderSections();
 </script>
 
 </body>

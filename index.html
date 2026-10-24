@@ -627,7 +627,7 @@ a.nc-link:hover .nc-go::after { transform: translateX(4px); }
 }
 
 /* Thumbnail strip */
-.field-thumbs { display: flex; gap: 8px; margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+.field-thumbs { display: flex; gap: 8px; margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--rule); overflow-x: auto; scrollbar-width: thin; padding-bottom: 4px; }
 .field-thumb {
   width: 58px; height: 44px; overflow: hidden; border-radius: var(--r-sm);
   border: 2px solid transparent; cursor: pointer;
@@ -1099,12 +1099,44 @@ footer {
     <!-- Slider -->
     <div class="field-slider" id="fieldSlider">
       <div class="field-photo-corner"><span class="c1"></span><span class="c2"></span></div>
-      <div class="field-counter" id="fieldCounter">1 / 9</div>
+      <div class="field-counter" id="fieldCounter">1 / 17</div>
       <div class="field-slides" id="fieldSlides">
+
+        <div class="field-slide">
+          <img src="images/lab_knpa2026fall_05_award.jpg" alt="김태호 선생님과 함께 우수포스터상 수상 포스터 앞에서">
+        </div>
+
+        <div class="field-slide">
+          <img src="images/knpa2026fall_award_poster.jpg" alt="우수포스터상 수상 포스터">
+        </div>
+
+        <div class="field-slide">
+          <img src="images/lab_knpa2026fall_01_sumteo.jpg" alt="정신건강 동아리 숨터 학부생들과 포스터 앞에서">
+        </div>
+
+        <div class="field-slide">
+          <img src="images/lab_knpa2026fall_02_grads_pi.jpg" alt="AIR Lab 대학원생들과 포스터 앞에서">
+        </div>
+
+        <div class="field-slide">
+          <img src="images/lab_knpa2026fall_03_grads.jpg" alt="AIR Lab 대학원생 연구원 다섯 명">
+        </div>
+
+        <div class="field-slide">
+          <img src="images/lab_knpa2026fall_04_cbnu.jpg" alt="충북대학교 학생들과 다 함께">
+        </div>
+
+        <div class="field-slide">
+          <img src="images/lab_knpa2026fall_06_ncsw_poster.jpg" alt="Neurobiology for Clinical Social Work 연구팀 포스터 앞에서">
+        </div>
+
+        <div class="field-slide">
+          <img src="images/lab_knpa2026fall_07_ncsw_stage.jpg" alt="Neurobiology for Clinical Social Work 연구팀 학술대회 무대 앞에서">
+        </div>
 
         <!-- Slide 1 — WIN.jpg (Best Poster Award ceremony, Sept 2026) -->
         <div class="field-slide">
-          <img src="images/WIN.jpg" alt="Best Academic Poster Award ceremony at the 2026 Korean Association for Suicide Prevention conference">
+          <img src="images/WIN3.jpg" alt="Best Academic Poster Award ceremony at the 2026 Korean Association for Suicide Prevention conference">
         </div>
 
         <!-- Slide 2 — WIN1.jpg (award-winning poster) -->
@@ -1159,6 +1191,14 @@ footer {
         <div class="field-dot" onclick="goSlide(6)"></div>
         <div class="field-dot" onclick="goSlide(7)"></div>
         <div class="field-dot" onclick="goSlide(8)"></div>
+        <div class="field-dot" onclick="goSlide(9)"></div>
+        <div class="field-dot" onclick="goSlide(10)"></div>
+        <div class="field-dot" onclick="goSlide(11)"></div>
+        <div class="field-dot" onclick="goSlide(12)"></div>
+        <div class="field-dot" onclick="goSlide(13)"></div>
+        <div class="field-dot" onclick="goSlide(14)"></div>
+        <div class="field-dot" onclick="goSlide(15)"></div>
+        <div class="field-dot" onclick="goSlide(16)"></div>
       </div>
       <!-- Arrow nav -->
       <div class="field-nav">
@@ -1170,24 +1210,32 @@ footer {
     <!-- Caption panel -->
     <div class="field-caption-panel">
       <div class="field-caption-inner" id="fieldCaption">
-        <div class="lab-caption-eyebrow" id="fcEyebrow">🏆 우수 학술포스터상 · Sept 2026</div>
-        <div class="lab-caption-title" id="fcTitle">Best Academic Poster Award, 2026 자살예방종합학술대회</div>
+        <div class="lab-caption-eyebrow" id="fcEyebrow">🏆 우수포스터상 · 2026년 10월</div>
+        <div class="lab-caption-title" id="fcTitle">2026 대한신경정신의학회 추계학술대회 우수포스터상</div>
         <div class="lab-caption-meta" id="fcMeta">
-          <span class="lab-meta-date">September 4, 2026 · 한국자살예방협회</span>
-          한국자살예방협회가 주최한 「2026년도 자살예방종합학술대회」에서 우수 학술포스터로 선정되어 상을 받았습니다. 함께 고생한 이재은, 정화영 연구원에게 고맙습니다.
+          <span class="lab-meta-date">2026년 10월 16~17일 · 대구 호텔 인터불고</span>
+          계명대학교 동산병원 <strong>김태호</strong> 정신건강사회복지사 선생님과 함께. 이번 추계학술대회에서 「Typologies of Allostatic Load and Social Disadvantage」 포스터로 <strong>우수포스터상</strong>을 받았습니다. 축하합니다! 함께한 김태호, 김정현, 김동현 선생님께 감사드립니다.
         </div>
       </div>
       <!-- Thumbnail strip -->
       <div class="field-thumbs" id="fieldThumbs">
-        <div class="field-thumb active" onclick="goSlide(0)"><img src="images/WIN.jpg" alt=""></div>
-        <div class="field-thumb" onclick="goSlide(1)"><img src="images/WIN1.jpg" alt=""></div>
-        <div class="field-thumb" onclick="goSlide(2)"><img src="images/WIN2.jpg" alt=""></div>
-        <div class="field-thumb" onclick="goSlide(3)"><img src="images/lab_teachers_day_2026.jpg" alt=""></div>
-        <div class="field-thumb" onclick="goSlide(4)"><img src="images/lab_dcw_mens_2026.jpg" alt=""></div>
-        <div class="field-thumb" onclick="goSlide(5)"><img src="images/lab_knpa2026.jpg" alt=""></div>
-        <div class="field-thumb" onclick="goSlide(6)"><img src="images/lab_knpa2026_02.jpg" alt=""></div>
-        <div class="field-thumb" onclick="goSlide(7)"><img src="images/lab_knpa2026_03.jpg" alt=""></div>
-        <div class="field-thumb" onclick="goSlide(8)"><img src="images/lab_knpa2026_04.jpg" alt=""></div>
+        <div class="field-thumb active" onclick="goSlide(0)"><img src="images/lab_knpa2026fall_05_award.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(1)"><img src="images/knpa2026fall_award_poster.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(2)"><img src="images/lab_knpa2026fall_01_sumteo.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(3)"><img src="images/lab_knpa2026fall_02_grads_pi.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(4)"><img src="images/lab_knpa2026fall_03_grads.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(5)"><img src="images/lab_knpa2026fall_04_cbnu.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(6)"><img src="images/lab_knpa2026fall_06_ncsw_poster.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(7)"><img src="images/lab_knpa2026fall_07_ncsw_stage.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(8)"><img src="images/WIN3.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(9)"><img src="images/WIN1.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(10)"><img src="images/WIN2.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(11)"><img src="images/lab_teachers_day_2026.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(12)"><img src="images/lab_dcw_mens_2026.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(13)"><img src="images/lab_knpa2026.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(14)"><img src="images/lab_knpa2026_02.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(15)"><img src="images/lab_knpa2026_03.jpg" alt=""></div>
+        <div class="field-thumb" onclick="goSlide(16)"><img src="images/lab_knpa2026_04.jpg" alt=""></div>
       </div>
     </div>
   </div><!-- /field-gallery -->
@@ -1197,8 +1245,40 @@ footer {
   <div class="lab-life-panel" id="panel-minigallery">
     <div class="gallery-grid" style="margin-top:0;">
 
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="2026 대한신경정신의학회 추계학술대회 우수포스터상 · 2026년 10월 16~17일 · 대구 호텔 인터불고 — 계명대학교 동산병원 김태호 정신건강사회복지사 선생님과 함께. 이번 추계학술대회에서 「Typologies of Allostatic Load and Social Disadvantage」 포스터로 우수포스터상을 받았습니다. 축하합니다! 함께한 김태호, 김정현, 김동현 선생님께 감사드립니다.">
+        <img src="images/lab_knpa2026fall_05_award.jpg" alt="김태호 선생님과 함께 우수포스터상 수상 포스터 앞에서">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">🏆 우수포스터상 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="Typologies of Allostatic Load and Social Disadvantage · 2026 대한신경정신의학회 추계학술대회 · P-17 — 알로스타틱 부하(만성 스트레스로 몸에 쌓이는 생리적 부담)를 네 가지 유형으로 나누고, 사회적 불리가 겹칠수록 고위험 유형에 속할 위험이 어떻게 달라지는지 국민건강영양조사(2024)로 분석했습니다. 김준범, 김태호*, 김정현, 김동현.">
+        <img src="images/knpa2026fall_award_poster.jpg" alt="우수포스터상 수상 포스터">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">수상 포스터 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="정신건강 동아리 &#x27;숨터&#x27; 학부생들과 함께 · 2026년 10월 16일 · 대구 호텔 인터불고 — 아동복지학과 정신건강 동아리 &#x27;숨터&#x27; 소속 학부생들과 함께한 추계학술대회. 왼쪽부터 이재국, 이상준, 정수환 학생입니다.">
+        <img src="images/lab_knpa2026fall_01_sumteo.jpg" alt="정신건강 동아리 숨터 학부생들과 포스터 앞에서">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">숨터 학부생들과 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="AIR Lab 대학원생들과 함께 · 2026년 10월 16일 · 대구 호텔 인터불고 — 추계학술대회 포스터 앞에서 AIR Lab 대학원생 네 명과 함께 찍은 사진입니다.">
+        <img src="images/lab_knpa2026fall_02_grads_pi.jpg" alt="AIR Lab 대학원생들과 포스터 앞에서">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">대학원생들과 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="AIR Lab 대학원생 연구원들 · 2026년 10월 16일 · 대구 호텔 인터불고 — 추계학술대회에 함께한 AIR Lab 대학원생 연구원들. 정화영, 이승연, 조현진, 김슬기, 권영희 연구원입니다.">
+        <img src="images/lab_knpa2026fall_03_grads.jpg" alt="AIR Lab 대학원생 연구원 다섯 명">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">AIR Lab 연구원들 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="충북대학교 학생들 모두와 함께 · 2026년 10월 16일 · 대구 호텔 인터불고 — 추계학술대회에 참석한 충북대학교 대학원생, 학부생 모두와 함께 찍은 단체 사진입니다.">
+        <img src="images/lab_knpa2026fall_04_cbnu.jpg" alt="충북대학교 학생들과 다 함께">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">충북대 학생들과 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="Neurobiology for Clinical Social Work 연구팀 · 2026년 10월 17일 · 대구 호텔 인터불고 — 학술대회 둘째 날, Neurobiology for Clinical Social Work 연구팀이 함께했습니다. 김태호 선생님, 김정현 박사님, 전진호 교수님과 함께.">
+        <img src="images/lab_knpa2026fall_06_ncsw_poster.jpg" alt="Neurobiology for Clinical Social Work 연구팀 포스터 앞에서">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">NCSW 연구팀 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="Neurobiology for Clinical Social Work 연구팀 · 2026년 10월 17일 · 대구 호텔 인터불고 — 둘째 날 학술대회장에서. Neurobiology for Clinical Social Work 연구팀의 김태호 선생님, 김정현 박사님, 전진호 교수님과 함께.">
+        <img src="images/lab_knpa2026fall_07_ncsw_stage.jpg" alt="Neurobiology for Clinical Social Work 연구팀 학술대회 무대 앞에서">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">NCSW 연구팀 · 2026.10</div></div>
+      </div>
       <div class="gallery-item" onclick="openLightbox(this)" data-caption="🏆 우수 학술포스터상 · 2026.09.04 — 한국자살예방협회 「2026년도 자살예방종합학술대회」 시상식">
-        <img src="images/WIN.jpg" alt="">
+        <img src="images/WIN3.jpg" alt="">
         <div class="gallery-item-overlay"><div class="gallery-item-caption">🏆 우수 학술포스터상 · Sept 2026</div></div>
       </div>
       <div class="gallery-item" onclick="openLightbox(this)" data-caption="수상 포스터 「닿지 못한 도움, 서로 다른 이유」 · 김준범, 이재은, 정화영">
@@ -1286,6 +1366,13 @@ footer {
 
   <div class="subsection-label">🏅 Awards</div>
   <div>
+    <div class="award-item">
+      <div class="award-date">Oct. 2026</div>
+      <div class="award-body">
+        <div class="award-title">🏆 우수포스터상: 2026년 대한신경정신의학회 추계학술대회</div>
+        <div class="award-org">Typologies of Allostatic Load and Social Disadvantage: A Dose-Response Analysis of Social Determinants Using the Korea National Health and Nutrition Examination Survey · 김준범, 김태호, 김정현, 김동현 (2026. 10. 16~17., 대구)</div>
+      </div>
+    </div>
     <div class="award-item">
       <div class="award-date">Sep. 2026</div>
       <div class="award-body">
@@ -1393,8 +1480,40 @@ footer {
     <div class="gallery-group-title">AIR Lab · Chungbuk National University</div>
     <div class="gallery-group-sub">ACEs-Informed Recovery Lab — students, conferences, and everyday lab life</div>
     <div class="gallery-grid">
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="2026 대한신경정신의학회 추계학술대회 우수포스터상 · 2026년 10월 16~17일 · 대구 호텔 인터불고 — 계명대학교 동산병원 김태호 정신건강사회복지사 선생님과 함께. 이번 추계학술대회에서 「Typologies of Allostatic Load and Social Disadvantage」 포스터로 우수포스터상을 받았습니다. 축하합니다! 함께한 김태호, 김정현, 김동현 선생님께 감사드립니다.">
+        <img src="images/lab_knpa2026fall_05_award.jpg" alt="김태호 선생님과 함께 우수포스터상 수상 포스터 앞에서">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">🏆 우수포스터상 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="Typologies of Allostatic Load and Social Disadvantage · 2026 대한신경정신의학회 추계학술대회 · P-17 — 알로스타틱 부하(만성 스트레스로 몸에 쌓이는 생리적 부담)를 네 가지 유형으로 나누고, 사회적 불리가 겹칠수록 고위험 유형에 속할 위험이 어떻게 달라지는지 국민건강영양조사(2024)로 분석했습니다. 김준범, 김태호*, 김정현, 김동현.">
+        <img src="images/knpa2026fall_award_poster.jpg" alt="우수포스터상 수상 포스터">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">수상 포스터 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="정신건강 동아리 &#x27;숨터&#x27; 학부생들과 함께 · 2026년 10월 16일 · 대구 호텔 인터불고 — 아동복지학과 정신건강 동아리 &#x27;숨터&#x27; 소속 학부생들과 함께한 추계학술대회. 왼쪽부터 이재국, 이상준, 정수환 학생입니다.">
+        <img src="images/lab_knpa2026fall_01_sumteo.jpg" alt="정신건강 동아리 숨터 학부생들과 포스터 앞에서">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">숨터 학부생들과 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="AIR Lab 대학원생들과 함께 · 2026년 10월 16일 · 대구 호텔 인터불고 — 추계학술대회 포스터 앞에서 AIR Lab 대학원생 네 명과 함께 찍은 사진입니다.">
+        <img src="images/lab_knpa2026fall_02_grads_pi.jpg" alt="AIR Lab 대학원생들과 포스터 앞에서">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">대학원생들과 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="AIR Lab 대학원생 연구원들 · 2026년 10월 16일 · 대구 호텔 인터불고 — 추계학술대회에 함께한 AIR Lab 대학원생 연구원들. 정화영, 이승연, 조현진, 김슬기, 권영희 연구원입니다.">
+        <img src="images/lab_knpa2026fall_03_grads.jpg" alt="AIR Lab 대학원생 연구원 다섯 명">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">AIR Lab 연구원들 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="충북대학교 학생들 모두와 함께 · 2026년 10월 16일 · 대구 호텔 인터불고 — 추계학술대회에 참석한 충북대학교 대학원생, 학부생 모두와 함께 찍은 단체 사진입니다.">
+        <img src="images/lab_knpa2026fall_04_cbnu.jpg" alt="충북대학교 학생들과 다 함께">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">충북대 학생들과 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="Neurobiology for Clinical Social Work 연구팀 · 2026년 10월 17일 · 대구 호텔 인터불고 — 학술대회 둘째 날, Neurobiology for Clinical Social Work 연구팀이 함께했습니다. 김태호 선생님, 김정현 박사님, 전진호 교수님과 함께.">
+        <img src="images/lab_knpa2026fall_06_ncsw_poster.jpg" alt="Neurobiology for Clinical Social Work 연구팀 포스터 앞에서">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">NCSW 연구팀 · 2026.10</div></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)" data-caption="Neurobiology for Clinical Social Work 연구팀 · 2026년 10월 17일 · 대구 호텔 인터불고 — 둘째 날 학술대회장에서. Neurobiology for Clinical Social Work 연구팀의 김태호 선생님, 김정현 박사님, 전진호 교수님과 함께.">
+        <img src="images/lab_knpa2026fall_07_ncsw_stage.jpg" alt="Neurobiology for Clinical Social Work 연구팀 학술대회 무대 앞에서">
+        <div class="gallery-item-overlay"><div class="gallery-item-caption">NCSW 연구팀 · 2026.10</div></div>
+      </div>
       <div class="gallery-item" onclick="openLightbox(this)" data-caption="🏆 우수 학술포스터상 · 2026.09.04 — 한국자살예방협회가 주최한 「2026년도 자살예방종합학술대회」에서 우수 학술포스터로 선정되어 상을 받았습니다.">
-        <img src="images/WIN.jpg" alt="Best Academic Poster Award ceremony, September 2026">
+        <img src="images/WIN3.jpg" alt="Best Academic Poster Award ceremony, September 2026">
         <div class="gallery-item-overlay"><div class="gallery-item-caption">🏆 우수 학술포스터상 · Sept 2026</div></div>
       </div>
       <div class="gallery-item" onclick="openLightbox(this)" data-caption="수상 포스터 「닿지 못한 도움, 서로 다른 이유」 — 성별에 따라 자살위험 청소년이 정신건강 서비스에 닿지 못하는 이유를 살펴본 연구 (김준범, 이재은, 정화영)">
@@ -1541,6 +1660,7 @@ footer {
 
 <script>
 const NEWS_DATA = [
+  { date:"2026.10.17", type:"bigaward", featured:true, title:"🏆 우수포스터상 수상", body:"2026년 대한신경정신의학회 추계학술대회에서 우수포스터상을 받았습니다. 계명대학교 동산병원 김태호 선생님, 김정현 박사님, 김동현 선생님과 함께한 연구입니다. 축하합니다!", sub:"Typologies of Allostatic Load and Social Disadvantage: A Dose-Response Analysis of Social Determinants Using the KNHANES · 김준범, 김태호, 김정현, 김동현 · 2026년 10월 16~17일, 대구" },
   { date:"2026.09.04", type:"bigaward", featured:true, title:"🏆 우수 학술포스터상 수상", body:"한국자살예방협회가 주최한 「2026년도 자살예방종합학술대회」에서 우수 학술포스터로 선정되어 수상했습니다.", sub:"닿지 못한 도움, 서로 다른 이유 · 김준범, 이재은, 정화영 · 2026년 9월 4일" },
   { date:"2026.08", type:"paper", title:"New Publication (KCI)", body:"누가 주도하고, 가담하며, 방어하고, 회피하는가: 학교폭력 참여 역할의 복합성과 관계적 영향요인 분석", sub:"청소년학연구, 33(8), 69-97." },
     { date:"2026.07",    type:"study",   featured:true, title:"📊 Statistics 페이지 개설", body:"함께 공부해요! 통계 방법론을 직접 클릭하며 배우는 인터랙티브 학습 페이지를 새로 열었습니다.", link:"statistics.html" },
@@ -1819,6 +1939,54 @@ function fp(type, btn) {
 // ── FIELD GALLERY SLIDER ──
 const SLIDE_CAPTIONS = [
   {
+    eyebrow: "🏆 우수포스터상 · 2026년 10월",
+    title: "2026 대한신경정신의학회 추계학술대회 우수포스터상",
+    date: "2026년 10월 16~17일 · 대구 호텔 인터불고",
+    body: `계명대학교 동산병원 <strong>김태호</strong> 정신건강사회복지사 선생님과 함께. 이번 추계학술대회에서 「Typologies of Allostatic Load and Social Disadvantage」 포스터로 <strong>우수포스터상</strong>을 받았습니다. 축하합니다! 함께한 김태호, 김정현, 김동현 선생님께 감사드립니다.`
+  },
+  {
+    eyebrow: "수상 포스터 · 2026년 10월",
+    title: "Typologies of Allostatic Load and Social Disadvantage",
+    date: "2026 대한신경정신의학회 추계학술대회 · P-17",
+    body: `알로스타틱 부하(만성 스트레스로 몸에 쌓이는 생리적 부담)를 네 가지 유형으로 나누고, 사회적 불리가 겹칠수록 고위험 유형에 속할 위험이 어떻게 달라지는지 국민건강영양조사(2024)로 분석했습니다. 김준범, 김태호*, 김정현, 김동현.`
+  },
+  {
+    eyebrow: "숨터 · 2026년 10월",
+    title: "정신건강 동아리 '숨터' 학부생들과 함께",
+    date: "2026년 10월 16일 · 대구 호텔 인터불고",
+    body: `아동복지학과 정신건강 동아리 <strong>'숨터'</strong> 소속 학부생들과 함께한 추계학술대회. 왼쪽부터 <strong>이재국, 이상준, 정수환</strong> 학생입니다.`
+  },
+  {
+    eyebrow: "AIR Lab · 2026년 10월",
+    title: "AIR Lab 대학원생들과 함께",
+    date: "2026년 10월 16일 · 대구 호텔 인터불고",
+    body: `추계학술대회 포스터 앞에서 AIR Lab 대학원생 네 명과 함께 찍은 사진입니다.`
+  },
+  {
+    eyebrow: "AIR Lab · 2026년 10월",
+    title: "AIR Lab 대학원생 연구원들",
+    date: "2026년 10월 16일 · 대구 호텔 인터불고",
+    body: `추계학술대회에 함께한 AIR Lab 대학원생 연구원들. <strong>정화영, 이승연, 조현진, 김슬기, 권영희</strong> 연구원입니다.`
+  },
+  {
+    eyebrow: "충북대학교 · 2026년 10월",
+    title: "충북대학교 학생들 모두와 함께",
+    date: "2026년 10월 16일 · 대구 호텔 인터불고",
+    body: `추계학술대회에 참석한 충북대학교 대학원생, 학부생 모두와 함께 찍은 단체 사진입니다.`
+  },
+  {
+    eyebrow: "연구팀 · 2026년 10월",
+    title: "Neurobiology for Clinical Social Work 연구팀",
+    date: "2026년 10월 17일 · 대구 호텔 인터불고",
+    body: `학술대회 둘째 날, <strong>Neurobiology for Clinical Social Work 연구팀</strong>이 함께했습니다. 김태호 선생님, 김정현 박사님, 전진호 교수님과 함께.`
+  },
+  {
+    eyebrow: "연구팀 · 2026년 10월",
+    title: "Neurobiology for Clinical Social Work 연구팀",
+    date: "2026년 10월 17일 · 대구 호텔 인터불고",
+    body: `둘째 날 학술대회장에서. <strong>Neurobiology for Clinical Social Work 연구팀</strong>의 김태호 선생님, 김정현 박사님, 전진호 교수님과 함께.`
+  },
+  {
     eyebrow: "🏆 우수 학술포스터상 · Sept 2026",
     title: "Best Academic Poster Award, 2026 자살예방종합학술대회",
     date: "September 4, 2026 · 한국자살예방협회",
@@ -1887,6 +2055,8 @@ function goSlide(n) {
   document.querySelectorAll('.field-dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
   // Update thumbs
   document.querySelectorAll('.field-thumb').forEach((t, i) => t.classList.toggle('active', i === currentSlide));
+  const _at = document.querySelectorAll('.field-thumb')[currentSlide];
+  if (_at && _at.parentElement) { const p = _at.parentElement; p.scrollTo({ left: _at.offsetLeft - p.offsetLeft - p.clientWidth / 2 + _at.clientWidth / 2, behavior: 'smooth' }); }
 
   // Update caption with fade
   const cap = SLIDE_CAPTIONS[currentSlide];
