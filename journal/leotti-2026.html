@@ -1,0 +1,1365 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TIC 담론 읽기</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+  /* ════════ AIR Lab theme: navy → recovery-teal (synced with index) ════════ */
+  :root{ --sky:#2d6a9f; --sky-deep:#1f4e79; --sky-bright:#7fa9d1; --sky-soft:#e9eff6; --sky-soft2:#f4f7fb; --sky-soft-2:#f4f7fb; --mint:#3a9a8f; --mint-soft:#eaf5f2; --hover-bg:#eef3f9; }
+  .stripe{background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+  .stripe span{background:transparent!important}
+  .nav-logo-dot .d3{background:#3a9a8f}
+  .hero{isolation:isolate}
+  .hero::before{background:radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%), linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%)!important}
+  .overline{color:#9fd3ca!important}
+  .overline::before{background:#8cc7bd!important}
+  .hero h1{color:#fff!important}
+  .hero h1 em{color:#bfe6df!important}
+  .hero .citation{color:#b7c9da!important;border-left-color:#8cc7bd!important}
+  .hero .citation em{color:#d6e5f2!important}
+  .hero .citation a{color:#bfe6df!important}
+  .hero .subtitle{color:#d2e0ec!important}
+  .hero .subtitle strong,.hero .subtitle b{color:#fff!important}
+  .hero .subtitle em{color:#bfe6df}
+  .hero .stat{background:rgba(255,255,255,0.08)!important;border-color:rgba(255,255,255,0.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .hero .stat .num{color:#fff!important}
+  .hero .stat .lbl{color:#a9c1d6!important}
+  .paper-meta,.condition-header{background:linear-gradient(120deg,#1c4a73 0%,#22655f 100%)!important}
+  .section-num{background:linear-gradient(120deg,#1f4e79 0%,#2d7d78 100%)!important}
+</style>
+</head>
+<body id="top">
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">배경</a></li>
+      <li><a href="#method">이론·방법</a></li>
+      <li><a href="#subjects">발견 1 주체성</a></li>
+      <li><a href="#governance">발견 2 통치</a></li>
+      <li><a href="#discussion">논의</a></li>
+      <li><a href="#limits">읽기의 한계</a></li>
+      <li><a href="#phrases">명문장</a></li>
+      <li><a href="#ourstudy">우리 연구</a></li>
+      <li><a href="#worksheet">정리</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">Leotti, Wahab &amp; Anderson-Nathe 2026 · Journal Club</div>
+    <h1>돌봄의 언어는 무엇을 하는가: <em>외상기반 실천이 클라이언트와 사회복지사를 만들어내는 방식</em></h1>
+    <div class="citation">Leotti, S. M., Wahab, S., &amp; Anderson-Nathe, B. (2026). The work of trauma-informed care discourse: Constructing clients, workers, and logics of governance. <em>The British Journal of Social Work</em>. Advance online publication. https://doi.org/10.1093/bjsw/bcag078</div>
+    <p class="subtitle">이 논문은 외상기반 실천(trauma-informed care, TIC)이 <strong>효과가 있는가</strong>를 묻지 않습니다. 대신 TIC라는 말이 사회복지 문헌 안에서 <strong>무엇을 하는가</strong>를 묻습니다. 누구를 취약한 사람으로, 누구를 전문가로 세우는지, 그리고 그 과정에서 무엇이 보이지 않게 되는지를 따라가는 비판적 담론분석입니다. 읽을 때에는 저자들의 결론에 동의하는지보다, <strong>“이론의 효과”가 아니라 “이론의 작동”을 분석 대상으로 삼는 연구 설계</strong>가 어떻게 구성되는지에 주목하면 좋습니다.</p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">131편</span><div class="lbl">선행 스코핑 리뷰 문헌 (2012~2022)</div></div>
+      <div class="stat"><span class="num">10편</span><div class="lbl">분석 대상: 최다 인용 TIC 논문</div></div>
+      <div class="stat"><span class="num">7개</span><div class="lbl">Gee의 building tasks</div></div>
+      <div class="stat"><span class="num">3 → 2</span><div class="lbl">담론 주제 3개, 핵심 발견 2개</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>Leotti et al. (2026)</div>
+
+<!-- §01 -->
+<div class="section-head" id="paper">
+  <div class="section-num">01</div>
+  <div class="section-title-block">
+    <h2>논문 소개</h2>
+    <p class="section-subtitle">어떤 전통 위에 있고, 무엇을 고쳐 쓰려 하는가</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>지난 10여 년 동안 TIC는 사회복지 교육, 임상, 정책 전반에서 “모범 실천(best practice)”으로 자리 잡았습니다. 저자들이 서론에서 짚듯이 IFSW, CASW, NASW, CSWE 같은 전문 단체가 모두 TIC를 지지하며, 교과과정과 인증 기준에도 점점 더 깊이 들어와 있습니다. 그런데 저자들의 선행 연구인 스코핑 리뷰(Leotti &amp; Wahab, 2025, <em>Trauma, Violence, &amp; Abuse</em>)는 TIC의 정의가 모호하고 효과에 대한 경험적 근거도 빈약하다는 점을 보여 주었습니다. 이 논문은 바로 그 지점에서 출발합니다. 정의도 근거도 불분명한데 왜 이렇게 널리 받아들여졌는가, 그리고 이렇게 널리 쓰이는 말이 실제로 어떤 효과를 내고 있는가를 묻습니다.</p>
+  <p>이론적 계보로 보면 이 논문은 푸코 이후의 후기구조주의, 특히 <strong>통치성(governmentality)</strong> 논의를 사회복지의 외상 담론에 적용하는 비판적 사회복지 연구의 흐름에 놓여 있습니다. 저자들은 Chatterjee and Park (2024, <em>BJSW</em>), Smith et al. (2021), Bath (2017), Birnbaum (2019) 등의 비판을 잇되, 그 비판을 <strong>TIC라는 실천 틀 자체</strong>에 집중시킵니다. 즉 이 논문의 기여는 “TIC는 좋은가 나쁜가”라는 평가가 아니라, TIC를 하나의 <strong>담론</strong>으로 다시 개념화하는 데 있습니다.</p>
+</div>
+
+<div class="paper-meta">
+  <h3>The work of trauma-informed care discourse</h3>
+  <div class="sub">Constructing clients, workers, and logics of governance</div>
+  <div class="paper-meta-grid">
+    <div class="paper-meta-item"><div class="label">Journal</div><div class="value">The British Journal of Social Work (SSCI)<br>Advance article, 2026. Accepted May 2026. Open Access (CC BY-NC-ND)</div></div>
+    <div class="paper-meta-item"><div class="label">Type</div><div class="value">비판적 담론분석(CDA)<br>Gee (2011, 2014)의 7가지 building tasks, 3인 연구자 다단계 분석</div></div>
+    <div class="paper-meta-item"><div class="label">Core claim</div><div class="value">TIC는 실천 틀이기 이전에 클라이언트와 제공자의 주체성을 구성하고, 개인화된 신자유주의 통치를 수행하는 규제 담론이다</div></div>
+  </div>
+</div>
+
+<div class="quote-box">“Findings suggest that: (1) TIC discourse paradoxically constructs people with trauma as both fragile and dangerous, while positioning the trauma-informed professional social worker as benevolent and empowering, but also in need of protection from the dangerously traumatized client; and (2) TIC discourse enacts a form of neoliberal governance through the construction of productive (client) subjects.”
+  <span class="trans">연구 결과는 (1) TIC 담론이 역설적으로 트라우마를 가진 사람을 <strong>취약하면서 동시에 위험한</strong> 존재로 구성하고, 외상기반 전문 사회복지사는 선의를 지닌 임파워링 주체이지만 동시에 위험한 클라이언트로부터 보호받아야 할 존재로 자리매김한다는 점, 그리고 (2) TIC 담론이 <strong>생산적인 (클라이언트) 주체</strong>를 구성함으로써 일종의 신자유주의적 통치를 수행한다는 점을 시사한다.</span>
+  <span class="attr">출처: Abstract</span>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">이 연구가 던지는 질문</span><br>
+  <strong>질문 1.</strong> 정의가 모호하고 효과 근거가 부족한 TIC가 어떻게 사회복지의 “마스터 내러티브”가 되었는가?<br>
+  <strong>질문 2.</strong> TIC 담론은 트라우마를 가진 사람과 그들을 돕는 전문가를 각각 어떤 주체로 만들어내는가?<br>
+  <strong>질문 3.</strong> 그렇게 만들어진 주체성은 어떤 통치 논리에 봉사하며, 그 과정에서 무엇(구조적, 제도적 해악)이 보이지 않게 되는가?
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">🧭 길잡이</span><br>
+  이 논문을 처음 읽는 사람이 가장 흔히 하는 오해는 “저자들이 TIC를 반대한다”고 읽는 것입니다. 저자들은 명시적으로 <em>“We are not suggesting that TIC is without value to people who have experienced trauma.”</em>(§Introduction)라고 씁니다. 이들의 질문은 가치 판단이 아니라 <strong>기능 분석</strong>입니다. 어떤 말이 좋은 의도를 담고 있어도, 그 말이 사회 속에서 하는 일은 의도와 다를 수 있다는 것이 담론분석의 기본 전제입니다. 우리 랩이 지난 회차에 함께 읽은 MacRae et al. (2026)의 TIC 통합적 리뷰가 TIC를 <strong>정리하고 체계화</strong>하는 방향의 글이었다면, 이 논문은 같은 개념을 <strong>해체하고 되묻는</strong> 방향의 글입니다. 두 편을 나란히 놓고 읽으면 하나의 개념을 둘러싼 학문적 대화가 어떻게 이루어지는지 볼 수 있습니다.
+</div>
+
+<!-- §02 -->
+<div class="section-head" id="intro">
+  <div class="section-num">02</div>
+  <div class="section-title-block">
+    <h2>Introduction: 모호하지만 의무적인 마스터 내러티브</h2>
+    <p class="section-subtitle">선행 스코핑 리뷰가 남긴 네 가지 발견과 “편재하는 트라우마”라는 전제</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>서론의 첫 문단은 TIC의 위상을 하나의 역설로 요약합니다. TIC는 긴급하고 권위 있는 동시에 모호하고 강제적이며, 어디에나 있고 무엇이든 될 수 있는 <strong>마스터 내러티브</strong>라는 것입니다. 저자들은 McLean et al. (2017)을 인용해 마스터 내러티브를 “한 문화의 좋은 구성원이 되는 법을 알려 주는, 문화적으로 공유된 이야기”로 정의합니다. 이 정의를 TIC에 적용하면, TIC는 단지 기법이 아니라 <strong>좋은 사회복지사가 되는 법</strong>을 규정하는 이야기가 됩니다.</p>
+  <p>이어서 저자들은 자신들의 선행 연구(Leotti &amp; Wahab, 2025)에서 131편을 검토해 얻은 네 가지 발견을 요약합니다. 이 네 가지는 이번 담론분석이 왜 필요한지를 설명하는 출발점이므로, 아래 그림과 함께 하나씩 정리해 두는 것이 좋습니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 1. 이 연구의 출발점: 스코핑 리뷰에서 담론분석으로</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 개념도</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 230" width="100%" role="img" aria-label="131편에서 10편, 7개 과제, 3개 주제, 연구질문으로 이어지는 흐름">
+      <defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3f86c4"/></marker></defs>
+      <g font-size="14" text-anchor="middle" fill="#20262e">
+        <rect x="10" y="50" width="150" height="110" rx="14" fill="#fff" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="85" y="88" font-weight="700" fill="#2f6fa8" font-size="22">131편</text>
+        <text x="85" y="114">사회복지 TIC 문헌</text>
+        <text x="85" y="134" fill="#828d9b" font-size="12">스코핑 리뷰 2012~2022</text>
+
+        <line x1="162" y1="105" x2="192" y2="105" stroke="#3f86c4" stroke-width="2" marker-end="url(#ar1)"/>
+        <rect x="195" y="50" width="150" height="110" rx="14" fill="#fff" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="270" y="88" font-weight="700" fill="#2f6fa8" font-size="22">10편</text>
+        <text x="270" y="114">가장 많이 인용된</text>
+        <text x="270" y="134">TIC 논문</text>
+
+        <line x1="347" y1="105" x2="377" y2="105" stroke="#3f86c4" stroke-width="2" marker-end="url(#ar1)"/>
+        <rect x="380" y="50" width="150" height="110" rx="14" fill="#fff" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="455" y="88" font-weight="700" fill="#2f6fa8" font-size="22">7 tasks</text>
+        <text x="455" y="114">Gee의 담론분석</text>
+        <text x="455" y="134">3인 독립 분석</text>
+
+        <line x1="532" y1="105" x2="562" y2="105" stroke="#3f86c4" stroke-width="2" marker-end="url(#ar1)"/>
+        <rect x="565" y="50" width="150" height="110" rx="14" fill="#fff" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="640" y="88" font-weight="700" fill="#2f6fa8" font-size="22">3 themes</text>
+        <text x="640" y="114">반복되는</text>
+        <text x="640" y="134">담론 주제</text>
+
+        <line x1="717" y1="105" x2="747" y2="105" stroke="#3f86c4" stroke-width="2" marker-end="url(#ar1)"/>
+        <rect x="750" y="50" width="140" height="110" rx="14" fill="#e8f1fa" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="820" y="92" font-weight="700" fill="#2f6fa8" font-size="15" font-family="Inter">What does</text>
+        <text x="820" y="112" font-weight="700" fill="#2f6fa8" font-size="15" font-family="Inter">TIC do?</text>
+        <text x="820" y="136" font-size="12" fill="#46505c">TIC는 무엇을 하는가</text>
+
+        <text x="270" y="195" font-size="12" fill="#828d9b">TIC란 무엇인가 (mapping)</text>
+        <text x="640" y="195" font-size="12" fill="#828d9b">TIC는 무엇을 하는가 (interrogating)</text>
+        <path d="M120 180 Q 450 215 800 180" fill="none" stroke="#aab4c1" stroke-dasharray="4 4"/>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문에는 그림이나 표가 본문에 실려 있지 않습니다(분석 대상 10편 목록은 온라인 Supplementary Table 1). 이 그림은 원문 §Impetus for the current study, §Current study, §Analysis의 서술을 AIR Lab이 흐름도로 재구성한 것입니다.</p>
+  <div class="fig-implies"><b>이게 무슨 뜻인가:</b> 같은 연구팀이 같은 자료에서 질문을 바꾸어 두 번째 연구를 만들었다는 점이 핵심입니다. 첫 연구가 “TIC가 무엇인지 지도를 그리는(mapping)” 작업이었다면, 이번 연구는 “TIC가 무엇을 하는지 심문하는(interrogating)” 작업입니다. 하나의 데이터셋에서 기술적 질문을 비판적 질문으로 전환하는 것은 대학원생이 자기 학위논문 자료로 후속 연구를 설계할 때 그대로 응용할 수 있는 전략입니다.</div>
+</div>
+
+<div class="subhead"><span class="code">2.1</span><h3>스코핑 리뷰가 남긴 네 가지 발견</h3><span class="en">Impetus for the current study</span></div>
+
+<div class="mod-grid">
+  <div class="mod-card risk">
+    <h4>① 개념의 무한 팽창</h4>
+    <div class="en">conceptually expansive</div>
+    <p>거의 모든 종류의 해악이나 역경이 “트라우마”로 간주됩니다. 저자들은 “If almost any type of adversity or harm can lead to trauma, how then does the term ‘trauma’ retain gravity and significance?”라고 묻습니다. 모든 것이 트라우마라면 트라우마라는 말은 무게를 잃습니다.</p>
+  </div>
+  <div class="mod-card risk">
+    <h4>② 개인화: 구조적 해악의 소거</h4>
+    <div class="en">individual over structural harm</div>
+    <p>다양한 외상 경험을 언급하면서도, 강조점은 압도적으로 개인적이고 대인관계적인 해악에 놓이고 구조적, 체계적 해악은 가려집니다. 저자들은 이를 신자유주의와 심리학적 실천 틀이 공유하는 개인화 논리로 해석합니다.</p>
+  </div>
+  <div class="mod-card risk">
+    <h4>③ 이미 주변화된 집단에 집중</h4>
+    <div class="en">othering minoritized groups</div>
+    <p>TIC 문헌은 여성, 청소년, 인종화된 개인에 압도적으로 초점을 둡니다. 이는 이미 소수자화된 집단을 손상과 취약성의 자리로 반복해서 지목하여 “타자화”할 위험이 있습니다.</p>
+  </div>
+  <div class="mod-card risk">
+    <h4>④ 실천의 모호성</h4>
+    <div class="en">vagueness of practice</div>
+    <p>TIC로 묶이는 실천은 “웃는 접수 직원부터 마음챙김 연습까지” 모든 것을 포함합니다. 그렇다면 TIC는 이미 공감적이고 윤리적인 사회복지 실천과 무엇이 다른가라는 질문이 남습니다.</p>
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 2. TIC라는 우산 아래 모인 것들, 그리고 기존 실천과의 겹침</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 개념도</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 300" width="100%" role="img" aria-label="TIC 우산 아래의 다양한 실천과 기존 공감적 실천과의 벤다이어그램">
+      <g font-size="13.5" text-anchor="middle" fill="#20262e">
+        <!-- umbrella -->
+        <path d="M40 120 Q 240 -10 440 120 Q 406 104 373 120 Q 340 104 306 120 Q 273 104 240 120 Q 206 104 173 120 Q 140 104 106 120 Q 73 104 40 120 z" fill="#e8f1fa" stroke="#2f6fa8" stroke-width="1.8"/>
+        <text x="240" y="80" font-size="22" font-weight="700" fill="#2f6fa8" font-family="Inter">TIC</text>
+        <line x1="240" y1="120" x2="240" y2="270" stroke="#2f6fa8" stroke-width="1.8"/>
+        <path d="M240 270 Q 240 285 226 285 Q 214 285 214 274" fill="none" stroke="#2f6fa8" stroke-width="1.8"/>
+        <g>
+          <rect x="52" y="140" width="120" height="30" rx="15" fill="#fff" stroke="#6cb0e4"/><text x="112" y="160">웃는 접수 직원</text>
+          <rect x="52" y="180" width="120" height="30" rx="15" fill="#fff" stroke="#6cb0e4"/><text x="112" y="200">마음챙김 연습</text>
+          <rect x="52" y="220" width="120" height="30" rx="15" fill="#fff" stroke="#6cb0e4"/><text x="112" y="240">요가</text>
+          <rect x="308" y="140" width="120" height="30" rx="15" fill="#fff" stroke="#6cb0e4"/><text x="368" y="160">안전 계획 세우기</text>
+          <rect x="308" y="180" width="120" height="30" rx="15" fill="#fff" stroke="#6cb0e4"/><text x="368" y="200">동기강화상담</text>
+          <rect x="308" y="220" width="120" height="30" rx="15" fill="#fff" stroke="#6cb0e4"/><text x="368" y="240">자기성찰 모델링</text>
+        </g>
+        <!-- venn -->
+        <circle cx="610" cy="150" r="105" fill="rgba(63,134,196,0.12)" stroke="#2f6fa8" stroke-width="1.6"/>
+        <circle cx="730" cy="150" r="105" fill="rgba(63,168,138,0.12)" stroke="#3fa88a" stroke-width="1.6"/>
+        <text x="560" y="140" font-weight="600" fill="#2f6fa8">TIC로 불리는</text>
+        <text x="560" y="158" font-weight="600" fill="#2f6fa8">실천들</text>
+        <text x="785" y="140" font-weight="600" fill="#3fa88a">기존의 공감적,</text>
+        <text x="785" y="158" font-weight="600" fill="#3fa88a">윤리적 실천</text>
+        <text x="670" y="155" font-size="26" font-weight="700" fill="#e0573e">?</text>
+        <text x="670" y="180" font-size="12" fill="#46505c">무엇이 다른가</text>
+        <text x="670" y="285" font-size="12.5" fill="#828d9b">겹치는 영역이 너무 넓으면 TIC 고유의 내용이 무엇인지 말하기 어려워진다</text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문 §Impetus for the current study에서 열거한 실천 예시(“from a smiling receptionist to mindfulness exercises; … modeling self-reflection, planning for safety, yoga, and motivational interviewing”)를 시각화했습니다.</p>
+  <div class="fig-implies"><b>그림 읽는 법:</b> 왼쪽 우산은 하나의 이름 아래 성격이 전혀 다른 활동들이 모여 있음을, 오른쪽 벤다이어그램은 그 활동들이 이미 좋은 사회복지 실천으로 여겨지던 것과 크게 겹친다는 점을 보여 줍니다. 개념이 측정 가능하고 검증 가능하려면 경계가 있어야 합니다. 경계가 흐린 개념은 효과 연구를 어렵게 만들고, 동시에 비판도 어렵게 만듭니다. 무엇이든 될 수 있는 개념은 반박당할 지점도 없기 때문입니다.</div>
+</div>
+
+<div class="subhead"><span class="code">2.2</span><h3>“편재하는 트라우마”라는 전제와 ACEs</h3><span class="en">The presumed ubiquity of trauma</span></div>
+
+<div class="panel">
+  <p>저자들은 TIC 담론이 무엇을 하는지 묻기 전에, 그 담론이 기대고 있는 전제를 먼저 해부합니다. 그것은 트라우마가 <strong>어디에나 있고 대체로 피할 수 없으며, 상당 부분 아동기 부정적 경험(ACEs)에서 비롯된다</strong>는 가정입니다. 저자들은 CDC(2025)를 인용해 성인의 최대 64%, 고등학생의 75%가 18세 이전에 하나 이상의 ACE를 보고한다는 수치를 제시하고, 그 결과 “대부분의 트라우마는 아동기의 산물로 담론적으로 틀지어진다”고 지적합니다. 원문은 이 대목에서 ACEs를 “adverse childhood effects”로 표기하고 있는데, 일반적인 용어(adverse childhood experiences)와 다르다는 점도 함께 기억해 둘 만합니다.</p>
+  <p>이 전제의 효과에 대한 저자들의 분석이 이 절의 핵심입니다. 트라우마가 어디에나 있다고 가정하면, 우리가 할 수 있는 최선은 <strong>예방이 아니라 수용과 적응</strong>이 됩니다. 관심은 ACEs와 트라우마를 막는 전략에서, 트라우마의 불가피성을 받아들이고 트라우마를 가진 개인에게 반응하는 교수법과 치료적 개입으로 이동합니다. 저자들의 표현으로 TIC가 하는 일은 <em>“to produce trauma acceptance and resilience, without addressing the conditions that facilitate certain traumas in the first place”</em>입니다.</p>
+  <p>두 번째 전제는 트라우마를 <strong>“특정 시점의 사건(point in time)”</strong>으로 보는 틀입니다. SAMHSA(2014)가 시간 차원을 트라우마 정의에 포함하지만, 그 시간성은 주로 사건의 효과가 지속된다는 의미여서 결국 시점 중심의 틀을 강화한다는 것입니다. 저자들은 이 틀이 트라우마에서 식민적, 정치적, 구조적 뿌리를 제거하는 생의학적 논리와 연결된다고 봅니다(Sheehi &amp; Sheehi, 2021). 해악을 고립된 단일 사건에 위치시키면 인종차별, 정착민 식민주의, 경제적 착취 같은 지속적이고 집단적인 억압은 보이지 않게 됩니다.</p>
+  <p>저자들은 1970년대 여성주의 반폭력 운동의 사례로 균형을 잡습니다. 개인의 피해를 공적으로 명명한 일이 정책적 변화를 이끌어 내기도 했다는 점을 인정하면서도, 그 결과로 나온 범죄화 중심 정책이 모든 생존자에게 고르게 이롭지 않았고 특히 유색인 공동체에 추가적 해악을 낳기도 했다고 지적합니다. 공적 인식이 정치적 행동으로 이어졌지만 <strong>개인 피해와 개인 가해라는 기본 틀은 그대로 남았다</strong>는 것이 이 사례의 교훈이며, TIC도 같은 틀에 기대고 있다는 것이 저자들의 주장입니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 3. 두 개의 시간 틀: “특정 시점의 사건”과 “지속되는 구조”</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 비교도</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 250" width="100%" role="img" aria-label="시점 사건 중심 트라우마와 지속적 구조적 해악의 비교">
+      <g font-size="13.5" fill="#20262e">
+        <rect x="10" y="10" width="425" height="225" rx="14" fill="#fff" stroke="#e6ebf1"/>
+        <text x="222" y="38" text-anchor="middle" font-weight="700" fill="#2f6fa8" font-size="15">TIC 담론의 틀: 시점 사건</text>
+        <line x1="40" y1="130" x2="405" y2="130" stroke="#46505c" stroke-width="1.5"/>
+        <text x="405" y="150" text-anchor="end" font-size="12" fill="#828d9b">시간 →</text>
+        <circle cx="150" cy="130" r="13" fill="#e0573e"/>
+        <text x="150" y="105" text-anchor="middle" font-size="12.5">외상 사건</text>
+        <path d="M163 130 Q 240 85 380 118" fill="none" stroke="#e0573e" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <text x="300" y="88" text-anchor="middle" font-size="12.5" fill="#e0573e">개인에게 남는 효과</text>
+        <text x="222" y="190" text-anchor="middle" font-size="13">개입 대상: <tspan font-weight="700">개인의 증상과 반응</tspan></text>
+        <text x="222" y="212" text-anchor="middle" font-size="12" fill="#828d9b">맥락이 탈각된 단일 사건</text>
+
+        <rect x="465" y="10" width="425" height="225" rx="14" fill="#fff" stroke="#e6ebf1"/>
+        <text x="677" y="38" text-anchor="middle" font-weight="700" fill="#3fa88a" font-size="15">저자들이 복원하려는 시선: 지속 구조</text>
+        <rect x="495" y="60" width="365" height="26" rx="6" fill="rgba(63,168,138,0.15)"/>
+        <text x="677" y="78" text-anchor="middle" font-size="12.5">인종차별</text>
+        <rect x="495" y="92" width="365" height="26" rx="6" fill="rgba(63,168,138,0.15)"/>
+        <text x="677" y="110" text-anchor="middle" font-size="12.5">정착민 식민주의</text>
+        <rect x="495" y="124" width="365" height="26" rx="6" fill="rgba(63,168,138,0.15)"/>
+        <text x="677" y="142" text-anchor="middle" font-size="12.5">경제적 착취</text>
+        <text x="677" y="190" text-anchor="middle" font-size="13">개입 대상: <tspan font-weight="700">해악을 만들어내는 조건</tspan></text>
+        <text x="677" y="212" text-anchor="middle" font-size="12" fill="#828d9b">집단적, 지속적, 세대 간 해악</text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문 §Introduction 후반(SAMHSA 2014의 시간 차원 논의, Sheehi &amp; Sheehi 2021 인용)의 대비를 비교 패널로 재구성했습니다. 오른쪽 세 항목은 원문이 예로 든 것입니다.</p>
+  <div class="fig-implies"><b>이게 무슨 뜻인가:</b> 같은 고통을 왼쪽 틀로 보면 “사건 이후의 개인 회복”이 과제가 되고, 오른쪽 틀로 보면 “해악을 계속 만들어내는 조건의 변화”가 과제가 됩니다. 저자들은 TIC가 왼쪽 틀에 머무르는 한, 아무리 따뜻한 실천이라도 구조를 질문하지 않게 된다고 봅니다.</div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">🍳 비유</span><br>
+  강 상류의 공장이 계속 오염물질을 흘려보내는 마을을 떠올려 봅시다. 하류의 병원은 환자를 더 친절하고 세심하게 맞이하는 법을 배웁니다. 대기실을 편안하게 꾸미고, 직원들은 소진되지 않도록 자기돌봄 연수를 받습니다. 이 모든 것은 분명 좋은 일입니다. 그러나 “오염은 어디에나 있으니 잘 받아들이자”는 이야기가 병원의 표준 언어가 되면, 상류의 공장을 문제 삼는 질문은 점점 들리지 않게 됩니다. 저자들이 말하는 “트라우마 수용과 회복탄력성의 생산”은 이런 상황을 가리킵니다.
+</div>
+
+<!-- §03 -->
+<div class="section-head" id="method">
+  <div class="section-num">03</div>
+  <div class="section-title-block">
+    <h2>이론적 토대와 방법: 언어는 현실을 반영하지 않고 만든다</h2>
+    <p class="section-subtitle">Theoretical foundation · Methodology · Analysis</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>저자들은 후기구조주의, 특히 푸코의 권력관을 출발점으로 삼습니다. 권력은 누군가가 소유하는 물건이 아니라 <strong>행사되는 순간에만 경험되는 관계적이고 역사적인 것</strong>이며, 통치나 통제의 형식으로 쓰일 수도 있고 동시에 그 통치에 대한 저항으로 행사될 수도 있습니다. 이런 관점에서 연구자의 관심은 감옥과 수감자, 교사와 학생 같은 권력관계가 담론을 통해 어떻게 생산되고, 다시 그 관계가 담론을 어떻게 재생산하는지로 향합니다.</p>
+  <p>담론에 대한 저자들의 입장도 분명합니다. 담론은 특정 시대에 특정 주체에게 요구되는 당연시된 규범과 행위 기대를 반영하며, 언어는 현실을 비추는 거울이 아니라 사회구조를 만들고 또 그에 의해 만들어진다는 것입니다. 저자들은 TIC를 이런 의미의 <strong>독자적 담론</strong>으로 위치시키고, 그 근거로 스코틀랜드 정부의 National Trauma Transformation Programme, 북아일랜드 Safeguarding Board, SAMHSA, 캐나다 정부의 정책 틀, 그리고 NASW, IFSW, CASW, BASW, AASW 등의 지침과 연수, 교육과정과 인증 기준(CSWE, 2018)을 열거합니다. TIC가 여러 나라의 제도 속에 반복적으로 등장한다는 사실 자체가 TIC를 하나의 담론으로 분석할 근거가 된다는 논리입니다.</p>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">🧪 용어 정리</span><br>
+  <strong>비판적 담론분석(CDA)</strong>: 언어가 의미, 관계, 권력을 어떻게 구성하는지를 체계적으로 분석하는 접근의 총칭입니다. 원문은 Gee, Van Dijk, Jäger &amp; Maier, Fairclough 등 여러 방법이 있다고 소개합니다.<br>
+  <strong>주체성(subjectivity) / 주체 위치(subject position)</strong>: 담론이 사람들에게 부여하는 “어떤 사람으로 존재할 수 있는가”의 자리입니다. 예를 들어 “트라우마 생존자”, “외상기반 전문가”는 개인의 본질이 아니라 담론이 마련해 둔 자리입니다.<br>
+  <strong>통치성(governmentality)</strong>: 푸코(1991)의 개념으로, 사회를 통치 가능한 것으로 만들기 위해 개인이 스스로를 다스리고 규범에 맞추도록 형성하는 기법과 전략의 총체를 말합니다.<br>
+  <strong>신자유주의적 통치</strong>: 개인 책임과 시장 효율성 논리를 중심으로 보건, 복지, 교육 기관을 행동을 관리하고 규제하는 장소로 만드는 통치 양식입니다(원문은 Larner 2000; Wacquant 2009 인용).
+</div>
+
+<div class="subhead"><span class="code">3.1</span><h3>Gee의 7가지 building tasks</h3><span class="en">Seven Building Tasks (Gee 2011, 2014)</span></div>
+
+<div class="panel">
+  <p>저자들이 여러 CDA 방법 가운데 Gee를 택한 이유는 세 가지입니다. 언어가 구성하는 사회적 실천과 정체성에 주목한다는 점, 후기구조주의와 푸코적 인식론과 양립 가능하다는 점, 그리고 분석을 구체화할 수 있는 <strong>“building tasks”</strong>라는 도구를 제공한다는 점입니다. Gee는 모든 분석이 일곱 과제를 다 다룰 필요는 없으며 자료에 가장 두드러진 과제를 탐색하라고 권합니다. 원문은 각 과제에 대한 분석 템플릿을 만들었다고 밝히고 그 질문의 예를 세 가지 제시합니다. 아래 그림에서 원문이 제시한 질문은 따옴표로, 나머지는 과제 이름만 표시했습니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 4. Gee의 7가지 building tasks: 텍스트를 일곱 방향에서 묻기</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 원형 흐름도</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 430" width="100%" role="img" aria-label="TIC 텍스트를 중심으로 일곱 가지 분석 과제가 둘러싼 원형 다이어그램">
+      <g font-size="13" text-anchor="middle" fill="#20262e">
+        <circle cx="450" cy="215" r="150" fill="none" stroke="#aab4c1" stroke-dasharray="5 5"/>
+        <circle cx="450" cy="215" r="62" fill="#e8f1fa" stroke="#2f6fa8" stroke-width="1.8"/>
+        <text x="450" y="210" font-weight="700" fill="#2f6fa8" font-size="15">TIC 텍스트</text>
+        <text x="450" y="230" font-size="12" fill="#46505c">(최다 인용 10편)</text>
+        <!-- 7 nodes at angles -90 + k*51.4 -->
+        <g>
+          <rect x="370" y="22" width="160" height="50" rx="12" fill="#2f6fa8"/>
+          <text x="450" y="43" fill="#fff" font-weight="700">의미 부여</text>
+          <text x="450" y="61" fill="#cfe2f4" font-size="11.5" font-family="Inter">Significance</text>
+        </g>
+        <g>
+          <rect x="590" y="78" width="160" height="50" rx="12" fill="#fff" stroke="#2f6fa8" stroke-width="1.5"/>
+          <text x="670" y="99" font-weight="700">실천</text>
+          <text x="670" y="117" fill="#828d9b" font-size="11.5" font-family="Inter">Practices</text>
+        </g>
+        <g>
+          <rect x="640" y="215" width="170" height="50" rx="12" fill="#2f6fa8"/>
+          <text x="725" y="236" fill="#fff" font-weight="700">정체성</text>
+          <text x="725" y="254" fill="#cfe2f4" font-size="11.5" font-family="Inter">Identities</text>
+        </g>
+        <g>
+          <rect x="545" y="335" width="160" height="50" rx="12" fill="#fff" stroke="#2f6fa8" stroke-width="1.5"/>
+          <text x="625" y="356" font-weight="700">관계</text>
+          <text x="625" y="374" fill="#828d9b" font-size="11.5" font-family="Inter">Relationships</text>
+        </g>
+        <g>
+          <rect x="195" y="335" width="160" height="50" rx="12" fill="#2f6fa8"/>
+          <text x="275" y="356" fill="#fff" font-weight="700">정치 (사회적 재화)</text>
+          <text x="275" y="374" fill="#cfe2f4" font-size="11.5" font-family="Inter">Politics</text>
+        </g>
+        <g>
+          <rect x="90" y="215" width="170" height="50" rx="12" fill="#fff" stroke="#2f6fa8" stroke-width="1.5"/>
+          <text x="175" y="236" font-weight="700">연결</text>
+          <text x="175" y="254" fill="#828d9b" font-size="11.5" font-family="Inter">Connections</text>
+        </g>
+        <g>
+          <rect x="140" y="78" width="170" height="50" rx="12" fill="#fff" stroke="#2f6fa8" stroke-width="1.5"/>
+          <text x="225" y="99" font-weight="700">기호체계와 지식</text>
+          <text x="225" y="117" fill="#828d9b" font-size="11.5" font-family="Inter">Sign Systems &amp; Knowledge</text>
+        </g>
+        <!-- example questions -->
+        <text x="450" y="95" font-size="11.5" fill="#2f6fa8">“무엇을 중요하게 혹은 사소하게 만드는가?”</text>
+        <text x="830" y="290" font-size="11.5" fill="#2f6fa8" text-anchor="end">“어떤 정체성을 연기하게 하는가?”</text>
+        <text x="275" y="405" font-size="11.5" fill="#2f6fa8">“사회적 재화에 대해 어떤 관점을 전하는가?”</text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">일곱 과제의 이름은 원문 §Methodology, 세 개의 예시 질문은 원문 §Phase 1에 근거합니다(채색된 세 상자). 나머지 네 과제의 템플릿 질문은 원문에 제시되지 않았습니다.</p>
+  <div class="fig-implies"><b>📊 그림 읽는 법:</b> 가운데의 텍스트를 일곱 개의 렌즈로 번갈아 들여다본다고 생각하면 됩니다. 이 연구의 발견과 연결해 보면, “정체성”과 “관계” 과제는 발견 1(클라이언트와 제공자의 주체성)로, “정치(사회적 재화)”와 “의미 부여” 과제는 발견 2(신자유주의 통치)로 이어지는 것으로 읽힙니다. 다만 원문이 각 발견을 특정 과제와 일대일로 대응시키지는 않으므로, 이 연결은 독해를 돕기 위한 해석입니다.</div>
+</div>
+
+<div class="subhead"><span class="code">3.2</span><h3>세 단계 분석 절차</h3><span class="en">A systematic multi-phase analysis process</span></div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 5. 세 연구자, 세 단계: 독립 분석에서 공통 주제까지</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 절차도</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 290" width="100%" role="img" aria-label="세 단계 분석 절차를 막대 인물로 표현한 그림">
+      <defs>
+        <g id="stick">
+          <circle cx="0" cy="0" r="9" fill="#fff" stroke="#2f6fa8" stroke-width="1.6"/>
+          <line x1="0" y1="9" x2="0" y2="34" stroke="#2f6fa8" stroke-width="1.6"/>
+          <line x1="-12" y1="18" x2="12" y2="18" stroke="#2f6fa8" stroke-width="1.6"/>
+          <line x1="0" y1="34" x2="-9" y2="50" stroke="#2f6fa8" stroke-width="1.6"/>
+          <line x1="0" y1="34" x2="9" y2="50" stroke="#2f6fa8" stroke-width="1.6"/>
+        </g>
+        <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3f86c4"/></marker>
+      </defs>
+      <g font-size="13" text-anchor="middle" fill="#20262e">
+        <rect x="10" y="10" width="270" height="270" rx="14" fill="#fff" stroke="#e6ebf1"/>
+        <text x="145" y="36" font-weight="700" fill="#2f6fa8" font-size="14.5">Phase 1 초기 분석</text>
+        <use href="#stick" x="70" y="70"/><use href="#stick" x="145" y="70"/><use href="#stick" x="220" y="70"/>
+        <rect x="56" y="128" width="28" height="34" fill="#fff" stroke="#828d9b"/><rect x="131" y="128" width="28" height="34" fill="#fff" stroke="#828d9b"/><rect x="206" y="128" width="28" height="34" fill="#fff" stroke="#828d9b"/>
+        <text x="145" y="190">10편 모두를 3인이 각자</text>
+        <text x="145" y="208">7 tasks 템플릿으로 분석</text>
+        <text x="145" y="234" fill="#46505c" font-size="12">합의점과 이견을 대화로 통합</text>
+        <text x="145" y="252" fill="#46505c" font-size="12">→ 논문별 통합 분석 문서</text>
+
+        <line x1="283" y1="145" x2="313" y2="145" stroke="#3f86c4" stroke-width="2" marker-end="url(#ar2)"/>
+
+        <rect x="315" y="10" width="270" height="270" rx="14" fill="#fff" stroke="#e6ebf1"/>
+        <text x="450" y="36" font-weight="700" fill="#2f6fa8" font-size="14.5">Phase 2 통합과 메모</text>
+        <use href="#stick" x="375" y="70"/><use href="#stick" x="450" y="70"/><use href="#stick" x="525" y="70"/>
+        <text x="375" y="145" font-size="11.5" fill="#828d9b">논문 A</text><text x="450" y="145" font-size="11.5" fill="#828d9b">논문 B</text><text x="525" y="145" font-size="11.5" fill="#828d9b">논문 C</text>
+        <text x="450" y="190">논문을 나누어 맡고</text>
+        <text x="450" y="208">중복 제거, 핵심 통찰 종합</text>
+        <text x="450" y="234" fill="#46505c" font-size="12">기술적-분석적 메모 작성</text>
+        <text x="450" y="252" fill="#46505c" font-size="12">→ 언어 패턴, 은유, 수사 전략</text>
+
+        <line x1="588" y1="145" x2="618" y2="145" stroke="#3f86c4" stroke-width="2" marker-end="url(#ar2)"/>
+
+        <rect x="620" y="10" width="270" height="270" rx="14" fill="#e8f1fa" stroke="#6cb0e4"/>
+        <text x="755" y="36" font-weight="700" fill="#2f6fa8" font-size="14.5">Phase 3 문서 간 분석</text>
+        <circle cx="755" cy="105" r="48" fill="#fff" stroke="#2f6fa8" stroke-width="1.5"/>
+        <text x="755" y="100" font-weight="700" fill="#2f6fa8">3개</text>
+        <text x="755" y="118" font-weight="700" fill="#2f6fa8">담론 주제</text>
+        <text x="755" y="190">모든 메모를 각자 검토,</text>
+        <text x="755" y="208">반복 주제 목록 작성</text>
+        <text x="755" y="234" fill="#46505c" font-size="12">공동으로 패턴 확인</text>
+        <text x="755" y="252" fill="#46505c" font-size="12">→ 주제 1, 2, 3 도출</text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문 §Analysis의 Phase 1~3 서술을 절차도로 재구성했습니다.</p>
+  <div class="fig-implies"><b>이게 무슨 뜻인가:</b> 해석적 질적 연구에서 엄밀성은 숫자가 아니라 <b>절차의 투명성</b>으로 확보됩니다. 이 연구는 독립 분석, 대화를 통한 통합, 메모 작성, 교차 검토라는 단계를 밝힘으로써 “연구자가 원하는 인용만 골랐다”는 의심에 대응하려 합니다. 다만 코딩 일치도 같은 지표나 반례 탐색 절차는 보고되지 않았습니다(§06에서 다시 다룹니다).</div>
+</div>
+
+<div class="subhead"><span class="code">3.3</span><h3>세 개의 주제, 그리고 한 주제를 전제로 옮긴 결정</h3><span class="en">Ubiquity as a precondition</span></div>
+
+<div class="panel">
+  <p>Phase 3에서 도출된 주제는 다음 세 가지입니다. (1) TIC는 어디에나 있고 정의가 불분명하며, 폭력과 트라우마를 주어진 것으로 받아들이면서 주로 개인의 회복탄력성에 초점을 둔다. (2) 트라우마를 가진 사람은 취약하고 위험한 존재로, 외상기반 전문가는 선의를 지닌 임파워링 주체로 역설적으로 구성된다. (3) TIC는 생산적 주체를 구성함으로써 신자유주의적 통치에 참여한다.</p>
+  <p>흥미로운 것은 저자들이 이 단계에서 내린 분석적 결정입니다. 저자들은 첫 번째 주제인 트라우마의 편재성이 TIC 담론의 <strong>결과가 아니라 선행조건</strong>, 즉 TIC를 필요하게 만드는 전제라고 판단했습니다. 그래서 이 주제를 발견(Findings)이 아니라 서론의 문헌 검토 부분으로 옮기고, 나머지 두 주제를 “TIC는 사회복지에서 무엇을 하는가”에 대한 답으로 제시합니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 6. 세 주제의 구조: 바닥(전제)과 두 기둥(발견)</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 구조도</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 300" width="100%" role="img" aria-label="편재성이라는 바닥 위에 두 개의 발견 기둥이 서 있는 집 모양 구조도">
+      <g font-size="13.5" text-anchor="middle" fill="#20262e">
+        <path d="M200 90 L450 20 L700 90 z" fill="#e8f1fa" stroke="#2f6fa8" stroke-width="1.8"/>
+        <text x="450" y="70" font-weight="700" fill="#2f6fa8" font-family="Inter" font-size="15">What does TIC do in social work?</text>
+        <rect x="230" y="98" width="190" height="130" rx="8" fill="#fff" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="325" y="128" font-weight="700" fill="#2f6fa8">발견 1 (주제 2)</text>
+        <text x="325" y="156">클라이언트와 제공자</text>
+        <text x="325" y="176">주체성의 구성</text>
+        <text x="325" y="208" font-size="12" fill="#828d9b">§04</text>
+        <rect x="480" y="98" width="190" height="130" rx="8" fill="#fff" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="575" y="128" font-weight="700" fill="#2f6fa8">발견 2 (주제 3)</text>
+        <text x="575" y="156">신자유주의 통치의</text>
+        <text x="575" y="176">기술로서의 TIC</text>
+        <text x="575" y="208" font-size="12" fill="#828d9b">§05</text>
+        <rect x="160" y="236" width="580" height="50" rx="8" fill="#fdeee9" stroke="#e0573e" stroke-width="1.6"/>
+        <text x="450" y="258" font-weight="700" fill="#e0573e">주제 1: 트라우마의 편재성 (TIC를 필요하게 만드는 전제조건)</text>
+        <text x="450" y="277" font-size="12" fill="#46505c">분석 과정에서 “발견”에서 “문헌 검토”로 위치를 옮김 · §02.2</text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문 §Phase 3 마지막 문단의 서술(“the ubiquity of trauma is a precondition creating the necessity of TIC”)을 구조도로 재구성했습니다.</p>
+  <div class="fig-implies"><b>📊 그림 읽는 법:</b> 바닥이 흔들리면 두 기둥도 흔들립니다. 즉 트라우마가 어디에나 있다는 전제를 받아들이는 순간, TIC 전문가의 필요성과 TIC를 통한 행동 관리가 자연스럽게 정당화됩니다. 방법론적으로는 <b>분석 도중에 주제의 위상을 재배치한 결정을 독자에게 공개했다</b>는 점이 배울 만합니다. 질적 연구에서 이런 “분석적 결정의 기록”은 연구의 신뢰성을 높이는 장치입니다.</div>
+</div>
+
+<!-- §04 -->
+<div class="section-head" id="subjects">
+  <div class="section-num">04</div>
+  <div class="section-title-block">
+    <h2>발견 1: 클라이언트와 제공자 주체성의 구성</h2>
+    <p class="section-subtitle">The construction of client/provider subjectivities · 세 개의 역설</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>첫 번째 발견은 TIC 담론이 <strong>전문가의 권력과 클라이언트의 행위주체성을 동시에 확장하고 제약하는</strong> 주체 위치를 만들어낸다는 것입니다. 저자들은 이 역설이 세 가지 형태로 나타난다고 정리합니다: 보편적이면서 타자화된 주체, 취약하면서 위험한 클라이언트, 강력한 전문가이면서 취약한 조력자. 아래에서는 원문이 각 역설의 근거로 든 텍스트와 함께 하나씩 살펴봅니다.</p>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">분석 대상 10편 중 본문에 인용된 텍스트</span><br>
+  본문에서 직접 인용되어 분석 근거로 쓰인 텍스트는 다음 8편입니다: Knight (2015, <em>Clinical Social Work Journal</em>), West et al. (2014, <em>Children and Youth Services Review</em>), Levenson (2017, <em>Social Work</em>), Carello &amp; Butler (2015, <em>Journal of Teaching in Social Work</em>), Kramer et al. (2013, <em>Children and Youth Services Review</em>), Donisch et al. (2016, <em>Child Maltreatment</em>), Crosby (2015, <em>Children &amp; Schools</em>), Collins-Camargo et al. (2019, <em>Child Welfare</em>). 나머지 2편은 온라인 Supplementary Table 1에 수록되어 있어 <strong>확인 필요</strong>입니다. 참고문헌에는 본문에서 인용되지 않은 Kulkarni (2019, <em>Journal of Family Violence</em>)가 포함되어 있어 표본 중 하나일 가능성이 있으나 이 역시 확인 필요입니다.
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">1</div>
+    <div class="cond-titles">
+      <div class="cond-code">Paradox 1</div>
+      <h3>보편적이면서 타자화된 주체: 트라우마를 정상화하면서 병리화하기</h3>
+      <div class="cond-en">The universal yet othered subject</div>
+    </div>
+    <span class="verdict weak">역설</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">“누구나 트라우마가 있다”고 말하면서, 동시에 “트라우마가 있는 사람은 우리와 다르다”고 말한다.</div>
+    <p>분석한 모든 텍스트에서 저자들은 같은 긴장을 발견합니다. 문헌은 독자에게 만나는 모든 사람이 트라우마를 겪었다고 가정하라고 권하면서도, 트라우마를 가진 것으로 명명된 사람들은 특별하고 규범 밖에 있는 존재로 위치시킵니다. 예를 들어 Knight (2015)는 아동기 트라우마의 성인 생존자가 임상 서비스를 찾거나 받도록 요구되는 사람의 다수를 차지한다고 하여 트라우마를 정상화한 뒤, 곧바로 우울, 낮은 자존감, 자살사고, 만성통증, 경계성, 해리성 장애, 물질남용, 섭식장애, 자해 등 긴 문제 목록으로 생존자를 분류합니다. West et al. (2014)도 사법체계에 연루된 청소년의 트라우마가 만연하다고 강조한 뒤 같은 청소년을 자해, 데이트 폭력, 낮은 학업성취, 노숙, 이른 부모됨 등 부정적 결과에 “특히 취약한” 집단으로 표시합니다.</p>
+    <p>저자들의 해석은 이렇습니다. 트라우마 <strong>경험</strong>은 규범적인 것으로 제시되지만, 트라우마를 <strong>가진 사람</strong>은 예외적 주체로 구성됩니다. 트라우마라는 명칭이나 진단, 그리고 그에 따른 증상 분류는 전문가의 명명 관행을 통해 사람을 규범 밖으로 위치시키는 타자화 기제로 작동합니다.</p>
+    <div class="quote-box">“These practices transform the temporal experiences of trauma into fixed identity characteristics.”
+      <span class="trans">이러한 관행은 트라우마라는 <strong>일시적 경험</strong>을 <strong>고정된 정체성 특성</strong>으로 바꾸어 놓는다.</span>
+      <span class="attr">출처: §Findings, The universal yet othered subject</span>
+    </div>
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 7. 정상화와 타자화가 동시에 일어나는 방식</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 비교 패널</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 290" width="100%" role="img" aria-label="모두가 트라우마를 가졌다고 보는 원과 일부를 분류해 밖으로 표시하는 원의 비교">
+      <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e0573e"/></marker></defs>
+      <g font-size="13" text-anchor="middle" fill="#20262e">
+        <text x="200" y="26" font-weight="700" fill="#2f6fa8" font-size="14.5">정상화: “모두가 겪었다고 가정하라”</text>
+        <circle cx="200" cy="150" r="100" fill="#e8f1fa" stroke="#2f6fa8" stroke-width="1.6"/>
+        <g fill="#3f86c4">
+          <circle cx="150" cy="110" r="7"/><circle cx="185" cy="95" r="7"/><circle cx="225" cy="100" r="7"/><circle cx="260" cy="120" r="7"/>
+          <circle cx="135" cy="150" r="7"/><circle cx="170" cy="140" r="7"/><circle cx="210" cy="145" r="7"/><circle cx="250" cy="155" r="7"/>
+          <circle cx="150" cy="190" r="7"/><circle cx="190" cy="185" r="7"/><circle cx="230" cy="195" r="7"/><circle cx="265" cy="185" r="7"/>
+          <circle cx="200" cy="220" r="7"/>
+        </g>
+        <text x="200" y="278" font-size="12" fill="#46505c">트라우마 경험 = 규범적인 것</text>
+
+        <line x1="330" y1="150" x2="560" y2="150" stroke="#e0573e" stroke-width="2" marker-end="url(#ar3)"/>
+        <text x="445" y="136" fill="#e0573e" font-weight="700">분류와 명명</text>
+        <text x="445" y="172" font-size="12" fill="#46505c">증상 목록, 위험 목록</text>
+        <text x="445" y="190" font-size="12" fill="#46505c">“특히 취약한 집단”</text>
+
+        <text x="700" y="26" font-weight="700" fill="#e0573e" font-size="14.5">타자화: “그들은 정상 밖에 있다”</text>
+        <circle cx="670" cy="150" r="100" fill="#fff" stroke="#2f6fa8" stroke-width="1.6"/>
+        <g fill="#aab4c1">
+          <circle cx="625" cy="110" r="7"/><circle cx="660" cy="95" r="7"/><circle cx="610" cy="150" r="7"/><circle cx="645" cy="140" r="7"/>
+          <circle cx="625" cy="190" r="7"/><circle cx="665" cy="190" r="7"/><circle cx="680" cy="225" r="7"/>
+        </g>
+        <ellipse cx="800" cy="150" rx="62" ry="70" fill="#fdeee9" stroke="#e0573e" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <g fill="#e0573e">
+          <circle cx="785" cy="115" r="7"/><circle cx="815" cy="130" r="7"/><circle cx="790" cy="160" r="7"/><circle cx="820" cy="180" r="7"/><circle cx="795" cy="195" r="7"/>
+        </g>
+        <text x="800" y="242" font-size="12" fill="#e0573e" font-weight="600">“트라우마 생존자”</text>
+        <text x="700" y="278" font-size="12" fill="#46505c">일시적 경험 → 고정된 정체성</text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문 §The universal yet othered subject의 논증(Knight 2015; West et al. 2014 분석)을 비교 패널로 재구성했습니다.</p>
+  <div class="fig-implies"><b>📊 그림 읽는 법:</b> 왼쪽 원에서는 모든 점이 같은 색입니다. 가운데 화살표의 “분류와 명명”을 거치면 오른쪽처럼 일부 점이 원의 경계 밖으로 밀려나 다른 색으로 칠해집니다. 저자들의 요점은 이 두 장면이 <b>같은 텍스트 안에서 연달아</b> 일어난다는 것입니다. 사람중심 통계로 집단을 유형화하는 연구자에게도 이 그림은 경고가 됩니다. 잠재계층에 붙이는 이름(예: “고위험군”)이 일시적 상태를 정체성처럼 고정시킬 수 있기 때문입니다.</div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">2</div>
+    <div class="cond-titles">
+      <div class="cond-code">Paradox 2</div>
+      <h3>취약하면서 위험한 주체</h3>
+      <div class="cond-en">The fragile yet dangerous subject</div>
+    </div>
+    <span class="verdict weak">역설</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">트라우마를 가진 사람은 “보호해야 할 사람”이자 “관리해야 할 사람”으로 그려지고, 이 이중성이 돌봄과 통제를 함께 정당화한다.</div>
+    <p>저자들은 트라우마를 가진 주체가 <strong>취약성 담론과 위험 담론을 동시에</strong> 통해 가시화된다고 봅니다. 취약한 존재는 돌봄과 보호를, 위험한 존재는 관리와 통제를 요구합니다. Knight (2015)는 아동기 트라우마의 성인 생존자를 “especially challenging group of clients”라고 부르고 낮은 자존감, 무가치감, 무력감, 타인에 대한 불신을 특징으로 묘사합니다. Levenson (2017)은 클라이언트의 “emotional vulnerability”를, Carello and Butler (2015)는 트라우마 이력이 있는 학생이 재외상화의 위험이 높으므로 특별한 조정이 필요하다고 말합니다.</p>
+    <p>그런데 같은 사람들이 동시에 도전적이고 어렵고 잠재적으로 타인에게 위험한 존재로 구성됩니다. 이 위험 담론은 “acting out” 행동에 대한 논의, 그리고 대리외상에 대한 반복적 언급을 통해 나타나며, 그 결과 <strong>트라우마는 타인에게 퍼질 수 있는 전염병처럼</strong> 구성됩니다. 교육과 소년사법 현장의 문헌에서 이 역설은 특히 뚜렷합니다. West et al. (2014)는 학생의 외현화 행동이 트리거에 의해 “야기된다”고 쓰고 이런 반응은 복합외상에 노출되지 않은 사람에게서는 보통 관찰되지 않는다고 덧붙입니다. 저자들은 여기서 문제 행동이 트라우마 트리거의 결과로 설명되면서 트라우마 자체가 위험의 원천이 된다고 읽습니다.</p>
+    <p>저자들은 이 취약성이 결국 <strong>무력함</strong>으로 이어진다고 정리합니다: 사회복지 전공생은 어려운 주제를 감당하지 못하고, 초중등 학생은 행동을 조절하지 못하며, 클라이언트는 과거의 상처에서 완전히 회복하지 못한 채 부정적 행동을 이어간다는 식입니다.</p>
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 8. 한 사람에게 붙는 두 개의 말풍선</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 말풍선 도식</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 300" width="100%" role="img" aria-label="한 인물의 양쪽에 취약함과 위험함이라는 말풍선이 붙고 각각 돌봄과 통제를 정당화하는 도식">
+      <defs><marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#46505c"/></marker></defs>
+      <g font-size="13" text-anchor="middle" fill="#20262e">
+        <!-- figure -->
+        <circle cx="450" cy="120" r="20" fill="#fff" stroke="#20262e" stroke-width="1.8"/>
+        <line x1="450" y1="140" x2="450" y2="200" stroke="#20262e" stroke-width="1.8"/>
+        <line x1="422" y1="160" x2="478" y2="160" stroke="#20262e" stroke-width="1.8"/>
+        <line x1="450" y1="200" x2="432" y2="236" stroke="#20262e" stroke-width="1.8"/>
+        <line x1="450" y1="200" x2="468" y2="236" stroke="#20262e" stroke-width="1.8"/>
+        <text x="450" y="262" font-weight="600">트라우마를 가진 클라이언트</text>
+        <text x="450" y="280" font-size="11.5" fill="#828d9b">(학생, 아동, 클라이언트의 자리)</text>
+        <!-- left bubble -->
+        <path d="M70 40 h250 a16 16 0 0 1 16 16 v62 a16 16 0 0 1 -16 16 h-170 l-30 26 l4 -26 h-54 a16 16 0 0 1 -16 -16 v-62 a16 16 0 0 1 16 -16 z" fill="#e8f1fa" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="195" y="70" font-weight="700" fill="#2f6fa8" font-size="14.5">취약하다 (fragile)</text>
+        <text x="195" y="94">재외상화 위험, 정서적 취약성</text>
+        <text x="195" y="114">“특별한 조정이 필요하다”</text>
+        <line x1="340" y1="105" x2="415" y2="125" stroke="#2f6fa8" stroke-dasharray="4 3"/>
+        <!-- right bubble -->
+        <path d="M580 40 h250 a16 16 0 0 1 16 16 v62 a16 16 0 0 1 -16 16 h-54 l4 26 l-30 -26 h-170 a16 16 0 0 1 -16 -16 v-62 a16 16 0 0 1 16 -16 z" fill="#fdeee9" stroke="#e0573e" stroke-width="1.6"/>
+        <text x="705" y="70" font-weight="700" fill="#e0573e" font-size="14.5">위험하다 (dangerous)</text>
+        <text x="705" y="94">acting out, 트리거로 인한 행동</text>
+        <text x="705" y="114">대리외상으로 “전염”된다</text>
+        <line x1="560" y1="105" x2="485" y2="125" stroke="#e0573e" stroke-dasharray="4 3"/>
+        <!-- outcomes -->
+        <line x1="195" y1="168" x2="195" y2="205" stroke="#46505c" stroke-width="1.6" marker-end="url(#ar4)"/>
+        <rect x="95" y="210" width="200" height="40" rx="20" fill="#fff" stroke="#2f6fa8"/>
+        <text x="195" y="235" font-weight="600" fill="#2f6fa8">연민적 개입의 정당화</text>
+        <line x1="705" y1="168" x2="705" y2="205" stroke="#46505c" stroke-width="1.6" marker-end="url(#ar4)"/>
+        <rect x="605" y="210" width="200" height="40" rx="20" fill="#fff" stroke="#e0573e"/>
+        <text x="705" y="235" font-weight="600" fill="#e0573e">제도적 통제의 정당화</text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문 §The fragile yet dangerous subject (“This dual construction serves to justify both compassionate intervention and institutional control.”)를 말풍선 도식으로 재구성했습니다. 말풍선 안의 문구는 원문이 분석한 텍스트의 표현을 한국어로 요약한 것입니다.</p>
+  <div class="fig-implies"><b>이게 무슨 뜻인가:</b> 두 말풍선은 서로 모순처럼 보이지만, 저자들은 이 둘이 <b>함께 있어야</b> 개입이 정당화된다고 봅니다. 취약하기만 하면 돌봄만 필요하고, 위험하기만 하면 통제만 필요합니다. 둘 다이기 때문에 “따뜻한 관리”라는 형태의 개입이 자연스러워집니다.</div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">3</div>
+    <div class="cond-titles">
+      <div class="cond-code">Paradox 3</div>
+      <h3>강력한 전문가이면서 취약한 조력자</h3>
+      <div class="cond-en">The professional as both powerful expert and vulnerable helper</div>
+    </div>
+    <span class="verdict weak">역설</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">TIC를 배운 전문가는 트라우마를 “아는 사람”이 되어 클라이언트의 경험까지 대신 아는 권위를 얻지만, 동시에 클라이언트에게서 트라우마를 “옮을 수 있는” 사람이 된다.</div>
+    <p>전문가의 주체성은 클라이언트의 역설적 위치에서 직접 파생되고, 다시 그 위치를 강화합니다. 전문가는 훈련과 전문화를 통해 트라우마를 식별, 이해, 대응하는 고유한 능력을 지닌 사람으로 이해되며, 트라우마를 정의할 권한을 부여받습니다. Kramer et al. (2013)은 아동복지체계에서 슈퍼바이저의 전문성이 “critical for general worker skill transfer”라고 쓰는데, 저자들은 이것이 전문가를 핵심 지식 보유자로 놓고 아동과 가족은 전문성의 방정식 밖에 두는 언어라고 읽습니다.</p>
+    <p>이 권위는 트라우마의 편재성 가정에 의해 더욱 강화됩니다. Carello and Butler (2015)는 교수자가 거의 모든 강의실에 재외상화 위험이 높은 “알 수 없는 일부” 학생이 있다고 가정해야 하며, 이 가정이 교수자에게 트라우마의 징후와 증상을 익힐 의무를 부과한다고 씁니다. 저자들은 이 틀이 <strong>당사자가 스스로를 트라우마 피해자로 여기지 않을 때조차</strong> 전문가가 트라우마를 식별할 권한을 갖게 하여 위계적 인식 관계를 강화한다고 지적합니다. Levenson (2017)의 문장, 즉 TIC 실천가가 클라이언트를 무력하고 압도된 피해자에서 자기 삶을 주도하는 생존자로 “transform”할 수 있다는 표현도 같은 방식으로 읽힙니다. 변화의 행위자는 전문가이고, 클라이언트의 행위주체성은 전문가를 통해 부여됩니다.</p>
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 9. 목소리를 인정하고, 곧바로 무효화하기</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 말풍선 대화</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 260" width="100%" role="img" aria-label="학생의 의견을 전문가가 인정한 뒤 무효화하는 대화 장면">
+      <g font-size="13" text-anchor="middle" fill="#20262e">
+        <!-- student -->
+        <circle cx="110" cy="150" r="16" fill="#fff" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="110" y1="166" x2="110" y2="210" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="90" y1="182" x2="130" y2="182" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="110" y1="210" x2="96" y2="240" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="110" y1="210" x2="124" y2="240" stroke="#20262e" stroke-width="1.6"/>
+        <text x="110" y="256" font-size="12" fill="#828d9b">청소년(학생)</text>
+        <path d="M30 20 h230 a14 14 0 0 1 14 14 v50 a14 14 0 0 1 -14 14 h-130 l-18 30 l-2 -30 h-80 a14 14 0 0 1 -14 -14 v-50 a14 14 0 0 1 14 -14 z" fill="#fff" stroke="#2f6fa8" stroke-width="1.5"/>
+        <text x="145" y="52">“학교에 규율과 구조가</text>
+        <text x="145" y="72">더 있었으면 좋겠어요.”</text>
+        <!-- professional -->
+        <circle cx="520" cy="150" r="16" fill="#fff" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="520" y1="166" x2="520" y2="210" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="500" y1="182" x2="540" y2="182" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="520" y1="210" x2="506" y2="240" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="520" y1="210" x2="534" y2="240" stroke="#20262e" stroke-width="1.6"/>
+        <text x="520" y="256" font-size="12" fill="#828d9b">전문가(연구자)</text>
+        <path d="M330 10 h380 a14 14 0 0 1 14 14 v70 a14 14 0 0 1 -14 14 h-170 l-18 26 l-4 -26 h-188 a14 14 0 0 1 -14 -14 v-70 a14 14 0 0 1 14 -14 z" fill="#fdeee9" stroke="#e0573e" stroke-width="1.5"/>
+        <text x="520" y="40"><tspan fill="#2f6fa8" font-weight="600">① 학생들의 목소리는 중요하다.</tspan></text>
+        <text x="520" y="62"><tspan fill="#e0573e" font-weight="600">② 하지만 이는 이 청소년들이 대안적 훈육</tspan></text>
+        <text x="520" y="82"><tspan fill="#e0573e" font-weight="600">방식을 접해 보지 못했음을 보여 준다.</tspan></text>
+        <!-- result -->
+        <rect x="660" y="160" width="230" height="78" rx="12" fill="#fff" stroke="#46505c" stroke-dasharray="5 4"/>
+        <text x="775" y="186" font-weight="700" fill="#20262e">수사적 효과</text>
+        <text x="775" y="208" font-size="12.5">당사자 지식 = 미숙하거나</text>
+        <text x="775" y="226" font-size="12.5">잘못되었거나 불완전한 것</text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문 §The professional as both powerful expert and vulnerable helper에서 저자들이 분석한 West et al. (2014: 63)의 서술을 말풍선으로 재구성했습니다. 말풍선 문구는 원문 인용의 한국어 요약이며 직접 번역이 아닙니다.</p>
+  <div class="fig-implies"><b>이게 무슨 뜻인가:</b> 저자들은 이 장면을 “acknowledging voice only to invalidate it”이라는 수사적 움직임으로 부릅니다. 그리고 분석한 텍스트 전체에서 <b>트라우마를 겪은 사람을 자기 경험의 전문가로 인정하는 언어가 부재</b>하다는 점, 즉 텍스트의 침묵 자체를 하나의 발견으로 제시합니다. 공감, 목소리, 협력을 표방하는 TIC 안에서 이 침묵은 담론과 실천 사이의 근본적 긴장을 드러내며, 당사자 참여는 실질보다 상징에 가까워진다는 것이 저자들의 결론입니다.</div>
+</div>
+
+<div class="panel">
+  <p>이 역설의 다른 절반은 <strong>전문가의 취약성</strong>입니다. 2차 외상, 대리외상, 공감피로 같은 개념은 전문가를 권위 있는 동시에 클라이언트의 트라우마에 의해 피해를 입을 수 있는 존재로 위치시킵니다. Donisch et al. (2016)은 아동복지 실무자의 높은 2차 외상 스트레스를, Knight (2015)는 역전이와 간접 외상의 영향을 최소화할 필요를, Carello and Butler (2015)는 훈련 중의 간접 노출이 학생과 교수자, 현장 교육자에게 대리외상을 일으킬 수 있음을 강조합니다. 저자들은 이 표현들이 모여 트라우마에 <strong>“전달되는 성질(transmission-like quality)”</strong>을 부여한다고 봅니다.</p>
+  <p>원문은 전문가 취약성의 구성이 세 가지 담론적 기능을 한다고 정리합니다. 첫째, 클라이언트를 전문가를 압도하거나 오염시킬 수 있는 위험한 존재로 다시 확인합니다. 둘째, <strong>자기돌봄을 전문가의 의무로 만들어</strong> 제도적 해악과 노동 조건을 관리할 책임을 개별 노동자에게 옮깁니다. 셋째, 클라이언트와 제공자 사이에 평행선을 그어 위계가 사라지는 듯 보이게 하지만 결국 암묵적인 “우리와 그들”의 구도로 위계를 다시 세웁니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 10. 서로를 필요로 하는 네 개의 자리</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 관계도</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 330" width="100%" role="img" aria-label="전문가 조력자와 취약한 클라이언트, 취약한 전문가와 위험한 클라이언트가 서로를 필요로 하는 관계도">
+      <defs>
+        <marker id="ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fa8"/></marker>
+        <marker id="ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e0573e"/></marker>
+      </defs>
+      <g font-size="13.5" text-anchor="middle" fill="#20262e">
+        <text x="200" y="28" font-weight="700" fill="#46505c">제공자의 자리</text>
+        <text x="700" y="28" font-weight="700" fill="#46505c">클라이언트의 자리</text>
+        <rect x="80" y="50" width="240" height="70" rx="14" fill="#e8f1fa" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="200" y="80" font-weight="700" fill="#2f6fa8">전문가 조력자</text>
+        <text x="200" y="102" font-size="12">선의, 임파워링, 아는 주체</text>
+        <rect x="580" y="50" width="240" height="70" rx="14" fill="#e8f1fa" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="700" y="80" font-weight="700" fill="#2f6fa8">취약한 클라이언트</text>
+        <text x="700" y="102" font-size="12">보호와 변화가 필요한 존재</text>
+        <line x1="325" y1="78" x2="573" y2="78" stroke="#2f6fa8" stroke-width="1.8" marker-end="url(#ar5)"/>
+        <line x1="573" y1="96" x2="325" y2="96" stroke="#2f6fa8" stroke-width="1.8" marker-end="url(#ar5)"/>
+        <text x="450" y="70" font-size="12" fill="#2f6fa8">존재하려면 서로를 필요로 함</text>
+
+        <rect x="80" y="190" width="240" height="70" rx="14" fill="#fdeee9" stroke="#e0573e" stroke-width="1.6"/>
+        <text x="200" y="220" font-weight="700" fill="#e0573e">취약한 전문가</text>
+        <text x="200" y="242" font-size="12">대리외상, 2차 외상, 공감피로</text>
+        <rect x="580" y="190" width="240" height="70" rx="14" fill="#fdeee9" stroke="#e0573e" stroke-width="1.6"/>
+        <text x="700" y="220" font-weight="700" fill="#e0573e">위험한 클라이언트</text>
+        <text x="700" y="242" font-size="12">acting out, “전염”의 원천</text>
+        <line x1="573" y1="218" x2="325" y2="218" stroke="#e0573e" stroke-width="1.8" marker-end="url(#ar6)"/>
+        <line x1="325" y1="236" x2="573" y2="236" stroke="#e0573e" stroke-width="1.8" marker-end="url(#ar6)"/>
+        <text x="450" y="210" font-size="12" fill="#e0573e">트라우마의 “전달”</text>
+
+        <rect x="80" y="282" width="240" height="38" rx="19" fill="#fff" stroke="#c78a1e" stroke-width="1.6"/>
+        <text x="200" y="306" font-weight="600" fill="#c78a1e">→ 자기돌봄의 의무화</text>
+        <line x1="200" y1="262" x2="200" y2="280" stroke="#c78a1e" stroke-width="1.6"/>
+        <text x="700" y="306" font-size="12.5" fill="#46505c">→ 관리와 행동 조절의 대상</text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문 §Discussion, Dialectical construction of client and provider subjectivities의 문장(“the ‘expert helper’ subjectivity requires the ‘vulnerable client’ subjectivity to exist, while the ‘vulnerable professional’ requires the ‘dangerous client’ as its counterpart”)과 §Findings의 전문가 취약성 논의를 관계도로 재구성했습니다.</p>
+  <div class="fig-implies"><b>📊 그림 읽는 법:</b> 위쪽 파란 줄은 “돌봄의 짝”, 아래쪽 붉은 줄은 “위험의 짝”입니다. 각 짝의 양쪽 자리는 상대가 없으면 성립하지 않습니다. 저자들은 이 상호의존적 구성이 협력과 임파워먼트라는 TIC의 표방과 달리 <b>권력 차이를 흔들기보다 강화한다</b>고 봅니다. 아래 주황색 상자는 그 결과 중 하나로, 소진이 구조의 문제가 아니라 개인의 관리 과제가 되는 지점을 가리킵니다.</div>
+</div>
+
+<!-- §05 -->
+<div class="section-head" id="governance">
+  <div class="section-num">05</div>
+  <div class="section-title-block">
+    <h2>발견 2: 신자유주의 통치의 기술로서의 TIC</h2>
+    <p class="section-subtitle">TIC as a technology of neoliberal governance · 클라이언트 통치와 제공자 통치</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>두 번째 발견은 첫 번째 발견에서 구성된 주체들이 <strong>어떤 통치 논리에 봉사하는가</strong>를 다룹니다. 저자들은 푸코의 통치성 개념을 빌려, 신자유주의 맥락에서 보건, 복지, 교육 기관이 행동을 관리하고 규제하는 장소가 되며, 자기계발과 개인적 성장에 초점을 둔 개입이 체계와 기관은 그대로 둔 채 개인을 관리하는 통치 양식의 일부가 된다고 설명합니다(Cruikshank, 1993). 사회복지에서는 구조적 변화보다 개인 변화에 대한 압도적 강조, 그리고 회복탄력성, 순응, 적응의 담론을 통해 이러한 통치가 행사된다는 것입니다(Reisch, 2013).</p>
+  <p>저자들은 TIC가 이런 통치 양식의 하나로 작동하며, 클라이언트와 제공자 모두를 서로 다른 방식으로 <strong>책임감 있고 스스로를 조절하며 “임파워된” 주체</strong>로 형성한다고 주장합니다. 클라이언트에게는 정서 조절, 순응, 적응적 행동이, 제공자에게는 자기관리와 회복탄력성이 요구되며, 그 결과 학교, 법원, 사회서비스, 아동복지 같은 체계 안에서 두 집단 모두 더 관리하기 쉬운 존재가 됩니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 11. 두 갈래의 통치: 클라이언트와 제공자를 함께 다스리기</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 흐름도</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 320" width="100%" role="img" aria-label="TIC 담론에서 클라이언트와 제공자로 갈라지는 두 개의 통치 경로와 그대로 남는 체계">
+      <defs><marker id="ar7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3f86c4"/></marker></defs>
+      <g font-size="13" text-anchor="middle" fill="#20262e">
+        <rect x="20" y="125" width="150" height="60" rx="30" fill="#2f6fa8"/>
+        <text x="95" y="160" fill="#fff" font-weight="700" font-size="15">TIC 담론</text>
+        <path d="M170 145 C 220 145 220 70 268 70" fill="none" stroke="#3f86c4" stroke-width="2" marker-end="url(#ar7)"/>
+        <path d="M170 165 C 220 165 220 240 268 240" fill="none" stroke="#3f86c4" stroke-width="2" marker-end="url(#ar7)"/>
+
+        <rect x="270" y="35" width="300" height="72" rx="12" fill="#fff" stroke="#2f6fa8" stroke-width="1.5"/>
+        <text x="420" y="60" font-weight="700" fill="#2f6fa8">클라이언트 통치</text>
+        <text x="420" y="82">정서 조절 · 순응 · 적응적 행동</text>
+        <text x="420" y="99" font-size="11.5" fill="#828d9b">“문제 행동을 바꾸도록 돕는다”</text>
+
+        <rect x="270" y="205" width="300" height="72" rx="12" fill="#fff" stroke="#2f6fa8" stroke-width="1.5"/>
+        <text x="420" y="230" font-weight="700" fill="#2f6fa8">제공자 통치</text>
+        <text x="420" y="252">자기돌봄 · 자기관리 · 회복탄력성</text>
+        <text x="420" y="269" font-size="11.5" fill="#828d9b">“가르치는 것을 실천하라”</text>
+
+        <line x1="572" y1="71" x2="640" y2="140" stroke="#3f86c4" stroke-width="2" marker-end="url(#ar7)"/>
+        <line x1="572" y1="241" x2="640" y2="172" stroke="#3f86c4" stroke-width="2" marker-end="url(#ar7)"/>
+        <rect x="642" y="118" width="240" height="76" rx="14" fill="#e8f1fa" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="762" y="146" font-weight="700" fill="#2f6fa8">책임감 있고, 스스로 조절하는</text>
+        <text x="762" y="166" font-weight="700" fill="#2f6fa8">“생산적” 주체</text>
+        <text x="762" y="185" font-size="11.5" fill="#46505c">체계 안에서 관리하기 쉬운</text>
+
+        <rect x="642" y="240" width="240" height="52" rx="10" fill="#f4f7fb" stroke="#aab4c1" stroke-dasharray="5 4"/>
+        <text x="762" y="262" font-size="12.5" fill="#46505c">학교 · 법원 · 사회서비스 · 아동복지</text>
+        <text x="762" y="281" font-size="12.5" fill="#e0573e" font-weight="600">체계 자체는 그대로</text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문 §TIC as a technology of neoliberal governance 첫 두 문단의 서술을 흐름도로 재구성했습니다. 회색 따옴표 문구는 원문이 인용한 Levenson (2017)과 Carello &amp; Butler (2015) 표현의 한국어 요약입니다.</p>
+  <div class="fig-implies"><b>이게 무슨 뜻인가:</b> 두 갈래 화살표가 같은 지점으로 모인다는 점이 핵심입니다. 클라이언트에게는 “행동을 조절하라”, 제공자에게는 “스스로를 돌보라”는 서로 다른 요구가 주어지지만, 결과는 둘 다 기존 체계 안에서 더 원활하게 기능하는 주체입니다. 오른쪽 아래 점선 상자가 보여 주듯, 이 과정에서 체계는 변화의 대상이 되지 않습니다.</div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">A</div>
+    <div class="cond-titles">
+      <div class="cond-code">Governing clients</div>
+      <h3>클라이언트 통치: 친사회적 행동 기준과 규범적 정서 표현</h3>
+      <div class="cond-en">Governing “clients”</div>
+    </div>
+    <span class="verdict mixed">통치 기제</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">TIC 문헌은 원하는 행동을 구체적으로 명시하지는 않지만, “행동 변화”를 TIC의 목표로 분명히 말한다.</div>
+    <p>저자들이 발견한 담론 갈래는 TIC의 채택이 “친사회적” 행동 기준과 규범적 정서 표현에 대한 순응을 기르는 기제로 작동한다는 것입니다. Levenson (2017)은 외상기반 실무자가 클라이언트의 문제 행동을 바꾸고, 위기를 더 잘 관리하고, 자녀를 더 양육적으로 기르도록 도울 수 있다고 씁니다. 가장 선명한 예는 Crosby (2015)가 소개한 Detroit의 한 차터스쿨(법원에 연루된 여학생 대상)의 <strong>Monarch Room</strong> 개입입니다(Day et al., 2015). 이 공간에서 학생은 “trauma-trained social worker”의 서비스를 받는데, 목표는 학생이 10분 안에 진정하여 신속하게 교실로 돌아가게 하는 것이었습니다.</p>
+    <p>저자들은 또한 표본 전반에 <strong>결핍 지향</strong>이 퍼져 있다고 지적합니다. 트라우마 경험은 반복적으로 “maladaptive”, “unhealthy”, “harmful”, “dysfunctional” 행동과 연결되고, Crosby (2015)는 트라우마로 “망가진” 청소년에 대한 긴 서술을 담고 있습니다. 강점기반을 표방하는 TIC 안에서 개인 병리가 다시 강화되는 또 하나의 역설입니다. Levenson (2017)은 환경 속의 인간 관점을 활용해 역경이 부적응적 대처 패턴 형성에 하는 역할을 인식하라고 권하는데, 저자들은 여기서 환경 속의 인간이라는 사회복지의 고전적 관점조차 개인의 결함을 설명하는 방향으로 쓰인다고 읽습니다.</p>
+    <p>Knight (2015)는 트라우마 중심 개입과 달리 외상기반 실천은 생존자가 고통을 관리하고 일상에서 더 효과적으로 기능하는 역량을 기르도록 돕는다고 설명하며, Collins-Camargo et al. (2019)는 위탁부모 교육과정의 목적을 아동의 정서적, 행동적 영향을 더 잘 이해하고 “관리”하도록 돕는 것으로 제시합니다. 저자들의 결론은 TIC가 인간적이고 공감적인 언어 속에서 <strong>더 부드럽고 친절한 행동 통제 방법</strong>으로 자리 잡으며, 그 과정에서 거시적, 제도적 해악의 원천은 가려진다는 것입니다.</p>
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 12. Monarch Room의 10분 순환</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 원형 흐름도</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 340" width="100%" role="img" aria-label="교실, 촉발과 행동, 모나크 룸, 10분 내 진정, 교실 복귀로 이어지는 원형 순환">
+      <defs><marker id="ar8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fa8"/></marker></defs>
+      <g font-size="13.5" text-anchor="middle" fill="#20262e">
+        <circle cx="330" cy="170" r="120" fill="none" stroke="#cfe2f4" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <path d="M371 57.2 A120 120 0 0 1 442.8 129" fill="none" stroke="#2f6fa8" stroke-width="2.4" marker-end="url(#ar8)"/>
+        <path d="M442.8 211 A120 120 0 0 1 371 282.8" fill="none" stroke="#2f6fa8" stroke-width="2.4" marker-end="url(#ar8)"/>
+        <path d="M289 282.8 A120 120 0 0 1 217.2 211" fill="none" stroke="#2f6fa8" stroke-width="2.4" marker-end="url(#ar8)"/>
+        <path d="M217.2 129 A120 120 0 0 1 289 57.2" fill="none" stroke="#2f6fa8" stroke-width="2.4" marker-end="url(#ar8)"/>
+        <rect x="270" y="28" width="120" height="40" rx="20" fill="#fff" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="330" y="53" font-weight="700">교실</text>
+        <rect x="400" y="150" width="140" height="40" rx="20" fill="#fdeee9" stroke="#e0573e" stroke-width="1.6"/>
+        <text x="470" y="175" font-weight="700" fill="#e0573e">트리거와 행동</text>
+        <rect x="255" y="270" width="150" height="40" rx="20" fill="#e8f1fa" stroke="#2f6fa8" stroke-width="1.6"/>
+        <text x="330" y="295" font-weight="700" fill="#2f6fa8">Monarch Room</text>
+        <rect x="115" y="150" width="150" height="40" rx="20" fill="#e6f5f0" stroke="#3fa88a" stroke-width="1.6"/>
+        <text x="190" y="175" font-weight="700" fill="#3fa88a">10분 안에 진정</text>
+        <text x="330" y="165" font-size="13" fill="#46505c">목표:</text>
+        <text x="330" y="185" font-size="13" font-weight="700" fill="#2f6fa8">신속한 교실 복귀</text>
+
+        <rect x="610" y="60" width="270" height="220" rx="14" fill="#fff" stroke="#e6ebf1"/>
+        <text x="745" y="90" font-weight="700" fill="#46505c">저자들의 읽기</text>
+        <text x="745" y="122" font-size="12.5">빠른 진정과 복귀에 대한 강조는</text>
+        <text x="745" y="142" font-size="12.5">취약성과 위험을 함께 관리하면서</text>
+        <text x="745" y="162" font-size="12.5">순응, 질서, 제도적 통제를</text>
+        <text x="745" y="182" font-size="12.5">유지하는 방식을 보여 준다.</text>
+        <line x1="640" y1="205" x2="850" y2="205" stroke="#e6ebf1"/>
+        <text x="745" y="232" font-size="12" fill="#828d9b">순환 밖에서 질문되지 않는 것:</text>
+        <text x="745" y="252" font-size="12" fill="#e0573e" font-weight="600">교실과 학교라는 환경 그 자체</text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문이 Crosby (2015: 226)를 인용해 분석한 Monarch Room 사례(“The goal was to help students to de-escalate within 10 minutes so that they could promptly return to the classroom”)를 순환도로 재구성했습니다. 원 개입의 효과나 세부 운영에 대해서는 이 논문이 다루지 않으므로 판단하지 않습니다.</p>
+  <div class="fig-implies"><b>📊 그림 읽는 법:</b> 화살표를 따라 한 바퀴 돌면 학생은 출발점인 교실로 돌아옵니다. 저자들이 주목하는 것은 이 원이 <b>닫혀 있다</b>는 점입니다. 트리거가 왜 그 교실에서 생겼는지, 법원에 연루된 여학생이라는 조건이 무엇을 의미하는지는 원 안으로 들어오지 않습니다. 같은 개입을 학생의 안전감을 높이는 공간으로 읽을 수도 있다는 점은 열어 두되, 성과 지표가 “10분”과 “복귀”로 설정될 때 그 개입이 무엇을 위해 설계되었는지가 드러난다는 것이 저자들의 논점입니다.</div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">B</div>
+    <div class="cond-titles">
+      <div class="cond-code">Governing providers</div>
+      <h3>제공자 통치: 자기돌봄이라는 의무</h3>
+      <div class="cond-en">Governing providers</div>
+    </div>
+    <span class="verdict mixed">통치 기제</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">소진이 구조의 문제가 아니라 개인의 문제가 되면, 해결책도 “일터를 바꾸기”가 아니라 “자기를 돌보기”가 된다.</div>
+    <p>제공자에게 TIC는 자기돌봄과 개인적 안녕을 실천의 초석으로 강조합니다. Knight (2015)는 자기 양육, 충만한 관계 형성, 능동적 스트레스 관리 전략을 길게 다루고, Carello and Butler (2015)는 교수자에게 “practice what we teach”를 권하며 강의계획서에 학생의 자기돌봄에 대한 교수자의 기대를 담은 문구를 넣으라고 제안합니다. 저자들은 이러한 자기돌봄 강조가 노동자 안녕의 책임을 개인에게 지우며, 노동자가 스스로를 잘 돌보면 업무에서 더 효율적이고 생산적이 될 것이라는 가정을 깔고 있다고 지적합니다.</p>
+    <p>자기돌봄 담론의 신자유주의적 기반에 대한 비판은 이미 있었지만(Ward, 2015; Newcomb, 2022 등), 이 논문은 그 비판을 <strong>TIC로 확장</strong>했다는 점을 기여로 내세웁니다. 또한 Carello and Butler (2015)가 제시한, 교수자가 학생의 정서와 경험을 관리하기 위해 피해야 할 행동 목록(최소화, 무시, 위협, 조롱, 권력 과시, 조급함, 심지어 실망의 표현까지)을 근거로, 저자들은 TIC가 국가에 봉사하는 체계를 위해 <strong>개인의 정서를 관리하는 일</strong>을 수행한다고 결론짓습니다.</p>
+  </div>
+</div>
+
+<div class="quote-box">“The solution to burnout is then also located in the individual (practice self-care) rather than the systems that are burning them out.”
+  <span class="trans">그러면 소진의 해법 역시 그들을 소진시키는 <strong>체계</strong>가 아니라 <strong>개인</strong>(자기돌봄을 실천하라)에게서 찾아진다.</span>
+  <span class="attr">출처: §Findings, Governing providers</span>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트</span><br>
+  <strong>① 인용이 곧 자료다.</strong> 담론분석에서 원문 인용은 장식이 아니라 데이터입니다. 이 논문은 주장마다 출처 페이지를 붙인 짧은 인용을 제시하고, 그 인용에서 무엇을 읽어내는지를 바로 뒤에 서술합니다. “인용 → 해석 → 이론적 연결”의 3단 구조를 문단 단위로 반복하는 방식은 질적 논문 작성에서 그대로 모방할 만합니다.<br>
+  <strong>② 부재(absence)도 발견이 된다.</strong> 당사자를 자기 경험의 전문가로 인정하는 언어가 없다는 사실, 기관을 트라우마의 생산자로 보는 시선이 없다는 사실은 “무엇이 쓰이지 않았는가”를 체계적으로 묻는 분석 틀이 있을 때에만 주장할 수 있습니다. 다만 부재를 주장하려면 분석 대상 전체를 검토했다는 근거가 필요하며, 이 논문은 10편 전체를 3인이 독립 분석했다는 절차로 이를 뒷받침합니다.<br>
+  <strong>③ 표본 선정 논리가 주장의 범위를 정한다.</strong> “가장 많이 인용된 10편”은 담론의 중심부를 대표한다는 점에서 합리적이지만, 2012~2022년의 미국 중심 문헌이라는 점(저자들도 인정)에서 오늘날 각국의 실천 현장을 대표한다고 보기는 어렵습니다. 주장의 일반화 범위를 표본 논리와 맞추어 읽어야 합니다.
+</div>
+
+<!-- §06 -->
+<div class="section-head" id="discussion">
+  <div class="section-num">06</div>
+  <div class="section-title-block">
+    <h2>Discussion: 개혁을 통한 통치</h2>
+    <p class="section-subtitle">트라우마는 어디에 사는가 · 개혁과 변혁 · 향후 연구 방향</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>논의에서 저자들은 자신들의 분석을 트라우마 개념이 전문직과 문화 안에서 동원되고 제도화되는 방식에 대한 기존 비판의 연장선에 놓습니다. 그리고 핵심 결론을 이렇게 정리합니다: TIC는 단지 트라우마에 대응하는 틀이 아니라, <strong>주체성을 조직하고, 특정 형태의 전문가 권위를 정당화하며, 궁극적으로 개인화 논리와 개혁주의 논리를 강화하는 규제 담론</strong>이다.</p>
+  <p>첫 번째 논의 갈래는 클라이언트와 제공자의 주체성이 <strong>짝을 이루어 변증법적으로</strong> 구성된다는 점입니다(그림 10). 저자들은 Rossiter (2001)를 빌려 이러한 역학이 전문가를 필요하고 선한 존재로 위치시킴으로써 지속적인 전문적 개입을 정당화하는 통치성을 촉진한다고 말합니다. 그리고 클라이언트가 트라우마의 장소로 표시될 때 <strong>체계와 기관 자체의 외상적 작동은 가려진다</strong>는 점을 강조합니다. 저자들의 스코핑 리뷰에서도 트라우마는 제도적인 것으로 개념화되는 일이 드물었고, 학교, 아동복지체계, 교정시설은 트라우마를 능동적으로 생산하는 장소로 검토되지 않았습니다. 클라이언트는 이미 트라우마를 지닌 채 이 기관에 “도착”하는 것으로 가정될 뿐입니다. Kramer et al. (2013)이 아동복지체계와의 접촉이 트라우마를 악화시킬 수 있다고 쓴 것은 예외적 뉘앙스이지만, 그것도 체계가 트라우마에 직접 책임이 있다는 주장으로까지는 나아가지 않습니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 13. 트라우마는 어디에 사는가: 개인 안인가, 구조 안인가</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 비교 패널</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 300" width="100%" role="img" aria-label="트라우마가 개인 안에 있다고 보는 시선과 기관이 트라우마를 생산한다고 보는 시선의 비교">
+      <defs><marker id="ar9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e0573e"/></marker></defs>
+      <g font-size="13" text-anchor="middle" fill="#20262e">
+        <rect x="10" y="10" width="430" height="280" rx="14" fill="#fff" stroke="#e6ebf1"/>
+        <text x="225" y="38" font-weight="700" fill="#2f6fa8" font-size="14.5">TIC 담론: 트라우마는 개인 안에</text>
+        <circle cx="225" cy="105" r="20" fill="#fff" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="225" y1="125" x2="225" y2="185" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="198" y1="145" x2="252" y2="145" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="225" y1="185" x2="208" y2="218" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="225" y1="185" x2="242" y2="218" stroke="#20262e" stroke-width="1.6"/>
+        <circle cx="225" cy="160" r="11" fill="#e0573e"/>
+        <g font-size="12">
+          <rect x="40" y="90" width="90" height="30" rx="4" fill="#f4f7fb" stroke="#aab4c1"/><text x="85" y="110">학교</text>
+          <rect x="40" y="140" width="90" height="30" rx="4" fill="#f4f7fb" stroke="#aab4c1"/><text x="85" y="160">아동복지</text>
+          <rect x="320" y="90" width="90" height="30" rx="4" fill="#f4f7fb" stroke="#aab4c1"/><text x="365" y="110">교정시설</text>
+          <rect x="320" y="140" width="90" height="30" rx="4" fill="#f4f7fb" stroke="#aab4c1"/><text x="365" y="160">사회서비스</text>
+        </g>
+        <text x="225" y="250">기관은 중립적 배경, 클라이언트는</text>
+        <text x="225" y="270">트라우마를 지닌 채 “도착”한다 → <tspan font-weight="700" fill="#2f6fa8">개입 가능한 욕구</tspan></text>
+
+        <rect x="460" y="10" width="430" height="280" rx="14" fill="#fff" stroke="#e6ebf1"/>
+        <text x="675" y="38" font-weight="700" fill="#3fa88a" font-size="14.5">저자들의 시선: 기관도 트라우마를 만든다</text>
+        <circle cx="675" cy="125" r="20" fill="#fff" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="675" y1="145" x2="675" y2="200" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="648" y1="165" x2="702" y2="165" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="675" y1="200" x2="658" y2="232" stroke="#20262e" stroke-width="1.6"/>
+        <line x1="675" y1="200" x2="692" y2="232" stroke="#20262e" stroke-width="1.6"/>
+        <g font-size="12">
+          <rect x="490" y="60" width="90" height="30" rx="4" fill="#fdeee9" stroke="#e0573e"/><text x="535" y="80">가르치기</text>
+          <rect x="490" y="170" width="90" height="30" rx="4" fill="#fdeee9" stroke="#e0573e"/><text x="535" y="190">수용·구금</text>
+          <rect x="770" y="60" width="90" height="30" rx="4" fill="#fdeee9" stroke="#e0573e"/><text x="815" y="80">분리·보호조치</text>
+          <rect x="770" y="170" width="90" height="30" rx="4" fill="#fdeee9" stroke="#e0573e"/><text x="815" y="190">훈육</text>
+        </g>
+        <line x1="582" y1="80" x2="650" y2="118" stroke="#e0573e" stroke-width="1.6" marker-end="url(#ar9)"/>
+        <line x1="582" y1="185" x2="650" y2="168" stroke="#e0573e" stroke-width="1.6" marker-end="url(#ar9)"/>
+        <line x1="768" y1="80" x2="700" y2="118" stroke="#e0573e" stroke-width="1.6" marker-end="url(#ar9)"/>
+        <line x1="768" y1="185" x2="700" y2="168" stroke="#e0573e" stroke-width="1.6" marker-end="url(#ar9)"/>
+        <text x="675" y="262">기관의 일상적 작동이 트라우마의</text>
+        <text x="675" y="280">원천이 될 수 있다 → <tspan font-weight="700" fill="#3fa88a">구조적 책임</tspan></text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문 §Discussion의 서술(“the work of institutions (teaching, holding, removing, disciplining) is rarely treated as traumatizing”)과 Hannah-Moffat (2005)의 “intervenable need” 개념을 비교 패널로 재구성했습니다. 오른쪽의 네 행위는 원문이 괄호 안에 든 예시입니다.</p>
+  <div class="fig-implies"><b>이게 무슨 뜻인가:</b> 왼쪽 그림에서는 붉은 점(트라우마)이 사람 안에 있고 기관은 회색 배경입니다. 이때 트라우마는 전문가가 개입할 수 있는 “개입 가능한 욕구(intervenable need)”가 되고, 전문가의 존재 이유가 됩니다. 오른쪽 그림에서는 같은 기관들이 붉은 화살표를 쏘는 주체로 바뀝니다. 아동복지 맥락으로 옮기면, 아동을 가정에서 분리하는 조치 자체가 트라우마의 원천이 될 수 있다는 질문을 던지는 것입니다.</div>
+</div>
+
+<div class="subhead"><span class="code">6.1</span><h3>개혁을 통한 통치</h3><span class="en">Governing through reform</span></div>
+
+<div class="panel">
+  <p>두 번째 논의 갈래에서 저자들은 TIC를 하나의 <strong>개혁(reform)</strong>으로 이해하게 되었다고 밝힙니다. 기존 체계와 구조(교정 체계를 포함해)를 변혁하거나 해체하는 대신, 더 환영하고 친절하고 공감적으로 수정하는 것입니다. 이 논리는 표본 중 아동복지 문헌에서 특히 두드러지는데, 서비스 전달의 개선 수단으로 TIC가 옹호되지만 가족 감시와 아동 분리라는 근본 논리는 흔들리지 않습니다. 저자들은 Davis (2003), Ben-Moshe (2020), Roberts (2022) 등을 빌려, 개혁이 기존의 해로운 체계의 모서리를 부드럽게 함으로써 오히려 그 체계를 강화하고 정당화할 수 있다고 주장합니다. 회복탄력성(Garrett, 2016), 자기돌봄(Newcomb, 2022), 자존감(Cruikshank, 1993), 행동 순응(Härnbro, 2019)이 돌봄 전문직 안의 신자유주의 합리성의 표현으로 지목되어 왔는데, 표본 속의 TIC는 바로 이 주제들을 집단적 투쟁과 구조 변화보다 앞세운다는 것입니다.</p>
+  <p>저자들은 SAMHSA(2023)가 TIC를 조직 차원의 변혁으로 규정하며 트라우마 특화 개입만으로는 충분하지 않고 조직의 문화, 정책, 절차, 실천에 외상기반 원칙을 통합해야 한다고 말한다는 점도 짚습니다. 그러나 분석한 자료에서 이 비전은 거의 실현되지 않았고, TIC는 주로 개별 제공자(슈퍼바이저, 실무자, 교사)가 행동을 형성하고 자신과 클라이언트가 트라우마에 적응하도록 돕는 방식으로 쓰였다고 보고합니다. 조직 정책이 언급될 때조차 형식적이거나, 애착 기반 훈육 전략이나 개인 자기조절 기법처럼 개인 수준의 적응으로 다시 수렴했다는 것입니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 14. 개혁과 변혁: 같은 건물, 다른 질문</div>
+  <span class="fig-tag kr">AIR Lab 재구성 · 비교 패널</span>
+  <div class="fig-kr">
+    <svg viewBox="0 0 900 290" width="100%" role="img" aria-label="모서리를 둥글게 다듬은 건물과 구조 자체를 다시 묻는 건물의 비교">
+      <g font-size="13" text-anchor="middle" fill="#20262e">
+        <rect x="10" y="10" width="430" height="270" rx="14" fill="#fff" stroke="#e6ebf1"/>
+        <text x="225" y="38" font-weight="700" fill="#2f6fa8" font-size="14.5">개혁 (reform): 더 친절하게</text>
+        <path d="M120 200 L120 110 Q120 80 150 80 L300 80 Q330 80 330 110 L330 200 z" fill="#e8f1fa" stroke="#2f6fa8" stroke-width="1.8"/>
+        <path d="M110 84 Q225 30 340 84" fill="none" stroke="#2f6fa8" stroke-width="1.8"/>
+        <rect x="150" y="110" width="40" height="30" rx="8" fill="#fff" stroke="#6cb0e4"/>
+        <rect x="260" y="110" width="40" height="30" rx="8" fill="#fff" stroke="#6cb0e4"/>
+        <rect x="205" y="150" width="40" height="50" rx="10" fill="#fff" stroke="#6cb0e4"/>
+        <text x="225" y="102" font-size="11.5" fill="#3fa88a">♡ 환영 · 공감 · 안전</text>
+        <text x="225" y="232">모서리는 부드러워지지만</text>
+        <text x="225" y="252" font-weight="700" fill="#e0573e">감시와 분리의 논리는 그대로</text>
+
+        <rect x="460" y="10" width="430" height="270" rx="14" fill="#fff" stroke="#e6ebf1"/>
+        <text x="675" y="38" font-weight="700" fill="#3fa88a" font-size="14.5">변혁 (transformation): 구조를 묻기</text>
+        <path d="M570 200 L570 90 L780 90 L780 200" fill="none" stroke="#aab4c1" stroke-width="1.8" stroke-dasharray="6 5"/>
+        <path d="M560 94 L675 50 L790 94" fill="none" stroke="#aab4c1" stroke-width="1.8" stroke-dasharray="6 5"/>
+        <text x="675" y="125" font-size="30" font-weight="700" fill="#3fa88a">?</text>
+        <text x="675" y="155" font-size="12" fill="#46505c">이 건물은 왜 이런 모양인가</text>
+        <text x="675" y="175" font-size="12" fill="#46505c">누구를 위해 지어졌는가</text>
+        <text x="675" y="232">해악을 생산하는 조건을</text>
+        <text x="675" y="252" font-weight="700" fill="#3fa88a">변화와 조직화의 대상으로</text>
+      </g>
+    </svg>
+  </div>
+  <p class="fig-cap">원문 §Governing through reform의 개혁과 변혁 대비(“modified to be more welcoming, kind, and empathic, rather than transformed or dismantled altogether”)를 비교 패널로 재구성했습니다.</p>
+  <div class="fig-implies"><b>📊 그림 읽는 법:</b> 왼쪽 건물은 같은 골격에 둥근 모서리와 따뜻한 장식을 더한 모습이고, 오른쪽은 골격 자체를 점선으로 그려 “다시 지을 수도 있는 것”으로 표시한 모습입니다. 저자들은 TIC가 왼쪽에 머문다고 봅니다. 이 대비는 TIC가 무가치하다는 뜻이 아니라, 개혁이 변혁의 질문을 대체할 때 생기는 효과를 경계하자는 뜻입니다.</div>
+</div>
+
+<div class="quote-box">“Rendering such processes ‘trauma-informed’ does not undo their violence; it may, in fact, obscure it.”
+  <span class="trans">그러한 과정(가족 감시와 아동 분리)을 “외상기반”으로 만든다고 해서 그 폭력이 취소되지는 않는다. 오히려 그것을 <strong>가릴</strong> 수도 있다.</span>
+  <span class="attr">출처: §Discussion, Governing through reform</span>
+</div>
+
+<div class="subhead"><span class="code">6.2</span><h3>향후 연구 방향</h3><span class="en">Future directions</span></div>
+
+<div class="mod-grid">
+  <div class="mod-card">
+    <h4>트라우마 편재성의 역사성</h4>
+    <div class="en">Is ubiquity a contemporary construction?</div>
+    <p>트라우마가 보편적이라는 가정은 인간 발달과 인간 조건에 대해 무엇을 말하는가, 그것은 현대적 구성물인가 역사적으로 일관된 현실인가를 묻자고 제안합니다.</p>
+  </div>
+  <div class="mod-card">
+    <h4>인접 분야로의 확장</h4>
+    <div class="en">Allied fields and trauma treatment</div>
+    <p>심리학 등 인접 분야의 TIC 담론, 그리고 이번 연구가 다루지 않은 트라우마 치료에서의 상호성과 협력을 후속 과제로 제시합니다.</p>
+  </div>
+  <div class="mod-card">
+    <h4>회색 문헌과 현장 실천</h4>
+    <div class="en">Gray literature and praxis</div>
+    <p>학술 문헌 밖의 기관 문서, 그리고 실제로 “일을 하는 사람들”이 TIC를 어떻게 실행하는지를 연구하면 “TIC는 무엇을 하는가”에 더 깊이 답할 수 있다고 봅니다.</p>
+  </div>
+  <div class="mod-card">
+    <h4>효과성과 충실도 측정</h4>
+    <div class="en">Effectiveness and fidelity</div>
+    <p>저자들은 집필 시점 기준으로 TIC 충실도나 효능을 평가하는 타당화된 척도가 없다고 보고하며, 학자와 실무자가 TIC의 “효과”를 어떻게 개념화하는지도 연구 대상이 된다고 말합니다.</p>
+  </div>
+</div>
+
+<!-- §07 limits -->
+<div class="section-head" id="limits">
+  <div class="section-num">07</div>
+  <div class="section-title-block">
+    <h2>읽기의 한계: 이 비판을 어디까지 받아들일 것인가</h2>
+    <p class="section-subtitle">세미나에서 공정하게 따져볼 지점들</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>좋은 비판 논문일수록 그 비판의 범위를 정확히 읽는 것이 중요합니다. 원문은 별도의 “Limitations” 절을 두지 않지만, 본문 곳곳에서 저자들 스스로 범위를 밝히고 있으며, 독자로서 추가로 따져볼 지점도 있습니다. 아래 표는 이를 구분해 정리한 것입니다.</p>
+  <table class="mini-table">
+    <tr><th style="width:26%">쟁점</th><th>내용</th><th style="width:18%">근거</th></tr>
+    <tr><td>표본의 범위</td><td>2012~2022년 사회복지 학술지의 최다 인용 10편이며, 주로 미국 맥락의 TIC를 반영합니다. 최근 문헌이나 다른 나라의 정책 문서, 현장 실천은 직접 분석되지 않았습니다.</td><td>저자 명시 (§Current study, §Future directions)</td></tr>
+    <tr><td>실천 틀과 치료의 구분</td><td>분석은 실천 틀로서의 TIC에 한정되며 트라우마 특화 치료는 다루지 않습니다. 따라서 결론을 트라우마 치료 전반으로 확장해서는 안 됩니다.</td><td>저자 명시 (§Current study)</td></tr>
+    <tr><td>“인용 많음”과 “영향력”</td><td>최다 인용 텍스트가 담론의 중심을 보여 준다는 논리는 합리적이지만, 인용 수가 실제 현장 실천을 얼마나 대표하는지는 별도의 문제입니다. 저자들도 회색 문헌과 현장 연구를 후속 과제로 제시합니다.</td><td>저자 명시 + 독자 판단</td></tr>
+    <tr><td>해석의 경쟁 가능성</td><td>같은 문장(예: 자기돌봄 권고, 10분 진정 목표)을 실무자 보호나 학생 안전의 언어로 읽을 여지도 있습니다. 논문은 3인 독립 분석과 대화로 해석을 통합했다고 밝히지만, 반례 탐색이나 대안적 해석의 체계적 검토 절차는 보고하지 않습니다.</td><td>독자 판단</td></tr>
+    <tr><td>연구자의 위치</td><td>분석팀은 선행 스코핑 리뷰를 수행한 같은 연구자들이며, 첫 연구에서 이미 비판적 문제의식을 형성했습니다. 이는 연속성의 장점이지만 해석의 방향을 미리 정했을 가능성도 함께 생각해 볼 수 있습니다. 원문은 연구자 성찰성(positionality)에 대한 별도 서술을 두지 않습니다.</td><td>독자 판단</td></tr>
+    <tr><td>분석 대상 목록</td><td>10편 중 본문에 인용된 것은 8편이며, 전체 목록은 온라인 Supplementary Table 1에 있습니다(이 페이지에서는 <strong>확인 필요</strong>).</td><td>원문 §Current study</td></tr>
+  </table>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">🧭 길잡이: 비판을 실천으로 옮기는 방법</span><br>
+  이 논문의 결론을 “TIC를 버리자”로 읽으면 저자들의 의도와도 멀어집니다. 보다 생산적인 독해는 TIC를 실천하거나 연구할 때 스스로에게 던질 질문의 목록으로 바꾸는 것입니다. 예를 들어, 이 개입의 성과 지표는 누구의 필요를 반영하는가, 당사자는 자기 경험의 전문가로 인정되는가, 기관 자체가 트라우마의 원천일 가능성을 평가 항목에 넣었는가, 실무자의 소진을 개인의 자기돌봄 과제로만 다루고 있지는 않은가 같은 질문입니다.
+</div>
+
+<!-- §08 phrases -->
+<div class="section-head" id="phrases">
+  <div class="section-num">08</div>
+  <div class="section-title-block">
+    <h2>명문장: 영어 논문 작성에 가져다 쓸 수 있는 문장들</h2>
+    <p class="section-subtitle">Notable sentences · 비판적 논증을 영어로 구성하는 법</p>
+  </div>
+</div>
+
+<div class="phrase-grid">
+  <div class="phrase">
+    <div class="en">“It is at once urgent and authoritative, as it is nebulous and compulsory.”</div>
+    <div class="kr">그것은 긴급하고 권위 있는 동시에, 모호하고 강제적이다.</div>
+    <div class="why"><b>왜 유용한가:</b> 서론 첫 문단에서 연구 대상의 역설적 위상을 대구 구조(at once A and B, as it is C and D)로 압축합니다. 비판적 논문의 첫 문장을 강하게 여는 수사적 모델입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">“Yet, despite its rapid uptake, TIC remains conceptually vague and empirically underdeveloped.”</div>
+    <div class="kr">그러나 빠르게 확산되었음에도 TIC는 개념적으로 모호하고 경험적으로 미발달한 상태로 남아 있다.</div>
+    <div class="why"><b>왜 유용한가:</b> “despite its rapid uptake”로 대중성과 근거 부족의 간극을 한 문장에 담습니다. 개념적(conceptual) 결함과 경험적(empirical) 결함을 짝지어 연구 공백을 두 축으로 제시하는 표준 표현입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">“If almost any type of adversity or harm can lead to trauma, how then does the term ‘trauma’ retain gravity and significance?”</div>
+    <div class="kr">거의 모든 유형의 역경이나 해악이 트라우마로 이어질 수 있다면, “트라우마”라는 용어는 어떻게 그 무게와 의미를 유지할 수 있는가?</div>
+    <div class="why"><b>왜 유용한가:</b> 개념 팽창(concept creep)을 비판할 때 조건문과 수사의문문을 결합해 독자가 스스로 결론에 이르게 합니다. ACEs 측정 범위를 논의하는 우리 논문에도 응용할 수 있습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">“We extended our work from mapping what TIC is to interrogating what it does through a critical discourse analysis (CDA).”</div>
+    <div class="kr">우리는 TIC가 무엇인지 지도를 그리는 작업에서, 비판적 담론분석을 통해 TIC가 무엇을 하는지 심문하는 작업으로 연구를 확장했다.</div>
+    <div class="why"><b>왜 유용한가:</b> 선행 연구와 현재 연구의 관계를 “from mapping … to interrogating”이라는 동사 대비 하나로 설명합니다. 후속 연구의 정당성을 짧게 서술할 때 그대로 쓸 수 있는 틀입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">“We are not suggesting that TIC is without value to people who have experienced trauma. Rather, we are highlighting the work it does …”</div>
+    <div class="kr">우리는 TIC가 트라우마를 경험한 사람들에게 가치가 없다고 말하는 것이 아니다. 오히려 우리는 그것이 하는 일을 조명하고 있다.</div>
+    <div class="why"><b>왜 유용한가:</b> 비판의 대상을 가치가 아니라 기능으로 한정하는 예방적 문장(hedging)입니다. 리뷰어의 “이 연구는 TIC를 부정하는가”라는 반론을 미리 차단합니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">“These practices transform the temporal experiences of trauma into fixed identity characteristics.”</div>
+    <div class="kr">이러한 관행은 트라우마라는 일시적 경험을 고정된 정체성 특성으로 바꾸어 놓는다.</div>
+    <div class="why"><b>왜 유용한가:</b> temporal과 fixed, experiences와 characteristics의 이중 대비가 분석의 핵심을 한 문장에 담습니다. 낙인, 명명, 유형화를 다루는 논문의 discussion에서 효과적인 문장 구조입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">“This rhetorical move (acknowledging voice only to invalidate it) discursively reaffirms expert authority …”</div>
+    <div class="kr">이러한 수사적 움직임(목소리를 인정하되 오직 무효화하기 위해 인정하는 것)은 담론적으로 전문가 권위를 재확인한다.</div>
+    <div class="why"><b>왜 유용한가:</b> 분석한 텍스트의 수사 전략에 이름을 붙이고 괄호로 정의합니다. 질적 분석에서 발견한 패턴을 “명명 + 정의 + 효과”로 제시하는 모범적 형식입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">“These subject positions are mutually reinforcing: the ‘expert helper’ subjectivity requires the ‘vulnerable client’ subjectivity to exist …”</div>
+    <div class="kr">이 주체 위치들은 서로를 강화한다: “전문가 조력자”라는 주체성은 “취약한 클라이언트”라는 주체성이 있어야 존재할 수 있다.</div>
+    <div class="why"><b>왜 유용한가:</b> 콜론 뒤에서 추상적 주장(mutually reinforcing)을 구체적 짝으로 풀어 줍니다. 관계적 구성 개념을 영어로 설명할 때 유용한 “claim: specification” 구조입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">“The solution to burnout is then also located in the individual (practice self-care) rather than the systems that are burning them out.”</div>
+    <div class="kr">그러면 소진의 해법 역시 그들을 소진시키는 체계가 아니라 개인(자기돌봄을 실천하라)에게서 찾아진다.</div>
+    <div class="why"><b>왜 유용한가:</b> “located in A rather than B” 구조로 책임의 소재를 대비시키고, burnout과 burning them out의 말놀이로 체계의 능동성을 드러냅니다. 개인화 비판의 영어 표현으로 활용도가 높습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">“Rendering such processes ‘trauma-informed’ does not undo their violence; it may, in fact, obscure it.”</div>
+    <div class="kr">그러한 과정을 “외상기반”으로 만든다고 해서 그 폭력이 취소되지는 않는다. 오히려 그것을 가릴 수도 있다.</div>
+    <div class="why"><b>왜 유용한가:</b> 세미콜론과 “in fact”로 예상을 뒤집는 두 번째 절을 붙입니다. 개혁의 역설적 효과를 주장할 때 강하지만 “may”로 단정을 피하는 균형 잡힌 문장입니다.</div>
+  </div>
+</div>
+
+<!-- §09 our study -->
+<div class="section-head" id="ourstudy">
+  <div class="section-num">09</div>
+  <div class="section-title-block">
+    <h2>AIR Lab 연구와의 연결</h2>
+    <p class="section-subtitle">ACEs, 사람중심 방법, 외상기반 아동·청소년 정신건강 연구에 이 비판을 비추어 보기</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>이 논문은 ACEs와 외상기반 실천을 핵심 의제로 삼는 연구실에 특히 불편하고, 그래서 중요한 텍스트입니다. 저자들은 트라우마의 편재성이라는 전제가 상당 부분 ACEs 유병률 통계에 기대고 있다고 지적하며, 그 전제가 예방보다 수용과 적응을, 구조보다 개인을 향하게 만든다고 봅니다. 이 비판은 ACEs 연구를 그만두라는 요구가 아니라, <strong>우리가 무엇을 측정하고 어떻게 이름 붙이며 어떤 결론을 정책으로 연결하는가</strong>를 점검하라는 요구로 읽을 수 있습니다.</p>
+  <p>특히 잠재프로파일분석이나 네트워크 분석처럼 사람을 유형화하는 방법을 쓰는 연구는 “보편적이면서 타자화된 주체”의 역설과 직접 맞닿아 있습니다. 잠재계층에 붙이는 이름, 결과변수로 선택하는 개인 수준 증상, 보호요인으로 강조하는 회복탄력성은 모두 이 논문의 분석 대상이 될 수 있는 언어입니다. 동시에 이 논문은 구조 변수를 모형에 포함하고, 기관 경험을 노출 변수로 다루며, 당사자의 해석을 분석에 통합하는 방향으로 우리 연구를 확장할 단서도 줍니다.</p>
+  <table class="mini-table">
+    <tr><th style="width:30%">우리 연구 요소</th><th>이 논문에서의 대응</th></tr>
+    <tr><td>ACE 점수의 누적 측정과 높은 유병률 보고</td><td>트라우마 편재성 전제(§02.2): 유병률이 예방이 아닌 수용과 적응의 근거로 쓰일 수 있음</td></tr>
+    <tr class="hi"><td>LPA/LCA로 도출한 계층과 그 명명(“고위험군” 등)</td><td>보편적이면서 타자화된 주체(그림 7): 일시적 경험이 고정된 정체성 특성으로 바뀔 위험</td></tr>
+    <tr><td>개인 수준 결과변수(우울, 자해, 자살사고)</td><td>개인화 논리(§02.1 ②): 구조적, 제도적 해악이 결과 해석에서 사라질 가능성</td></tr>
+    <tr class="hi"><td>회복탄력성과 보호요인 강조</td><td>신자유주의 합리성의 표현으로서의 resilience(§06.1, Garrett 2016 인용)</td></tr>
+    <tr><td>아동보호, 시설, 학교 경험</td><td>기관이 트라우마를 생산할 가능성(그림 13): 기관 경험을 노출 변수로 다룰 근거</td></tr>
+    <tr class="hi"><td>정책 제언(외상기반 서비스 확대)</td><td>개혁과 변혁의 구분(그림 14): 제언이 체계의 모서리만 다듬는지 점검</td></tr>
+    <tr><td>실무자 소진, 대리외상 연구</td><td>제공자 통치(§05 B): 소진을 개인의 자기돌봄 과제로 환원하지 않는 설계</td></tr>
+  </table>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">스터디 토론 질문</span><br>
+  <strong>Q1.</strong> 저자들은 트라우마의 편재성이 TIC를 필요하게 만드는 전제라고 봅니다. ACEs 유병률을 보고하는 우리 연구는 이 전제를 강화하는가, 아니면 예방과 구조 변화를 요구하는 근거로 쓰일 수 있는가? 두 쓰임을 가르는 것은 결과 해석의 어떤 문장인가?<br>
+  <strong>Q2.</strong> 잠재계층이나 프로파일에 이름을 붙일 때, “일시적 경험을 고정된 정체성 특성으로 바꾸는” 효과를 줄이기 위해 어떤 명명 원칙과 서술 방식을 쓸 수 있는가?<br>
+  <strong>Q3.</strong> Monarch Room의 “10분 안에 진정하여 교실 복귀”라는 목표를 다른 성과 지표로 바꾼다면 무엇이 되어야 하는가? 이 논문의 비판을 받아들이면서도 TIC 개입의 효과 연구를 설계할 수 있는 방법은 무엇인가?
+</div>
+
+<!-- §10 worksheet -->
+<div class="section-head" id="worksheet">
+  <div class="section-num">10</div>
+  <div class="section-title-block">
+    <h2>정리 활동</h2>
+    <p class="section-subtitle">작성한 내용은 이 브라우저에 자동 저장됩니다</p>
+  </div>
+</div>
+
+<div class="worksheet">
+  <h4>활동 1. 한 문장 요약과 반론</h4>
+  <div class="prompt">이 논문의 핵심 주장을 영어 한 문장으로 요약하고, 그 주장에 대해 가장 강력하다고 생각하는 반론을 한 문장으로 써 보세요. 반론은 원문의 어떤 근거를 겨냥하는지도 밝혀 주세요.</div>
+  <textarea data-key="summary_counter" placeholder="Summary: ...&#10;Counterargument: ..."></textarea>
+  <span class="save-status"></span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 2. 우리 문장을 담론분석해 보기</h4>
+  <div class="prompt">본인이 최근에 쓴 논문이나 초록에서 트라우마, ACEs, 회복탄력성, 고위험군 같은 표현이 들어간 문장 하나를 옮겨 적고, Gee의 building tasks 중 “정체성”과 “정치(사회적 재화)” 두 가지 질문으로 분석해 보세요. 이 문장은 누구를 어떤 주체로 만들고, 어떤 해결책을 자연스럽게 만드는가?</div>
+  <textarea data-key="own_sentence" placeholder="원문 문장: ...&#10;정체성: ...&#10;정치(사회적 재화): ..."></textarea>
+  <span class="save-status"></span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 3. 개혁에서 변혁으로: 연구 설계 바꾸기</h4>
+  <div class="prompt">진행 중이거나 계획 중인 연구 하나를 떠올리고, 이 논문의 비판을 반영해 바꿀 수 있는 설계 요소 하나(측정 변수, 표본, 결과 해석, 정책 제언 중 하나)를 구체적으로 제안해 보세요.</div>
+  <textarea data-key="redesign" placeholder="연구: ...&#10;바꿀 요소: ...&#10;이유: ..."></textarea>
+  <span class="save-status"></span>
+</div>
+
+<div class="closing">
+  <div class="closing-inner">
+    <h2>이 논문이 세미나에 남기는 것</h2>
+    <p>이론이 성장하는 방식에는 새로운 기제를 더하는 길도 있지만, 이미 당연해진 개념이 <strong>무엇을 하고 있는지</strong>를 되묻는 길도 있습니다. 이 논문은 후자의 길을 보여 줍니다. 효과를 묻는 대신 작동을 묻고, 주장된 가치 대신 생산되는 주체를 묻습니다. 그 결과 TIC는 “좋은 실천 틀”에서 “분석되어야 할 담론”으로 위치가 바뀝니다.</p>
+    <p>동시에 이 논문은 비판의 범위가 표본과 방법에 의해 정해진다는 점도 함께 가르칩니다. 최다 인용 10편이라는 창은 담론의 중심을 보여 주지만, 현장의 모든 TIC를 보여 주지는 않습니다. 좋은 독자는 비판을 받아들이는 동시에 그 범위를 정확히 표시합니다. 외상과 역경을 연구하는 우리에게 남는 과제는, <strong>트라우마를 개인 안에서만 찾지 않는 연구 언어와 설계</strong>를 만들어 가는 일입니다.</p>
+    <div class="signature">Leotti, S. M., Wahab, S., &amp; Anderson-Nathe, B. (2026). The work of trauma-informed care discourse: Constructing clients, workers, and logics of governance. The British Journal of Social Work. · AIR Lab Journal Club</div>
+  </div>
+</div>
+
+</main>
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(31,78,121,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#1f4e79"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#1f4e79"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<footer class="footer">
+  이 페이지는 AIR Lab 대학원 저널클럽의 교육용 자료입니다. 원문 인용은 학술적 논의를 위한 짧은 발췌이며, 모든 그림은 원문 서술을 바탕으로 AIR Lab이 재구성한 것입니다. 원문은 Open Access(CC BY-NC-ND 4.0)로 공개되어 있으니 정확한 내용은 반드시 원문을 확인해 주세요.
+</footer>
+
+<script>
+(function(){
+  var PREFIX = 'jc_leotti2026_';
+  var areas = document.querySelectorAll('.worksheet textarea[data-key]');
+  function store(){ try { return window.localStorage; } catch(e){ return null; } }
+  function flash(el){
+    var s = el.parentNode.querySelector('.save-status');
+    if(!s) return;
+    s.textContent = '저장됨';
+    s.classList.add('show');
+    clearTimeout(s._t);
+    s._t = setTimeout(function(){ s.classList.remove('show'); }, 1400);
+  }
+  function save(el){
+    var ls = store(); if(!ls) return false;
+    try { ls.setItem(PREFIX + el.getAttribute('data-key'), el.value); return true; } catch(e){ return false; }
+  }
+  areas.forEach(function(el){
+    var ls = store();
+    if(ls){ try { var v = ls.getItem(PREFIX + el.getAttribute('data-key')); if(v !== null) el.value = v; } catch(e){} }
+    var timer;
+    el.addEventListener('input', function(){
+      clearTimeout(timer);
+      timer = setTimeout(function(){ if(save(el)) flash(el); }, 400);
+    });
+  });
+  window.saveAll = function(){
+    var ok = true;
+    areas.forEach(function(el){ if(save(el)) flash(el); else ok = false; });
+    if(!ok){ alert('이 브라우저에서는 자동 저장을 사용할 수 없습니다. 내용을 별도로 복사해 두세요.'); }
+  };
+})();
+</script>
+</body>
+</html>
