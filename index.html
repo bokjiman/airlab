@@ -676,8 +676,7 @@ a.nc-link:hover .nc-go::after { transform: translateX(4px); }
 .pb-stage {
   font-size: 0.62rem; letter-spacing: 0.05em; text-transform: uppercase;
   padding: 0.3rem 0.7rem; font-weight: 600; text-align: center; border-radius: var(--r-pill);
-  background: #fff4ec; color: #c0612a;
-}
+  background: #fff4ec; color: #c0612a; white-space: nowrap; }
 
 .pr-no { display: block; font-size: 0.66rem; letter-spacing: 0.04em; color: var(--xlight); margin-top: 0.3rem; font-weight: 400; }
 
@@ -1333,6 +1332,7 @@ footer {
         <button onclick="fp('intl',this)">SSCI / SCIE</button>
         <button onclick="fp('kci',this)">KCI</button>
         <button onclick="fp('review',this)">Under Review</button>
+        <button onclick="fp('progress',this)">In Progress</button>
       </div>
       <span style="font-size:0.63rem;letter-spacing:0.14em;color:var(--xlight);" id="pubCount"></span>
     </div>
@@ -1677,6 +1677,15 @@ const NEWS_DATA = [
 
 const PUB_DATA = [
   // ── 2026 ──
+  { no:null, year:2026, type:"", isNew:false, status:"progress", reviewStage:"In Progress", title:"청소년의 도박 관련 인식과 또래 도박 목격 및 대응 행동의 관계: 방관자 개입 모형을 중심으로", journal:"", authors:"이승연, 김준범, 이상준", citation:"이승연, 김준범, 이상준. (in preparation). 청소년의 도박 관련 인식과 또래 도박 목격 및 대응 행동의 관계: 방관자 개입 모형을 중심으로.", doi:"" },
+  { no:null, year:2026, type:"", isNew:false, status:"progress", reviewStage:"In Progress", title:"Physiological Embedding of Depressive Symptoms: Disentangling the Triggering and Accumulation of Allostatic Load", journal:"", authors:"Kim, J., & Lee, M. S.", citation:"Kim, J., & Lee, M. S. (in preparation). Physiological Embedding of Depressive Symptoms: Disentangling the Triggering and Accumulation of Allostatic Load.", doi:"" },
+  { no:null, year:2026, type:"", isNew:false, status:"progress", reviewStage:"In Progress", title:"지방소멸 시대 민간 사회복지시설 인력의 임금구조 진단: 직급군·지역·분위 교차에 대한 무조건부 분위회귀 분석", journal:"", authors:"김준범, 이재은, 김태호", citation:"김준범, 이재은, 김태호. (in preparation). 지방소멸 시대 민간 사회복지시설 인력의 임금구조 진단: 직급군·지역·분위 교차에 대한 무조건부 분위회귀 분석.", doi:"" },
+  { no:null, year:2026, type:"", isNew:false, status:"progress", reviewStage:"In Progress", title:"닿지 못한 도움, 서로 다른 이유: 성별에 따른 자살위험 청소년의 정신건강 서비스 이용 장벽 및 도움요청 채널별 상담 의향 분석", journal:"", authors:"김준범, 이재은, 정화영", citation:"김준범, 이재은, 정화영. (in preparation). 닿지 못한 도움, 서로 다른 이유: 성별에 따른 자살위험 청소년의 정신건강 서비스 이용 장벽 및 도움요청 채널별 상담 의향 분석.", doi:"" },
+  { no:null, year:2026, type:"", isNew:false, status:"progress", reviewStage:"In Progress", title:"심혈관대사질환 인지·치료·조절 단계의 이탈 위험요인에 관한 연구: 국민건강영양조사를 활용한 사회적 결정요인의 단계 특이성을 중심으로", journal:"", authors:"김준범, 손수민", citation:"김준범, 손수민. (in preparation). 심혈관대사질환 인지·치료·조절 단계의 이탈 위험요인에 관한 연구: 국민건강영양조사를 활용한 사회적 결정요인의 단계 특이성을 중심으로.", doi:"" },
+  { no:null, year:2026, type:"", isNew:false, status:"progress", reviewStage:"In Progress", title:"알로스타틱부하: 구조 및 개인 요인에 대한 허들 모형", journal:"", authors:"김준범, 김태호, 손수민", citation:"김준범, 김태호, 손수민. (in preparation). 알로스타틱부하: 구조 및 개인 요인에 대한 허들 모형.", doi:"" },
+  { no:null, year:2026, type:"", isNew:false, status:"progress", reviewStage:"In Progress", title:"학교 밖 청소년의 자살경향성 진입과 심화에 대한 허들 음이항모형 분석: 우울과 관계·지역사회 자원의 삼원 상호작용을 중심으로", journal:"", authors:"김준범, 박정명", citation:"김준범, 박정명. (in preparation). 학교 밖 청소년의 자살경향성 진입과 심화에 대한 허들 음이항모형 분석: 우울과 관계·지역사회 자원의 삼원 상호작용을 중심으로.", doi:"" },
+  { no:null, year:2026, type:"", isNew:false, status:"progress", reviewStage:"In Progress", title:"Externalizing Behavior as Embodied Distress: Delinquency Type, Child Maltreatment Profiles, and Distributional Heterogeneity in Adolescent Somatization", journal:"", authors:"Kim, J., & Kim, J. H.", citation:"Kim, J., & Kim, J. H. (in preparation). Externalizing Behavior as Embodied Distress: Delinquency Type, Child Maltreatment Profiles, and Distributional Heterogeneity in Adolescent Somatization.", doi:"" },
+  { no:null, year:2026, type:"", isNew:false, status:"progress", reviewStage:"In Progress", title:"학교 밖 청소년의 생명안전 사각지대: 자해·자살 위험 잠재유형과 안전망 접근성에 관한 혼합연구", journal:"", authors:"김준범, 이승연", citation:"김준범, 이승연. (in preparation). 학교 밖 청소년의 생명안전 사각지대: 자해·자살 위험 잠재유형과 안전망 접근성에 관한 혼합연구.", doi:"" },
     { no:76, year:2026, month:8, pubDate:"2026-08-31", type:"KCI", status:"published", title:"누가 주도하고, 가담하며, 방어하고, 회피하는가: 학교폭력 참여 역할의 복합성과 관계적 영향요인 분석", journal:"청소년학연구", authors:"이재은, 김준범", citation:"이재은, 김준범. (2026). 누가 주도하고, 가담하며, 방어하고, 회피하는가: 학교폭력 참여 역할의 복합성과 관계적 영향요인 분석. 청소년학연구, 33(8), 69-97.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003374005" },
   { no:75, year:2026, month:7, pubDate:"2026-07-01", type:"SSCI", status:"published", title:"Assessing the Link Between Attention Deficit Hyperactivity Disorder, Self-Harm and Suicidality in Adolescents: A Propensity Score Matching Analysis", journal:"Child and Adolescent Social Work Journal", authors:"Kim, J., Sung, S., & Jang, D.", citation:"Kim, J., Sung, S., & Jang, D. (2026). Assessing the Link Between Attention Deficit Hyperactivity Disorder, Self-Harm and Suicidality in Adolescents: A Propensity Score Matching Analysis. Child and Adolescent Social Work Journal.", doi:"https://link.springer.com/article/10.1007/s10560-026-01124-3" },
   { no:74, year:2026, month:6, pubDate:"2026-06-01", type:"KCI", status:"published", title:"청년 자산형성지원사업의 중도해지 결정 요인: 생존분석을 통한 시점별 이탈 위험 분석", journal:"한국사회복지행정학", authors:"김준범, 김동현, 임지혜, 최윤희", citation:"김준범, 김동현, 임지혜, 최윤희. (2026). 청년 자산형성지원사업의 중도해지 결정 요인: 생존분석을 통한 시점별 이탈 위험 분석. 한국사회복지행정학, 28(2), 107-139.", doi:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003340206" },
@@ -1851,15 +1860,17 @@ function renderNews() {
 function renderPubs(filter) {
   const published = PUB_DATA.filter(p => p.status === 'published');
   const under_review = PUB_DATA.filter(p => p.status === 'review');
+  const in_progress = PUB_DATA.filter(p => p.status === 'progress');
 
   let filtered;
   if (filter === 'all')    filtered = published;
   else if (filter === 'intl') filtered = published.filter(p => isIntl(p.type));
   else if (filter === 'kci')  filtered = published.filter(p => p.type === 'KCI');
   else if (filter === 'review') filtered = under_review;
+  else if (filter === 'progress') filtered = in_progress;
   else filtered = published;
 
-  const isReviewMode = filter === 'review';
+  const isReviewMode = filter === 'review' || filter === 'progress';
   document.getElementById('pubCount').textContent = `${filtered.length} papers`;
 
   const yearCount = {};
@@ -1891,9 +1902,9 @@ function renderPubs(filter) {
           <div class="pr-yr">${yrDisplay}${noLabel}</div>
           <div>
             <div class="pr-title-text">${newTitleBadge}${p.title}</div>
-            <div class="pr-authors-preview">${authorsHi} · <em>${p.journal}</em></div>
+            <div class="pr-authors-preview">${authorsHi}${p.journal ? ` · <em>${p.journal}</em>` : ''}</div>
           </div>
-          <div class="pr-badges">${stageB}<span class="pb ${cls}">${lbl}</span></div>
+          <div class="pr-badges">${stageB}${p.type ? `<span class="pb ${cls}">${lbl}</span>` : ''}</div>
         </div>
         <div class="pr-detail">
           <div class="detail-inner">
