@@ -99,7 +99,7 @@ footer { max-width:1200px; margin:0 auto; padding:3rem 2.5rem; display:grid; gri
   .jc-venue{color:#2d7d78!important}
 
 /* ════════ Journal Club: themed layout ════════ */
-.theme-overview { max-width:1200px; margin:0 auto; padding:2.4rem 2.5rem 0.4rem; display:grid; grid-template-columns:repeat(5,1fr); gap:0.8rem; }
+.theme-overview { max-width:1200px; margin:0 auto; padding:2.4rem 2.5rem 0.4rem; display:grid; grid-template-columns:repeat(6,1fr); gap:0.8rem; }
 .th-tile { text-align:left; font-family:var(--font-text); background:#fff; border:1px solid var(--rule); border-top:3px solid var(--tc); border-radius:var(--r-md); padding:1rem 1rem 0.95rem; cursor:pointer; transition:box-shadow .18s, transform .18s, background .18s; display:flex; flex-direction:column; gap:0.35rem; }
 .th-tile:hover { box-shadow:var(--shadow-card); transform:translateY(-2px); }
 .th-tile.on { background:color-mix(in srgb, var(--tc) 7%, #fff); box-shadow:0 0 0 1.5px var(--tc) inset; }
@@ -348,6 +348,76 @@ const REVIEWS = [
     href: "journal/bauducco-2024.html",
     theme: "bio",
     isNew: true
+  },
+  {
+    title: "7회 · 5장 후반 (11.15 예정)",
+    titleKo: "몸이 더하는 것, 아이가 느끼는 것: 다이애드와 알로스타틱 부하",
+    venue: "Neuro Study · Session",
+    journal: "신경사회사업연구회 · Shapiro & Applegate (2018) 함께 읽기",
+    date: "2026.11",
+    desc: "11월 15일로 미룬 모임의 미리 보기입니다. 취약한 다이애드와 알로스타틱 부하, 아이가 느끼는 안전을 강의교안으로 먼저 정리했습니다.",
+    href: "https://bokjiman.github.io/neuro-socialwork/study/s07.html",
+    theme: "neuro"
+  },
+  {
+    title: "6회 · 5장 전반",
+    titleKo: "켜는 것은 쉽다, 끄는 것이 문제다: 스트레스와 ACE",
+    venue: "Neuro Study · Session",
+    journal: "신경사회사업연구회 · Shapiro & Applegate (2018) 함께 읽기",
+    date: "2026.10",
+    desc: "ACE 점수가 세는 것과 세지 않는 것, 켜고 꺼지는 스트레스 반응계, 한국 자료와 완충의 근거를 정리했습니다.",
+    href: "https://bokjiman.github.io/neuro-socialwork/study/s06.html",
+    theme: "neuro"
+  },
+  {
+    title: "5회 · 4장",
+    titleKo: "애착 관계의 역할: 초기 뇌 발달과 정서 조절의 관계적 맥락",
+    venue: "Neuro Study · Session",
+    journal: "신경사회사업연구회 · Shapiro & Applegate (2018) 함께 읽기",
+    date: "2026.10",
+    desc: "내적 작동 모델과 낯선 상황, 성찰 기능, 애착의 신경생물학을 원서·발제·참고자료로 함께 읽었습니다.",
+    href: "https://bokjiman.github.io/neuro-socialwork/study/s05.html",
+    theme: "neuro"
+  },
+  {
+    title: "4회 · 3장",
+    titleKo: "정동과 정동조절: 두 사람이 함께 만드는 조절",
+    venue: "Neuro Study · Session",
+    journal: "신경사회사업연구회 · Shapiro & Applegate (2018) 함께 읽기",
+    date: "2026.09",
+    desc: "정동의 정의에서 Panksepp, LeDoux, Damasio, 거울뉴런, 무표정 실험까지 따라가며 정동조절을 관계의 과업으로 읽었습니다.",
+    href: "https://bokjiman.github.io/neuro-socialwork/study/s04.html",
+    theme: "neuro"
+  },
+  {
+    title: "3회 · 2장",
+    titleKo: "학습과 기억의 신경과학: 경험은 어떻게 새겨지는가",
+    venue: "Neuro Study · Session",
+    journal: "신경사회사업연구회 · Shapiro & Applegate (2018) 함께 읽기",
+    date: "2026.08",
+    desc: "명시기억과 암묵기억, 트라우마 기억과 해리, 그리고 회복의 조건으로서 수용과 연결을 함께 읽었습니다.",
+    href: "https://bokjiman.github.io/neuro-socialwork/study/s03.html",
+    theme: "neuro"
+  },
+  {
+    title: "2회 · 서문·1장",
+    titleKo: "사회복지와 신경과학: 뇌를 사회적 기관으로 보기",
+    venue: "Neuro Study · Session",
+    journal: "신경사회사업연구회 · Shapiro & Applegate (2018) 함께 읽기",
+    date: "2026.08",
+    desc: "서문과 1장의 기초 개념을 읽고, Pollak과 Smith(2026)의 역경 측정 리뷰를 함께 나눴습니다.",
+    href: "https://bokjiman.github.io/neuro-socialwork/study/s02.html",
+    theme: "neuro"
+  },
+  {
+    title: "1회 · 첫 모임",
+    titleKo: "첫 모임: 진행 방식과 Courtet et al. (2016)",
+    venue: "Neuro Study · Session",
+    journal: "신경사회사업연구회 · Shapiro & Applegate (2018) 함께 읽기",
+    date: "2026.08",
+    desc: "진행 방식을 정하고, 신경염증으로 자살 취약성을 설명하는 Courtet 등(2016)의 리뷰를 함께 읽었습니다.",
+    href: "https://bokjiman.github.io/neuro-socialwork/study/s01.html",
+    theme: "neuro"
   }
 ];
 
@@ -357,7 +427,8 @@ const ICON = {
   protect: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M12 10c0-3 2-5.5 6-6-.2 4-2.6 6-6 6z"/><path d="M12 13c0-2.6-1.8-4.6-5-5 .2 3.3 2.2 5 5 5z"/></svg>',
   tic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg>',
   practice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.4"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M14.5 20a4 4 0 0 1 6.5-3.1"/></svg>',
-  bio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4c0 4 6 4 6 8s-6 4-6 8"/><path d="M15 4c0 4-6 4-6 8s6 4 6 8"/><path d="M9.5 8h5M9.5 16h5"/></svg>'
+  bio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4c0 4 6 4 6 8s-6 4-6 8"/><path d="M15 4c0 4-6 4-6 8s6 4 6 8"/><path d="M9.5 8h5M9.5 16h5"/></svg>',
+  neuro: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><circle cx="4.5" cy="6" r="1.8"/><circle cx="19.5" cy="6" r="1.8"/><circle cx="4.5" cy="18" r="1.8"/><circle cx="19.5" cy="18" r="1.8"/><path d="M6 7.2l4 3M18 7.2l-4 3M6 16.8l4-3M18 16.8l-4-3"/></svg>'
 };
 const THEMES = [
   { id:'ace', ko:'아동기 역경과 발달', en:'ACEs & Early Adversity', color:'#1f4e79',
@@ -369,7 +440,9 @@ const THEMES = [
   { id:'practice', ko:'아동보호와 사회복지 실천', en:'Child Welfare & Practice', color:'#8a6a2f',
     desc:'아동보호 인력, 실천 이론, 서비스 이용(도움추구)까지, 제도와 현장의 문제.' },
   { id:'bio', ko:'정신건강의 생물학적 경로', en:'Biological Pathways', color:'#6b5aa0',
-    desc:'염증, 면역대사, 수면처럼 마음의 고통이 몸에 새겨지는 기제.' }
+    desc:'염증, 면역대사, 수면처럼 마음의 고통이 몸에 새겨지는 기제.' },
+  { id:'neuro', ko:'신경사회사업연구회 스터디', en:'Neuro-Social Work Study', color:'#1c5c57',
+    desc:'Neurobiology for Clinical Social Work를 함께 읽는 신경사회사업연구회의 회차별 정리. 각 카드는 연구회 홈페이지로 이어집니다.' }
 ];
 const T = Object.fromEntries(THEMES.map(t => [t.id, t]));
 const ov = document.getElementById('themeOverview');
