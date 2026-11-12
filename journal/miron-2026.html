@@ -1,0 +1,1124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>보이지 않는 학대의 무게</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+  /* ════════ AIR Lab theme: navy → recovery-teal (synced with index) ════════ */
+  :root{ --sky:#2d6a9f; --sky-deep:#1f4e79; --sky-bright:#7fa9d1; --sky-soft:#e9eff6; --sky-soft2:#f4f7fb; --sky-soft-2:#f4f7fb; --mint:#3a9a8f; --mint-soft:#eaf5f2; --hover-bg:#eef3f9; }
+  .stripe{background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+  .stripe span{background:transparent!important}
+  .nav-logo-dot .d3{background:#3a9a8f}
+  .hero{isolation:isolate}
+  .hero::before{background:radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%), linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%)!important}
+  .overline{color:#9fd3ca!important}
+  .overline::before{background:#8cc7bd!important}
+  .hero h1{color:#fff!important}
+  .hero h1 em{color:#bfe6df!important}
+  .hero .citation{color:#b7c9da!important;border-left-color:#8cc7bd!important}
+  .hero .citation em{color:#d6e5f2!important}
+  .hero .citation a{color:#bfe6df!important}
+  .hero .subtitle{color:#d2e0ec!important}
+  .hero .subtitle strong,.hero .subtitle b{color:#fff!important}
+  .hero .subtitle em{color:#bfe6df}
+  .hero .stat{background:rgba(255,255,255,0.08)!important;border-color:rgba(255,255,255,0.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .hero .stat .num{color:#fff!important}
+  .hero .stat .lbl{color:#a9c1d6!important}
+  .paper-meta,.condition-header{background:linear-gradient(120deg,#1c4a73 0%,#22655f 100%)!important}
+  .section-num{background:linear-gradient(120deg,#1f4e79 0%,#2d7d78 100%)!important}
+
+  /* ════════ figure originals + line-drawing helpers ════════ */
+  .fig-orig a{display:block}
+  .fig-orig img{display:block;margin:0 auto;background:#fff}
+  .fig-lic{font-size:11.5px;color:var(--light);line-height:1.55;margin:8px 2px 0;text-align:left}
+  .fig-lic a{color:var(--sky-deep)}
+  .guide-list{margin:6px 0 0;padding-left:20px}
+  .guide-list li{margin-bottom:5px}
+  .mini-table td.num,.mini-table th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .mini-table td small{color:var(--light)}
+  .tbl-wrap{overflow-x:auto}
+  .three-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+  @media (max-width:900px){.three-grid{grid-template-columns:1fr}}
+  svg .ink{stroke:#20262e;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  svg .inkthin{stroke:#46505c;stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body id="top">
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">통념의 출처</a></li>
+      <li><a href="#measure">측정의 문제</a></li>
+      <li><a href="#theory">이론</a></li>
+      <li><a href="#methods">방법</a></li>
+      <li><a href="#r1">주분석</a></li>
+      <li><a href="#r2">조절·편향</a></li>
+      <li><a href="#r3">증후군별</a></li>
+      <li><a href="#disc">논의·한계</a></li>
+      <li><a href="#phrases">명문장</a></li>
+      <li><a href="#ourstudy">우리 연구</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">Miron et al. 2026 · Journal Club</div>
+    <h1>보이지 않는 학대의 무게:<br><em>정서학대는 정말 "덜 해로운" 학대인가</em></h1>
+    <div class="citation">Miron, N., D'Andrea, W. M., Barzilai, E., Krohner, S., Yates, E. H., Conner Self, S. G., Winer, E. S., Doukas, A. M., &amp; Spinazzola, J. (2026). Childhood emotional abuse and adult psychopathology: A multilevel meta-analytic review. <em>Psychological Bulletin, 152</em>(7-8), 623-664. https://doi.org/10.1037/bul0000530</div>
+    <p class="subtitle">정서학대(EA)는 신체학대(PA)나 성학대(SA)보다 신고도 덜 되고, DSM-5의 외상 정의에도 들어 있지 않습니다. 이 논문은 그 밑에 깔린 <strong>"정서학대는 덜 해롭다"는 통념</strong>을 104편의 연구로 직접 검정합니다. 읽을 때는 세 가지를 따라가면 됩니다: 통념이 어디서 왔는가, 세 학대 유형을 <strong>한 모형 안에서</strong> 어떻게 공정하게 비교했는가, 그리고 저자들이 스스로 밝힌 한계 안에서 이 결과를 어디까지 믿을 수 있는가.</p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">104편 · 414개</span><div class="lbl">포함 연구 수 · 효과크기 수</div></div>
+      <div class="stat"><span class="num">113,673명</span><div class="lbl">통합 참여자 수</div></div>
+      <div class="stat"><span class="num">.34 / .25 / .23</span><div class="lbl">EA / PA / SA의 통합 상관 r</div></div>
+      <div class="stat"><span class="num">3수준 모형</span><div class="lbl">효과크기 → 연구 → 전체</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>Miron et al. (2026)</div>
+
+<!-- §01 -->
+<div class="section-head" id="paper">
+  <div class="section-num">01</div>
+  <div class="section-title-block"><h2>논문 소개</h2><p class="section-subtitle">이 논문은 어떤 전통 위에 서 있고, 무엇을 고치려 하는가</p></div>
+</div>
+
+<div class="panel">
+  <p>아동학대 연구에서 신체학대(physical abuse, PA)와 성학대(sexual abuse, SA)는 오래전부터 성인기 정신병리의 위험요인으로 자리를 잡았습니다. 반면 <strong>정서학대(emotional abuse, EA)</strong>는 독립된 학대 유형으로 인정받은 지가 수십 년밖에 되지 않았고, 지금도 "다른 학대에 딸려 오는 부차적 현상" 또는 "상대적으로 가벼운 학대"로 취급되는 일이 많습니다.</p>
+  <p>이 논문은 그 통념을 메타분석으로 검정합니다. 기존 메타분석은 대개 한 가지 학대 유형만 보거나, 여러 유형을 하나의 지수로 합치거나, 우울 같은 단일 결과만 다루었습니다. 저자들은 <strong>같은 연구에서 EA와 PA, SA를 함께 측정한 논문만</strong> 모아, 세 유형을 하나의 다수준 모형 안에서 직접 비교합니다. 비교의 공정성을 설계 단계에서 확보하려 했다는 점이 이 논문의 출발점입니다.</p>
+  <p><em>Psychological Bulletin</em>에 실린 42쪽 분량의 논문답게 서론이 매우 깁니다. 정의, 문화적 맥락, 측정, 이론, 선행 메타분석을 차례로 정리하는데, 그 자체가 정서학대 연구의 지형도 역할을 합니다. 이 페이지도 그 흐름을 그대로 따라갑니다.</p>
+</div>
+
+<div class="paper-meta">
+  <h3>Childhood Emotional Abuse and Adult Psychopathology: A Multilevel Meta-Analytic Review</h3>
+  <div class="sub">Noga Miron · Wendy M. D'Andrea (The New School) · Joseph Spinazzola (The Foundation Trust) 외 6인</div>
+  <div class="paper-meta-grid">
+    <div class="paper-meta-item"><div class="label">Journal</div><div class="value">Psychological Bulletin (SSCI)<br>2026, 152(7-8), 623-664 · Open Access (CC BY-NC-ND 4.0)</div></div>
+    <div class="paper-meta-item"><div class="label">Type</div><div class="value">다수준(3수준) 무선효과 메타분석. 1980~2020년 발표 연구 104편, 효과크기 414개. 사전등록은 하지 않았다고 명시</div></div>
+    <div class="paper-meta-item"><div class="label">Core claim</div><div class="value">아동기 정서학대는 신체학대나 성학대만큼, 여러 증후군에서는 그보다 더 강하게 성인기 정신병리와 연관된다</div></div>
+  </div>
+</div>
+
+<div class="quote-box">
+  "Because studies relied on retrospective self-report and cross-sectional designs, findings should be interpreted cautiously. Nevertheless, findings challenge the perception that EA is less harmful than PA and SA."
+  <span class="trans">포함된 연구들이 <strong>회고적 자기보고와 횡단 설계</strong>에 의존했으므로 결과는 조심스럽게 해석해야 한다. 그럼에도 이 결과는 <strong>정서학대가 신체학대나 성학대보다 덜 해롭다는 인식</strong>에 이의를 제기한다.</span>
+  <span class="attr">출처: Abstract</span>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">🧭 길잡이 · 이 연구의 세 가지 질문</span><br>
+  <strong>질문 1.</strong> 아동기 EA, PA, SA는 각각 성인기 정신병리와 얼마나 강하게 연관되는가?<br>
+  <strong>질문 2.</strong> 세 유형을 같은 모형 안에서 비교하면 EA의 연관은 PA, SA와 비슷한가, 더 큰가?<br>
+  <strong>질문 3.</strong> 그 양상은 표본 출처, 측정도구, 성별, 인종 구성, 진단체계, 증후군 종류에 따라 달라지는가?
+</div>
+
+<!-- §02 -->
+<div class="section-head" id="intro">
+  <div class="section-num">02</div>
+  <div class="section-title-block"><h2>통념은 어디서 왔는가: 정의하기 어렵고 보이지 않는 학대</h2><p class="section-subtitle">Defining Childhood Maltreatment · Specific Challenges Defining and Detecting Childhood EA</p></div>
+</div>
+
+<div class="panel">
+  <p>저자들은 서론 첫 단락에서 통념의 제도적 근거 두 가지를 짚습니다. 첫째, PA와 SA는 EA보다 당국에 신고될 가능성이 높고, EA는 아동보호서비스에 가장 덜 신고되는 학대 유형에 속합니다. 둘째, DSM-5는 외상 사건을 "실제적이거나 위협적인 죽음, 심각한 부상, 또는 성폭력에의 노출"로 정의하는데, PA와 SA는 이 정의에 자연스럽게 들어가지만 EA는 그렇지 않습니다.</p>
+  <p>여기에 <strong>정의의 문제</strong>가 겹칩니다. PA는 "신체적 힘의 사용과 그 결과"로, SA는 "성적 행위와 관계 맥락"으로 비교적 표준화된 정의가 있습니다. EA는 그렇지 않습니다. DSM-5는 "아동에게 심각한 심리적 해를 주거나 줄 가능성이 있는, 양육자의 비우발적인 언어적·상징적 행위"로 정의하고, APSAC(American Professional Society on the Abuse of Children)는 "아동에게 자신이 무가치하고, 결함이 있고, 사랑받지 못하고, 원치 않는 존재라는 메시지를 전하는 양육자 행동의 반복 양상 또는 심각한 사건"으로 정의합니다. 한쪽은 행위와 결과를, 다른 쪽은 반복성과 메시지를 강조합니다.</p>
+  <p><strong>정서적 방임(emotional neglect, EN)</strong>과의 경계도 문제입니다. 통상 EA는 작위(commission: 위협, 모욕), EN은 부작위(omission: 관심과 애정의 결핍)로 구분하지만, WHO의 정의는 둘을 함께 담고 있고, 오래 지속되는 "무시하기(silent treatment)"처럼 관심의 부작위이자 적대의 작위인 경우도 있습니다. 이 구분은 뒤의 포함기준에서 다시 중요해집니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">세 학대 유형이 "눈에 띄는 정도"는 왜 다른가 (서론 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 340" width="100%" style="max-width:900px" role="img" aria-label="세 학대 유형의 가시성 비교">
+    <g font-size="13">
+      <!-- PA -->
+      <rect x="20" y="16" width="270" height="308" rx="14" fill="#fff" stroke="#3a9a8f" stroke-width="1.5"/>
+      <text x="155" y="44" text-anchor="middle" font-size="15" font-weight="700" fill="#3a9a8f">신체학대 PA</text>
+      <circle cx="155" cy="92" r="17" class="ink"/><path d="M155 109 L155 162 M155 124 L128 146 M155 124 L182 146 M155 162 L137 196 M155 162 L173 196" class="ink"/>
+      <path d="M178 118 l8 -8 m-8 0 l8 8" stroke="#e0573e" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="155" y="226" text-anchor="middle" fill="#20262e" font-weight="600">흔적이 남는다</text>
+      <text x="155" y="248" text-anchor="middle" fill="#46505c" font-size="12">멍, 상처 같은 관찰 가능한 지표</text>
+      <text x="155" y="276" text-anchor="middle" fill="#46505c" font-size="12">정의: 행위와 그 결과</text>
+      <text x="155" y="298" text-anchor="middle" fill="#3a9a8f" font-size="12" font-weight="600">DSM-5 외상 정의에 포함</text>
+      <!-- SA -->
+      <rect x="315" y="16" width="270" height="308" rx="14" fill="#fff" stroke="#c78a1e" stroke-width="1.5"/>
+      <text x="450" y="44" text-anchor="middle" font-size="15" font-weight="700" fill="#c78a1e">성학대 SA</text>
+      <circle cx="450" cy="92" r="17" class="ink"/><path d="M450 109 L450 162 M450 124 L423 146 M450 124 L477 146 M450 162 L432 196 M450 162 L468 196" class="ink"/>
+      <rect x="406" y="70" width="88" height="134" rx="10" fill="none" stroke="#c78a1e" stroke-width="2" stroke-dasharray="6 5"/>
+      <text x="450" y="226" text-anchor="middle" fill="#20262e" font-weight="600">경계 위반이 분명하다</text>
+      <text x="450" y="248" text-anchor="middle" fill="#46505c" font-size="12">사회적으로 합의된 선을 넘는 행위</text>
+      <text x="450" y="276" text-anchor="middle" fill="#46505c" font-size="12">정의: 비교적 표준화</text>
+      <text x="450" y="298" text-anchor="middle" fill="#c78a1e" font-size="12" font-weight="600">DSM-5 외상 정의에 포함</text>
+      <!-- EA -->
+      <rect x="610" y="16" width="270" height="308" rx="14" fill="#e9eff6" stroke="#1f4e79" stroke-width="2"/>
+      <text x="745" y="44" text-anchor="middle" font-size="15" font-weight="700" fill="#1f4e79">정서학대 EA</text>
+      <circle cx="745" cy="100" r="17" class="ink"/><path d="M745 117 L745 166 M745 130 L722 150 M745 130 L768 150 M745 166 L729 196 M745 166 L761 196" class="ink"/>
+      <path d="M640 62 h78 a8 8 0 0 1 8 8 v22 a8 8 0 0 1 -8 8 h-12 l8 12 l-20 -12 h-54 a8 8 0 0 1 -8 -8 v-22 a8 8 0 0 1 8 -8 z" fill="#fff" stroke="#1f4e79" stroke-width="1.6"/>
+      <text x="679" y="86" text-anchor="middle" font-size="12" fill="#1f4e79" font-weight="600">"넌 쓸모없어"</text>
+      <text x="745" y="226" text-anchor="middle" fill="#20262e" font-weight="600">흔적도 뚜렷한 선도 없다</text>
+      <text x="745" y="248" text-anchor="middle" fill="#46505c" font-size="12">흔한 꾸중과의 구분이 어렵다</text>
+      <text x="745" y="276" text-anchor="middle" fill="#46505c" font-size="12">정의: 기관마다 강조점이 다름</text>
+      <text x="745" y="298" text-anchor="middle" fill="#e0573e" font-size="12" font-weight="600">DSM-5 외상 정의에 명시되지 않음</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 저자들의 논리는 "덜 보인다"와 "덜 해롭다"가 섞여 버렸다는 것입니다. 관찰 가능한 지표가 없으면 신고와 개입이 줄고, 진단체계에서도 빠지고, 그 결과 연구에서도 덜 다뤄집니다. 통념은 해로움에 대한 증거에서 나온 것이 아니라 <b>인식 가능성의 차이</b>에서 나왔을 수 있습니다.</div>
+</div>
+
+<div class="panel">
+  <p>가시성의 차이는 수치로도 나타납니다. 저자들이 인용한 Stoltenborgh 등(2012)에 따르면 아동기 EA의 추정치는 <strong>제3자 보고 기준 약 3%</strong>, <strong>자기보고 기준 약 36%</strong>입니다. 또한 심리적 처벌과 부모의 언어적 불만 표현은 국제적으로 70~85%에서 보고될 만큼 흔해서, 어디부터가 학대인지 선을 긋기가 더 어렵습니다.</p>
+  <p>저자들은 문화적 맥락도 따로 다룹니다. 체벌과 언어적 공격에 대한 수용도는 문화권마다 다르고, 해당 행동이 규범적일수록 해로움이 줄어든다는 가설도 있습니다. 그러나 저자들이 검토한 근거는 이 가설을 <strong>부분적으로만</strong> 지지합니다. Pinquart(2021)의 메타분석에서 가혹한 훈육과 아동의 부정적 결과 사이의 연관은 지역을 가리지 않고 일관되었고, 문화적 규범성이 그 연관을 없앤다는 증거는 없었습니다.</p>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">🍳 비유</span><br>
+  화재경보기는 연기와 열에 반응하도록 만들어져 있습니다. 가스가 조용히 새는 집에서는 경보가 울리지 않습니다. 경보가 울리지 않았다는 사실은 "위험하지 않았다"의 증거가 아니라 <strong>"그 경보기가 감지하도록 설계되지 않았다"</strong>의 증거입니다. 신고 통계와 진단 기준은 PA와 SA를 감지하도록 설계된 경보기에 가깝다는 것이 서론의 문제의식입니다.
+</div>
+
+<!-- §03 -->
+<div class="section-head" id="measure">
+  <div class="section-num">03</div>
+  <div class="section-title-block"><h2>측정의 문제: 전향적 기록과 회고적 보고는 같은 사람을 잡아내지 않는다</h2><p class="section-subtitle">Measuring Childhood Maltreatment · Prospective Versus Retrospective Measures</p></div>
+</div>
+
+<div class="panel">
+  <p>이 논문의 결과를 해석하려면 측정 절을 반드시 읽어야 합니다. 포함된 연구 대부분이 성인의 <strong>회고적 자기보고</strong>에 의존하기 때문입니다. 저자들은 이를 숨기지 않고, 오히려 서론에서 가장 긴 지면을 할애해 전향적 측정과 회고적 측정의 장단점을 비교합니다.</p>
+  <p><strong>전향적 측정</strong>(공식 기록, 양육자 보고, 관찰)은 시간적 정확성이 높고 회상 편향이 적습니다. 그러나 신고되고 조사되고 확인된 사례만 잡히므로 더 심각한 사례에 치우치고, 가해자가 양육자일 때는 축소 보고의 위험이 있습니다. 저자들이 소개한 ALSPAC 자료 분석(Dunn 등, 2026)에서는 성인이 된 자녀가 보고한 학대를 양육자가 보고하지 않은 비율이 PA 20.4%, EA 27.8%였습니다.</p>
+  <p><strong>회고적 측정</strong>은 접근이 쉽고 신고 의무의 윤리적 부담이 적지만, 회상 편향, 수치심과 낙인, 그리고 현재의 고통을 설명하려고 과거를 재구성하는 "effort after meaning"(Brown &amp; Harris, 1978)에 취약합니다. 저자들은 이 가운데 EA 보고가 특히 이런 편향에 민감할 수 있다고 스스로 적습니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">전향적 측정과 회고적 측정이 포착하는 집단 (Newbury et al., 2018; Baldwin et al., 2019의 논지 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 330" width="100%" style="max-width:900px" role="img" aria-label="전향적 측정과 회고적 측정의 벤다이어그램">
+    <g font-size="13">
+      <circle cx="350" cy="165" r="130" fill="#3a9a8f" fill-opacity=".16" stroke="#3a9a8f" stroke-width="2"/>
+      <circle cx="550" cy="165" r="130" fill="#1f4e79" fill-opacity=".14" stroke="#1f4e79" stroke-width="2"/>
+      <text x="290" y="120" text-anchor="middle" font-weight="700" fill="#2c7d73" font-size="14">전향적으로만 확인</text>
+      <text x="290" y="144" text-anchor="middle" fill="#46505c" font-size="12">기록에는 있지만</text>
+      <text x="290" y="162" text-anchor="middle" fill="#46505c" font-size="12">성인이 되어 보고하지 않음</text>
+      <text x="290" y="196" text-anchor="middle" fill="#2c7d73" font-size="12" font-weight="600">성인기 정신병리와의</text>
+      <text x="290" y="214" text-anchor="middle" fill="#2c7d73" font-size="12" font-weight="600">연관이 약해짐</text>
+      <text x="450" y="158" text-anchor="middle" font-weight="700" fill="#20262e" font-size="13">둘 다</text>
+      <text x="450" y="178" text-anchor="middle" fill="#46505c" font-size="11.5">일치도는 낮은 편</text>
+      <text x="450" y="196" text-anchor="middle" fill="#46505c" font-size="11.5">(κ ≤ .31)</text>
+      <text x="612" y="120" text-anchor="middle" font-weight="700" fill="#1f4e79" font-size="14">회고적으로만 보고</text>
+      <text x="612" y="144" text-anchor="middle" fill="#46505c" font-size="12">기록에는 없지만</text>
+      <text x="612" y="162" text-anchor="middle" fill="#46505c" font-size="12">당사자가 학대로 기억</text>
+      <text x="612" y="196" text-anchor="middle" fill="#1f4e79" font-size="12" font-weight="600">성인기 정신병리를</text>
+      <text x="612" y="214" text-anchor="middle" fill="#1f4e79" font-size="12" font-weight="600">여전히 예측</text>
+      <text x="350" y="24" text-anchor="middle" fill="#2c7d73" font-weight="600">공식 기록 · 양육자 보고 · 관찰</text>
+      <text x="550" y="24" text-anchor="middle" fill="#1f4e79" font-weight="600">성인의 자기보고 (예: CTQ)</text>
+      <text x="450" y="320" text-anchor="middle" fill="#828d9b" font-size="12">EA는 두 측정의 일치도가 가장 낮은 유형으로 보고됨 (Baldwin et al., 2019; Reuben et al., 2016; Scardera et al., 2023)</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> E-Risk 쌍둥이 코호트(2,232명)를 분석한 Newbury 등(2018)에서 전향적 보고와 18세 시점 CTQ의 일치도는 κ ≤ .31로 낮았습니다. 더 중요한 것은, 전향적 보고의 연관이 회고적 보고를 통제하면 상당수 사라졌다는 점입니다. 저자들은 이를 "두 측정이 <b>서로 다른 두 집단</b>을 포착한다"고 요약합니다. 다만 회고적 보고와 정신병리가 모두 같은 사람의 자기보고라는 <b>공통방법분산</b>도 그 차이의 일부일 수 있다고 함께 밝힙니다.</div>
+</div>
+
+<div class="quote-box">
+  "Differences in concordance between these measures should therefore not be interpreted simply as evidence of poor validity in retrospective measures."
+  <span class="trans">따라서 두 측정 사이의 일치도 차이를 <strong>회고적 측정의 타당도가 낮다는 증거로만</strong> 해석해서는 안 된다.</span>
+  <span class="attr">출처: Introduction · Prospective Versus Retrospective Measures</span>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 ① : "편향이 있다"와 "쓸 수 없다"는 다른 말이다</span><br>
+  저자들은 회고적 보고의 약점을 인정한 뒤 반대 증거도 제시합니다. 아동보호 기록이 있는 청소년 79명을 6개월 간격으로 재측정한 Pinto 등(2014)에서 ACE 보고의 일치도는 대체로 양호했고(ICC ≥ 0.65), ACE 보고의 변화와 증상 변화는 상관이 없었습니다(r = -0.06, p = .693). 1958년 영국 출생 코호트 9,308명을 분석한 Pinto-Pereira 등(2021)에서는 전향적으로 기록된 유해 환경 지표가 많을수록 성인기 학대 보고 확률이 높았고, 이 관계는 보고 시점의 우울 여부에 따라 달라지지 않았습니다. <strong>측정의 약점을 서술한 다음, 그 약점이 결과를 얼마나 설명할 수 있는지를 따로 따져 보는</strong> 이 순서는 한계 절을 쓸 때 그대로 쓸 수 있는 구조입니다.
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">🧪 용어 정리</span><br>
+  <strong>CTQ (Childhood Trauma Questionnaire)</strong>: 정서학대, 신체학대, 성학대, 정서적 방임, 신체적 방임을 하위척도로 재는 회고적 자기보고 도구. 이 메타분석의 104편 중 75편이 사용했습니다.<br>
+  <strong>ACES</strong>: Felitti 등(1998)의 10문항 척도. EA는 1문항으로 측정됩니다.<br>
+  <strong>공통방법분산(shared method variance)</strong>: 예측변수와 결과변수를 같은 출처(여기서는 같은 응답자의 자기보고)로 재면 실제 관계와 무관하게 상관이 부풀 수 있다는 문제입니다.
+</div>
+
+<!-- §04 -->
+<div class="section-head" id="theory">
+  <div class="section-num">04</div>
+  <div class="section-title-block"><h2>이론: 정서학대는 왜 깊이 남을 수 있는가</h2><p class="section-subtitle">Linking Childhood EA and Mental Health · Previous Meta-Analyses</p></div>
+</div>
+
+<div class="panel">
+  <p>저자들은 EA와 성인기 정신병리를 잇는 설명틀로 세 가지 모델을 소개합니다. 지향점은 다르지만 세 모델 모두 <strong>양육 관계 안에서 자기(self)와 안전감이 형성된다</strong>는 전제를 공유합니다.</p>
+</div>
+
+<div class="three-grid">
+  <div class="mod-card">
+    <h4>인지적 취약성 모델</h4>
+    <div class="en">Rose &amp; Abramson (1992)</div>
+    <p>반복되는 학대 속에서 아동은 자신과 양육자에 대한 긍정적 귀인을 유지하기 어렵고, "내가 나쁜 아이라서"라는 부정적 인과 귀인을 만들게 됩니다. EA에서는 그 부정적 평가가 <strong>양육자의 입에서 직접 전달</strong>되므로 이런 해석이 특히 쉽게 자리 잡는다는 설명입니다.</p>
+  </div>
+  <div class="mod-card">
+    <h4>애착 이론</h4>
+    <div class="en">Bowlby (1973, 1982)</div>
+    <p>애착 체계는 대인관계적 스트레스 조절 체계입니다. EA는 "양육자가 나를 돌볼 가치가 있는 존재로 보지 않는다"는 메시지를 주어 안전 기지를 무너뜨리고, 자기와 타인에 대한 <strong>내적 작동 모델</strong>의 형성을 방해합니다.</p>
+  </div>
+  <div class="mod-card">
+    <h4>정서조절 이론</h4>
+    <div class="en">Schore &amp; Schore (2008)</div>
+    <p>양육자는 영아의 각성 상태에 맞추어 반응하면서 발달 중인 신경계를 <strong>함께 조절(coregulation)</strong>합니다. 학대하는 양육자는 이 조율을 일관되게 제공하기 어렵고, 그 결과 정서조절 능력의 발달이 방해받는다는 가설입니다.</p>
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">세 모델이 공유하는 경로: 양육 관계의 교란에서 성인기 취약성까지</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 230" width="100%" style="max-width:900px" role="img" aria-label="정서학대에서 성인기 정신병리로 이어지는 가설적 경로">
+    <defs><marker id="arM" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#2d6a9f"/></marker></defs>
+    <g font-size="13">
+      <circle cx="95" cy="110" r="72" fill="#fff" stroke="#1f4e79" stroke-width="2"/>
+      <text x="95" y="100" text-anchor="middle" font-weight="700" fill="#1f4e79">양육자의</text>
+      <text x="95" y="120" text-anchor="middle" font-weight="700" fill="#1f4e79">반복된 거부·모욕·위협</text>
+      <path d="M172 110 L246 110" stroke="#2d6a9f" stroke-width="2.4" marker-end="url(#arM)"/>
+      <circle cx="325" cy="110" r="72" fill="#e9eff6" stroke="#2d6a9f" stroke-width="2"/>
+      <text x="325" y="94" text-anchor="middle" font-weight="700" fill="#1f4e79">안전감과</text>
+      <text x="325" y="114" text-anchor="middle" font-weight="700" fill="#1f4e79">애착 안정성의 교란</text>
+      <text x="325" y="136" text-anchor="middle" fill="#46505c" font-size="11.5">"의지할 곳이 없다"</text>
+      <path d="M402 110 L476 110" stroke="#2d6a9f" stroke-width="2.4" marker-end="url(#arM)"/>
+      <circle cx="555" cy="110" r="72" fill="#e9eff6" stroke="#2d6a9f" stroke-width="2"/>
+      <text x="555" y="86" text-anchor="middle" font-weight="700" fill="#1f4e79">부정적 자기도식</text>
+      <text x="555" y="106" text-anchor="middle" font-weight="700" fill="#1f4e79">내적 작동 모델</text>
+      <text x="555" y="126" text-anchor="middle" font-weight="700" fill="#1f4e79">정서조절의 어려움</text>
+      <path d="M632 110 L706 110" stroke="#2d6a9f" stroke-width="2.4" marker-end="url(#arM)"/>
+      <circle cx="790" cy="110" r="76" fill="#fff" stroke="#3a9a8f" stroke-width="2"/>
+      <text x="790" y="100" text-anchor="middle" font-weight="700" fill="#2c7d73">성인기 정신병리에</text>
+      <text x="790" y="120" text-anchor="middle" font-weight="700" fill="#2c7d73">대한 취약성</text>
+      <text x="450" y="216" text-anchor="middle" fill="#828d9b" font-size="12">이 메타분석은 양 끝(학대 유형과 성인기 증후군)의 연관만 추정했고, 가운데 두 단계는 직접 검정하지 않았습니다.</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>📊 그림 읽는 법.</b> 이 그림은 저자들이 인용한 세 이론의 공통분모를 한 줄로 이은 것입니다. 주의할 점은 메타분석이 추정한 것이 <b>첫 원과 마지막 원 사이의 상관</b>뿐이라는 사실입니다. 가운데 기제는 이론적 배경이지 이 논문의 결과가 아닙니다. 논의 절에서 저자들이 "may", "suggest"를 일관되게 쓰는 이유가 여기에 있습니다.</div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 ② : 작은 효과크기를 둘러싼 Rind 논쟁</span><br>
+  저자들은 같은 학술지에 실렸던 Rind 등(1998)의 메타분석을 길게 다룹니다. 대학생 표본에서 아동기 SA와 정신병리 증상의 상관이 r = 0.07~0.13으로 작게 나오자, 성학대의 해로움을 축소한다는 비판이 거세졌고 미국 의회가 논문을 규탄하는 결의까지 했습니다. 저자들의 정리는 두 가지입니다. 첫째, 작은 평균 상관은 외상에 노출된 사람 다수가 정신병리로 이어지지 않는다는 문헌과 일관됩니다. 둘째, 수십 년이 지난 뒤에도, 그것도 비임상 표본에서 탐지되는 연관이라면 그 지속성 자체가 의미를 갖습니다. <strong>효과크기는 "얼마나 큰가"만이 아니라 "어떤 조건에서 살아남은 값인가"와 함께 읽어야 합니다.</strong>
+</div>
+
+<!-- §05 -->
+<div class="section-head" id="methods">
+  <div class="section-num">05</div>
+  <div class="section-title-block"><h2>방법: 세 학대 유형을 한 모형 안에서 비교하기</h2><p class="section-subtitle">Method · Inclusion Criteria · Meta-Analytic Procedures</p></div>
+</div>
+
+<div class="subhead"><span class="code">5.1</span><h3>포함기준과 문헌 선정</h3><span class="en">Inclusion Criteria · Literature Search · Data Collection</span></div>
+
+<div class="panel">
+  <p>포함기준은 다섯 가지입니다. 동료심사 학술지에 실린 원저일 것, 성인기 정신병리 증상과 <strong>EA, 그리고 PA 또는 SA(혹은 둘 다)</strong>의 연관을 함께 보고할 것, 정신병리가 DSM-III 이후 기준으로 측정될 것, EA가 18세 미만에 발생할 것, 성인(18세 이상) 표본일 것. 여기에 정의의 혼란을 줄이려는 장치가 하나 더 있습니다. <strong>EA를 작위 행위로 분명히 정의한 연구만</strong> 포함하고, EA와 EN을 "정서적 학대 및 방임"처럼 하나로 합쳐 측정한 연구는 제외했습니다.</p>
+  <p>검색은 6개 데이터베이스에서 2020년 1월 10일까지 이루어졌고, 중복 제거 후 30,776편에서 출발해 1차 선별 후 323편, 최종 <strong>104편</strong>이 남았습니다. 선별은 서로의 판단을 모르는 세 명이 독립적으로 수행했고, 초기 일치율은 제목 단계 92%, 전문 단계 81%였습니다. 연구 선정 흐름도는 본문이 아니라 보충자료(Supplemental Figure S1)에 있어 이 페이지에는 싣지 못했습니다.</p>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">비판적 읽기 · 검색 종료 시점</span><br>
+  논문은 2026년에 출판되었지만 포함된 연구는 <strong>1980~2020년 발표분</strong>이고 검색은 2020년 1월에 끝났습니다. 최근 6년의 연구는 반영되지 않았습니다. 또한 영어 논문만 포함했고 포함 연구의 84%가 미국에서 수행되었습니다. 저자들도 일반화 가능성의 한계로 이 점을 명시합니다.
+</div>
+
+<div class="subhead"><span class="code">5.2</span><h3>3수준 무선효과 모형</h3><span class="en">Meta-Analytic Procedures</span></div>
+
+<div class="panel">
+  <p>한 연구가 EA, PA, SA 각각에 대해, 때로는 여러 증후군에 대해 효과크기를 보고하므로, 효과크기들은 서로 독립이 아닙니다(연구당 2~18개, 평균 3.98개). 일반적인 무선효과 메타분석은 이 의존성을 다루지 못합니다. 저자들은 효과크기(1수준)가 연구(2수준) 안에 묶이고, 연구들이 전체 분포(3수준)를 이루는 <strong>다수준 모형</strong>을 R의 <code>metafor</code> 패키지 <code>rma.mv</code> 함수로 추정했습니다. 학대 유형을 조절변수로 넣어 유형별 평균 상관과 유형 간 차이(Δr)를 함께 얻습니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">3수준 메타분석 모형의 구조 (Method 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 360" width="100%" style="max-width:900px" role="img" aria-label="3수준 메타분석 모형">
+    <g font-size="13">
+      <text x="24" y="52" font-weight="700" fill="#1f4e79">3수준</text><text x="24" y="70" fill="#828d9b" font-size="11.5">전체 분포</text>
+      <text x="24" y="172" font-weight="700" fill="#2d6a9f">2수준</text><text x="24" y="190" fill="#828d9b" font-size="11.5">연구 (M = 104)</text>
+      <text x="24" y="292" font-weight="700" fill="#3a9a8f">1수준</text><text x="24" y="310" fill="#828d9b" font-size="11.5">효과크기 (k = 414)</text>
+      <rect x="330" y="26" width="300" height="52" rx="26" fill="#1f4e79"/>
+      <text x="480" y="48" text-anchor="middle" fill="#fff" font-weight="700">통합 효과 (학대 유형별 r)</text>
+      <text x="480" y="66" text-anchor="middle" fill="#cfe0f0" font-size="11.5">연구 간 이질성 σ(between) = 0.13</text>
+      <g stroke="#aab4c1" stroke-width="1.5" fill="none">
+        <path d="M480 78 L230 142"/><path d="M480 78 L480 142"/><path d="M480 78 L730 142"/>
+        <path d="M230 198 L170 262"/><path d="M230 198 L230 262"/><path d="M230 198 L290 262"/>
+        <path d="M480 198 L420 262"/><path d="M480 198 L480 262"/><path d="M480 198 L540 262"/>
+        <path d="M730 198 L670 262"/><path d="M730 198 L730 262"/><path d="M730 198 L790 262"/>
+      </g>
+      <g>
+        <rect x="150" y="142" width="160" height="56" rx="12" fill="#e9eff6" stroke="#2d6a9f"/><text x="230" y="166" text-anchor="middle" font-weight="600" fill="#1f4e79">연구 A</text><text x="230" y="184" text-anchor="middle" fill="#46505c" font-size="11.5">같은 표본에서 나온 값들</text>
+        <rect x="400" y="142" width="160" height="56" rx="12" fill="#e9eff6" stroke="#2d6a9f"/><text x="480" y="166" text-anchor="middle" font-weight="600" fill="#1f4e79">연구 B</text><text x="480" y="184" text-anchor="middle" fill="#46505c" font-size="11.5">연구 내 이질성 σ(within) = 0.08</text>
+        <rect x="650" y="142" width="160" height="56" rx="12" fill="#e9eff6" stroke="#2d6a9f"/><text x="730" y="166" text-anchor="middle" font-weight="600" fill="#1f4e79">연구 C ...</text><text x="730" y="184" text-anchor="middle" fill="#46505c" font-size="11.5">ICC = 0.71</text>
+      </g>
+      <g font-size="12" font-weight="700">
+        <circle cx="170" cy="282" r="20" fill="#fff" stroke="#1f4e79" stroke-width="2"/><text x="170" y="286" text-anchor="middle" fill="#1f4e79">EA</text>
+        <circle cx="230" cy="282" r="20" fill="#fff" stroke="#3a9a8f" stroke-width="2"/><text x="230" y="286" text-anchor="middle" fill="#2c7d73">PA</text>
+        <circle cx="290" cy="282" r="20" fill="#fff" stroke="#c78a1e" stroke-width="2"/><text x="290" y="286" text-anchor="middle" fill="#c78a1e">SA</text>
+        <circle cx="420" cy="282" r="20" fill="#fff" stroke="#1f4e79" stroke-width="2"/><text x="420" y="286" text-anchor="middle" fill="#1f4e79">EA</text>
+        <circle cx="480" cy="282" r="20" fill="#fff" stroke="#3a9a8f" stroke-width="2"/><text x="480" y="286" text-anchor="middle" fill="#2c7d73">PA</text>
+        <circle cx="540" cy="282" r="20" fill="#fff" stroke="#c78a1e" stroke-width="2"/><text x="540" y="286" text-anchor="middle" fill="#c78a1e">SA</text>
+        <circle cx="670" cy="282" r="20" fill="#fff" stroke="#1f4e79" stroke-width="2"/><text x="670" y="286" text-anchor="middle" fill="#1f4e79">EA</text>
+        <circle cx="730" cy="282" r="20" fill="#fff" stroke="#3a9a8f" stroke-width="2"/><text x="730" y="286" text-anchor="middle" fill="#2c7d73">PA</text>
+        <circle cx="790" cy="282" r="20" fill="#fff" stroke="#c78a1e" stroke-width="2"/><text x="790" y="286" text-anchor="middle" fill="#c78a1e">SA</text>
+      </g>
+      <path d="M192 282 h16 M252 282 h16" stroke="#e0573e" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="230" y="328" text-anchor="middle" fill="#e0573e" font-size="12" font-weight="600">학대 유형 간 상관 ρ = 0.6으로 가정</text>
+      <text x="610" y="328" text-anchor="middle" fill="#828d9b" font-size="12">효과크기 수: EA 139 · PA 138 · SA 137</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>📊 그림 읽는 법.</b> 맨 아래 원 하나가 효과크기 하나입니다. 같은 연구(가운데 상자)에서 나온 원들은 같은 사람들에게서 계산되었으므로 서로 닮아 있습니다. ICC = 0.71은 전체 변동의 71%가 연구 간 차이에서 온다는 뜻으로, 한 연구 안의 효과크기들이 매우 비슷하다는 것을 보여 줍니다. 3수준 모형은 이 묶임을 반영해 가중치를 주며, 저자들은 연구 간 분산을 0으로 고정한 단순 모형보다 적합도가 유의하게 좋다는 것도 확인했습니다(χ²(5) = 92.62, p &lt; .001).</div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 ③ : "동시 발생을 통제했다"는 말의 정확한 뜻</span><br>
+  초록은 이 연구의 강점으로 "statistically controlling for co-occurring abuse types"를 듭니다. 이 표현은 조심해서 읽어야 합니다. 원자료에서 다른 학대 유형을 공변량으로 넣어 <strong>편상관을 구했다는 뜻이 아닙니다.</strong> 포함된 효과크기 대부분은 이변량 상관이고, 저자들이 한 일은 같은 표본에서 나온 EA, PA, SA 효과크기들의 <strong>표집오차 공분산 행렬을 구성할 때 유형 간 상관을 ρ = 0.6으로 넣어 준 것</strong>입니다. 이 값은 유형 간 상관을 보고한 52편의 범위(r = 0.35~0.82)와 CTQ 요인 연구를 근거로 정했고, ρ = .10~.80 범위의 민감도 분석으로 뒷받침했습니다. 저자들도 한계 절에서 이것이 근사치임을 밝힙니다. 따라서 이 결과를 "다른 학대를 겪지 않은 사람에게서 EA만의 고유 효과"로 읽어서는 안 됩니다. 정확한 해석은 <strong>"효과크기들의 의존성을 반영한 상태에서 유형별 평균 상관을 비교했다"</strong>입니다.
+</div>
+
+<div class="subhead"><span class="code">5.3</span><h3>효과크기 변환과 강건 표준오차</h3><span class="en">Effect Size Calculations and Conversions · Cluster-Robust Variance Estimators</span></div>
+
+<div class="panel">
+  <p>원 연구들은 상관계수, 표준화 평균차, 오즈비 등 서로 다른 형식으로 결과를 보고했습니다. 저자들은 모두 <strong>상관계수 r</strong>로 변환했습니다. 상관을 직접 보고한 연구가 49편(k = 223), 학대와 정신병리를 모두 이분형으로 보고해 사분상관(tetrachoric correlation)으로 변환한 연구가 33편(k = 107), 한 변수만 이분화되어 평균차에서 양류상관(biserial correlation)으로 변환한 연구가 23편(k = 84)입니다. 조정 오즈비만 보고한 연구를 넣어도 결과가 달라지지 않는지는 민감도 분석으로 확인했습니다.</p>
+  <p>추론에는 <strong>군집강건 분산추정(CRVE, CR2 샌드위치 추정량)</strong>을 썼습니다. 의존 구조를 정확히 알 수 없어도 표준오차와 검정통계량이 일관되도록 하는 방법으로, 점추정치는 그대로 두고 신뢰구간만 보정합니다. 유형 간 차이는 Satterthwaite 근사 자유도를 쓴 t 검정으로 비교했습니다. 조절변수는 CTQ 사용 여부, 표본 출처, 출판 연도, 여성 비율, 비백인 비율, DSM 판, 그리고 10점 만점의 연구 질 점수입니다.</p>
+</div>
+
+<!-- §06 -->
+<div class="section-head" id="r1">
+  <div class="section-num">06</div>
+  <div class="section-title-block"><h2>결과 1: 세 학대 모두 유의하고, 정서학대의 상관이 가장 크다</h2><p class="section-subtitle">Results · Primary Analyses</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">1</div>
+    <div class="cond-titles"><div class="cond-code">Primary analysis · M = 104, k = 414</div><h3>학대 유형이 연관의 크기를 유의하게 조절한다</h3><div class="cond-en">F(2, 67.87) = 50.61, p &lt; .001</div></div>
+    <span class="verdict promising">일관된 결과</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">세 학대 모두 성인기 정신병리와 관련이 있고, 그 관련의 크기는 정서학대가 가장 큽니다. 차이는 통계적으로 뚜렷하지만 절대적인 크기는 r 기준 0.1 안팎입니다.</div>
+    <p>통합 상관은 EA r = 0.34, 95% CI [0.30, 0.37], PA r = 0.25 [0.22, 0.28], SA r = 0.23 [0.20, 0.26]입니다. 쌍별 비교에서 EA는 PA보다(Δr = 0.08 [0.07, 0.10]), 그리고 SA보다(Δr = 0.11 [0.09, 0.14]) 유의하게 컸습니다. PA와 SA의 차이도 유의했지만 작았습니다(Δr = 0.03 [0.00, 0.05]).</p>
+    <p>이질성은 큽니다. 잔차 이질성 검정이 유의했고(QE = 4011.7, p &lt; .001), 분산의 64.2%가 연구 간 차이에, 25.6%가 연구 내 차이에 귀속됩니다. 전체 414개 효과크기 가운데 0 이하인 값은 10개뿐이었습니다.</p>
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">학대 유형별 통합 상관, 95% 신뢰구간, 95% 예측구간 (본문 Primary Analyses의 수치)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 330" width="100%" style="max-width:900px" role="img" aria-label="학대 유형별 통합 상관과 예측구간">
+<line x1="190.0" y1="52" x2="190.0" y2="262" stroke="#e6ebf1" stroke-width="1"/>
+<text x="190.0" y="282" text-anchor="middle" font-size="12" fill="#828d9b">-0.1</text>
+<line x1="270.0" y1="52" x2="270.0" y2="262" stroke="#20262e" stroke-width="1.4"/>
+<text x="270.0" y="282" text-anchor="middle" font-size="12" fill="#828d9b">0.0</text>
+<line x1="350.0" y1="52" x2="350.0" y2="262" stroke="#e6ebf1" stroke-width="1"/>
+<text x="350.0" y="282" text-anchor="middle" font-size="12" fill="#828d9b">0.1</text>
+<line x1="430.0" y1="52" x2="430.0" y2="262" stroke="#e6ebf1" stroke-width="1"/>
+<text x="430.0" y="282" text-anchor="middle" font-size="12" fill="#828d9b">0.2</text>
+<line x1="510.0" y1="52" x2="510.0" y2="262" stroke="#e6ebf1" stroke-width="1"/>
+<text x="510.0" y="282" text-anchor="middle" font-size="12" fill="#828d9b">0.3</text>
+<line x1="590.0" y1="52" x2="590.0" y2="262" stroke="#e6ebf1" stroke-width="1"/>
+<text x="590.0" y="282" text-anchor="middle" font-size="12" fill="#828d9b">0.4</text>
+<line x1="670.0" y1="52" x2="670.0" y2="262" stroke="#e6ebf1" stroke-width="1"/>
+<text x="670.0" y="282" text-anchor="middle" font-size="12" fill="#828d9b">0.5</text>
+<line x1="750.0" y1="52" x2="750.0" y2="262" stroke="#e6ebf1" stroke-width="1"/>
+<text x="750.0" y="282" text-anchor="middle" font-size="12" fill="#828d9b">0.6</text>
+<line x1="830.0" y1="52" x2="830.0" y2="262" stroke="#e6ebf1" stroke-width="1"/>
+<text x="830.0" y="282" text-anchor="middle" font-size="12" fill="#828d9b">0.7</text>
+<text x="510" y="306" text-anchor="middle" font-size="12.5" fill="#46505c">성인기 정신병리와의 통합 상관 r</text>
+<text x="190" y="36" font-size="12" fill="#828d9b">굵은 막대: 95% 신뢰구간 · 가는 선: 95% 예측구간(PI) · 점: 통합 추정치</text>
+<text x="24" y="95" font-size="14.5" font-weight="700" fill="#1f4e79">정서학대 EA</text>
+<line x1="302.0" y1="90" x2="782.0" y2="90" stroke="#1f4e79" stroke-width="1.6" opacity=".55"/>
+<line x1="302.0" y1="83" x2="302.0" y2="97" stroke="#1f4e79" stroke-width="1.6" opacity=".55"/>
+<line x1="782.0" y1="83" x2="782.0" y2="97" stroke="#1f4e79" stroke-width="1.6" opacity=".55"/>
+<line x1="510.0" y1="90" x2="566.0" y2="90" stroke="#1f4e79" stroke-width="9" stroke-linecap="round"/>
+<circle cx="542.0" cy="90" r="7.5" fill="#fff" stroke="#1f4e79" stroke-width="3"/>
+<text x="542.0" y="74" text-anchor="middle" font-size="13" font-weight="700" fill="#1f4e79">r = 0.34 [0.30, 0.37]</text>
+<text x="790.0" y="114" text-anchor="end" font-size="11.5" fill="#828d9b">PI [0.04, 0.64]</text>
+<text x="24" y="161" font-size="14.5" font-weight="700" fill="#3a9a8f">신체학대 PA</text>
+<line x1="230.0" y1="156" x2="710.0" y2="156" stroke="#3a9a8f" stroke-width="1.6" opacity=".55"/>
+<line x1="230.0" y1="149" x2="230.0" y2="163" stroke="#3a9a8f" stroke-width="1.6" opacity=".55"/>
+<line x1="710.0" y1="149" x2="710.0" y2="163" stroke="#3a9a8f" stroke-width="1.6" opacity=".55"/>
+<line x1="446.0" y1="156" x2="494.0" y2="156" stroke="#3a9a8f" stroke-width="9" stroke-linecap="round"/>
+<circle cx="470.0" cy="156" r="7.5" fill="#fff" stroke="#3a9a8f" stroke-width="3"/>
+<text x="470.0" y="140" text-anchor="middle" font-size="13" font-weight="700" fill="#3a9a8f">r = 0.25 [0.22, 0.28]</text>
+<text x="718.0" y="180" text-anchor="end" font-size="11.5" fill="#828d9b">PI [-0.05, 0.55]</text>
+<text x="24" y="227" font-size="14.5" font-weight="700" fill="#c78a1e">성학대 SA</text>
+<line x1="214.0" y1="222" x2="694.0" y2="222" stroke="#c78a1e" stroke-width="1.6" opacity=".55"/>
+<line x1="214.0" y1="215" x2="214.0" y2="229" stroke="#c78a1e" stroke-width="1.6" opacity=".55"/>
+<line x1="694.0" y1="215" x2="694.0" y2="229" stroke="#c78a1e" stroke-width="1.6" opacity=".55"/>
+<line x1="430.0" y1="222" x2="478.0" y2="222" stroke="#c78a1e" stroke-width="9" stroke-linecap="round"/>
+<circle cx="454.0" cy="222" r="7.5" fill="#fff" stroke="#c78a1e" stroke-width="3"/>
+<text x="454.0" y="206" text-anchor="middle" font-size="13" font-weight="700" fill="#c78a1e">r = 0.23 [0.20, 0.26]</text>
+<text x="702.0" y="246" text-anchor="end" font-size="11.5" fill="#828d9b">PI [-0.07, 0.53]</text>
+</svg>
+  </div>
+  <div class="fig-implies"><b>📊 그림 읽는 법.</b> 굵은 막대는 <b>신뢰구간</b>으로 "평균 효과가 어디쯤인가"의 불확실성을, 가는 선은 <b>예측구간</b>으로 "비슷한 새 연구 하나를 한다면 그 연구의 참 효과가 어디쯤 나올까"를 나타냅니다. 신뢰구간은 세 유형 모두 좁지만 예측구간은 매우 넓습니다. EA의 예측구간 [0.04, 0.64]는 전부 양수이고, PA [-0.05, 0.55]와 SA [-0.07, 0.53]는 0을 살짝 걸칩니다. 저자들이 EA를 "가장 일관되게 연관된 유형"이라고 말하는 근거가 이것입니다. 동시에 예측구간이 이렇게 넓다는 것은 <b>평균값 하나로 요약하기에는 연구 간 차이가 크다</b>는 뜻이기도 합니다.</div>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">🍳 비유</span><br>
+  세 식당의 평균 별점이 4.1, 3.6, 3.5라고 합시다. 리뷰가 수천 개라 평균은 아주 정밀합니다(좁은 신뢰구간). 하지만 지점마다 편차가 커서, 처음 가 보는 지점의 맛은 2점일 수도 5점일 수도 있습니다(넓은 예측구간). "첫 번째 식당이 평균적으로 낫다"는 말은 참이지만 "어느 지점에 가도 낫다"는 말은 아닙니다. 메타분석의 평균 차이를 개별 사례에 그대로 적용하면 안 되는 이유입니다.
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 ④ : r = .34는 큰가</span><br>
+  저자들은 세 유형의 효과를 "small-to-moderate range"라고 표현합니다. r = .34를 제곱하면 약 .12이므로, 단순 계산으로는 변동의 12% 정도를 공유하는 수준입니다. EA와 PA의 차이 Δr = 0.08은 통계적으로 분명하지만(신뢰구간이 0에서 멀리 떨어져 있음) 실질적 크기로는 작은 차이입니다. 논문의 주장을 정확히 옮기면 <strong>"정서학대가 압도적으로 더 해롭다"가 아니라 "덜 해롭다는 통념을 지지하는 증거가 없고, 연관은 오히려 다소 크다"</strong>입니다.
+</div>
+
+<!-- §07 -->
+<div class="section-head" id="r2">
+  <div class="section-num">07</div>
+  <div class="section-title-block"><h2>결과 2: 이 양상은 조건이 바뀌어도 유지되는가</h2><p class="section-subtitle">Sensitivity Analyses of Moderators · Test of Moderators · Publication Bias</p></div>
+</div>
+
+<div class="subhead"><span class="code">7.1</span><h3>표본 출처, 측정도구, 정서적 방임</h3><span class="en">Sample Source · CTQ · EN</span></div>
+
+<div class="panel">
+  <p>표본 출처(지역사회/대학생, 외래, 입원)는 연관의 크기를 조절하지 않았습니다(F(2, 42.47) = 0.06, p = .94). 세 출처 모두에서 EA의 점추정치가 가장 컸습니다. 다만 <strong>입원 표본에서는 EA와 PA, EA와 SA의 차이가 유의하지 않았습니다.</strong></p>
+  <div class="tbl-wrap">
+  <table class="mini-table">
+    <tr><th>표본 출처</th><th class="num">연구 수 · 효과크기 수</th><th class="num">EA r [95% CI]</th><th class="num">PA r [95% CI]</th><th class="num">SA r [95% CI]</th><th>EA와의 차이</th></tr>
+    <tr><td>지역사회/대학생</td><td class="num">M = 50 · k = 196</td><td class="num">0.35 [0.30, 0.39]</td><td class="num">0.25 [0.20, 0.29]</td><td class="num">0.22 [0.17, 0.26]</td><td>PA, SA 모두 유의</td></tr>
+    <tr><td>외래</td><td class="num">M = 38 · k = 156</td><td class="num">0.33 [0.27, 0.38]</td><td class="num">0.26 [0.20, 0.31]</td><td class="num">0.23 [0.18, 0.29]</td><td>PA, SA 모두 유의</td></tr>
+    <tr class="hi"><td>입원</td><td class="num">M = 16 · k = 62</td><td class="num">0.33 [0.24, 0.41]</td><td class="num">0.27 [0.18, 0.36]</td><td class="num">0.26 [0.17, 0.35]</td><td>유의하지 않음</td></tr>
+  </table>
+  </div>
+  <p class="fig-cap">원문 Table 2와 Table 3의 수치. 쌍별 비교는 Holm 보정 p 값 기준입니다.</p>
+  <p>CTQ를 쓴 75편(k = 305)만으로 다시 추정해도 결과는 거의 같았습니다(EA 0.34, PA 0.25, SA 0.22). 연구 질 점수, 여성 비율, 비백인 비율, DSM 판도 유의한 조절변수가 아니었습니다. 인종 구성은 52편에서만 보고되었다는 점을 함께 기억해야 합니다.</p>
+  <p>EN을 따로 보고한 연구의 자료를 추가하면(총 505개 효과크기) EA와 EN은 강하게 상관되어 있었고(중앙값 r = 0.59), 둘 다 정신병리와 유의하게 연관되었지만 EA의 상관이 더 컸습니다(EA 0.34 [0.31, 0.38], EN 0.28 [0.24, 0.33], Δr = 0.06 [0.03, 0.09]).</p>
+</div>
+
+<div class="subhead"><span class="code">7.2</span><h3>성별</h3><span class="en">Gender Composition</span></div>
+
+<div class="panel">
+  <p>여성만으로 구성된 표본(19편, k = 87, 34,287명)에서는 전체 결과와 같은 양상이 나타났습니다(EA 0.33, PA 0.26, SA 0.25, EA가 둘보다 유의하게 큼). 남성만으로 구성된 표본은 <strong>5편(k = 21, 758명)</strong>뿐이었고, 세 유형 모두 유의했지만(EA 0.25, PA 0.20, SA 0.22) 유형 간 차이는 유의하지 않았습니다. 저자들은 표본 수가 적어 검정력이 부족하다는 점을 들어 조심스럽게 해석하라고 말합니다.</p>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">비판적 읽기 · 원문 안의 작은 불일치</span><br>
+  여성 전용 표본의 연구 수가 본문에서는 19편(Nineteen studies), Table 4의 표제에서는 M = 20으로 적혀 있습니다. 결론에 영향을 주는 차이는 아니지만, 인용할 때는 어느 쪽 수치를 썼는지 밝히는 편이 안전합니다. <strong>확인 필요.</strong>
+</div>
+
+<div class="subhead"><span class="code">7.3</span><h3>출판 연도: 원문 Figure 1</h3><span class="en">Year of Publication</span></div>
+
+<div class="figure-block">
+  <div class="fig-title">원문 Figure 1. Scatterplot: Year of Publication as a Moderator</div>
+  <span class="fig-tag orig">원문 그대로</span>
+  <div class="fig-orig"><a href="figs/miron-2026-fig1.png" target="_blank" rel="noopener"><img src="figs/miron-2026-fig1.png" alt="Miron et al. 2026 Figure 1: 출판 연도와 효과크기의 산점도" loading="lazy"></a></div>
+  <p class="fig-cap">가로축은 출판 연도, 세로축은 Pearson r입니다. 원 하나가 효과크기 하나이고 원의 크기는 연구 가중치를 뜻합니다. 실선은 전체 평균(Grand Mean), 점선들은 EA, PA, SA 각각의 회귀선입니다.</p>
+  <p class="fig-lic">출처: Miron et al. (2026), <em>Psychological Bulletin, 152</em>(7-8), Figure 1. 원문에서 변형 없이 가져왔으며 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> 라이선스를 따릅니다. 그림을 누르면 크게 볼 수 있습니다.</p>
+
+  <div class="fig-implies"><b>📊 그림 읽는 법.</b> 선들이 모두 오른쪽 아래로 기울어 있습니다. 최근 연구일수록 보고된 상관이 조금씩 작다는 뜻이고, 실제로 출판 연도는 유일하게 유의한 조절변수였습니다(F(1, 28.27) = 10.58, p = .003, 기울기 -0.01). 그런데 그림 왼쪽 위를 보면 1990년대의 원 몇 개가 0.5 근처에 따로 떠 있습니다. 저자들은 초기 연구 두 편(Pribor et al., 1993; Ferguson &amp; Dacey, 1997)을 빼면 조절효과가 유의하지 않게 된다고 보고합니다. 또 하나 볼 것은 <b>세 점선이 거의 평행</b>하다는 점입니다. 출판 연도와 학대 유형의 상호작용은 없었고, 따라서 시간에 따른 변화가 있더라도 세 유형의 상대적 순서는 바뀌지 않습니다. 가장 위에 있는 긴 점선이 EA입니다.</div>
+</div>
+
+<div class="subhead"><span class="code">7.4</span><h3>출판 편향: 원문 Figure 2</h3><span class="en">Publication Bias</span></div>
+
+<div class="figure-block">
+  <div class="fig-title">원문 Figure 2. Publication Bias Funnel Plots</div>
+  <span class="fig-tag orig">원문 그대로</span>
+  <div class="fig-orig"><a href="figs/miron-2026-fig2.png" target="_blank" rel="noopener"><img src="figs/miron-2026-fig2.png" alt="Miron et al. 2026 Figure 2: 출판 편향 깔때기 그림" loading="lazy"></a></div>
+  <p class="fig-cap">(A) 전체 학대 유형(n = 414), (B) 정서학대(K = 104), (C) 신체학대(K = 102), (D) 성학대(K = 102). 세로축은 표준오차(위로 갈수록 정밀한 연구), 가로축은 (A)에서는 모형 잔차, (B)~(D)에서는 Pearson r입니다. 음영은 유의확률 구간을 나타내는 등고선입니다.</p>
+  <p class="fig-lic">출처: Miron et al. (2026), <em>Psychological Bulletin, 152</em>(7-8), Figure 2. 원문에서 변형 없이 가져왔으며 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> 라이선스를 따릅니다. 그림을 누르면 크게 볼 수 있습니다.</p>
+
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 250" width="100%" style="max-width:900px" role="img" aria-label="깔때기 그림 읽는 법">
+    <g font-size="12.5">
+      <text x="225" y="24" text-anchor="middle" font-weight="700" fill="#2c7d73" font-size="14">편향이 없을 때: 대칭</text>
+      <path d="M225 44 L95 214 L355 214 Z" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.6"/>
+      <line x1="225" y1="44" x2="225" y2="214" stroke="#3a9a8f" stroke-dasharray="4 4"/>
+      <g fill="#20262e"><circle cx="222" cy="70" r="4"/><circle cx="231" cy="88" r="4"/><circle cx="212" cy="104" r="4"/><circle cx="240" cy="120" r="4"/><circle cx="200" cy="138" r="4"/><circle cx="252" cy="150" r="4"/><circle cx="184" cy="166" r="4"/><circle cx="268" cy="176" r="4"/><circle cx="160" cy="194" r="4"/><circle cx="292" cy="198" r="4"/><circle cx="224" cy="188" r="4"/></g>
+      <text x="14" y="60" fill="#828d9b">정밀한 연구</text><text x="14" y="212" fill="#828d9b">작은 연구</text>
+      <text x="675" y="24" text-anchor="middle" font-weight="700" fill="#e0573e" font-size="14">편향이 의심될 때: 한쪽이 빈다</text>
+      <path d="M675 44 L545 214 L805 214 Z" fill="#fdeee9" stroke="#e0573e" stroke-width="1.6"/>
+      <line x1="675" y1="44" x2="675" y2="214" stroke="#e0573e" stroke-dasharray="4 4"/>
+      <g fill="#20262e"><circle cx="672" cy="70" r="4"/><circle cx="681" cy="88" r="4"/><circle cx="690" cy="120" r="4"/><circle cx="702" cy="150" r="4"/><circle cx="718" cy="176" r="4"/><circle cx="742" cy="198" r="4"/><circle cx="694" cy="190" r="4"/><circle cx="668" cy="104" r="4"/></g>
+      <ellipse cx="610" cy="182" rx="46" ry="26" fill="none" stroke="#e0573e" stroke-width="1.6" stroke-dasharray="5 4"/>
+      <text x="610" y="186" text-anchor="middle" fill="#e0573e" font-weight="600">비어 있음</text>
+      <text x="450" y="242" text-anchor="middle" fill="#828d9b">작고 효과가 약한 연구가 출판되지 않으면 깔때기의 아래 한쪽이 비어 평균이 부풀려집니다.</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>📊 그림 읽는 법.</b> 위 설명 그림을 머리에 두고 원문 패널을 보면 됩니다. 저자들은 네 패널 모두 육안으로는 <b>약간의 비대칭</b>이 있다고 보고합니다. 통계 검정은 유형마다 달랐습니다. EA는 Egger 검정이 유의하지 않았고(p = .493) trim-and-fill로 추가된 연구도 없어 통합 추정치(0.34)가 그대로였습니다. PA는 Egger 검정이 유의했지만(p = .02) trim-and-fill 후에도 추정치가 유지되었습니다(0.24). SA는 Egger 검정은 유의하지 않았는데(p = .419) trim-and-fill이 <b>28편을 왼쪽에 채워 넣었고 추정치가 0.15 [0.12, 0.18]로 내려갔습니다.</b> 저자들의 결론은 솔직합니다. 이질성이 큰 자료에서는 trim-and-fill이 믿을 만하지 않고, 다수준 모형에 맞는 편향 탐지법은 아직 충분히 개발되지 않았으며, 따라서 <b>출판 편향의 존재를 반박할 수 없다</b>는 것입니다.</div>
+</div>
+
+<div class="quote-box">
+  "Thus, because the presence of publication bias could not be refuted, it is important to consider that there may be unpublished evidence that, if published, would challenge the findings observed in the present meta-analysis."
+  <span class="trans">따라서 출판 편향의 존재를 반박할 수 없었으므로, <strong>출판되었다면 본 메타분석의 결과에 이의를 제기했을 미출판 증거</strong>가 있을 수 있음을 고려해야 한다.</span>
+  <span class="attr">출처: Discussion · Limitations</span>
+</div>
+
+<!-- §08 -->
+<div class="section-head" id="r3">
+  <div class="section-num">08</div>
+  <div class="section-title-block"><h2>결과 3: 증후군별로 보면 무엇이 달라지는가</h2><p class="section-subtitle">Associations With Specific Psychiatric Syndromes · Table 1</p></div>
+</div>
+
+<div class="panel">
+  <p>저자들은 결과변수를 "psychiatric syndromes"라고 부릅니다. 진단 기준을 충족했는지와 무관하게 특정 장애에 특징적인 증상 군집을 가리키며, 범주형 진단과 차원적 증상 점수를 함께 포함한다는 뜻입니다. 원문 Table 1은 12개 증후군 범주마다 세 유형의 상관과 쌍별 차이를 네 쪽에 걸쳐 보고합니다. 아래 그림은 그 수치를 한 장에 모은 것입니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">증후군별 EA, PA, SA의 상관과 95% 신뢰구간 (원문 Table 1의 수치, EA 상관이 큰 순서)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 672" width="100%" style="max-width:900px" role="img" aria-label="증후군별 학대 유형 상관">
+<circle cx="262" cy="24" r="6" fill="#1f4e79"/><text x="274" y="29" font-size="12.5" fill="#46505c">EA 정서학대</text>
+<circle cx="382" cy="24" r="6" fill="#3a9a8f"/><text x="394" y="29" font-size="12.5" fill="#46505c">PA 신체학대</text>
+<circle cx="502" cy="24" r="6" fill="#c78a1e"/><text x="514" y="29" font-size="12.5" fill="#46505c">SA 성학대</text>
+<text x="622" y="29" font-size="12" fill="#828d9b">속 빈 점: 95% CI가 0을 포함</text>
+<text x="24" y="52" font-size="12" font-weight="600" fill="#828d9b">증후군 (연구 수 M · 효과크기 k · n)</text>
+<text x="738" y="52" font-size="12" font-weight="600" fill="#828d9b">유의한 쌍별 차이</text>
+<line x1="299.5" y1="62" x2="299.5" y2="614" stroke="#20262e" stroke-width="1.3"/>
+<text x="299.5" y="632" text-anchor="middle" font-size="12" fill="#828d9b">0.0</text>
+<line x1="398.4" y1="62" x2="398.4" y2="614" stroke="#e6ebf1" stroke-width="1"/>
+<text x="398.4" y="632" text-anchor="middle" font-size="12" fill="#828d9b">0.2</text>
+<line x1="497.4" y1="62" x2="497.4" y2="614" stroke="#e6ebf1" stroke-width="1"/>
+<text x="497.4" y="632" text-anchor="middle" font-size="12" fill="#828d9b">0.4</text>
+<line x1="596.3" y1="62" x2="596.3" y2="614" stroke="#e6ebf1" stroke-width="1"/>
+<text x="596.3" y="632" text-anchor="middle" font-size="12" fill="#828d9b">0.6</text>
+<line x1="695.3" y1="62" x2="695.3" y2="614" stroke="#e6ebf1" stroke-width="1"/>
+<text x="695.3" y="632" text-anchor="middle" font-size="12" fill="#828d9b">0.8</text>
+<text x="485.0" y="654" text-anchor="middle" font-size="12.5" fill="#46505c">상관 r (95% 신뢰구간)</text>
+<rect x="14" y="62" width="872" height="46" fill="#f4f7fb"/>
+<text x="24" y="83" font-size="14" font-weight="700" fill="#20262e">양극성</text>
+<text x="24" y="100" font-size="11.5" fill="#828d9b">M=4 · k=12 · n=399</text>
+<line x1="442.9" y1="73" x2="650.7" y2="73" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="546.8" cy="73" r="4.6" fill="#1f4e79" stroke="#1f4e79" stroke-width="2"/>
+<line x1="309.4" y1="85" x2="536.9" y2="85" stroke="#3a9a8f" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="423.2" cy="85" r="4.6" fill="#3a9a8f" stroke="#3a9a8f" stroke-width="2"/>
+<line x1="428.1" y1="97" x2="541.9" y2="97" stroke="#c78a1e" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="487.5" cy="97" r="4.6" fill="#c78a1e" stroke="#c78a1e" stroke-width="2"/>
+<text x="738" y="90" font-size="12" font-weight="600" fill="#1f4e79">EA>PA</text>
+<text x="24" y="129" font-size="14" font-weight="700" fill="#20262e">성격장애</text>
+<text x="24" y="146" font-size="11.5" fill="#828d9b">M=4 · k=12 · n=610</text>
+<line x1="373.7" y1="119" x2="700.2" y2="119" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="536.9" cy="119" r="4.6" fill="#1f4e79" stroke="#1f4e79" stroke-width="2"/>
+<line x1="254.9" y1="131" x2="690.3" y2="131" stroke="#3a9a8f" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="472.6" cy="131" r="4.6" fill="#fff" stroke="#3a9a8f" stroke-width="2"/>
+<line x1="334.1" y1="143" x2="512.2" y2="143" stroke="#c78a1e" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="423.2" cy="143" r="4.6" fill="#c78a1e" stroke="#c78a1e" stroke-width="2"/>
+<text x="738" y="136" font-size="12" font-weight="600" fill="#1f4e79">EA>SA</text>
+<rect x="14" y="154" width="872" height="46" fill="#f4f7fb"/>
+<text x="24" y="175" font-size="14" font-weight="700" fill="#20262e">해리 증상</text>
+<text x="24" y="192" font-size="11.5" fill="#828d9b">M=18 · k=54 · n=2,530</text>
+<line x1="447.9" y1="165" x2="527.1" y2="165" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="487.5" cy="165" r="4.6" fill="#1f4e79" stroke="#1f4e79" stroke-width="2"/>
+<line x1="403.4" y1="177" x2="502.3" y2="177" stroke="#3a9a8f" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="452.8" cy="177" r="4.6" fill="#3a9a8f" stroke="#3a9a8f" stroke-width="2"/>
+<line x1="418.2" y1="189" x2="512.2" y2="189" stroke="#c78a1e" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="467.7" cy="189" r="4.6" fill="#c78a1e" stroke="#c78a1e" stroke-width="2"/>
+<text x="738" y="182" font-size="12" font-weight="600" fill="#1f4e79">EA>PA</text>
+<text x="24" y="221" font-size="14" font-weight="700" fill="#20262e">PTSD</text>
+<text x="24" y="238" font-size="11.5" fill="#828d9b">M=11 · k=33 · n=7,989</text>
+<line x1="438.0" y1="211" x2="522.1" y2="211" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="482.5" cy="211" r="4.6" fill="#1f4e79" stroke="#1f4e79" stroke-width="2"/>
+<line x1="438.0" y1="223" x2="487.5" y2="223" stroke="#3a9a8f" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="462.7" cy="223" r="4.6" fill="#3a9a8f" stroke="#3a9a8f" stroke-width="2"/>
+<line x1="438.0" y1="235" x2="492.4" y2="235" stroke="#c78a1e" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="462.7" cy="235" r="4.6" fill="#c78a1e" stroke="#c78a1e" stroke-width="2"/>
+<text x="738" y="228" font-size="12" font-weight="600" fill="#828d9b">차이 없음</text>
+<rect x="14" y="246" width="872" height="46" fill="#f4f7fb"/>
+<text x="24" y="267" font-size="14" font-weight="700" fill="#20262e">우울</text>
+<text x="24" y="284" font-size="11.5" fill="#828d9b">M=35 · k=104 · n=34,248</text>
+<line x1="442.9" y1="257" x2="507.3" y2="257" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="477.6" cy="257" r="4.6" fill="#1f4e79" stroke="#1f4e79" stroke-width="2"/>
+<line x1="398.4" y1="269" x2="442.9" y2="269" stroke="#3a9a8f" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="423.2" cy="269" r="4.6" fill="#3a9a8f" stroke="#3a9a8f" stroke-width="2"/>
+<line x1="388.5" y1="281" x2="438.0" y2="281" stroke="#c78a1e" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="413.3" cy="281" r="4.6" fill="#c78a1e" stroke="#c78a1e" stroke-width="2"/>
+<text x="738" y="274" font-size="12" font-weight="600" fill="#1f4e79">EA>PA, EA>SA</text>
+<text x="24" y="313" font-size="14" font-weight="700" fill="#20262e">경계선 성격</text>
+<text x="24" y="330" font-size="11.5" fill="#828d9b">M=13 · k=39 · n=39,060</text>
+<line x1="398.4" y1="303" x2="532.0" y2="303" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="467.7" cy="303" r="4.6" fill="#1f4e79" stroke="#1f4e79" stroke-width="2"/>
+<line x1="348.9" y1="315" x2="472.6" y2="315" stroke="#3a9a8f" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="413.3" cy="315" r="4.6" fill="#3a9a8f" stroke="#3a9a8f" stroke-width="2"/>
+<line x1="363.8" y1="327" x2="423.2" y2="327" stroke="#c78a1e" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="393.5" cy="327" r="4.6" fill="#c78a1e" stroke="#c78a1e" stroke-width="2"/>
+<text x="738" y="320" font-size="12" font-weight="600" fill="#1f4e79">EA>PA, EA>SA</text>
+<rect x="14" y="338" width="872" height="46" fill="#f4f7fb"/>
+<text x="24" y="359" font-size="14" font-weight="700" fill="#20262e">ADHD</text>
+<text x="24" y="376" font-size="11.5" fill="#828d9b">M=4 · k=11 · n=3,504</text>
+<line x1="428.1" y1="349" x2="492.4" y2="349" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="457.8" cy="349" r="4.6" fill="#1f4e79" stroke="#1f4e79" stroke-width="2"/>
+<line x1="324.2" y1="361" x2="556.7" y2="361" stroke="#3a9a8f" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="438.0" cy="361" r="4.6" fill="#3a9a8f" stroke="#3a9a8f" stroke-width="2"/>
+<line x1="294.5" y1="373" x2="482.5" y2="373" stroke="#c78a1e" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="388.5" cy="373" r="4.6" fill="#fff" stroke="#c78a1e" stroke-width="2"/>
+<text x="738" y="366" font-size="12" font-weight="600" fill="#1f4e79">EA>SA</text>
+<text x="24" y="405" font-size="14" font-weight="700" fill="#20262e">정신증</text>
+<text x="24" y="422" font-size="11.5" fill="#828d9b">M=7 · k=19 · n=2,044</text>
+<line x1="403.4" y1="395" x2="512.2" y2="395" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="457.8" cy="395" r="4.6" fill="#1f4e79" stroke="#1f4e79" stroke-width="2"/>
+<line x1="348.9" y1="407" x2="522.1" y2="407" stroke="#3a9a8f" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="433.1" cy="407" r="4.6" fill="#3a9a8f" stroke="#3a9a8f" stroke-width="2"/>
+<line x1="334.1" y1="419" x2="462.7" y2="419" stroke="#c78a1e" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="398.4" cy="419" r="4.6" fill="#c78a1e" stroke="#c78a1e" stroke-width="2"/>
+<text x="738" y="412" font-size="12" font-weight="600" fill="#1f4e79">EA>SA</text>
+<rect x="14" y="430" width="872" height="46" fill="#f4f7fb"/>
+<text x="24" y="451" font-size="14" font-weight="700" fill="#20262e">불안</text>
+<text x="24" y="468" font-size="11.5" fill="#828d9b">M=17 · k=58 · n=19,707</text>
+<line x1="383.6" y1="441" x2="492.4" y2="441" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="438.0" cy="441" r="4.6" fill="#1f4e79" stroke="#1f4e79" stroke-width="2"/>
+<line x1="353.9" y1="453" x2="438.0" y2="453" stroke="#3a9a8f" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="393.5" cy="453" r="4.6" fill="#3a9a8f" stroke="#3a9a8f" stroke-width="2"/>
+<line x1="329.2" y1="465" x2="413.3" y2="465" stroke="#c78a1e" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="373.7" cy="465" r="4.6" fill="#c78a1e" stroke="#c78a1e" stroke-width="2"/>
+<text x="738" y="458" font-size="12" font-weight="600" fill="#1f4e79">EA>PA, EA>SA, PA>SA</text>
+<text x="24" y="497" font-size="14" font-weight="700" fill="#20262e">물질사용</text>
+<text x="24" y="514" font-size="11.5" fill="#828d9b">M=11 · k=33 · n=37,868</text>
+<line x1="378.6" y1="487" x2="487.5" y2="487" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="433.1" cy="487" r="4.6" fill="#1f4e79" stroke="#1f4e79" stroke-width="2"/>
+<line x1="358.8" y1="499" x2="477.6" y2="499" stroke="#3a9a8f" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="418.2" cy="499" r="4.6" fill="#3a9a8f" stroke="#3a9a8f" stroke-width="2"/>
+<line x1="334.1" y1="511" x2="438.0" y2="511" stroke="#c78a1e" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="388.5" cy="511" r="4.6" fill="#c78a1e" stroke="#c78a1e" stroke-width="2"/>
+<text x="738" y="504" font-size="12" font-weight="600" fill="#1f4e79">EA>SA</text>
+<rect x="14" y="522" width="872" height="46" fill="#f4f7fb"/>
+<text x="24" y="543" font-size="14" font-weight="700" fill="#20262e">섭식</text>
+<text x="24" y="560" font-size="11.5" fill="#828d9b">M=6 · k=18 · n=2,157</text>
+<line x1="363.8" y1="533" x2="477.6" y2="533" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="418.2" cy="533" r="4.6" fill="#1f4e79" stroke="#1f4e79" stroke-width="2"/>
+<line x1="314.3" y1="545" x2="428.1" y2="545" stroke="#3a9a8f" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="373.7" cy="545" r="4.6" fill="#3a9a8f" stroke="#3a9a8f" stroke-width="2"/>
+<line x1="274.7" y1="557" x2="408.3" y2="557" stroke="#c78a1e" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="344.0" cy="557" r="4.6" fill="#fff" stroke="#c78a1e" stroke-width="2"/>
+<text x="738" y="550" font-size="12" font-weight="600" fill="#1f4e79">EA>PA, EA>SA, PA>SA</text>
+<text x="24" y="589" font-size="14" font-weight="700" fill="#20262e">강박·신체화</text>
+<text x="24" y="606" font-size="11.5" fill="#828d9b">M=4 · k=12 · n=1,670</text>
+<line x1="264.8" y1="579" x2="507.3" y2="579" stroke="#1f4e79" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="388.5" cy="579" r="4.6" fill="#fff" stroke="#1f4e79" stroke-width="2"/>
+<line x1="254.9" y1="591" x2="492.4" y2="591" stroke="#3a9a8f" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="373.7" cy="591" r="4.6" fill="#fff" stroke="#3a9a8f" stroke-width="2"/>
+<line x1="284.6" y1="603" x2="477.6" y2="603" stroke="#c78a1e" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<circle cx="378.6" cy="603" r="4.6" fill="#fff" stroke="#c78a1e" stroke-width="2"/>
+<text x="738" y="596" font-size="12" font-weight="600" fill="#828d9b">차이 없음</text>
+</svg>
+  </div>
+  <div class="fig-implies"><b>📊 그림 읽는 법.</b> 한 줄이 증후군 하나이고, 줄마다 점 세 개가 위에서부터 EA, PA, SA입니다. 세 가지를 차례로 확인하면 됩니다. <b>첫째</b>, 파란 점(EA)은 12개 줄 모두에서 가장 오른쪽에 있거나 그에 가깝습니다. <b>둘째</b>, 막대의 길이를 보십시오. 우울(M = 35), 불안(M = 17)은 막대가 짧고, 양극성과 성격장애(각 M = 4)는 막대가 매우 깁니다. 가장 큰 점추정치(0.50, 0.48)가 가장 불확실한 추정치이기도 합니다. <b>셋째</b>, PTSD와 해리 증상에서는 세 점이 거의 겹칩니다. PTSD에서는 어떤 쌍도 유의하게 다르지 않았고, 해리에서 EA는 SA와 다르지 않았습니다.</div>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">비판적 읽기 · 본문 요약과 표를 나란히 놓기</span><br>
+  본문은 EA가 "우울, 불안, 경계선 성격, 양극성, ADHD, 물질사용, 정신증, 섭식"에서 PA 또는 SA보다 유의하게 강했다고 요약합니다. 표를 보면 이 요약에는 층이 있습니다. EA가 <strong>PA와 SA 둘 다보다</strong> 유의하게 컸던 것은 우울, 불안, 경계선 성격, 섭식의 네 범주입니다. 양극성에서는 PA보다만, ADHD, 물질사용, 정신증, 성격장애에서는 SA보다만 유의하게 컸습니다. "EA or PA or SA보다 강했다"는 요약 문장을 "모든 유형보다 강했다"로 옮겨 적지 않도록 주의해야 합니다. 저자들도 일부 증후군별 결과가 적은 수의 연구에 기반하므로 재현이 필요하다고 명시합니다.
+</div>
+
+<div class="panel">
+  <p>증후군별 결과에서 이론적으로 가장 흥미로운 대목은 <strong>PTSD와 해리</strong>입니다. DSM-5 기준 A에 해당하지 않는 EA가, 기준 A에 명확히 해당하는 PA, SA와 비슷한 크기로 외상 관련 증후군과 연관되었습니다(PTSD: EA 0.37, PA 0.33, SA 0.33). 저자들은 이 결과를 논의 절에서 "EA가 그 자체로 외상 유발적(traumatogenic) 경험일 수 있다"는 주장의 근거로 사용합니다.</p>
+  <p>강박 및 신체화 범주는 유일하게 세 유형 모두 유의하지 않았습니다. 다만 이 범주는 강박 관련 장애 2편과 신체증상 관련 장애 2편을 합친 것이고, 저자들 스스로 임상적 효용이 제한적이라고 적습니다.</p>
+</div>
+
+<!-- §09 -->
+<div class="section-head" id="disc">
+  <div class="section-num">09</div>
+  <div class="section-title-block"><h2>논의: 왜 정서학대의 연관이 더 크게 나오는가</h2><p class="section-subtitle">Possible Pathways From Childhood EA to Adult Psychopathology · Evidence for EA as Distinct and Traumatogenic · Limitations</p></div>
+</div>
+
+<div class="quote-box">
+  "We highlight three nonmutually exclusive pathways: (a) the direct psychological impact of EA on self-development, (b) the relative underrecognition of EA and its consequences, and (c) potential reporting biases."
+  <span class="trans">우리는 서로 배타적이지 않은 세 가지 경로를 제시한다: (a) 정서학대가 <strong>자기 발달</strong>에 미치는 직접적인 심리적 영향, (b) 정서학대와 그 결과가 <strong>상대적으로 덜 인식</strong>된다는 점, (c) 잠재적인 <strong>보고 편향</strong>.</span>
+  <span class="attr">출처: Discussion · Possible Pathways From Childhood EA to Adult Psychopathology</span>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">a</div>
+    <div class="cond-titles"><div class="cond-code">Pathway (a)</div><h3>자기 발달에 대한 직접적 영향</h3><div class="cond-en">Direct psychological impact on self-development</div></div>
+    <span class="verdict promising">이론적으로 유력 · 직접 검정 없음</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">때리는 것은 몸을 향하지만, "넌 쓸모없어"라는 말은 아이가 자기 자신을 어떻게 보는지를 곧바로 겨눕니다.</div>
+    <p>저자들은 EA가 모든 학대의 밑바탕에 있는 "양육 체계의 교란"을 가장 직접적으로 드러내는 형태라고 봅니다. PA와 SA에서도 그 교란은 일어나지만, EA는 아동의 가치, 사랑받을 자격, 관계적 가치에 대한 <strong>직접적인 메시지</strong>를 담고 있다는 점에서 구별됩니다. 우울 증후군(EA 0.36)과 성격장애 증후군에서의 결과가 인지적 취약성 모델, 애착 이론의 예측과 일관된다는 것이 근거입니다. 다만 매개 기제(자기도식, 내적 작동 모델)는 이 메타분석에서 측정되지 않았습니다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">b</div>
+    <div class="cond-titles"><div class="cond-code">Pathway (b)</div><h3>인식되지 않아서 개입도 없다</h3><div class="cond-en">Relative underrecognition of EA and its consequences</div></div>
+    <span class="verdict new">새로운 해석 · 향후 연구 과제</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">신체학대와 성학대는 누군가 알아채고 개입할 가능성이 높습니다. 정서학대는 아무도 알아채지 못한 채 지나가고, 본인조차 그것이 학대였다고 이름 붙이지 못합니다.</div>
+    <p>이 경로는 결과의 해석을 뒤집는 흥미로운 가능성을 담고 있습니다. EA의 연관이 더 큰 이유가 EA 자체의 독성이 아니라, PA와 SA가 <strong>더 자주 발견되고 지지와 개입으로 이어져 장기적 영향이 완화되기 때문</strong>일 수 있다는 것입니다. 또한 인정받지 못한 경험은 당사자가 자신의 고통을 정당한 것으로 받아들이기 어렵게 만들어 의미 만들기와 심리적 통합을 방해할 수 있습니다. 저자들은 기관의 발견, 대인관계적 인정, 자기 인식이 발달 경로를 어떻게 바꾸는지를 향후 연구 과제로 제시합니다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">c</div>
+    <div class="cond-titles"><div class="cond-code">Pathway (c)</div><h3>보고와 측정 과정의 산물일 가능성</h3><div class="cond-en">Potential reporting biases</div></div>
+    <span class="verdict mixed">배제할 수 없음</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">지금 우울한 사람은 어린 시절을 더 어둡게 기억할 수 있습니다. 그리고 "모욕당했다"는 기억은 "맞았다"는 기억보다 해석의 여지가 큽니다.</div>
+    <p>EA 문항은 의도와 의미가 모호한 대인관계적 상호작용을 묻기 때문에 현재 상태에 따른 재해석에 특히 민감할 수 있습니다. 우울은 자전적 기억의 부정적 편향과 연관되고, 결과변수도 대부분 자기보고여서 공통방법분산이 더해집니다. 저자들은 이 설명이 전부는 아닐 것이라는 반론도 제시합니다. EA의 연관은 우울이나 불안뿐 아니라 성격, 양극성, 정신증, 물질사용 증후군처럼 <strong>부정적 자기참조 편향으로 덜 정의되는 결과</strong>에서도 나타났고, 지역사회와 임상 표본 모두에서 일관되었다는 것입니다.</p>
+  </div>
+</div>
+
+<div class="quote-box">
+  "These findings suggest that although reporting processes may contribute to observed associations, they are unlikely to provide a complete explanation."
+  <span class="trans">이러한 결과는 보고 과정이 관찰된 연관에 <strong>기여할 수는 있지만</strong>, 그것이 <strong>완전한 설명이 되기는 어렵다</strong>는 것을 시사한다.</span>
+  <span class="attr">출처: Discussion · Possible Pathways</span>
+</div>
+
+<div class="subhead"><span class="code">9.1</span><h3>정서학대는 "외상"인가: DSM-5 기준 A를 발달적으로 읽기</h3><span class="en">Evidence for EA as Distinct and Traumatogenic</span></div>
+
+<div class="panel">
+  <p>저자들은 결과를 진단체계에 대한 논의로 연결합니다. DSM-5 기준 A는 EA를 명시적으로 배제하지는 않지만, EA를 "임상적 주의의 초점이 될 수 있는 기타 상태"로 분류하고, 기준 A의 예시가 모두 신체적으로 정의된 위협이라는 점에서 <strong>사실상 배제</strong>한다고 봅니다. 반면 ICD-11은 반복적이고 장기적인 외상과 연결된 복합 PTSD 개념을 두고 있어 만성적 EA를 외상 유발 경험으로 볼 개념적 여지가 있다고 평가합니다.</p>
+  <p>저자들의 제안은 기준 A를 넓히자는 것이 아닙니다. DSM-5는 사랑하는 사람의 죽음을 폭력적이거나 우발적이지 않으면 외상으로 보지 않으면서도, 어린 아동에게 부모의 죽음은 외상일 수 있다고 명시합니다. 양육 체계의 교란이 아동에게 갖는 발달적 의미를 이미 인정하고 있는 셈입니다. 같은 원리를 EA에 적용해, 양육자가 반복적으로 버리겠다고 위협하거나 "원치 않는 아이"라고 말하는 것은 <strong>의존해야 생존할 수 있는 아동의 관점에서는 생존에 대한 위협</strong>으로 경험될 수 있다는 것입니다.</p>
+</div>
+
+<div class="quote-box">
+  "This developmental perspective does not necessarily require expanding Criterion A; instead, it underscores the potential value of interpreting existing trauma definitions through a more explicitly developmental lens."
+  <span class="trans">이러한 발달적 관점이 반드시 기준 A의 확장을 요구하는 것은 아니다. 그보다는 <strong>기존의 외상 정의를 더 명시적으로 발달적인 렌즈로 해석</strong>하는 일의 잠재적 가치를 강조한다.</span>
+  <span class="attr">출처: Discussion · Evidence for EA as Distinct and Traumatogenic</span>
+</div>
+
+<div class="subhead"><span class="code">9.2</span><h3>저자들이 밝힌 한계</h3><span class="en">Limitations</span></div>
+
+<div class="mod-grid">
+  <div class="mod-card risk"><h4>횡단 설계와 인과</h4><div class="en">Cross-sectional designs</div><p>포함 연구 대부분이 횡단 연구여서 방향을 확정할 수 없습니다. 저자들은 효과크기를 "rough estimate"로 보아야 하며 교란변수와 <strong>역인과</strong>의 영향을 반영할 수 있다고 적습니다. 유전적 위험, 발달 시기, 만성성, 비선형 관계도 다루지 못했습니다.</p></div>
+  <div class="mod-card risk"><h4>회고적 자기보고</h4><div class="en">Retrospective self-report</div><p>회상 편향과 외상성 기억상실에 취약하고, EA 문항은 PA, SA 문항보다 주관성이 큽니다. 다만 EA가 아동기에 가장 덜 확인되는 유형이므로 회고적 보고가 가장 적합한 측정일 수 있다고 덧붙입니다.</p></div>
+  <div class="mod-card risk"><h4>유형 간 상관의 근사</h4><div class="en">Approximated dependency</div><p>유형 간 상관을 보고하지 않은 연구가 많아 ρ = 0.6으로 근사했습니다. 민감도 분석으로 뒷받침했지만 근사라는 사실은 남습니다.</p></div>
+  <div class="mod-card risk"><h4>CTQ 의존과 일반화</h4><div class="en">Reliance on the CTQ · Generalizability</div><p>CTQ는 발달 시기, 만성성, 가해자와의 관계, 지지적 성인의 유무를 구분하지 않습니다. 표본은 대부분 미국이고, 절반가량의 연구가 인종 구성을 보고하지 않았으며, 가족의 사회경제적 배경도 체계적으로 보고되지 않았습니다.</p></div>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">🧭 길잡이 · 실천과 정책에 대한 함의</span><br>
+  저자들은 세 가지를 제안합니다. 양육자의 내적 작동 모델과 정신화 능력을 다루는 예방적 개입(child-parent psychotherapy, GABI, caregiver support intervention 등)의 가치, 성인 생존자를 만날 때 초기 관계 경험을 평가하는 일의 중요성, 그리고 청소년기에 흔히 나타나는 ADHD와 섭식장애의 평가에서 정서학대를 포함한 학대 경험을 선별하는 일입니다. 연구 과제로는 전향적 종단 설계와, EA 외에 다른 외상 경험이 없는 사람들에게서 PTSD 증상과 위협 반응성을 살펴보는 연구를 제시합니다.
+</div>
+
+<!-- §10 phrases -->
+<div class="section-head" id="phrases">
+  <div class="section-num">10</div>
+  <div class="section-title-block"><h2>명문장: 영어 논문에 다시 쓸 수 있는 문장들</h2><p class="section-subtitle">Notable sentences · 표현의 구조와 쓰임새</p></div>
+</div>
+
+<div class="phrase-grid">
+  <div class="phrase">
+    <div class="en">"Thus, EA appears underrecognized in both public discourse and clinical classification."</div>
+    <div class="kr">이처럼 정서학대는 공적 담론과 임상적 분류 모두에서 덜 인식되고 있는 것으로 보인다.</div>
+    <div class="why"><b>왜 좋은가.</b> 문제 제기 단락을 닫는 한 문장입니다. "appears"로 단정을 피하면서 "both A and B" 구조로 공백이 두 영역에 걸쳐 있음을 압축합니다. 서론 첫 단락의 마무리 문장으로 응용하기 좋습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"To our knowledge, prior meta-analyses have not systematically compared the association of childhood EA with broad risk for adult psychopathology relative to other forms of abuse."</div>
+    <div class="kr">우리가 아는 한, 선행 메타분석은 아동기 정서학대와 성인기 정신병리 전반의 위험 사이의 연관을 다른 학대 유형과 체계적으로 비교한 적이 없다.</div>
+    <div class="why"><b>왜 좋은가.</b> 연구 공백을 선언하는 표준 문형입니다. "To our knowledge"로 방어선을 치고, "have not systematically compared"로 공백의 성격(전무가 아니라 체계적 비교의 부재)을 정밀하게 한정합니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Thus, it appears that prospective and retrospective measures of childhood maltreatment captured two separate groups of maltreated individuals."</div>
+    <div class="kr">따라서 아동학대의 전향적 측정과 회고적 측정은 학대를 경험한 서로 다른 두 집단을 포착한 것으로 보인다.</div>
+    <div class="why"><b>왜 좋은가.</b> 측정 불일치를 "오차"가 아니라 "서로 다른 모집단"으로 재해석하는 문장입니다. 우리 자료에서 자기보고와 기관 기록이 어긋날 때 이 틀을 빌려 쓸 수 있습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Importantly, modest effect sizes do not imply trivial impact."</div>
+    <div class="kr">중요한 것은, 크지 않은 효과크기가 사소한 영향을 뜻하지는 않는다는 점이다.</div>
+    <div class="why"><b>왜 좋은가.</b> 일곱 단어로 효과크기 해석의 원칙을 말합니다. "modest"와 "trivial"의 대비가 핵심입니다. 작은 효과를 보고할 때 과장하지도 폄하하지도 않는 문장으로 그대로 가져다 쓸 수 있습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"These findings are inconsistent with the common perception that EA may be less consequential than PA or SA."</div>
+    <div class="kr">이러한 결과는 정서학대가 신체학대나 성학대보다 덜 중대할 수 있다는 통념과 부합하지 않는다.</div>
+    <div class="why"><b>왜 좋은가.</b> "disprove"나 "refute"가 아니라 "are inconsistent with"를 씁니다. 횡단 상관 자료로 통념에 맞설 때 허용되는 가장 강한 동사가 어디까지인지를 보여 줍니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"At the same time, differences in magnitude alone cannot determine whether these represent differences in severity or differences in underlying developmental processes, highlighting the need for continued conceptual clarification."</div>
+    <div class="kr">동시에, 크기의 차이만으로는 그것이 심각도의 차이인지 기저 발달 과정의 차이인지 판단할 수 없으며, 이는 지속적인 개념적 명료화의 필요성을 부각한다.</div>
+    <div class="why"><b>왜 좋은가.</b> 양적 차이를 질적 차이로 과잉 해석하지 않도록 스스로 제동을 거는 문장입니다. 잠재계층 간 평균 차이를 해석할 때에도 같은 논리가 필요합니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"The effect sizes presented here must be considered a rough estimate of the associations of childhood abuse, as they may reflect the influence of confounding variables and potential reverse causation."</div>
+    <div class="kr">여기 제시된 효과크기는 아동학대와의 연관에 대한 대략적 추정치로 보아야 하는데, 교란변수의 영향과 잠재적 역인과를 반영할 수 있기 때문이다.</div>
+    <div class="why"><b>왜 좋은가.</b> 한계 절의 모범 문장입니다. "must be considered"로 독자의 해석을 직접 지시하고, 이유를 교란과 역인과 두 가지로 구체화합니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Regardless of how EA is ultimately conceptualized within diagnostic frameworks, its identification and assessment present important clinical and research challenges."</div>
+    <div class="kr">정서학대가 진단체계 안에서 궁극적으로 어떻게 개념화되든, 그것을 식별하고 평가하는 일은 임상과 연구 모두에 중요한 과제를 던진다.</div>
+    <div class="why"><b>왜 좋은가.</b> "Regardless of how X is ultimately ..."는 결론이 나지 않은 논쟁을 일단 괄호에 넣고 실천적 논점으로 넘어갈 때 쓰는 전환 문형입니다.</div>
+  </div>
+</div>
+
+<!-- §11 our study -->
+<div class="section-head" id="ourstudy">
+  <div class="section-num">11</div>
+  <div class="section-title-block"><h2>AIR Lab 연구와의 연결</h2><p class="section-subtitle">ACE 점수, 사람중심 분석, 그리고 측정의 문제</p></div>
+</div>
+
+<div class="panel">
+  <p>AIR Lab의 연구는 아동기 역경경험(ACEs)을 누적 점수로, 네트워크로, 잠재계층으로 다루어 왔습니다. 이 논문은 그 작업들에 공통으로 걸리는 질문을 던집니다. <strong>ACE 문항 하나하나를 같은 무게로 더해도 되는가.</strong> 합산 점수는 정서학대 1점과 신체학대 1점을 동등하게 취급하지만, 이 메타분석의 평균 상관은 유형마다 달랐습니다. 반대로, 이 논문이 다루지 못한 부분이 랩의 방법론적 강점과 맞닿아 있습니다. 변수중심 메타분석은 "EA만 겪은 사람"과 "EA와 PA를 함께 겪은 사람"을 구분하지 못하지만, LCA와 LPA는 바로 그 동시 발생 양상을 자료에서 찾아냅니다.</p>
+  <p>측정에 관한 논의도 직접 적용됩니다. 랩이 쓰는 청소년 패널과 조사 자료는 대부분 자기보고입니다. 저자들이 정리한 것처럼 자기보고는 "약한 측정"이 아니라 <strong>기관 기록과는 다른 집단을 포착하는 측정</strong>이며, 그 사실을 한계 절에서 어떻게 서술할지에 대한 좋은 본보기를 이 논문이 제공합니다.</p>
+  <div class="tbl-wrap">
+  <table class="mini-table">
+    <tr><th>우리 연구 요소</th><th>이 논문에서의 대응</th><th>가져올 점</th></tr>
+    <tr><td>ACE 누적 점수</td><td>유형별 통합 상관의 차이 (EA 0.34, PA 0.25, SA 0.23)</td><td>동일가중 합산의 가정을 명시하고, 유형별 민감도 분석을 함께 보고</td></tr>
+    <tr class="hi"><td>ACE 잠재계층·프로파일</td><td>유형 간 높은 상관 (r = 0.35~0.82), ρ = 0.6 근사</td><td>"정서학대 단독형" 계층이 존재하는지, 그 계층의 결과가 중복형과 다른지 검정</td></tr>
+    <tr><td>ACE 네트워크 분석</td><td>EA가 양육 체계 교란의 "가장 직접적인 표현"이라는 가설</td><td>정서학대 노드의 중심성과 다른 역경으로 이어지는 연결을 이론적으로 해석할 근거</td></tr>
+    <tr><td>청소년 자해·자살 연구</td><td>우울, 경계선 성격 증후군에서 EA가 PA, SA 모두보다 큼</td><td>가족관계 변수를 넣을 때 신체적 폭력뿐 아니라 언어적·정서적 학대를 분리해 측정</td></tr>
+    <tr><td>자기보고 자료의 한계 서술</td><td>전향 대 회고 측정에 대한 균형 잡힌 정리</td><td>편향을 인정한 뒤 그 편향이 결과를 얼마나 설명하는지 따로 논증하는 구조</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">스터디 토론 질문</span><br>
+  <strong>1.</strong> 경로 (b)가 맞다면, EA의 연관이 더 큰 것은 EA가 더 해로워서가 아니라 PA와 SA가 더 잘 발견되고 개입되기 때문입니다. 경로 (a)와 (b)를 구별하려면 어떤 자료와 설계가 필요할까요?<br>
+  <strong>2.</strong> "정서학대는 가장 덜 신고되는 유형"이라는 이 논문의 전제는 미국 자료에 기반합니다. 한국의 아동학대 판정 통계에서 정서학대의 비중이 어떠한지 각자 확인해 온 뒤, 경로 (b)의 논리가 한국 맥락에서도 성립하는지 토론해 봅시다.<br>
+  <strong>3.</strong> 입원 표본에서는 유형 간 차이가 유의하지 않았습니다. 검정력 부족(M = 16) 외에, 중증 임상 집단에서 유형 간 차이가 줄어들 실질적인 이유를 생각해 볼 수 있을까요?
+</div>
+
+<!-- §12 worksheet -->
+<div class="section-head" id="work">
+  <div class="section-num">12</div>
+  <div class="section-title-block"><h2>정리 활동</h2><p class="section-subtitle">입력한 내용은 이 브라우저에 자동 저장됩니다</p></div>
+</div>
+
+<div class="worksheet">
+  <h4>활동 1 · 주장의 강도 조절하기</h4>
+  <div class="prompt">이 논문의 결과를 (1) 가장 조심스럽게, (2) 저자들과 같은 강도로, (3) 과장해서 쓴 영어 문장을 각각 하나씩 만들어 보세요. 세 문장에서 달라지는 동사와 한정어에 밑줄을 긋는다고 생각하고 비교합니다.</div>
+  <textarea data-key="w1" placeholder="(1) Cautious: ...&#10;(2) As the authors put it: ...&#10;(3) Overstated: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 2 · 세 경로를 구별하는 연구 설계</h4>
+  <div class="prompt">경로 (a) 자기 발달, (b) 저인식, (c) 보고 편향 가운데 하나를 골라, 그 경로가 참일 때에만 관찰될 결과를 하나 적고 그것을 검정할 설계를 간단히 써 보세요.</div>
+  <textarea data-key="w2" placeholder="선택한 경로: ...&#10;이 경로가 참일 때에만 나타날 결과: ...&#10;자료와 설계: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 3 · 내 연구의 ACE 측정 점검</h4>
+  <div class="prompt">지금 쓰고 있는 자료의 ACE 또는 학대 문항을 떠올려 보세요. 정서학대는 몇 문항으로, 작위와 부작위 가운데 무엇을 묻고 있습니까? 합산 점수를 쓴다면 그 선택을 논문에서 어떻게 정당화하겠습니까?</div>
+  <textarea data-key="w3" placeholder="정서학대 문항 수와 내용: ...&#10;작위/부작위 구분: ...&#10;합산의 정당화 또는 대안: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="closing">
+  <div class="closing-inner">
+    <h2>이 논문이 보여 주는 것: 통념은 증거가 아니라 측정의 공백에서 자랄 수 있다</h2>
+    <p>"정서학대는 덜 해롭다"는 생각은 누군가 검정해서 얻은 결론이 아니었습니다. 눈에 보이지 않아 덜 신고되고, 덜 신고되어 덜 연구되고, 진단 기준에서도 빠지면서 굳어진 믿음이었습니다. 이 논문이 한 일은 새로운 이론을 내놓은 것이 아니라, <strong>세 유형을 같은 저울에 올려놓은 것</strong>입니다. 이론은 종종 이렇게 수정됩니다. 새로운 발견보다 먼저, 그동안 비교되지 않았던 것을 비교하는 설계에서 출발합니다.</p>
+    <p>동시에 이 논문은 주장의 크기를 증거의 크기에 맞추는 법을 보여 줍니다. 차이는 Δr = 0.08에서 0.11이고, 자료는 횡단적이며 자기보고이고, 출판 편향은 배제하지 못했습니다. 저자들은 그 모두를 본문에 적고, 결론을 "더 해롭다"가 아니라 <strong>"덜 해롭다는 통념과 부합하지 않는다"</strong>로 씁니다. 통념에 도전하는 글일수록 문장은 더 조심스러워야 한다는 것, 그리고 그 조심스러움이 주장을 약하게 하는 것이 아니라 믿을 만하게 만든다는 것이 이 논문에서 배울 점입니다.</p>
+    <div class="signature">Miron, N., D'Andrea, W. M., Barzilai, E., et al. (2026). Childhood emotional abuse and adult psychopathology: A multilevel meta-analytic review. Psychological Bulletin, 152(7-8), 623-664. · AIR Lab Journal Club</div>
+  </div>
+</div>
+
+
+</main>
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(31,78,121,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#1f4e79"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#1f4e79"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<footer class="footer">
+  이 페이지는 AIR Lab(ACEs-Informed Recovery Lab) 대학원 세미나의 교육 목적으로 제작되었습니다. 원문의 짧은 인용은 출처를 밝혀 사용했습니다. "원문 Figure"와 "원문 Table"로 표시한 이미지는 CC BY-NC-ND 4.0 라이선스로 공개된 원문에서 변형 없이 가져와 출처와 함께 실은 것이고, "AIR Lab 개념도"로 표시한 그림은 원문의 수치와 서술을 바탕으로 랩에서 따로 그린 설명용 그림입니다. 정확한 수치와 전체 내용은 원문과 보충자료를 확인하십시오.
+</footer>
+
+<script>
+(function(){
+  var PREFIX='jc_miron2026_';
+  var areas=document.querySelectorAll('.worksheet textarea[data-key]');
+  function store(k,v){try{localStorage.setItem(PREFIX+k,v);return true;}catch(e){return false;}}
+  function load(k){try{return localStorage.getItem(PREFIX+k);}catch(e){return null;}}
+  function flash(ta){var s=ta.parentNode.querySelector('.save-status');if(!s)return;s.classList.add('show');clearTimeout(s._t);s._t=setTimeout(function(){s.classList.remove('show');},1400);}
+  areas.forEach(function(ta){
+    var v=load(ta.getAttribute('data-key'));
+    if(v!==null)ta.value=v;
+    var timer;
+    ta.addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(function(){if(store(ta.getAttribute('data-key'),ta.value))flash(ta);},400);});
+  });
+  window.saveAll=function(){var ok=true;areas.forEach(function(ta){if(store(ta.getAttribute('data-key'),ta.value))flash(ta);else ok=false;});if(!ok)alert('이 브라우저에서는 저장 공간을 사용할 수 없습니다. 내용을 따로 복사해 두세요.');};
+})();
+</script>
+</body>
+</html>

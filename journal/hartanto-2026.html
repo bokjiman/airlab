@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>민감기는 창문인가 확률인가</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+  /* ════════ AIR Lab theme: navy → recovery-teal (synced with index) ════════ */
+  :root{ --sky:#2d6a9f; --sky-deep:#1f4e79; --sky-bright:#7fa9d1; --sky-soft:#e9eff6; --sky-soft2:#f4f7fb; --sky-soft-2:#f4f7fb; --mint:#3a9a8f; --mint-soft:#eaf5f2; --hover-bg:#eef3f9; }
+  .stripe{background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+  .stripe span{background:transparent!important}
+  .nav-logo-dot .d3{background:#3a9a8f}
+  .hero{isolation:isolate}
+  .hero::before{background:radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%), linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%)!important}
+  .overline{color:#9fd3ca!important}
+  .overline::before{background:#8cc7bd!important}
+  .hero h1{color:#fff!important}
+  .hero h1 em{color:#bfe6df!important}
+  .hero .citation{color:#b7c9da!important;border-left-color:#8cc7bd!important}
+  .hero .citation em{color:#d6e5f2!important}
+  .hero .citation a{color:#bfe6df!important}
+  .hero .subtitle{color:#d2e0ec!important}
+  .hero .subtitle strong,.hero .subtitle b{color:#fff!important}
+  .hero .subtitle em{color:#bfe6df}
+  .hero .stat{background:rgba(255,255,255,0.08)!important;border-color:rgba(255,255,255,0.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .hero .stat .num{color:#fff!important}
+  .hero .stat .lbl{color:#a9c1d6!important}
+  .paper-meta,.condition-header{background:linear-gradient(120deg,#1c4a73 0%,#22655f 100%)!important}
+  .section-num{background:linear-gradient(120deg,#1f4e79 0%,#2d7d78 100%)!important}
+
+  /* ════════ figure originals + line-drawing helpers ════════ */
+  .fig-orig a{display:block}
+  .fig-orig img{display:block;margin:0 auto;background:#fff}
+  .fig-lic{font-size:11.5px;color:var(--light);line-height:1.55;margin:8px 2px 0;text-align:left}
+  .fig-lic a{color:var(--sky-deep)}
+  .guide-list{margin:6px 0 0;padding-left:20px}
+  .guide-list li{margin-bottom:5px}
+  .mini-table td.num,.mini-table th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .mini-table td small{color:var(--light)}
+  .tbl-wrap{overflow-x:auto}
+  .three-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+  @media (max-width:900px){.three-grid{grid-template-columns:1fr}}
+  svg .ink{stroke:#20262e;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  svg .inkthin{stroke:#46505c;stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body id="top">
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#model">Life Cycle Model</a></li>
+      <li><a href="#methods">방법</a></li>
+      <li><a href="#r1">발생·지속</a></li>
+      <li><a href="#r2">피질하 구조</a></li>
+      <li><a href="#r3">피질 구조</a></li>
+      <li><a href="#r4">기능·유형</a></li>
+      <li><a href="#disc">논의</a></li>
+      <li><a href="#phrases">명문장</a></li>
+      <li><a href="#ourstudy">우리 연구</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">Hartanto et al. 2026 · Journal Club</div>
+    <h1>"언제 겪었는가"는 정말 중요한가:<br><em>민감기를 고정된 창문에서 확률로 다시 쓰다</em></h1>
+    <div class="citation">Hartanto, S., Rakesh, D., Orr, C., Forlano, E., Khetan, M., &amp; Whittle, S. (2026). Annual Research Review: A probe into sensitive periods: How the developmental timing of adverse childhood experiences influences brain structure and function: A systematic review. <em>Journal of Child Psychology and Psychiatry</em>. Advance online publication. https://doi.org/10.1111/jcpp.70259</div>
+    <p class="subtitle">발달신경과학에는 "뇌 영역마다 스트레스에 특히 취약한 시기가 있다"는 오래된 생각이 있고, Lupien 등(2009)의 <strong>Life Cycle Model of Stress</strong>가 그 대표 모델입니다. 이 체계적 문헌고찰은 43편의 MRI 연구로 그 예측을 점검합니다. 결론은 단순한 지지도 기각도 아닙니다. <strong>시점이 중요하다는 증거는 있지만, 어느 시점인지는 연구마다 다르다</strong>는 것입니다. 저자들이 이 엇갈린 결과를 어떻게 "이론을 고쳐 쓰자"는 제안으로 바꾸는지를 따라가 봅니다.</p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">43편</span><div class="lbl">MRI 연구 (구조 32 · 기능 10 · 병합 1)</div></div>
+      <div class="stat"><span class="num">31 / 12</span><div class="lbl">횡단 연구 / 종단 연구</div></div>
+      <div class="stat"><span class="num">8 · 12 · 32</span><div class="lbl">발생 연령 · 지속기간 · 노출 시기를 본 연구 수</div></div>
+      <div class="stat"><span class="num">메타분석 불가</span><div class="lbl">이질성 때문에 서술적 종합</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>Hartanto et al. (2026)</div>
+
+<!-- §01 -->
+<div class="section-head" id="paper">
+  <div class="section-num">01</div>
+  <div class="section-title-block"><h2>논문 소개</h2><p class="section-subtitle">이 논문은 어떤 전통 위에 서 있고, 무엇을 고치려 하는가</p></div>
+</div>
+
+<div class="panel">
+  <p>아동기 역경경험(ACEs)이 뇌 발달에 영향을 준다는 증거는 많습니다. 그런데 "어느 영역이, 어느 방향으로" 달라지는지는 연구마다 엇갈립니다. 이 불일치를 설명하는 유력한 후보가 <strong>발달적 시점(developmental timing)</strong>입니다. 같은 역경이라도 세 살에 겪은 것과 열세 살에 겪은 것은 그 시기에 한창 자라고 있는 뇌 영역이 다르므로 다른 흔적을 남긴다는 생각입니다.</p>
+  <p>이 생각은 <strong>민감기(sensitive period)</strong> 개념으로 정리되어 있습니다. 뇌가 환경의 영향에 특히 잘 바뀌는 시기가 있다는 것이고, 동물 연구가 탄탄한 근거를 제공해 왔습니다. 인간 연구에서 이 개념을 가장 구체적인 예측으로 옮긴 것이 Lupien 등(2009)의 Life Cycle Model of Stress입니다. 이 논문은 <em>Journal of Child Psychology and Psychiatry</em>의 Annual Research Review로, 인간 MRI 연구 43편이 그 예측을 얼마나 지지하는지를 체계적으로 검토합니다.</p>
+  <p>사회복지 전공자에게는 뇌 영역 이름이 낯설 수 있습니다. 그러나 이 논문에서 배울 핵심은 신경해부학이 아닙니다. <strong>널리 받아들여진 모델을 증거와 대조해 보고, 맞지 않을 때 "결과가 혼재한다"에서 멈추지 않고 개념 자체를 어떻게 다시 쓸지 제안하는 방식</strong>입니다.</p>
+</div>
+
+<div class="paper-meta">
+  <h3>Annual Research Review: A probe into sensitive periods: how the developmental timing of adverse childhood experiences influences brain structure and function: a systematic review</h3>
+  <div class="sub">Stephanie Hartanto · Divyangana Rakesh · Catherine Orr · Ebony Forlano · Muskan Khetan · Sarah Whittle</div>
+  <div class="paper-meta-grid">
+    <div class="paper-meta-item"><div class="label">Journal</div><div class="value">Journal of Child Psychology and Psychiatry (SSCI/SCIE)<br>Advance online, 2026 · Open Access (CC BY-NC-ND 4.0)</div></div>
+    <div class="paper-meta-item"><div class="label">Type</div><div class="value">체계적 문헌고찰(PRISMA, PROSPERO 사전등록 CRD42021284727). 서술적 종합. 메타분석은 이질성 때문에 수행하지 못함</div></div>
+    <div class="paper-meta-item"><div class="label">Core claim</div><div class="value">시점 효과의 증거는 있으나 특정 민감기는 확정할 수 없다. 민감기는 고정된 창이 아니라 확률적이고 체계마다 다른 것으로 다시 개념화해야 한다</div></div>
+  </div>
+</div>
+
+<div class="quote-box">
+  "Moving forward, we argue that advancing the field will require reconceptualising sensitive periods as probabilistic, system-specific and shaped by the nature, timing and chronicity of adversity, rather than as fixed developmental windows."
+  <span class="trans">앞으로 이 분야가 나아가려면 민감기를 <strong>고정된 발달의 창</strong>이 아니라, <strong>확률적이고, 체계 특이적이며, 역경의 성격과 시점과 만성성에 의해 형성되는 것</strong>으로 재개념화해야 한다고 우리는 주장한다.</span>
+  <span class="attr">출처: Abstract</span>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">🧭 길잡이 · 이 리뷰의 네 가지 목적</span><br>
+  <strong>목적 1.</strong> ACE의 시점은 뇌 구조·기능 지표와 어떻게 연관되는가?<br>
+  <strong>목적 2.</strong> ACE가 각 뇌 영역에 가장 큰 영향을 미치는 발달 시기는 언제인가?<br>
+  <strong>목적 3.</strong> 보고된 민감기 양상은 Life Cycle Model of Stress가 제안한 것과 일치하는가?<br>
+  <strong>목적 4.</strong> 시점 효과의 양상은 역경 유형과 방법론적 요인에 따라 달라지는가?
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">🧪 용어 정리 · 이 페이지에 나오는 뇌 영역</span><br>
+  <strong>해마(hippocampus)</strong>: 기억과 스트레스 반응의 종료에 관여. <strong>편도체(amygdala)</strong>: 위협 탐지와 정서 반응. <strong>전두피질(frontal cortex)</strong>: 계획, 억제, 정서조절 같은 고차 기능. <strong>대상피질(cingulate cortex)</strong>: 정서와 주의의 조절. <strong>피질하 구조(subcortical structures)</strong>: 대뇌피질 아래에 있는 해마, 편도체, 미상핵, 피각, 시상 등을 묶어 부르는 말입니다.<br>
+  <strong>HPA 축</strong>: 시상하부, 뇌하수체, 부신으로 이어지는 스트레스 호르몬 체계. 스트레스를 받으면 글루코코르티코이드(사람에서는 코르티솔)를 분비합니다.
+</div>
+
+<!-- §02 -->
+<div class="section-head" id="intro">
+  <div class="section-num">02</div>
+  <div class="section-title-block"><h2>Introduction: "무엇을 겪었는가"에서 "언제 겪었는가"로</h2><p class="section-subtitle">Introduction</p></div>
+</div>
+
+<div class="panel">
+  <p>저자들은 전 세계 인구의 약 3분의 2가 성인이 되기 전에 적어도 한 가지 중대한 역경을 겪는다는 보고로 서론을 시작합니다. ACE가 뇌와 HPA 축에 변화를 일으킨다는 증거는 풍부하지만, 어느 영역이 영향을 받고 효과의 방향이 어떤지는 일관되지 않습니다. 저자들이 제시하는 설명 후보가 시점입니다. 뇌 영역과 회로마다 민감기가 다를 수 있기 때문입니다.</p>
+  <p>동물 연구는 스트레스 노출 시점이 신경발달 결과를 좌우한다는 것을 일관되게 보여 줍니다. 그러나 뇌 성숙의 종간 차이 때문에 이를 인간에게 그대로 옮기기는 어렵습니다. 인간 연구는 상대적으로 적고, 시점의 측정 자체가 까다롭습니다. 자전적 기억과 시간 기억은 아동기 내내 발달하며, 기억은 고정된 기록이 아니라 이후 경험에 따라 달라지기 때문에 회고적 보고로 "몇 살 때였는가"를 정확히 얻기 어렵습니다. 저자들은 이것이 시점이 역경의 유무나 누적 부담보다 덜 연구된 이유 가운데 하나라고 봅니다.</p>
+  <p>선행 연구로는 Schaefer 등(2022)의 체계적 문헌고찰이 있습니다. 아동학대에 한정해 정신과적·신경생물학적 결과를 폭넓게 검토했고, 시점 효과의 증거는 찾았지만 결과가 엇갈려 정확한 민감기를 특정하지 못했습니다. 이 논문은 대상을 학대에서 <strong>폭넓은 ACE</strong>로 넓히고, 결과를 <strong>뇌 영상 지표</strong>로 좁혀 다시 묻습니다. 민감기는 신경가소성에서 비롯되므로 뇌를 직접 보면 더 잘 드러날 것이라는 논리입니다.</p>
+</div>
+
+<!-- §03 -->
+<div class="section-head" id="model">
+  <div class="section-num">03</div>
+  <div class="section-title-block"><h2>검증 대상: Life Cycle Model of Stress</h2><p class="section-subtitle">Lupien, McEwen, Gunnar, &amp; Heim (2009)</p></div>
+</div>
+
+<div class="panel">
+  <p>저자들의 요약에 따르면 이 모델의 논리는 다음과 같습니다. 스트레스는 HPA 축을 활성화해 글루코코르티코이드를 분비시키고, 이 호르몬은 <strong>노출 당시 빠르게 발달하고 있던 뇌 영역</strong>에 지속적인 변화를 일으킬 수 있습니다. 민감기는 생애에 걸쳐 간헐적으로 나타나며, 영역마다 다른 시기에 옵니다. 출생 후에 대해 모델이 제안하는 시기는 세 가지입니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">Life Cycle Model of Stress가 제안하는 영역별 민감기 (원문 Introduction의 서술을 그림으로 옮김)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 300" width="100%" style="max-width:900px" role="img" aria-label="Life Cycle Model of Stress의 영역별 민감기">
+    <g font-size="13">
+      <!-- axis -->
+      <line x1="200" y1="240" x2="860" y2="240" stroke="#20262e" stroke-width="1.6"/>
+      <g fill="#828d9b" font-size="12" text-anchor="middle">
+        <text x="200" y="262">출생</text><text x="273" y="262">2세</text><text x="383" y="262">5세</text><text x="493" y="262">8세</text><text x="640" y="262">12세</text><text x="860" y="262">18세</text>
+      </g>
+      <g stroke="#e6ebf1"><line x1="273" y1="40" x2="273" y2="240"/><line x1="383" y1="40" x2="383" y2="240"/><line x1="493" y1="40" x2="493" y2="240"/><line x1="640" y1="40" x2="640" y2="240"/></g>
+      <text x="530" y="288" text-anchor="middle" fill="#828d9b" font-size="12">원문은 "영아기부터 후기 아동기", "청소년기"처럼 발달 단계로만 서술하므로 막대의 끝 위치는 대략적인 표시입니다.</text>
+      <!-- hippocampus -->
+      <text x="24" y="76" font-weight="700" fill="#20262e" font-size="14">해마</text><text x="24" y="94" fill="#828d9b" font-size="11.5">hippocampus</text>
+      <rect x="200" y="62" width="660" height="26" rx="13" fill="#eef1f5"/>
+      <rect x="200" y="62" width="73" height="26" rx="13" fill="#9bc46a"/>
+      <text x="285" y="80" fill="#4f7a23" font-weight="600">초기 아동기 (2세까지)</text>
+      <!-- amygdala -->
+      <text x="24" y="136" font-weight="700" fill="#20262e" font-size="14">편도체</text><text x="24" y="154" fill="#828d9b" font-size="11.5">amygdala</text>
+      <rect x="200" y="122" width="660" height="26" rx="13" fill="#eef1f5"/>
+      <rect x="200" y="122" width="440" height="26" rx="13" fill="#9bc46a"/>
+      <text x="420" y="140" text-anchor="middle" fill="#2f4d12" font-weight="600">영아기부터 후기 아동기까지</text>
+      <!-- frontal -->
+      <text x="24" y="196" font-weight="700" fill="#20262e" font-size="14">전두피질</text><text x="24" y="214" fill="#828d9b" font-size="11.5">frontal cortex</text>
+      <rect x="200" y="182" width="660" height="26" rx="13" fill="#eef1f5"/>
+      <rect x="640" y="182" width="220" height="26" rx="13" fill="#9bc46a"/>
+      <text x="750" y="200" text-anchor="middle" fill="#2f4d12" font-weight="600">청소년기</text>
+      <!-- stick figures -->
+      <circle cx="205" cy="26" r="7" class="inkthin"/><path d="M205 33 v12 M205 37 l-7 5 M205 37 l7 5" class="inkthin"/>
+      <circle cx="855" cy="18" r="8" class="inkthin"/><path d="M855 26 v18 M855 32 l-9 7 M855 32 l9 7 M855 44 l-6 10 M855 44 l6 10" class="inkthin" transform="translate(0,-8)"/>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 초록색 구간이 모델이 예측하는 취약 시기입니다. 근거는 "그 영역이 그때 가장 활발히 발달한다"는 정상 발달 연구입니다. 해마는 생애 초기에, 전두피질은 청소년기에 크게 발달하므로 그 시기의 스트레스가 그 영역에 가장 큰 흔적을 남긴다는 것입니다. 뒤에 나오는 원문 Figure 2와 Figure 3의 맨 아래 줄에 있는 <b>초록색 막대</b>가 바로 이 예측입니다. 검증의 논리는 단순합니다. 실제 연구들이 찾아낸 민감기가 초록색 막대와 겹치는가.</div>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">🍳 비유</span><br>
+  콘크리트는 붓고 나서 굳기 전까지만 모양이 바뀝니다. 건물의 층마다 타설 시기가 다르다면, 같은 충격이라도 <strong>그때 굳고 있던 층</strong>에만 자국이 남습니다. Life Cycle Model은 뇌 영역별 "타설 일정표"를 제시한 셈입니다. 이 리뷰가 던지는 질문은 두 가지입니다. 실제 자국의 위치가 일정표와 맞는가. 그리고 애초에 모든 건물이 같은 일정표를 따르는가.
+</div>
+
+<!-- §04 -->
+<div class="section-head" id="methods">
+  <div class="section-num">04</div>
+  <div class="section-title-block"><h2>방법: 무엇을 포함했고, "시점"을 어떻게 나누었는가</h2><p class="section-subtitle">Methods · Literature search · Inclusion and exclusion criteria · Data synthesis</p></div>
+</div>
+
+<div class="panel">
+  <p>검색은 MEDLINE(OVID), PsycINFO, Scopus, Web of Science 네 개 데이터베이스에서 2021년 10월 24일에 처음, 2025년 6월 16일에 다시 이루어졌고 출판 연도 제한은 없었습니다. 프로토콜은 PROSPERO에 사전등록되었습니다. 포함 대상은 ACE의 발달적 시점과 뇌 구조·기능 지표의 연관을 살펴본 인간 대상 MRI 연구이고, 시점은 발생 연령, 노출 지속기간, 또는 둘 이상의 연령·발달 단계에서 따로 측정한 노출처럼 <strong>수량화된 측정</strong>이어야 했습니다.</p>
+  <p>ACE의 범위는 넓게 잡았습니다. 학대와 방임, 빈곤 같은 사회경제적 역경, 또래 괴롭힘 같은 심리사회적 역경, 부모 이혼 같은 스트레스 생활사건까지 포함합니다. 반대로, 여러 시점에서 역경을 쟀더라도 누적 점수나 평균, 성장 궤적(절편과 기울기)으로만 모형화해 <strong>시점 성분을 분리할 수 없는 연구는 제외</strong>했습니다. EEG나 fNIRS 같은 다른 영상 기법도 종합의 일관성을 위해 제외했습니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">원문 Figure 1. PRISMA chart summarising the study selection process</div>
+  <span class="fig-tag orig">원문 그대로</span>
+  <div class="fig-orig"><a href="figs/hartanto-2026-fig1.png" target="_blank" rel="noopener"><img src="figs/hartanto-2026-fig1.png" alt="Hartanto et al. 2026 Figure 1: PRISMA 흐름도" loading="lazy"></a></div>
+  <p class="fig-cap">연구 선정 흐름도입니다. 위에서 아래로 Identification(확인), Screening(선별), Included(포함)의 세 단계로 읽습니다. 오른쪽 상자들은 각 단계에서 제외된 문헌과 그 사유입니다. 마지막 제외 사유 상자의 아래쪽이 잘려 보이는 것은 원문 그림이 그렇게 실려 있기 때문입니다.</p>
+  <p class="fig-lic">출처: Hartanto et al. (2026), <em>Journal of Child Psychology and Psychiatry</em>, Figure 1. 원문에서 변형 없이 가져왔으며 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> 라이선스를 따릅니다. 그림을 누르면 크게 볼 수 있습니다.</p>
+
+  <div class="fig-implies"><b>📊 그림 읽는 법.</b> 숫자를 따라가면 됩니다. 데이터베이스에서 3,320건을 찾았고, 중복 등 1,454건을 제거해 1,866건을 제목과 초록으로 선별했으며, 1,371건을 제외하고 495건의 전문을 검토했습니다. 가장 많은 제외 사유는 "ACE의 발달적 시점을 다루지 않음"(337건)입니다. 역경과 뇌를 본 연구는 많아도 <b>시점을 분리해 분석한 연구는 드물다</b>는 사실이 이 숫자에 담겨 있습니다. 주의할 점이 하나 있습니다. 맨 아래 상자의 "Studies included in review (n = 81)"은 이 논문의 43편과 다릅니다. 저자들은 이 리뷰가 HPA 축 기능까지 포함한 더 큰 리뷰의 일부였고, 규모가 예상보다 커져 <b>이 논문에서는 뇌 영상 결과만 보고한다</b>고 방법 절에서 밝힙니다. 흐름도는 큰 리뷰 전체의 것입니다.</div>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">비판적 읽기 · 원문 안의 수치 불일치</span><br>
+  포함 연구 수는 초록과 결과 절에서 <strong>43편</strong>(구조 32, 기능 10, 병합 1)인데, 논문 끝의 Key points에는 "Across 42 neuroimaging studies"로 적혀 있습니다. 또 결과 절 첫머리에서는 기능 연구가 10편에 병합 1편이지만 기능 영상 절에서는 "Twelve studies utilised functional magnetic resonance imaging"으로 시작합니다. 흐름도의 데이터베이스 목록에도 MEDLINE이 따로 표시되지 않고 "Unspecified (n = 2336)"가 있습니다. 결론을 바꾸는 차이는 아니지만, 인용할 때는 초록과 결과 절의 43편을 기준으로 하되 이 불일치를 알고 있어야 합니다. <strong>확인 필요.</strong>
+</div>
+
+<div class="subhead"><span class="code">4.1</span><h3>"시점"을 재는 세 가지 방식</h3><span class="en">Three operationalisations of ACE timing</span></div>
+
+<div class="figure-block">
+  <div class="fig-title">같은 아이의 같은 역경 이력도 세 가지로 다르게 수량화된다 (Data synthesis 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 330" width="100%" style="max-width:900px" role="img" aria-label="시점의 세 가지 조작화">
+    <defs><marker id="arH" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1f4e79"/></marker></defs>
+    <g font-size="13">
+      <text x="24" y="34" font-weight="700" fill="#20262e" font-size="14">예시: 4세에 시작해 9세까지 이어진 역경</text>
+      <g transform="translate(0,54)">
+        <text x="24" y="24" font-weight="700" fill="#1f4e79">① 발생 연령</text><text x="24" y="42" fill="#828d9b" font-size="11.5">age of onset · 8편</text>
+        <line x1="200" y1="22" x2="860" y2="22" stroke="#aab4c1" stroke-width="2"/>
+        <circle cx="346" cy="22" r="9" fill="#1f4e79"/>
+        <text x="346" y="52" text-anchor="middle" fill="#1f4e79" font-weight="600">"4세"</text>
+        <text x="620" y="16" text-anchor="middle" fill="#828d9b" font-size="12">이후에 어떻게 이어졌는지는 보지 않음</text>
+      </g>
+      <g transform="translate(0,138)">
+        <text x="24" y="24" font-weight="700" fill="#2c7d73">② 지속기간</text><text x="24" y="42" fill="#828d9b" font-size="11.5">duration · 12편</text>
+        <line x1="200" y1="22" x2="860" y2="22" stroke="#aab4c1" stroke-width="2"/>
+        <rect x="346" y="12" width="184" height="20" rx="10" fill="#3a9a8f"/>
+        <text x="438" y="52" text-anchor="middle" fill="#2c7d73" font-weight="600">"5년"</text>
+        <text x="700" y="16" text-anchor="middle" fill="#828d9b" font-size="12">언제 시작했는지와 섞임</text>
+      </g>
+      <g transform="translate(0,222)">
+        <text x="24" y="24" font-weight="700" fill="#c78a1e">③ 노출 연령·단계</text><text x="24" y="42" fill="#828d9b" font-size="11.5">age or stage of exposure · 32편</text>
+        <line x1="200" y1="22" x2="860" y2="22" stroke="#aab4c1" stroke-width="2"/>
+        <g>
+          <rect x="200" y="10" width="183" height="24" rx="6" fill="#fff" stroke="#c78a1e" stroke-dasharray="4 3"/><text x="291" y="27" text-anchor="middle" fill="#828d9b" font-size="12">0~5세: 일부 노출</text>
+          <rect x="383" y="10" width="257" height="24" rx="6" fill="#fbf1dc" stroke="#c78a1e"/><text x="511" y="27" text-anchor="middle" fill="#8a5d0c" font-size="12" font-weight="600">6~12세: 노출</text>
+          <rect x="640" y="10" width="220" height="24" rx="6" fill="#fff" stroke="#c78a1e" stroke-dasharray="4 3"/><text x="750" y="27" text-anchor="middle" fill="#828d9b" font-size="12">13~18세: 없음</text>
+        </g>
+        <text x="530" y="58" text-anchor="middle" fill="#8a5d0c" font-weight="600">"어느 시기의 노출이 뇌 지표를 가장 잘 예측하는가"</text>
+      </g>
+      <g fill="#828d9b" font-size="11.5" text-anchor="middle"><text x="200" y="312">출생</text><text x="346" y="312">4세</text><text x="530" y="312">9세</text><text x="860" y="312">18세</text></g>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 저자들은 결과를 이 세 가지 조작화에 따라 나누어 종합합니다. ①과 ②는 한 사람당 숫자 하나로 요약되어 분석이 단순하지만 서로 얽혀 있습니다. 일찍 시작한 역경은 대개 오래 이어지기 때문입니다. ③은 민감기 가설을 가장 직접 검정하지만, 연구마다 연령 구간을 다르게 자르고 분석 방법(구간 비교, 랜덤 포레스트 회귀 등)도 달라 비교가 어렵습니다. <b>미리 말해 두면, 결과의 일관성은 ①, ②에서 높고 ③에서 낮았습니다.</b> 여러 측면을 함께 본 연구가 있어 세 숫자의 합은 43을 넘습니다.</div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 ① : 메타분석을 하지 않는 것도 방법론적 결정이다</span><br>
+  저자들은 분석 접근, 설계, ACE와 시점의 조작화가 연구마다 너무 달라 메타분석이 불가능했다고 밝히고 <strong>서술적 종합(narrative synthesis)</strong>을 택했습니다. 효과크기를 억지로 합치면 정밀해 보이는 숫자가 나오지만, 서로 다른 것을 잰 값의 평균은 의미가 없습니다. 대가도 있습니다. 서술적 종합은 "몇 편 중 몇 편이 유의했다"는 개수 세기(vote counting)에 기대게 되고, 표본 크기와 효과크기의 차이가 반영되지 않습니다. 이 논문의 표본 크기는 구조 영상 연구에서 21명에서 345명까지, 기능 영상 연구에서 15명에서 209명까지 분포합니다. 작은 연구의 "유의하지 않음"은 "효과 없음"과 같지 않다는 점을 염두에 두고 결과 절을 읽어야 합니다.
+</div>
+
+<!-- §05 -->
+<div class="section-head" id="r1">
+  <div class="section-num">05</div>
+  <div class="section-title-block"><h2>결과 1: 일찍 시작되고 오래 이어질수록</h2><p class="section-subtitle">Structural imaging findings · Findings relating to age of onset · Findings relating to duration of exposure</p></div>
+</div>
+
+<div class="panel">
+  <p>포함된 43편 가운데 31편이 횡단 연구이고 12편이 종단 연구입니다. 다만 종단 연구 12편 중 10편은 <strong>한 시점의 영상 자료만</strong> 분석했습니다. 역경을 여러 번 측정했더라도 뇌는 한 번만 본 연구가 대부분이라는 뜻입니다.</p>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">1</div>
+    <div class="cond-titles"><div class="cond-code">Age of onset · 구조 영상 6편 (표본 37~186명)</div><h3>발생 연령: 이를수록 부피가 작다</h3><div class="cond-en">Findings were largely consistent</div></div>
+    <span class="verdict promising">대체로 일관</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">학대가 더 어린 나이에 시작된 아이일수록 두개 내 부피, 소뇌, 해마의 부피가 작았습니다.</div>
+    <p>De Bellis와 동료들의 일련의 연구는 PTSD가 있는 학대 경험 아동·청소년을 학대 경험이 없는 건강한 대조군과 비교해, 학대 발생 연령이 이를수록 두개 내 부피, 소뇌, 해마의 회백질과 백질 부피가 작다고 보고했습니다. 예외도 있습니다. 발생이 늦을수록 전두엽의 뇌척수액 부피가 컸다는 보고가 있고, 표본이 작은 전뇌(whole-brain) 분석 두 편은 연관을 찾지 못했습니다. <strong>일관성의 상당 부분이 한 연구 집단의 임상 표본에서 나왔다</strong>는 점은 기억해 둘 만합니다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">2</div>
+    <div class="cond-titles"><div class="cond-code">Duration · 구조 영상 9편 (표본 37~183명)</div><h3>지속기간: 길수록 부피가 작다</h3><div class="cond-en">Findings were largely consistent</div></div>
+    <span class="verdict promising">대체로 일관</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">역경이 오래 이어질수록 뇌 전체와 여러 영역의 부피가 작았고, 뇌실은 컸습니다.</div>
+    <p>아동·청소년에서는 지속기간이 길수록 두개 내 부피, 전체 뇌 부피, 대뇌, 소뇌, 편도체 외측핵의 부피가 작았고, 성인에서는 전체 회백질과 백질, 일차 시각피질 회백질, 편도체와 해마가 작았습니다. 학대뿐 아니라 시설 박탈과 빈곤을 다룬 연구 세 편에서도 같은 방향이었습니다. 눈여겨볼 예외는 Mackes 등(2020)입니다. 생애 초기 시설 박탈의 기간이 길수록 성인기 전체 뇌 부피는 작았지만 <strong>내측 전전두피질의 표면적과 부피는 오히려 컸고</strong>, 원 저자들은 이를 전반적 감소 속에서 이 영역이 상대적으로 보존된 것으로 해석했습니다. 피질 두께, 표면적, 백질 미세구조에서는 연관이 없다는 보고도 있습니다.</p>
+  </div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 ② : 일관된 결과가 민감기의 증거인가</span><br>
+  "일찍 시작될수록, 오래 이어질수록 부피가 작다"는 결과는 민감기 가설과 양립하지만 민감기를 증명하지는 않습니다. 일찍 시작된 역경은 대개 더 오래, 더 많이 누적되므로 <strong>누적 노출 효과</strong>로도 똑같이 설명됩니다. 민감기 가설의 고유한 예측은 "같은 양의 노출이라도 특정 시기의 노출이 더 큰 차이를 만든다"이고, 이를 검정하려면 조작화 ③이 필요합니다. 저자들도 논의에서 누적 노출 같은 대안 설명을 명시적으로 고려해야 한다는 Schaefer 등(2022)의 권고를 인용합니다.
+</div>
+
+<!-- §06 -->
+<div class="section-head" id="r2">
+  <div class="section-num">06</div>
+  <div class="section-title-block"><h2>결과 2: 피질하 구조에서 민감기는 어디에 있는가</h2><p class="section-subtitle">Findings relating to chronological ages or developmental stages of exposure · Hippocampus · Amygdala · Other subcortical structures</p></div>
+</div>
+
+<div class="panel">
+  <p>이제 민감기 가설의 본 검정입니다. 서로 다른 연령이나 발달 단계의 노출이 뇌 구조와 어떻게 연관되는지를 본 연구는 24편(횡단 17, 종단 7, 표본 21~345명)입니다. 저자들은 이 결과를 뇌 영역별로 묶어 원문 Figure 2와 Figure 3에 한 장씩 그렸습니다. 이 두 그림이 논문의 핵심입니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">원문 Figure 2. Sensitive periods for the effect of adverse childhood experiences (ACEs) on subcortical brain structure</div>
+  <span class="fig-tag orig">원문 그대로</span>
+  <div class="fig-orig"><a href="figs/hartanto-2026-fig2.png" target="_blank" rel="noopener"><img src="figs/hartanto-2026-fig2.png" alt="Hartanto et al. 2026 Figure 2: 피질하 구조의 민감기" loading="lazy"></a></div>
+  <p class="fig-cap">(A) 해마, (B) 편도체, (C) 기타 피질하 영역의 구조. 초록색 막대는 Life Cycle Model of Stress가 가정한 민감기를 나타냅니다. 범례: 보라에서 파랑으로 변하는 막대는 남녀 혼합 표본, 보라는 여성 표본, 파랑은 남성 표본. 연구명 위의 약어는 C 횡단, L 종단, B 구간(binned) 분석, RF 랜덤 포레스트 회귀, A 성인 표본, CA 아동·청소년 표본, HS 건강 표본·대조군, CS 지역사회 표본, PS 임상 표본입니다.</p>
+  <p class="fig-lic">출처: Hartanto et al. (2026), <em>Journal of Child Psychology and Psychiatry</em>, Figure 2. 원문에서 변형 없이 가져왔으며 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> 라이선스를 따릅니다. 그림을 누르면 크게 볼 수 있습니다.</p>
+
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 250" width="100%" style="max-width:900px" role="img" aria-label="원문 Figure 2와 3의 한 줄을 읽는 법">
+    <g font-size="12.5">
+      <text x="24" y="28" font-weight="700" fill="#20262e" font-size="14">원문 Figure 2, 3의 한 줄을 읽는 법</text>
+      <path d="M210 60 h600 l24 14 l-24 14 h-600 z" fill="#dbe7f3"/>
+      <g fill="#1f4e79" font-size="11.5" text-anchor="middle" font-weight="600"><text x="240" y="79">1</text><text x="310" y="79">3</text><text x="380" y="79">5</text><text x="450" y="79">7</text><text x="520" y="79">9</text><text x="590" y="79">11</text><text x="660" y="79">13</text><text x="730" y="79">15</text><text x="800" y="79">17</text></g>
+      <text x="24" y="79" fill="#46505c">① 나이 눈금 (1~18세)</text>
+      <text x="24" y="128" font-weight="600" fill="#20262e">연구 A (예시)</text>
+      <rect x="230" y="114" width="590" height="20" rx="10" fill="#dcdfe4"/>
+      <rect x="300" y="114" width="150" height="20" rx="10" fill="#9a7fc4"/>
+      <text x="24" y="182" font-weight="600" fill="#20262e">LUPIEN ET AL. (2009)</text>
+      <rect x="230" y="168" width="590" height="20" rx="10" fill="#dcdfe4"/>
+      <rect x="230" y="168" width="60" height="20" rx="10" fill="#9bc46a"/>
+      <g stroke="#46505c" stroke-width="1.2" fill="none"><path d="M375 112 v-12"/><path d="M640 136 v14"/><path d="M260 190 v16"/></g>
+      <text x="460" y="128" fill="#6a4fa0" font-weight="600">② 색 막대: 이 연구가 연관을 찾은 시기</text>
+      <text x="640" y="162" text-anchor="middle" fill="#46505c">③ 회색 막대: 살펴보았지만 색 표시가 없는 구간</text>
+      <text x="260" y="220" fill="#4f7a23" font-weight="600">④ 초록 막대: 모델이 예측한 민감기</text>
+      <text x="530" y="242" text-anchor="middle" fill="#828d9b" font-size="12">검증의 질문: ②가 ④와 같은 자리에 오는가, 그리고 연구들 사이에서 ②의 자리가 서로 겹치는가</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>📊 그림 읽는 법.</b> 가로축은 1세에서 18세까지의 나이, 한 줄이 연구 하나입니다. 색 막대의 위치가 그 연구가 보고한 민감기입니다. 회색 막대의 의미는 원문 범례에 따로 정의되어 있지 않으나, 그림의 구성으로 보면 해당 연구가 분석에 포함한 연령 범위로 읽힙니다. 막대 안의 별표는 연구명 아래 작은 글씨의 각주와 짝을 이루며, 방임과 학대처럼 한 연구 안의 세부 결과를 구분합니다. <b>패널 (A) 해마</b>를 보십시오. 맨 아래 초록 막대(모델의 예측)는 왼쪽 끝 1~2세에 있습니다. 그 위의 색 막대들은 2~5세에도, 9~11세에도, 13~17세에도 흩어져 있습니다. <b>패널 (B) 편도체</b>에서는 초록 막대가 아동기 전체에 걸쳐 있어 거의 모든 결과와 겹치지만, 그것은 예측이 넓어서이지 연구들이 서로 일치해서가 아닙니다. 눈으로 한 번에 들어오는 인상, 곧 <b>색 막대가 세로로 정렬되지 않는다</b>는 것이 이 그림의 메시지입니다.</div>
+</div>
+
+<div class="panel">
+  <div class="tbl-wrap">
+  <table class="mini-table">
+    <tr><th>영역</th><th class="num">연구 수</th><th>종단 연구의 결과</th><th>횡단 연구의 결과</th><th class="num">시점 효과 없음</th><th>저자들의 판단</th></tr>
+    <tr><td><strong>해마</strong></td><td class="num">15편</td><td>3편 중 2편이 약 5세 이전 노출과 작은 해마 부피의 연관을 보고. 나머지 1편(N = 21)은 초기 청소년기의 지역사회 폭력 노출</td><td>초기 아동기부터 청소년기까지 분산. 학대 유형과 성별에 따라 다를 수 있다는 랜덤 포레스트 결과</td><td class="num">6편</td><td>일관된 민감기의 증거 거의 없음</td></tr>
+    <tr class="hi"><td><strong>편도체</strong></td><td class="num">14편</td><td>5편 중 3편이 초기 아동기를 지목. 단 방향이 다름: 1.2세 이전의 낮은 소득 대 욕구 비율은 <strong>큰</strong> 부피와, 학령전기 ACE는 <strong>작은</strong> 부피와 연관</td><td>후기 아동기와 청소년기가 여러 연구에서 지목되나 구체적 시기는 크게 다름</td><td class="num">5편</td><td>일관된 민감기도, 일관된 방향도 없음</td></tr>
+    <tr><td><strong>기타 피질하</strong></td><td class="num">7편</td><td colspan="2">초기 아동기 노출이 피각, 미상핵, 시상의 더 큰 부피 감소와 연관된다는 보고가 있으나, 미상핵에서 후기 아동기·청소년기를 지목한 연구와 시점 효과가 없다는 연구도 있음</td><td class="num">여러 편</td><td>혼재</td></tr>
+  </table>
+  </div>
+  <p class="fig-cap">원문 본문(Hippocampus, Amygdala, Other subcortical structures)의 서술을 표로 정리했습니다. 개별 연구의 세부는 원문 Table S2에 있습니다.</p>
+</div>
+
+<div class="quote-box">
+  "Overall, findings were mixed, providing little evidence for a consistent sensitive period for the effects of ACEs on hippocampal structure."
+  <span class="trans">전반적으로 결과는 혼재했으며, ACE가 해마 구조에 미치는 영향에 <strong>일관된 민감기가 있다는 증거는 거의 제공하지 못했다.</strong></span>
+  <span class="attr">출처: Results · Hippocampus</span>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">비판적 읽기 · "종단 연구는 초기 아동기를 지목했다"의 함정</span><br>
+  해마와 편도체 모두에서 종단 연구의 다수가 초기 아동기를 지목했다는 점은 모델을 지지하는 것처럼 보입니다. 저자들은 여기에 바로 단서를 답니다. 이 종단 연구들이 살펴본 발달 기간이 <strong>상대적으로 제한적</strong>이어서 이후 발달 단계와 비교할 수 없다는 것입니다. 원문 Figure 2에서 Luby 등(2019)과 Ramphal 등(2021)의 줄을 보면 회색 막대가 아동기 초중반에서 끝납니다. 청소년기를 아예 보지 않은 연구가 "초기 아동기가 중요하다"고 말할 때, 그것은 "청소년기보다 중요하다"는 뜻이 아닙니다. <strong>찾아본 곳에서만 찾을 수 있다</strong>는 이 원리는 민감기 연구 전체를 읽는 열쇠입니다.
+</div>
+
+<!-- §07 -->
+<div class="section-head" id="r3">
+  <div class="section-num">07</div>
+  <div class="section-title-block"><h2>결과 3: 피질 구조와 백질</h2><p class="section-subtitle">Cortical structures · Frontal cortex · Cingulate cortex · Other cortical structures · Diffusion-based studies</p></div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">원문 Figure 3. Sensitive periods for the effect of adverse childhood experiences (ACEs) on cortical brain structure</div>
+  <span class="fig-tag orig">원문 그대로</span>
+  <div class="fig-orig"><a href="figs/hartanto-2026-fig3.png" target="_blank" rel="noopener"><img src="figs/hartanto-2026-fig3.png" alt="Hartanto et al. 2026 Figure 3: 피질 구조의 민감기" loading="lazy"></a></div>
+  <p class="fig-cap">(A) 전두피질, (B) 대상피질, (C) 기타 피질 영역. 초록색 막대는 Life Cycle Model of Stress가 가정한 민감기를 나타냅니다. 색과 약어의 의미는 Figure 2와 같습니다.</p>
+  <p class="fig-lic">출처: Hartanto et al. (2026), <em>Journal of Child Psychology and Psychiatry</em>, Figure 3. 원문에서 변형 없이 가져왔으며 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> 라이선스를 따릅니다. 그림을 누르면 크게 볼 수 있습니다.</p>
+
+  <div class="fig-implies"><b>📊 그림 읽는 법.</b> 읽는 방법은 Figure 2와 같습니다. <b>패널 (A) 전두피질</b>의 맨 아래 초록 막대는 대략 8세에서 15세 사이에 놓여 있습니다. 모델은 전두피질이 청소년기에 가장 취약하다고 예측합니다. 그 위를 보면 Tyborowska 등(2018)과 Chad-Friedman 등(2020)의 색 막대는 1~8세, 곧 초록 막대의 왼쪽에 있고, Andersen 등(2008)과 Türkmen 등(2024)의 색 막대는 13~16세로 초록 막대의 오른쪽 끝과 겹칩니다. Monninger 등(2020)은 줄이 셋인데 결과 지표(전체 생활 스트레스와 우측 내측 안와전두피질 두께, 좌측 내측 안와전두피질 두께 등)에 따라 막대의 위치가 다릅니다. 같은 연구 안에서도 <b>무엇을 재느냐에 따라 민감기가 달라진다</b>는 것을 보여 주는 줄입니다. 패널 (B)와 (C)에는 초록 막대가 없습니다. 모델이 대상피질과 기타 피질 영역에 대해서는 구체적 예측을 제시하지 않았기 때문으로 읽힙니다.</div>
+</div>
+
+<div class="panel">
+  <p>피질 구조를 본 연구는 11편입니다. <strong>전두피질</strong>(8편)에서는 초기 아동기의 스트레스 사건이 청소년기 동안의 더 큰 전두피질 부피 감소와, 아동기 부모의 적대성이 남아의 중전두피질 두께 감소와, 아동기 스트레스 사건이 성인기 내측 안와전두피질 두께 감소와 연관된다는 종단 연구가 있습니다. 반면 14~16세의 성학대가 전두 회백질 부피 감소와, 13~15세의 학대가 알코올사용장애 집단의 하전두피질 두께 감소와 연관된다는 연구는 청소년기를 지목합니다. 시점 효과가 없다는 보고도 여러 편입니다.</p>
+  <p><strong>대상피질</strong>(10편)도 사정이 같습니다. 초기 아동기를 지목한 연구, 후기 아동기나 청소년기를 지목한 연구가 섞여 있고, 한 연구는 전대상피질과 후대상피질에서 서로 다른 시점 효과를 보고했으며, 5편은 시점 효과를 찾지 못했습니다. <strong>확산강조영상</strong>으로 백질 미세구조를 본 6편에서는 민감기가 생후 5년, 중기 아동기, 후기 아동기에서 초기 청소년기, 중후기 청소년기로 제각각 보고되었습니다.</p>
+  <p>저자들은 전두피질 결과가 특히 비교하기 어려운 이유를 따로 설명합니다. 해마와 편도체 연구는 대개 "부피"라는 같은 지표를 쓰지만, 전두피질 연구는 살펴본 하위 영역(배외측 전전두피질, 중전두회, 안와전두피질)도, 지표(표면적, 피질 두께, 부피)도 연구마다 다릅니다.</p>
+</div>
+
+<!-- §08 -->
+<div class="section-head" id="r4">
+  <div class="section-num">08</div>
+  <div class="section-title-block"><h2>결과 4: 뇌 기능, 역경 유형, 방법론적 요인</h2><p class="section-subtitle">Functional imaging findings · Patterns according to adversity type · Patterns according to methodological factors</p></div>
+</div>
+
+<div class="panel">
+  <p>기능 영상(fMRI) 연구는 표본 15~209명 규모로, 구조 영상보다 수가 적습니다. 발생 연령이나 지속기간을 본 3편은 모두 유의한 연관을 보고했습니다. 학대가 일찍 시작될수록, 오래 이어질수록 정서적 얼굴을 볼 때의 편도체 활성이 컸다는 식입니다. 그러나 역경의 종류, 과제, 결과 지표가 달라 서로 비교하기 어렵습니다.</p>
+  <p>노출 연령·단계를 본 10편 가운데 3편은 시점 효과를 찾지 못했고, 나머지는 아동기부터 청소년기에 걸친 다양한 시기를 보고했습니다. 한 가지 흥미로운 양상은 있습니다. Zhu 등(2019)은 청소년기의 학대 심각도가 편도체 활성 증가와, 아동기의 학대가 편도체 활성 감소와 연관된다고 보고했고, 같은 연구진의 후속 연구(Zhu 등, 2023)는 여러 피질하 및 전두 영역에서 <strong>이른 노출은 활성 감소, 늦은 노출은 활성 증가</strong>라는 비슷한 경향을 관찰했습니다. 저자들은 이를 확립된 결과로 제시하지는 않으며, 기능 영상 전체에 대해서는 일관된 민감기의 증거가 거의 없다고 결론짓습니다.</p>
+</div>
+
+<div class="mod-grid">
+  <div class="mod-card">
+    <h4>역경 유형에 따라 달라지는가</h4>
+    <div class="en">Patterns according to adversity type</div>
+    <p>위협 대 박탈이라는 넓은 차원에 대응하는 일관된 양상은 <strong>나타나지 않았습니다.</strong> 넓게 정의한 스트레스·역경 연구에서는 초기 아동기가 자주 지목되고, 학대 같은 특정 대인관계 역경 연구에서는 결과가 아동기와 청소년기 전반에 흩어졌습니다. 그러나 저자들은 이 차이가 실제 차이가 아니라 <strong>관찰 범위의 차이</strong>일 수 있다고 봅니다. 넓은 역경 연구는 주로 아동기만 보았고, 학대 연구는 더 넓은 연령대를 보았기 때문입니다.</p>
+    <span class="keynum">차원 모델의 예측은 지지되지 않음</span>
+  </div>
+  <div class="mod-card">
+    <h4>연구 방법에 따라 달라지는가</h4>
+    <div class="en">Patterns according to methodological factors</div>
+    <p>종단 구조 영상 연구는 초기 아동기를 지목하는 경향이, 횡단 연구는 발달 전반에 흩어지는 경향이 있었습니다. 그러나 앞서 본 대로 종단 연구는 관찰 기간이 짧습니다. 역경 확인 방법(전향적 평가, 회고적 보고, 기록)에 따른 뚜렷한 양상은 없었습니다. 다만 시점을 얼마나 촘촘하게 쟀는가 하는 <strong>시간 해상도</strong>가 민감기를 얼마나 구체적으로 특정할 수 있는지를 원천적으로 제한합니다.</p>
+    <span class="keynum">체계적 차이의 명확한 증거 없음</span>
+  </div>
+</div>
+
+<div class="quote-box">
+  "However, this apparent difference may partly reflect developmental coverage, as broad-adversity studies often examined more restricted periods, particularly childhood, whereas several maltreatment studies assessed broader age ranges."
+  <span class="trans">그러나 이 겉보기 차이는 부분적으로 <strong>발달적 관찰 범위</strong>를 반영하는 것일 수 있다. 넓은 역경을 다룬 연구는 흔히 더 제한된 기간, 특히 아동기를 살펴본 반면, 여러 학대 연구는 더 넓은 연령 범위를 평가했기 때문이다.</span>
+  <span class="attr">출처: Results · Patterns according to adversity type</span>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">결과 한눈에 보기: 시점을 어떻게 쟀느냐에 따라 일관성이 갈린다 (Results와 Concluding remarks 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 250" width="100%" style="max-width:900px" role="img" aria-label="조작화 방식별 결과의 일관성">
+    <g font-size="13">
+      <rect x="30" y="30" width="400" height="190" rx="16" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.6"/>
+      <text x="230" y="60" text-anchor="middle" font-weight="700" fill="#2c7d73" font-size="15">거칠게 쟀을 때</text>
+      <text x="230" y="82" text-anchor="middle" fill="#46505c">발생 연령 · 지속기간</text>
+      <g stroke="#3a9a8f" stroke-width="3" stroke-linecap="round"><path d="M110 190 L150 120"/><path d="M170 190 L210 120"/><path d="M230 190 L270 120"/><path d="M290 190 L330 120"/></g>
+      <g fill="#3a9a8f"><circle cx="150" cy="120" r="5"/><circle cx="210" cy="120" r="5"/><circle cx="270" cy="120" r="5"/><circle cx="330" cy="120" r="5"/></g>
+      <text x="230" y="212" text-anchor="middle" fill="#2c7d73" font-weight="600">화살표가 같은 방향: 이를수록, 길수록 부피 감소</text>
+      <rect x="470" y="30" width="400" height="190" rx="16" fill="#fdeee9" stroke="#e0573e" stroke-width="1.6"/>
+      <text x="670" y="60" text-anchor="middle" font-weight="700" fill="#c0432c" font-size="15">촘촘하게 쟀을 때</text>
+      <text x="670" y="82" text-anchor="middle" fill="#46505c">특정 연령·발달 단계의 노출</text>
+      <g stroke="#e0573e" stroke-width="3" stroke-linecap="round"><path d="M550 180 L590 120"/><path d="M650 120 L620 180"/><path d="M690 150 L740 150"/><path d="M800 180 L770 120"/></g>
+      <g fill="#e0573e"><circle cx="590" cy="120" r="5"/><circle cx="620" cy="180" r="5"/><circle cx="740" cy="150" r="5"/><circle cx="770" cy="120" r="5"/></g>
+      <text x="670" y="212" text-anchor="middle" fill="#c0432c" font-weight="600">화살표가 제각각: 민감기의 위치가 연구마다 다름</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 저자들의 결론 문장을 그림으로 옮긴 것입니다. 시점을 발생 연령이나 지속기간으로 조작화하면 "이른 발생과 긴 지속이 뇌 지표의 변화와 연관된다"는 결과가 반복되지만, 특정 연령의 노출처럼 더 세밀하게 살펴보면 결과가 대체로 일관되지 않습니다. 따라서 현재로서는 <b>정확한 민감기를 어느 정도의 확실성으로도 특정할 수 없고</b>, 주요 민감기 모델을 지지하는 증거가 충분한지도 평가할 수 없다는 것이 저자들의 판단입니다.</div>
+</div>
+
+<!-- §09 -->
+<div class="section-head" id="disc">
+  <div class="section-num">09</div>
+  <div class="section-title-block"><h2>논의: 엇갈린 결과를 이론의 수정으로 바꾸기</h2><p class="section-subtitle">Discussion · Probable factors contributing to heterogeneous sensitive periods findings · Beyond methodological considerations</p></div>
+</div>
+
+<div class="quote-box">
+  "However, the findings we encapsulated were largely inconsistent and did not necessarily align with the sensitive periods proposed in the Life Cycle Model of Stress (Lupien et al., 2009)."
+  <span class="trans">그러나 우리가 종합한 결과는 <strong>대체로 일관되지 않았으며</strong>, Life Cycle Model of Stress가 제안한 민감기와 <strong>반드시 일치하지도 않았다.</strong></span>
+  <span class="attr">출처: Discussion</span>
+</div>
+
+<div class="panel">
+  <p>엇갈린 결과 앞에서 리뷰 논문이 흔히 택하는 길은 "방법론이 제각각이므로 더 잘 설계된 연구가 필요하다"입니다. 저자들도 그 길을 먼저 갑니다. 전향적 ACE 평가, 더 정밀한 시점 조작화, 다중비교와 공선성을 다루는 통계 방법, 충분한 검정력, 역경 유형별 층화, 누적 노출 같은 대안 설명의 고려가 필요하다는 Schaefer 등(2022)의 권고를 확인합니다. 그러나 방법론적 요인에 따라 결과가 체계적으로 달라진다는 뚜렷한 증거는 찾지 못했다고 덧붙입니다.</p>
+  <p>이 논문이 한 걸음 더 나아가는 곳은 그다음입니다. 저자들은 문제를 방법이 아니라 <strong>모델의 전제</strong>에서 찾습니다. Life Cycle Model은 민감기가 "그 영역의 발달이 가장 활발한 시기"와 일치한다고 보고, 정상 발달 궤적 연구를 기준으로 민감기를 예측합니다. 저자들은 이 전제에 조건이 하나 숨어 있다고 지적합니다.</p>
+</div>
+
+<div class="quote-box">
+  "However, this is only meaningful if neurodevelopmental trajectories are uniform across individuals."
+  <span class="trans">그러나 이는 신경발달 궤적이 <strong>개인들 사이에서 균일할 때에만</strong> 의미가 있다.</span>
+  <span class="attr">출처: Discussion · Beyond methodological considerations</span>
+</div>
+
+<div class="panel">
+  <p>최근 연구는 뇌의 거시구조, 미세구조, 기능 발달에서 개인 간 변이와 개인 내 변이가 상당하며, 유전, 성별, 사춘기 성숙 과정이 여기에 영향을 준다는 것을 보여 줍니다. 더 나아가 역경이나 지지적 양육 같은 경험 자체가 신경가소성의 시기와 크기를 바꾸어 <strong>민감기를 이동시킬 수 있다</strong>는 연구도 인용됩니다. 저자들의 추론은 이렇습니다. 모델의 기본 전제(민감기는 가소성이 높아진 시기다)가 옳다면, 가소성의 시간표가 사람마다 다른 이상 민감기도 사람마다 다를 가능성이 높습니다. 그렇다면 "몇 살"이라는 달력 나이로 민감기를 찾으려는 시도는 처음부터 흐릿한 결과를 낼 수밖에 없습니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">민감기를 보는 두 가지 방식 (Discussion 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 340" width="100%" style="max-width:900px" role="img" aria-label="고정된 창 대 확률적 민감기">
+    <g font-size="13">
+      <!-- left -->
+      <rect x="20" y="16" width="420" height="308" rx="14" fill="#fff" stroke="#aab4c1" stroke-dasharray="6 5" stroke-width="1.5"/>
+      <text x="230" y="44" text-anchor="middle" font-weight="700" fill="#46505c" font-size="15">고정된 발달의 창</text>
+      <text x="230" y="64" text-anchor="middle" fill="#828d9b" font-size="12">fixed developmental window</text>
+      <line x1="60" y1="240" x2="400" y2="240" stroke="#20262e" stroke-width="1.5"/>
+      <rect x="150" y="110" width="110" height="130" fill="#eef1f5" stroke="#828d9b" stroke-width="2"/>
+      <line x1="205" y1="110" x2="205" y2="240" stroke="#828d9b" stroke-width="2"/><line x1="150" y1="175" x2="260" y2="175" stroke="#828d9b" stroke-width="2"/>
+      <text x="205" y="262" text-anchor="middle" fill="#46505c" font-size="12">모든 아이에게 같은 나이</text>
+      <text x="230" y="292" text-anchor="middle" fill="#46505c">창이 열려 있을 때만 영향을 받고,</text>
+      <text x="230" y="311" text-anchor="middle" fill="#46505c">그 시기는 달력 나이로 정해진다</text>
+      <text x="60" y="100" fill="#828d9b" font-size="11.5">민감도</text><text x="400" y="258" text-anchor="end" fill="#828d9b" font-size="11.5">나이</text>
+      <!-- right -->
+      <rect x="460" y="16" width="420" height="308" rx="14" fill="#e9eff6" stroke="#1f4e79" stroke-width="2"/>
+      <text x="670" y="44" text-anchor="middle" font-weight="700" fill="#1f4e79" font-size="15">확률적이고 체계 특이적인 민감기</text>
+      <text x="670" y="64" text-anchor="middle" fill="#2d6a9f" font-size="12">probabilistic, system-specific</text>
+      <line x1="500" y1="240" x2="840" y2="240" stroke="#20262e" stroke-width="1.5"/>
+      <path d="M510 238 C560 236 580 120 620 120 C660 120 680 236 730 238" fill="none" stroke="#1f4e79" stroke-width="2.5"/>
+      <path d="M560 238 C610 236 635 140 680 140 C725 140 750 236 800 238" fill="none" stroke="#3a9a8f" stroke-width="2.5"/>
+      <path d="M530 238 C590 236 610 170 660 170 C720 170 760 236 830 238" fill="none" stroke="#c78a1e" stroke-width="2.5"/>
+      <text x="620" y="110" text-anchor="middle" fill="#1f4e79" font-size="11.5" font-weight="600">아이 A</text>
+      <text x="700" y="132" text-anchor="middle" fill="#2c7d73" font-size="11.5" font-weight="600">아이 B</text>
+      <text x="790" y="190" text-anchor="middle" fill="#c78a1e" font-size="11.5" font-weight="600">아이 C</text>
+      <text x="670" y="262" text-anchor="middle" fill="#46505c" font-size="12">사춘기 시작, 이전 경험, 유전에 따라 위치와 높이가 다름</text>
+      <text x="670" y="292" text-anchor="middle" fill="#1f4e79" font-weight="600">민감기를 정하는 것은 달력 나이가 아니라</text>
+      <text x="670" y="311" text-anchor="middle" fill="#1f4e79" font-weight="600">그 시점 뇌의 가소성 상태</text>
+      <text x="500" y="100" fill="#828d9b" font-size="11.5">민감도</text><text x="840" y="258" text-anchor="end" fill="#828d9b" font-size="11.5">나이</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 왼쪽은 기존 모델이 암묵적으로 가정하는 그림이고, 오른쪽은 저자들이 제안하는 재개념화입니다. 오른쪽 그림에서 세 아이의 곡선을 평균하면 낮고 넓게 퍼진 언덕 하나가 나옵니다. 집단 자료에서 "민감기가 뚜렷하지 않다"거나 "연구마다 다르다"는 결과가 나오는 것은, 민감기가 없어서가 아니라 <b>사람마다 다른 곳에 있는 것을 같은 달력 위에 겹쳐 놓았기 때문</b>일 수 있습니다. 곡선의 모양은 개념을 설명하기 위한 것이며 실제 자료에서 추정한 것이 아닙니다.</div>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">🍳 비유</span><br>
+  "아이들의 이갈이는 여섯 살에 시작한다"는 말은 평균으로는 맞지만, 다섯 살에 시작하는 아이도 여덟 살에 시작하는 아이도 있습니다. 여섯 살 아이들만 모아 "지금 이가 흔들리는가"를 조사하면 절반쯤은 아니라고 답할 것입니다. 그렇다고 이갈이라는 시기가 없는 것은 아닙니다. 시기를 알려면 생일이 아니라 <strong>잇몸 상태</strong>를 봐야 합니다. 저자들이 달력 나이 대신 가소성의 신경생물학적 지표를 보자고 하는 이유입니다.
+</div>
+
+<div class="subhead"><span class="code">9.1</span><h3>앞으로의 연구를 위한 세 가지 제안</h3><span class="en">Empirical possibilities · Experimental and translational implications</span></div>
+
+<div class="three-grid">
+  <div class="mod-card protect">
+    <h4>가소성을 직접 재기</h4>
+    <div class="en">Novel neuroimaging methods</div>
+    <p>EEG의 감마 진동과 비주기 지수, fMRI의 저주파 변동 진폭(ALFF) 같은 지표가 민감기의 개폐를 조절하는 세포 수준 기제(PV+ 억제성 중간뉴런의 성숙, 흥분과 억제의 균형)를 간접적으로 반영할 수 있다는 제안을 소개합니다. 저자들은 추가 검증이 필요하다고 명시합니다.</p>
+  </div>
+  <div class="mod-card protect">
+    <h4>사춘기를 기준으로 삼기</h4>
+    <div class="en">Puberty as opportunity</div>
+    <p>동물 연구는 사춘기 호르몬이 민감기를 조절하는 세포 기제에 영향을 준다고 시사합니다. 달력 나이 대신 사춘기 발달 단계를 기준으로 ACE 시점을 살펴보는 것이 생물학적으로 근거 있는 접근일 수 있다는 제안입니다.</p>
+  </div>
+  <div class="mod-card protect">
+    <h4>개입 연구로 검증하기</h4>
+    <div class="en">Windows of opportunity</div>
+    <p>민감기는 취약성의 창이면서 <strong>기회의 창</strong>일 수 있습니다. 지지적 환경이나 치료적 개입의 효과가 발달 시점이나 신경생물학적 상태에 따라 달라지는지를 보면, 민감기 가설을 검증하는 동시에 개입 시기를 정하는 근거를 얻을 수 있습니다.</p>
+  </div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 ③ : 측정의 정밀함이 현상의 정밀함을 넘어설 때</span><br>
+  저자들은 직관에 반하는 제안을 하나 합니다. ACE 시점을 특정 연령처럼 아주 세밀하게 재는 것이 오히려 부적절할 수 있고, 아동기 대 청소년기처럼 <strong>넓은 발달 단계</strong>로 추정하는 편이 낫다는 것입니다. 신경발달의 변화는 개인차가 크더라도 넓은 추세는 사람들 사이에서 비슷하게 따르기 때문에, 넓은 구간은 기저 과정이 뒷받침하지 못하는 시간적 정밀함을 암시하지 않습니다. 이는 일반적인 측정 원칙으로 확장할 수 있습니다. 자료가 연 단위로 있다고 해서 연 단위로 분석해야 하는 것은 아니며, <strong>분석의 해상도는 이론이 말하는 과정의 해상도에 맞추어야 합니다.</strong>
+</div>
+
+<div class="subhead"><span class="code">9.2</span><h3>인간 연구의 제약</h3><span class="en">Empirical challenges</span></div>
+
+<div class="panel">
+  <p>저자들은 인간 민감기 연구가 안고 있는 구조적 어려움도 정리합니다. 윤리적 이유로 노출 시점을 실험적으로 통제할 수 없습니다. 스트레스에 대한 유전적·생물행동적 취약성, 지지적 양육 같은 보호 환경, 역경의 유형, 심각도, 누적, 예측 불가능성에 개인차가 있습니다. 그리고 많은 ACE가 만성적이거나 반복되고 <strong>다른 역경과 함께 발생</strong>하므로, 특정 발달 시기나 특정 노출에 귀속되는 효과를 분리하기 어렵습니다. 역경을 누적 점수나 넓은 차원으로 합치면 유형별로 다른 민감기가 가려질 수 있다는 지적도 덧붙입니다. 또한 ACE의 영향은 노출 직후에 관찰되지 않을 수 있습니다.</p>
+</div>
+
+<div class="quote-box">
+  "As such, at present, we cannot determine precise sensitive periods with any degree of certainty, nor assess whether there is sufficient evidence supporting key sensitive periods models."
+  <span class="trans">따라서 현재로서는 <strong>정확한 민감기를 어느 정도의 확실성으로도 특정할 수 없으며</strong>, 주요 민감기 모델을 뒷받침하는 증거가 충분한지도 평가할 수 없다.</span>
+  <span class="attr">출처: Concluding remarks</span>
+</div>
+
+<!-- §10 phrases -->
+<div class="section-head" id="phrases">
+  <div class="section-num">10</div>
+  <div class="section-title-block"><h2>명문장: 영어 논문에 다시 쓸 수 있는 문장들</h2><p class="section-subtitle">Notable sentences · 표현의 구조와 쓰임새</p></div>
+</div>
+
+<div class="phrase-grid">
+  <div class="phrase">
+    <div class="en">"One possible explanation for these inconsistent findings is the developmental timing of adversity exposure on the brain, given that different brain regions and circuitries may have different sensitive periods."</div>
+    <div class="kr">이러한 비일관된 결과에 대한 한 가지 가능한 설명은 역경 노출의 발달적 시점인데, 뇌 영역과 회로마다 민감기가 다를 수 있기 때문이다.</div>
+    <div class="why"><b>왜 좋은가.</b> 선행 연구의 불일치를 연구 질문으로 전환하는 문형입니다. "One possible explanation for these inconsistent findings is X, given that Y." 서론에서 조절변수나 하위집단 분석의 필요성을 제기할 때 그대로 쓸 수 있습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"It was not possible to conduct a meta-analysis due to substantial heterogeneity in the analytical approaches and design of included studies, as well as in the ways ACEs and their timing were operationalised."</div>
+    <div class="kr">포함된 연구들의 분석 접근과 설계, 그리고 ACE와 그 시점을 조작화한 방식에서 이질성이 상당하여 메타분석을 수행할 수 없었다.</div>
+    <div class="why"><b>왜 좋은가.</b> 메타분석을 하지 않은 이유를 변명 없이 한 문장으로 정당화합니다. 이질성의 출처를 세 가지(분석, 설계, 조작화)로 구체화한 점이 설득력을 만듭니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Although early childhood was implicated in two of the three longitudinal studies, the developmental periods examined in these studies were relatively restricted, limiting comparison with later developmental stages."</div>
+    <div class="kr">종단 연구 세 편 가운데 두 편에서 초기 아동기가 지목되었지만, 이 연구들이 살펴본 발달 기간은 상대적으로 제한적이어서 이후 발달 단계와의 비교에 한계가 있다.</div>
+    <div class="why"><b>왜 좋은가.</b> 자신의 가설에 유리한 증거를 스스로 한정하는 문장입니다. "Although A was implicated in X of Y studies, ..., limiting comparison with ..." 구조는 문헌고찰에서 결과를 과장하지 않고 요약할 때 유용합니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"When considered collectively, the evidence reviewed broadly supports the theory that the timing of ACEs may differentially influence brain structural and functional outcomes."</div>
+    <div class="kr">종합적으로 볼 때, 검토한 증거는 ACE의 시점이 뇌의 구조적·기능적 결과에 차별적으로 영향을 줄 수 있다는 이론을 대체로 지지한다.</div>
+    <div class="why"><b>왜 좋은가.</b> "broadly supports"와 "may"라는 이중 한정으로 지지의 수준을 조절합니다. 일반 명제는 지지하되 구체적 예측은 지지하지 않을 때, 이 문장 다음에 "However"로 이어 가는 구성이 전형적입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"However, this is only meaningful if neurodevelopmental trajectories are uniform across individuals."</div>
+    <div class="kr">그러나 이는 신경발달 궤적이 개인들 사이에서 균일할 때에만 의미가 있다.</div>
+    <div class="why"><b>왜 좋은가.</b> 이 논문에서 가장 날카로운 문장입니다. 기존 모델을 직접 부정하지 않고 그 모델이 성립하기 위한 <strong>숨은 조건</strong>을 드러냅니다. "This is only meaningful if ..."는 평균 중심 접근을 비판하고 사람중심 분석의 필요성을 논증할 때 쓸 수 있는 문형입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Thus, a key outstanding question is whether sensitive periods for ACEs can be better identified by indexing the neurobiological state of plasticity, rather than chronological age or normative trajectories of regional brain development alone."</div>
+    <div class="kr">따라서 풀리지 않은 핵심 질문은, ACE의 민감기가 달력 나이나 영역별 뇌 발달의 규준 궤적만으로가 아니라 가소성의 신경생물학적 상태를 지표화함으로써 더 잘 식별될 수 있는가이다.</div>
+    <div class="why"><b>왜 좋은가.</b> 비판을 검증 가능한 질문으로 바꾸는 문장입니다. "a key outstanding question is whether A can be better identified by B, rather than C alone." 향후 연구 절을 막연한 당부가 아닌 구체적 가설로 쓰는 본보기입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Importantly, sensitive periods may represent not only windows of vulnerability but also windows of opportunity, during which the brain may be particularly responsive to supportive environments and therapeutic intervention [...]."</div>
+    <div class="kr">중요한 것은, 민감기가 취약성의 창일 뿐 아니라 기회의 창일 수도 있다는 점이며, 이 시기에 뇌는 지지적 환경과 치료적 개입에 특히 잘 반응할 수 있다.</div>
+    <div class="why"><b>왜 좋은가.</b> "not only windows of vulnerability but also windows of opportunity"는 결손 중심의 논의를 실천적 함의로 전환하는 대구 표현입니다. 사회복지 논문의 함의 절에 잘 맞습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Moving forward, theoretical developments and refined hypotheses are needed to advance the field."</div>
+    <div class="kr">앞으로 이 분야가 나아가려면 이론의 발전과 정교화된 가설이 필요하다.</div>
+    <div class="why"><b>왜 좋은가.</b> 논문의 마지막 문장입니다. "더 많은 연구가 필요하다"가 아니라 "더 나은 이론과 가설이 필요하다"로 끝맺습니다. 자료의 부족이 아니라 개념의 부족을 진단할 때 쓰는 결론입니다.</div>
+  </div>
+</div>
+
+<!-- §11 our study -->
+<div class="section-head" id="ourstudy">
+  <div class="section-num">11</div>
+  <div class="section-title-block"><h2>AIR Lab 연구와의 연결</h2><p class="section-subtitle">"언제"를 묻는 자료, 평균 뒤의 이질성, 그리고 개입의 시기</p></div>
+</div>
+
+<div class="panel">
+  <p>AIR Lab이 주로 쓰는 ACE 측정은 "18세 이전에 겪었는가"를 묻습니다. 발생 연령도 지속기간도 없습니다. 이 논문은 그 한계를 다시 확인시켜 주는 동시에, 위안이 되는 메시지도 줍니다. 연 단위의 세밀한 시점 자료가 있다고 해서 더 분명한 답이 나오는 것은 아니었고, 저자들은 오히려 넓은 발달 단계 구분을 권합니다. 패널 자료에서 초등 시기와 중등 시기의 역경을 나누어 보는 정도의 설계가 이론적으로 정당화될 수 있다는 뜻입니다.</p>
+  <p>더 깊은 접점은 논의의 핵심 논리에 있습니다. "평균적 발달 궤적을 기준으로 삼는 것은 궤적이 개인 간에 균일할 때에만 의미가 있다"는 문장은 랩이 사람중심 방법(LCA, LPA, 성장혼합모형)을 쓰는 이유와 정확히 같은 논리입니다. 변수중심 분석에서 효과가 흐릿하게 나올 때, 그것이 효과가 없어서인지 <strong>서로 다른 하위집단의 효과가 평균 속에서 상쇄되어서인지</strong>를 묻는 것이 사람중심 접근입니다. 이 논문은 그 논증을 신경과학의 언어로 보여 줍니다.</p>
+  <div class="tbl-wrap">
+  <table class="mini-table">
+    <tr><th>우리 연구 요소</th><th>이 논문에서의 대응</th><th>가져올 점</th></tr>
+    <tr><td>ACE 유무·개수 중심의 측정</td><td>시점의 세 가지 조작화 (발생 연령, 지속기간, 노출 단계)</td><td>새 조사를 설계할 때 최소한 "처음 겪은 시기"와 "얼마나 이어졌는지"를 넓은 발달 단계로 묻는 문항 추가</td></tr>
+    <tr class="hi"><td>사람중심 분석 (LCA, LPA)</td><td>개인 간·개인 내 변이 때문에 달력 나이 기준의 민감기가 흐려진다는 논증</td><td>사람중심 접근의 이론적 정당화에 인용할 수 있는 근거. "This is only meaningful if ..." 논법의 활용</td></tr>
+    <tr><td>패널 자료의 종단 분석</td><td>종단 12편 중 10편이 결과를 한 시점에서만 분석했다는 한계</td><td>예측변수뿐 아니라 결과변수도 반복 측정해 변화를 모형화하는 설계의 가치</td></tr>
+    <tr><td>가정 밖 청소년 연구</td><td>일찍 시작되고 오래 이어진 역경이 가장 일관된 결과를 보임</td><td>가정 내 역경의 시작 시기와 지속기간이 긴 집단이라는 점을 고려한 사정과 개입 강도 설계. 단 이 논문은 뇌 지표를 다루며 서비스 효과를 검정한 것은 아님</td></tr>
+    <tr><td>개입 연구</td><td>민감기를 "기회의 창"으로 보는 관점, 개입 효과의 시점 의존성 검증 제안</td><td>개입 효과를 분석할 때 참여 시점의 연령이나 발달 단계를 조절변수로 사전 지정</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">스터디 토론 질문</span><br>
+  <strong>1.</strong> "이른 발생"과 "긴 지속"은 거의 항상 함께 옵니다. 민감기 효과와 누적 효과를 구별하려면 어떤 사례들이 자료에 있어야 할까요? 그런 사례는 현실에서 어떤 아이들일까요?<br>
+  <strong>2.</strong> 저자들의 재개념화(확률적, 체계 특이적 민감기)는 반증 가능한가요? 어떤 결과가 나오면 이 수정된 견해가 틀렸다고 말할 수 있을지 생각해 봅시다.<br>
+  <strong>3.</strong> 아동복지 정책은 "조기 개입"을 강조합니다. 이 논문의 결과는 그 강조를 지지하나요, 약화하나요, 아니면 다른 질문으로 바꾸나요?
+</div>
+
+<!-- §12 worksheet -->
+<div class="section-head" id="work">
+  <div class="section-num">12</div>
+  <div class="section-title-block"><h2>정리 활동</h2><p class="section-subtitle">입력한 내용은 이 브라우저에 자동 저장됩니다</p></div>
+</div>
+
+<div class="worksheet">
+  <h4>활동 1 · 숨은 전제 찾기</h4>
+  <div class="prompt">자신의 연구 분야에서 널리 쓰이는 모델이나 가정 하나를 고르고, 이 논문의 문형을 빌려 그 모델이 성립하기 위한 조건을 영어 한 문장으로 써 보세요. ("However, this is only meaningful if ...")</div>
+  <textarea data-key="w1" placeholder="모델 또는 가정: ...&#10;However, this is only meaningful if ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 2 · 원문 Figure 2 직접 읽기</h4>
+  <div class="prompt">원문 Figure 2의 패널 (A) 해마에서 연구 하나를 골라, 그 줄이 말하는 내용을 한국어 두 문장으로 풀어 써 보세요. 표본의 종류(약어), 살펴본 연령 범위, 연관을 찾은 시기, 그리고 모델의 예측(초록 막대)과의 일치 여부를 포함합니다.</div>
+  <textarea data-key="w2" placeholder="고른 연구: ...&#10;이 줄이 말하는 것: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 3 · 시점을 묻는 문항 설계</h4>
+  <div class="prompt">청소년 대상 설문에 ACE의 시점을 묻는 문항을 추가한다면 어떻게 묻겠습니까? 회고적 보고의 한계와 "넓은 발달 단계가 더 적절할 수 있다"는 저자들의 제안을 고려해 문항과 응답 범주를 적어 보세요.</div>
+  <textarea data-key="w3" placeholder="문항: ...&#10;응답 범주: ...&#10;이렇게 설계한 이유: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="closing">
+  <div class="closing-inner">
+    <h2>이 논문이 보여 주는 것: 맞지 않는 증거는 이론을 버리라는 신호가 아니라 고쳐 쓰라는 신호다</h2>
+    <p>43편의 연구는 Life Cycle Model of Stress가 그린 일정표와 잘 맞지 않았습니다. 여기서 저자들이 택할 수 있는 쉬운 결론은 두 가지였습니다. "민감기는 없다" 또는 "연구들의 방법이 나쁘다". 저자들은 둘 다 택하지 않습니다. 시점이 중요하다는 일반 명제는 유지하면서, 모델이 암묵적으로 깔고 있던 전제 하나, 곧 <strong>발달 궤적이 사람마다 같다는 전제</strong>를 꺼내어 그것을 수정합니다. 그 결과 민감기는 달력 위의 고정된 칸에서, 사람마다 위치가 다른 확률적 상태로 바뀝니다.</p>
+    <p>이론은 대개 이렇게 자랍니다. 예측이 틀렸을 때 핵심 통찰은 남기고, 그 통찰을 구체적 예측으로 옮기는 과정에서 덧붙였던 보조 가정을 고칩니다. 그리고 좋은 수정은 새로운 검증 방법을 함께 내놓습니다. 가소성의 직접 지표, 사춘기 단계, 개입 효과의 시점 의존성이 그것입니다. 덧붙여, 이 리뷰는 제1저자 Stephanie Hartanto가 연구의 구상, 설계, 분석, 집필을 이끌었다는 동료 저자들의 헌사를 Acknowledgements에 담고 있습니다.</p>
+    <div class="signature">Hartanto, S., Rakesh, D., Orr, C., Forlano, E., Khetan, M., &amp; Whittle, S. (2026). Annual Research Review: A probe into sensitive periods. Journal of Child Psychology and Psychiatry. https://doi.org/10.1111/jcpp.70259 · AIR Lab Journal Club</div>
+  </div>
+</div>
+
+
+</main>
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(31,78,121,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#1f4e79"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#1f4e79"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<footer class="footer">
+  이 페이지는 AIR Lab(ACEs-Informed Recovery Lab) 대학원 세미나의 교육 목적으로 제작되었습니다. 원문의 짧은 인용은 출처를 밝혀 사용했습니다. "원문 Figure"와 "원문 Table"로 표시한 이미지는 CC BY-NC-ND 4.0 라이선스로 공개된 원문에서 변형 없이 가져와 출처와 함께 실은 것이고, "AIR Lab 개념도"로 표시한 그림은 원문의 수치와 서술을 바탕으로 랩에서 따로 그린 설명용 그림입니다. 정확한 수치와 전체 내용은 원문과 보충자료를 확인하십시오.
+</footer>
+
+<script>
+(function(){
+  var PREFIX='jc_hartanto2026_';
+  var areas=document.querySelectorAll('.worksheet textarea[data-key]');
+  function store(k,v){try{localStorage.setItem(PREFIX+k,v);return true;}catch(e){return false;}}
+  function load(k){try{return localStorage.getItem(PREFIX+k);}catch(e){return null;}}
+  function flash(ta){var s=ta.parentNode.querySelector('.save-status');if(!s)return;s.classList.add('show');clearTimeout(s._t);s._t=setTimeout(function(){s.classList.remove('show');},1400);}
+  areas.forEach(function(ta){
+    var v=load(ta.getAttribute('data-key'));
+    if(v!==null)ta.value=v;
+    var timer;
+    ta.addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(function(){if(store(ta.getAttribute('data-key'),ta.value))flash(ta);},400);});
+  });
+  window.saveAll=function(){var ok=true;areas.forEach(function(ta){if(store(ta.getAttribute('data-key'),ta.value))flash(ta);else ok=false;});if(!ok)alert('이 브라우저에서는 저장 공간을 사용할 수 없습니다. 내용을 따로 복사해 두세요.');};
+})();
+</script>
+</body>
+</html>

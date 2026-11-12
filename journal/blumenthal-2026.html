@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>방임 개입의 근거를 다시 묻다</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+  /* ════════ AIR Lab theme: navy → recovery-teal (synced with index) ════════ */
+  :root{ --sky:#2d6a9f; --sky-deep:#1f4e79; --sky-bright:#7fa9d1; --sky-soft:#e9eff6; --sky-soft2:#f4f7fb; --sky-soft-2:#f4f7fb; --mint:#3a9a8f; --mint-soft:#eaf5f2; --hover-bg:#eef3f9; }
+  .stripe{background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+  .stripe span{background:transparent!important}
+  .nav-logo-dot .d3{background:#3a9a8f}
+  .hero{isolation:isolate}
+  .hero::before{background:radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%), linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%)!important}
+  .overline{color:#9fd3ca!important}
+  .overline::before{background:#8cc7bd!important}
+  .hero h1{color:#fff!important}
+  .hero h1 em{color:#bfe6df!important}
+  .hero .citation{color:#b7c9da!important;border-left-color:#8cc7bd!important}
+  .hero .citation em{color:#d6e5f2!important}
+  .hero .citation a{color:#bfe6df!important}
+  .hero .subtitle{color:#d2e0ec!important}
+  .hero .subtitle strong,.hero .subtitle b{color:#fff!important}
+  .hero .subtitle em{color:#bfe6df}
+  .hero .stat{background:rgba(255,255,255,0.08)!important;border-color:rgba(255,255,255,0.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .hero .stat .num{color:#fff!important}
+  .hero .stat .lbl{color:#a9c1d6!important}
+  .paper-meta,.condition-header{background:linear-gradient(120deg,#1c4a73 0%,#22655f 100%)!important}
+  .section-num{background:linear-gradient(120deg,#1f4e79 0%,#2d7d78 100%)!important}
+
+  /* ════════ figure originals + line-drawing helpers ════════ */
+  .fig-orig a{display:block}
+  .fig-orig img{display:block;margin:0 auto;background:#fff}
+  .fig-lic{font-size:11.5px;color:var(--light);line-height:1.55;margin:8px 2px 0;text-align:left}
+  .fig-lic a{color:var(--sky-deep)}
+  .guide-list{margin:6px 0 0;padding-left:20px}
+  .guide-list li{margin-bottom:5px}
+  .mini-table td.num,.mini-table th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .mini-table td small{color:var(--light)}
+  .tbl-wrap{overflow-x:auto}
+  .three-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+  @media (max-width:900px){.three-grid{grid-template-columns:1fr}}
+  svg .ink{stroke:#20262e;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  svg .inkthin{stroke:#46505c;stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body id="top">
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#bg">방임 이론의 이동</a></li>
+      <li><a href="#methods">방법</a></li>
+      <li><a href="#r1">결과 1: 측정</a></li>
+      <li><a href="#r2">결과 2: 대상</a></li>
+      <li><a href="#r3">결과 3: 이론</a></li>
+      <li><a href="#disc">논의·정책</a></li>
+      <li><a href="#phrases">명문장</a></li>
+      <li><a href="#ourstudy">우리 연구</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">Blumenthal et al. 2026 · Journal Club</div>
+    <h1>이론은 생태를 말하고 개입은 부모를 겨눈다:<br><em>방임 개입의 "근거"는 무엇을 근거하고 있는가</em></h1>
+    <div class="citation">Blumenthal, A., White-Wolfe, H., &amp; Thomas, M. (2026). Still blaming parents? Describing the "evidence base" underpinning child neglect intervention programs. <em>Child Abuse &amp; Neglect, 181</em>, 108296. https://doi.org/10.1016/j.chiabu.2026.108296</div>
+    <p class="subtitle">방임은 미국 아동보호 개입의 가장 흔한 사유입니다. 최근 이론은 방임을 "망가진 부모"가 아니라 <strong>여러 층의 생태학적 불리가 부모를 과부하(overload) 상태로 만든 결과</strong>로 설명합니다. 그렇다면 "근거기반"이라는 이름이 붙은 방임 개입 프로그램의 근거 논문들도 그렇게 말하고 있을까요? 이 논문은 효과를 다시 재지 않습니다. 대신 <strong>근거라고 불리는 논문들이 실제로 무엇을 측정했는지</strong>를 한 편씩 열어 봅니다.</p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">9개 · 46편</span><div class="lbl">CEBC 근거기반 프로그램 · 근거 논문</div></div>
+      <div class="stat"><span class="num">11% (5편)</span><div class="lbl">방임을 별개의 학대 유형으로 다룬 논문</div></div>
+      <div class="stat"><span class="num">4 / 5</span><div class="lbl">어머니를 대상으로 한 연구</div></div>
+      <div class="stat"><span class="num">3 / 5</span><div class="lbl">생태학적 틀을 언급한 논문</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>Blumenthal et al. (2026)</div>
+
+<!-- §01 -->
+<div class="section-head" id="paper">
+  <div class="section-num">01</div>
+  <div class="section-title-block"><h2>논문 소개</h2><p class="section-subtitle">이 논문은 어떤 전통 위에 서 있고, 무엇을 고치려 하는가</p></div>
+</div>
+
+<div class="panel">
+  <p>근거기반실천(evidence-based practice)은 사회복지에서 강력한 규범입니다. 미국에서는 연방 재정 지원이 "근거기반"으로 인정된 프로그램의 시행과 점점 더 강하게 묶이고 있고, 어떤 프로그램이 그 자격을 갖는지는 California Evidence-Based Clearinghouse for Child Welfare(CEBC) 같은 근거 정보센터의 평정이 좌우합니다. 그런데 "근거가 있다"는 말은 <strong>무엇에 대한</strong> 근거가 있다는 뜻일까요.</p>
+  <p>이 논문은 방임(neglect)을 사례로 그 질문을 던집니다. 방임 이론은 최근 크게 이동했습니다. 과거에는 어머니의 공감 능력이나 정보처리 능력의 결함으로 방임을 설명했지만, 지금은 빈곤, 주거, 지역사회 자원 같은 여러 층의 생태학적 불리가 부모를 과부하 상태로 만든다고 설명합니다. 저자들은 근거기반으로 평정된 방임 개입 프로그램의 근거 논문 46편을 <strong>내용분석</strong>하여, 그 논문들이 방임을 어떻게 개념화하고 측정했는지, 어떤 이론에 기대었는지, 누구를 대상으로 했는지를 기술합니다.</p>
+  <p>이 논문은 효과크기를 내놓지 않습니다. 프로그램이 효과가 있는지 없는지를 판단하지도 않습니다. 살펴보는 것은 <strong>이론, 개입 설계, 대상 집단, 결과 측정 사이의 정합성</strong>입니다. 대학원생에게는 "이론적 틀을 인용한다"는 것과 "이론이 연구 설계 안에서 작동한다"는 것의 차이를 배우는 텍스트입니다.</p>
+</div>
+
+<div class="paper-meta">
+  <h3>Still blaming parents? Describing the "evidence base" underpinning child neglect intervention programs</h3>
+  <div class="sub">Anne Blumenthal (University of Michigan) · Holly White-Wolfe (Independent Researcher) · Margaret Thomas (University of Chicago)</div>
+  <div class="paper-meta-grid">
+    <div class="paper-meta-item"><div class="label">Journal</div><div class="value">Child Abuse &amp; Neglect (SSCI)<br>2026, 181, 108296 · Open Access (CC BY-NC-ND 4.0)</div></div>
+    <div class="paper-meta-item"><div class="label">Type</div><div class="value">내용분석(content analysis). CEBC가 근거기반으로 평정한 프로그램 9개의 근거 논문 46편. 세 저자가 Dedoose로 반복 코딩</div></div>
+    <div class="paper-meta-item"><div class="label">Core claim</div><div class="value">근거기반 방임 개입의 근거 문헌과 방임에 대한 현대의 다수준 이론 사이에는 정합성이 제한적이다</div></div>
+  </div>
+</div>
+
+<div class="quote-box">
+  "By classifying which participants researchers engaged and which contributing factors researchers measured, we shed light on the underlying, often unnamed, theoretical models that currently inform evidence-based interventions."
+  <span class="trans">연구자들이 <strong>어떤 참여자를 모집했고 어떤 기여 요인을 측정했는지</strong>를 분류함으로써, 우리는 현재 근거기반 개입을 이끄는, <strong>흔히 이름 붙여지지 않은</strong> 기저의 이론적 모델을 드러낸다.</span>
+  <span class="attr">출처: 1. Introduction</span>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">🧭 길잡이 · 두 가지 연구 질문</span><br>
+  <strong>질문 1.</strong> 학대 개입의 공인된 근거 문헌은 방임을 어떻게 측정하는가?<br>
+  <strong>질문 2.</strong> 각 개입의 바탕에는 어떤 이론이 있고, 누구를 대상으로 하며, 출판된 근거 연구는 그 개입의 변화 이론(theory of change)과 대상 집단을 밝히고 있는가?
+</div>
+
+<!-- §02 -->
+<div class="section-head" id="intro">
+  <div class="section-num">02</div>
+  <div class="section-title-block"><h2>Introduction: 가장 흔한 개입 사유, 가장 덜 겨냥된 문제</h2><p class="section-subtitle">1. Introduction · 2.1 Child neglect as a social problem</p></div>
+</div>
+
+<div class="panel">
+  <p>저자들이 정리하는 방임의 현황은 다음과 같습니다. 미국에서 방임은 아동보호 개입의 가장 흔한 사유이고, 위탁보호 진입의 63%가 방임과 관련된 상황을 포함합니다. 아동학대 감소에 대한 연방 정책의 관심이 커졌는데도 방임으로 신고되는 아동의 비율은 수십 년간 거의 움직이지 않았습니다. 방임은 아동학대 관련 사망의 주된 원인 가운데 하나이며, 첫 개입 이후 재발할 가능성도 높습니다.</p>
+  <p>저자들은 수십 년의 연구에서 네 가지 양상을 뽑아냅니다. 첫째, 일반인과 임상가는 무엇이 방임인지에는 대체로 동의하지만 심각성과 책임 소재에는 의견이 갈립니다. 둘째, 방임의 확인과 신고는 가족의 사회경제적 조건과 강하게 연관됩니다. 셋째, 방임은 부모의 <strong>행위가 아니라 부작위</strong>로 이루어지는 별개의 학대 범주이지만, 하위 유형들은 다른 학대와 높은 상관을 보입니다. 넷째, 방임은 연구자, 정책가, 재정 지원자의 관심을 상대적으로 덜 받아 왔고, 이를 "방임의 방임(the neglect of neglect)"이라고 부릅니다.</p>
+  <p>이 네 가지 특징 때문에 이론에 기반해 방임의 발생과 재발을 막는 개입을 설계하기가 특히 어렵다는 것이 저자들의 출발점입니다.</p>
+</div>
+
+<!-- §03 -->
+<div class="section-head" id="bg">
+  <div class="section-num">03</div>
+  <div class="section-title-block"><h2>배경: 방임 이론은 어디에서 어디로 옮겨 왔는가</h2><p class="section-subtitle">2. Background</p></div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">방임을 설명하는 두 가지 틀 (Introduction과 Background 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 380" width="100%" style="max-width:900px" role="img" aria-label="망가진 부모 틀과 과부하 틀의 비교">
+    <g font-size="13">
+      <!-- left: damaged parents -->
+      <rect x="20" y="16" width="420" height="348" rx="14" fill="#fff" stroke="#aab4c1" stroke-dasharray="6 5" stroke-width="1.5"/>
+      <text x="230" y="44" text-anchor="middle" font-weight="700" fill="#46505c" font-size="15">"망가진 부모" 틀</text>
+      <text x="230" y="64" text-anchor="middle" fill="#828d9b" font-size="12">damaged parents · 1970~1990년대 이론</text>
+      <circle cx="230" cy="118" r="20" class="ink"/><path d="M230 138 L230 204 M230 156 L198 182 M230 156 L262 182 M230 204 L210 246 M230 204 L250 246" class="ink"/>
+      <path d="M222 112 l6 6 m0 -6 l-6 6 M234 112 l6 6 m0 -6 l-6 6" stroke="#e0573e" stroke-width="2" stroke-linecap="round"/>
+      <path d="M150 118 L196 118" stroke="#e0573e" stroke-width="2" marker-end="url(#arB)"/>
+      <text x="92" y="114" text-anchor="middle" fill="#c0432c" font-weight="600" font-size="12">원인은</text><text x="92" y="130" text-anchor="middle" fill="#c0432c" font-weight="600" font-size="12">부모 안에</text>
+      <text x="230" y="278" text-anchor="middle" fill="#46505c">공감하지 못한다 · 정보를 처리하지 못한다</text>
+      <text x="230" y="298" text-anchor="middle" fill="#46505c">자원을 활용하지 못한다</text>
+      <rect x="70" y="316" width="320" height="34" rx="17" fill="#fdeee9"/>
+      <text x="230" y="338" text-anchor="middle" fill="#c0432c" font-weight="600" font-size="12.5">개입 표적: 물질사용, 모의 정신건강, 양육기술</text>
+      <!-- right: overload -->
+      <rect x="460" y="16" width="420" height="348" rx="14" fill="#e9eff6" stroke="#1f4e79" stroke-width="2"/>
+      <text x="670" y="44" text-anchor="middle" font-weight="700" fill="#1f4e79" font-size="15">"과부하" 틀</text>
+      <text x="670" y="64" text-anchor="middle" fill="#2d6a9f" font-size="12">overload · 생태학적으로 중첩된 불리</text>
+      <g font-size="11.5" font-weight="600" text-anchor="middle">
+        <rect x="606" y="84" width="128" height="24" rx="5" fill="#fff" stroke="#1f4e79"/><text x="670" y="101" fill="#1f4e79">정책: 소득지원의 공백</text>
+        <rect x="614" y="110" width="112" height="24" rx="5" fill="#fff" stroke="#1f4e79"/><text x="670" y="127" fill="#1f4e79">지역사회: 자원 부족</text>
+        <rect x="622" y="136" width="96" height="24" rx="5" fill="#fff" stroke="#1f4e79"/><text x="670" y="153" fill="#1f4e79">빈곤 · 주거 불안</text>
+      </g>
+      <circle cx="670" cy="182" r="16" class="ink"/><path d="M670 198 L666 240 M668 212 L640 196 M668 212 L700 196 M666 240 L648 268 M666 240 L688 266" class="ink"/>
+      <path d="M640 196 L632 164 M700 196 L708 164" class="ink"/>
+      <path d="M742 122 q24 30 0 60" stroke="#1f4e79" stroke-width="1.6" fill="none" marker-end="url(#arB2)"/>
+      <text x="800" y="150" text-anchor="middle" fill="#1f4e79" font-weight="600" font-size="12">원인은</text><text x="800" y="166" text-anchor="middle" fill="#1f4e79" font-weight="600" font-size="12">부모 위에</text>
+      <text x="670" y="292" text-anchor="middle" fill="#46505c">스트레스가 쌓여 인지와 자원 관리 능력이 무너진다</text>
+      <rect x="500" y="316" width="340" height="34" rx="17" fill="#fff" stroke="#1f4e79"/>
+      <text x="670" y="338" text-anchor="middle" fill="#1f4e79" font-weight="600" font-size="12.5">개입 표적: 구체적 지원, 사회적 연결, 구조적 불리의 완화</text>
+    </g>
+    <defs>
+      <marker id="arB" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#e0573e"/></marker>
+      <marker id="arB2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1f4e79"/></marker>
+    </defs>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 두 틀은 같은 장면을 다르게 읽습니다. 왼쪽에서 방임은 부모 내부의 결함에서 나오고, 따라서 개입은 부모를 고치는 일이 됩니다. 오른쪽에서 부모는 위에서 내리누르는 여러 겹의 짐을 떠받치고 있고, 짐이 한계를 넘으면 돌봄이 무너집니다. 저자들에 따르면 "overload"는 아동 옹호 진영이 제안한 서사적 틀로, 근본원인이론(Theory of Fundamental Causes)과 생태학적 이론에 기대고 있습니다. 가족 수준 개입은 구체적 지원과 사회적 연결로 부모의 스트레스를 줄이려 하고, 지역사회 수준 개입은 보편적 유아교육처럼 구조적 불리 자체를 줄이려 합니다. <b>이 논문의 질문은, "근거기반"이라는 이름표가 붙은 개입의 근거가 어느 쪽 그림 위에 서 있는가입니다.</b></div>
+</div>
+
+<div class="panel">
+  <p>저자들은 이 이동이 말끔하지 않았다는 점도 짚습니다. 최근의 방임 연구는 방임 고유의 이론을 인용하지 않고 Belsky(1980)의 <strong>생태학적 아동학대 이론</strong>을 인용하는 경향이 있습니다. 개인, 가족, 지역사회, 문화라는 여러 층이 상호작용하여 학대를 촉진하거나 막는다는 이론입니다. 그런데 스스로 생태학적 접근이라고 표방하는 연구들도 실제로는 가족 수준의 위험요인 외에는 거의 확인하거나 측정하지 않습니다.</p>
+</div>
+
+<div class="quote-box">
+  "Contemporary studies of child neglect are not likely to cite neglect-specific theories and often position themselves as having an ecological approach, but they rarely identify or measure anything other than family-level risk factors [...]."
+  <span class="trans">현대의 아동 방임 연구는 방임 고유의 이론을 인용하지 않는 경향이 있고 스스로를 생태학적 접근으로 자리매김하는 일이 많지만, <strong>가족 수준의 위험요인 외에는 거의 확인하거나 측정하지 않는다.</strong></span>
+  <span class="attr">출처: 2.1 Child neglect as a social problem</span>
+</div>
+
+<div class="panel">
+  <p>배경 절의 또 하나의 축은 <strong>정합성(coherence)</strong>입니다. 저자들은 Segal 등(2012)의 가정방문 프로그램 리뷰를 인용합니다. 연구의 이론, 프로그램의 개입 요소, 대상 집단, 목표로 한 학대 결과가 서로 맞물려 있을 때 개입이 성공할 가능성이 높았는데, 그런 정합성을 보인 연구는 드물었고 근거 연구의 87%는 정합성을 반영하지 못했다는 것입니다. 개입 효과가 시간이 지나며 사라지는 현상(예: Nurse Family Partnership 연구에서 처치집단의 학대 감소가 2년 뒤 약해졌다는 보고)도 개입과 그 근거 연구에 변화 이론이 내재되어 있지 않은 탓일 수 있다고 저자들은 봅니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">정합성의 사슬: 네 고리가 맞물려야 한다 (Background의 Segal et al., 2012 논지 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 190" width="100%" style="max-width:900px" role="img" aria-label="이론, 개입, 대상, 결과의 정합성 사슬">
+    <g font-size="13" text-anchor="middle">
+      <g fill="#fff" stroke="#1f4e79" stroke-width="2">
+        <rect x="30" y="50" width="180" height="70" rx="35"/><rect x="246" y="50" width="180" height="70" rx="35"/><rect x="462" y="50" width="180" height="70" rx="35"/><rect x="678" y="50" width="192" height="70" rx="35"/>
+      </g>
+      <g stroke="#1f4e79" stroke-width="3"><path d="M210 85 h36"/><path d="M426 85 h36"/><path d="M642 85 h36"/></g>
+      <text x="120" y="80" font-weight="700" fill="#1f4e79">설명 이론</text><text x="120" y="100" fill="#46505c" font-size="12">방임은 왜 생기는가</text>
+      <text x="336" y="80" font-weight="700" fill="#1f4e79">개입 설계</text><text x="336" y="100" fill="#46505c" font-size="12">무엇을 바꾸려 하는가</text>
+      <text x="552" y="80" font-weight="700" fill="#1f4e79">대상 집단</text><text x="552" y="100" fill="#46505c" font-size="12">누구에게 하는가</text>
+      <text x="774" y="80" font-weight="700" fill="#1f4e79">목표 결과</text><text x="774" y="100" fill="#46505c" font-size="12">무엇이 달라졌는지 재는가</text>
+      <text x="450" y="160" fill="#828d9b" font-size="12.5">이 논문은 46편의 근거 논문에서 이 네 고리가 각각 어떻게 채워져 있는지를 코딩합니다.</text>
+      <text x="450" y="28" fill="#46505c" font-size="12.5">"Coherence between explanatory theory, intervention design, target population, and target outcomes"</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 예를 들어 이론이 "빈곤이 부모를 과부하시켜 방임이 생긴다"라면, 개입은 경제적 부담을 줄이는 요소를 포함해야 하고, 대상은 경제적 곤란을 겪는 가족이어야 하며, 결과로는 방임 자체를 재야 합니다. 한 고리라도 어긋나면, 가령 결과를 "양육 스트레스 점수"로만 재면, 개입이 방임을 줄였는지는 알 수 없게 됩니다. 뒤의 결과 절은 이 사슬의 고리를 하나씩 점검하는 순서로 읽으면 됩니다.</div>
+</div>
+
+<!-- §04 -->
+<div class="section-head" id="methods">
+  <div class="section-num">04</div>
+  <div class="section-title-block"><h2>방법: "근거기반"이라는 이름표의 뒷면을 읽기</h2><p class="section-subtitle">3. Methods · 3.1 Sample · 3.2 Methodology</p></div>
+</div>
+
+<div class="panel">
+  <p>표본은 Neglect and Prevention Policies(NAPP) 자료의 정보센터 자료에서 출발합니다. 저자들은 그 가운데 CEBC가 세 영역(아동학대와 방임의 1차 예방, 2차 예방, 3차 예방 및 방임 개입)에서 근거기반으로 평정한 프로그램에 초점을 맞추었습니다. CEBC는 과학적 평정 척도로 프로그램을 1(well-supported), 2(supported), 3(promising), 4(unsupported), 5(concerning or harmful), NR(과학적 근거 부족으로 평정 불가)로 구분합니다. 1~3은 관심 결과에 유익한 영향이 있다는 뜻이고, 4는 영향이 없음을, 5는 해로운 영향을 뜻합니다. 연방 Title IV-E 정보센터가 아니라 CEBC를 택한 이유는 20년 넘게 아동복지 분야에서 "근거"의 기준을 정해 온 기관이고, Title IV-E 정보센터는 학대와 방임을 직접 겨냥하기보다 정신건강, 물질사용, 양육기술 개입을 모아 두기 때문이라고 설명합니다.</p>
+  <p>예비 표본에서 두 가지 기준을 더 적용했습니다. 부모나 양육자를 대상으로 할 것(전문가나 아동 대상 프로그램 제외), 그리고 평정이 "supported" 또는 "well-supported"일 것(둘 이상의 연구에서 근거가 나왔음을 보장). 그 결과 9개 프로그램이 남았고, 각 프로그램의 CEBC 웹페이지에 근거로 인용된 동료심사 논문을 모두 모으니 46편이었습니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">원문 Table 1. Sample inclusion</div>
+  <span class="fig-tag orig">원문 그대로</span>
+  <div class="fig-orig"><a href="figs/blumenthal-2026-table1.png" target="_blank" rel="noopener"><img src="figs/blumenthal-2026-table1.png" alt="Blumenthal et al. 2026 Table 1: 표본 포함 기준" loading="lazy"></a></div>
+  <p class="fig-cap">예비 표본에 든 프로그램 각각에 대해 세 가지를 표시합니다: 개입이 부모나 양육자를 대상으로 하는가, "supported" 또는 "well supported"로 평정되었는가, 최종 표본에 포함되었는가. 맨 아래 줄은 각 열의 "Yes" 개수입니다.</p>
+  <p class="fig-lic">출처: Blumenthal, White-Wolfe, &amp; Thomas (2026), <em>Child Abuse &amp; Neglect, 181</em>, 108296, Table 1. 원문에서 변형 없이 가져왔으며 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> 라이선스를 따릅니다. 그림을 누르면 크게 볼 수 있습니다.</p>
+
+  <div class="fig-implies"><b>📊 표 읽는 법.</b> 가운데 두 열이 모두 "Yes"인 줄만 맨 오른쪽 열이 "Yes"가 됩니다. 맨 아래 합계를 보면 부모·양육자 대상 21개, 평정 기준 충족 10개, 최종 포함 9개입니다. 포함된 9개는 Child First, Childhaven Childhood Trauma Treatment, Homebuilders, The Incredible Years, Kinship Navigator, Nurse-Family Partnership, Safe Environment for Every Kid(SEEK), SafeCare, Triple P입니다. 표에서 꼭 읽어 내야 할 것은 <b>표에 없는 것</b>입니다. 저자들은 CEBC가 평정한 프로그램 가운데 지역사회 수준이나 구조적 수준의 개입은 하나도 없었다고 본문에 적습니다. Strong Communities for Children처럼 이름에 지역사회가 들어간 프로그램도 평정 기준을 충족하지 못해 빠졌습니다.</div>
+</div>
+
+<div class="quote-box">
+  "It is important to note that there were no community or structural-level interventions that were CEBC-rated."
+  <span class="trans">CEBC가 평정한 개입 가운데 <strong>지역사회 수준이나 구조적 수준의 개입은 하나도 없었다</strong>는 점에 주목할 필요가 있다.</span>
+  <span class="attr">출처: 3.1 Sample</span>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">비판적 읽기 · 원문 안의 작은 불일치</span><br>
+  본문은 예비 표본을 "27 CEBC-rated, evidence-based programs"라고 적지만, Table 1에 나열된 프로그램은 세어 보면 26개입니다. 최종 표본 9개와 논문 46편이라는 핵심 수치에는 영향이 없습니다. <strong>확인 필요.</strong>
+</div>
+
+<div class="subhead"><span class="code">4.1</span><h3>코딩 절차</h3><span class="en">3.2 Methodology</span></div>
+
+<div class="panel">
+  <p>저자들은 논문 일부를 먼저 읽고 연구 질문에 맞는 기술적 질문 목록을 만든 뒤, Dedoose에서 해당 본문을 표시하며 예/아니오로 코딩했습니다. 세 저자가 46편을 <strong>세 차례 반복 코딩</strong>해야 했는데, "이론적 틀이 사용되었는가" 같은 주관적 질문에서 불일치가 컸기 때문입니다. 이론을 간접적으로만 언급하는 논문이 많았습니다. 예컨대 서론에서는 양육 스트레스 틀을 전혀 언급하지 않으면서 모의 정신건강을 측정해 학대의 상관요인으로 쓰는 식입니다.</p>
+  <p>그래서 두 번째 코딩에서는 질문을 다섯 가지로 좁혔습니다. (1) 표본에 어떤 집단이 포함되었는가, (2) 표본 크기, (3) 방임을 다루어야 할 결과로 명시했는가, (4) 방임의 <strong>1차 예방</strong>(첫 발생의 예방)을 결과로 명시했는가, (5) 방임을 결과로 측정했는가. 방임의 정의는 CEBC의 것을 따랐습니다: 아동의 기본적 욕구를 충족시키지 못하는 부모·양육자의 전반적 실패.</p>
+  <p>코딩 규칙은 엄격했습니다. "maltreatment"나 "child abuse and neglect"라는 표현만 쓴 연구는 방임을 다룬 것으로 인정하지 않았습니다. 방임 측정을 서술했지만 결과를 보고하지 않은 연구는 "아니오"로 코딩했습니다. (3)~(5) 가운데 하나라도 "예"인 논문에 대해서는 모의 정신건강, 양육 스트레스, 물질남용, 대인 폭력·관계 갈등, 돌봄 부담, 경제적 욕구, 지역 자원의 가용성, 고용, 교육 가운데 무엇을 방임과 연결했고 무엇을 측정했는지를 추가로 코딩했습니다. 각 논문은 최소 두 명이 코딩했고, 불일치는 세 명이 모인 회의에서 해소했습니다.</p>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 ① : 코딩이 어려웠다는 사실 자체가 자료다</span><br>
+  "이론적 틀이 사용되었는가"에 세 연구자가 합의하지 못해 코딩을 세 번 했다는 보고는 절차상의 고백이면서 동시에 결과의 일부입니다. 근거 논문들이 이론을 <strong>명시하지 않은 채</strong> 측정 변수의 선택으로만 암시하고 있다는 뜻이기 때문입니다. 내용분석에서 코딩 불일치가 클 때 흔한 대응은 기준을 느슨하게 해 일치도를 높이는 것입니다. 저자들은 반대로 질문을 더 좁고 명시적인 것으로 바꾸었습니다. 한 가지 아쉬운 점은 평정자 간 신뢰도를 "assessed by hand"라고만 적고 본문에 계수(예: Cohen의 κ)를 제시하지 않았다는 것입니다. 세부는 부록에 있다고 되어 있습니다.
+</div>
+
+<!-- §05 -->
+<div class="section-head" id="r1">
+  <div class="section-num">05</div>
+  <div class="section-title-block"><h2>결과 1: 46편 가운데 방임을 다룬 논문은 5편</h2><p class="section-subtitle">4.1 Neglect prevention and measurement</p></div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">"방임 개입의 근거" 46편의 구성 (4.1절의 수치)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 250" width="100%" style="max-width:900px" role="img" aria-label="46편 가운데 방임을 다룬 5편">
+<text x="24" y="30" font-size="13" font-weight="700" fill="#20262e">CEBC가 근거로 제시한 논문 46편을 한 칸씩 그리면</text>
+<rect x="30" y="52" width="28" height="34" rx="4" fill="#e0573e" stroke="#e0573e" stroke-width="1.5"/>
+<rect x="66" y="52" width="28" height="34" rx="4" fill="#1f4e79" stroke="#1f4e79" stroke-width="1.5"/>
+<rect x="102" y="52" width="28" height="34" rx="4" fill="#1f4e79" stroke="#1f4e79" stroke-width="1.5"/>
+<rect x="138" y="52" width="28" height="34" rx="4" fill="#1f4e79" stroke="#1f4e79" stroke-width="1.5"/>
+<rect x="174" y="52" width="28" height="34" rx="4" fill="#1f4e79" stroke="#1f4e79" stroke-width="1.5"/>
+<rect x="210" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="216" y1="63" x2="232" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="216" y1="70" x2="232" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="216" y1="77" x2="227" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="246" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="252" y1="63" x2="268" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="252" y1="70" x2="268" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="252" y1="77" x2="263" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="282" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="288" y1="63" x2="304" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="288" y1="70" x2="304" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="288" y1="77" x2="299" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="318" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="324" y1="63" x2="340" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="324" y1="70" x2="340" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="324" y1="77" x2="335" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="354" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="360" y1="63" x2="376" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="360" y1="70" x2="376" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="360" y1="77" x2="371" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="390" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="396" y1="63" x2="412" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="396" y1="70" x2="412" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="396" y1="77" x2="407" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="426" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="432" y1="63" x2="448" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="432" y1="70" x2="448" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="432" y1="77" x2="443" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="462" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="468" y1="63" x2="484" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="468" y1="70" x2="484" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="468" y1="77" x2="479" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="498" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="504" y1="63" x2="520" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="504" y1="70" x2="520" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="504" y1="77" x2="515" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="534" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="540" y1="63" x2="556" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="540" y1="70" x2="556" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="540" y1="77" x2="551" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="570" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="576" y1="63" x2="592" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="576" y1="70" x2="592" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="576" y1="77" x2="587" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="606" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="612" y1="63" x2="628" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="612" y1="70" x2="628" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="612" y1="77" x2="623" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="642" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="648" y1="63" x2="664" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="648" y1="70" x2="664" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="648" y1="77" x2="659" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="678" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="684" y1="63" x2="700" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="684" y1="70" x2="700" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="684" y1="77" x2="695" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="714" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="720" y1="63" x2="736" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="720" y1="70" x2="736" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="720" y1="77" x2="731" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="750" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="756" y1="63" x2="772" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="756" y1="70" x2="772" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="756" y1="77" x2="767" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="786" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="792" y1="63" x2="808" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="792" y1="70" x2="808" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="792" y1="77" x2="803" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="822" y="52" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="828" y1="63" x2="844" y2="63" stroke="#d5dce5" stroke-width="2"/><line x1="828" y1="70" x2="844" y2="70" stroke="#d5dce5" stroke-width="2"/><line x1="828" y1="77" x2="839" y2="77" stroke="#d5dce5" stroke-width="2"/>
+<rect x="30" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="36" y1="107" x2="52" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="36" y1="114" x2="52" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="36" y1="121" x2="47" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="66" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="72" y1="107" x2="88" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="72" y1="114" x2="88" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="72" y1="121" x2="83" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="102" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="108" y1="107" x2="124" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="108" y1="114" x2="124" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="108" y1="121" x2="119" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="138" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="144" y1="107" x2="160" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="144" y1="114" x2="160" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="144" y1="121" x2="155" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="174" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="180" y1="107" x2="196" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="180" y1="114" x2="196" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="180" y1="121" x2="191" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="210" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="216" y1="107" x2="232" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="216" y1="114" x2="232" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="216" y1="121" x2="227" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="246" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="252" y1="107" x2="268" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="252" y1="114" x2="268" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="252" y1="121" x2="263" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="282" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="288" y1="107" x2="304" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="288" y1="114" x2="304" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="288" y1="121" x2="299" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="318" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="324" y1="107" x2="340" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="324" y1="114" x2="340" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="324" y1="121" x2="335" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="354" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="360" y1="107" x2="376" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="360" y1="114" x2="376" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="360" y1="121" x2="371" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="390" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="396" y1="107" x2="412" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="396" y1="114" x2="412" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="396" y1="121" x2="407" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="426" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="432" y1="107" x2="448" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="432" y1="114" x2="448" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="432" y1="121" x2="443" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="462" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="468" y1="107" x2="484" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="468" y1="114" x2="484" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="468" y1="121" x2="479" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="498" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="504" y1="107" x2="520" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="504" y1="114" x2="520" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="504" y1="121" x2="515" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="534" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="540" y1="107" x2="556" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="540" y1="114" x2="556" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="540" y1="121" x2="551" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="570" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="576" y1="107" x2="592" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="576" y1="114" x2="592" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="576" y1="121" x2="587" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="606" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="612" y1="107" x2="628" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="612" y1="114" x2="628" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="612" y1="121" x2="623" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="642" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="648" y1="107" x2="664" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="648" y1="114" x2="664" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="648" y1="121" x2="659" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="678" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="684" y1="107" x2="700" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="684" y1="114" x2="700" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="684" y1="121" x2="695" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="714" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="720" y1="107" x2="736" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="720" y1="114" x2="736" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="720" y1="121" x2="731" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="750" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="756" y1="107" x2="772" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="756" y1="114" x2="772" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="756" y1="121" x2="767" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="786" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="792" y1="107" x2="808" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="792" y1="114" x2="808" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="792" y1="121" x2="803" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="822" y="96" width="28" height="34" rx="4" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/>
+<line x1="828" y1="107" x2="844" y2="107" stroke="#d5dce5" stroke-width="2"/><line x1="828" y1="114" x2="844" y2="114" stroke="#d5dce5" stroke-width="2"/><line x1="828" y1="121" x2="839" y2="121" stroke="#d5dce5" stroke-width="2"/>
+<rect x="30" y="160" width="16" height="16" rx="3" fill="#fff" stroke="#aab4c1" stroke-width="1.5"/><text x="54" y="173" font-size="13" fill="#46505c">41편(89%): 방임을 "아동학대" 또는 "학대와 방임"이라는 묶음 안에서만 다룸</text>
+<rect x="30" y="186" width="16" height="16" rx="3" fill="#1f4e79"/><text x="54" y="199" font-size="13" fill="#46505c">5편(11%): 방임을 별개의 학대 유형으로 다룸</text>
+<rect x="30" y="212" width="16" height="16" rx="3" fill="#e0573e"/><text x="54" y="225" font-size="13" fill="#46505c">그중 1편: 방임의 1차 예방을 논의하고 방임을 결과로 측정까지 한 유일한 논문</text>
+</svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 방임 개입의 근거로 제시된 논문 46편 가운데 방임을 "돌봄의 부작위"라는 별개의 학대 유형으로 다루고 그 원인과 결과를 서술한 논문은 5편(11%)뿐이었습니다. 나머지 41편(89%)은 방임을 "아동학대" 또는 "아동학대와 방임"이라는 묶음으로만 다루었습니다. 5편 가운데 <b>방임의 예방을 논의하고 방임을 결과로 측정까지 한 논문은 1편</b>이었습니다. 5편은 네 개 프로그램을 뒷받침합니다: SEEK(2편), Nurse Family Partnership, SafeCare, Child First.</div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">1</div>
+    <div class="cond-titles"><div class="cond-code">Chain link · 목표 결과</div><h3>결과 고리: 방임을 재지 않는 방임 개입 연구</h3><div class="cond-en">Neglect as a distinct outcome: 5 of 46 (11%)</div></div>
+    <span class="verdict weak">정합성 약함</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">방임을 줄인다는 프로그램의 근거 논문 대부분이, 방임이 줄었는지를 따로 재지 않았습니다.</div>
+    <p>저자들은 논의에서 이 결과가 나온 이유를 두 가지로 설명합니다. 첫째는 CEBC의 분류 방식입니다. CEBC는 "neglect-related outcomes", 곧 아동이나 부모의 행동, 증상 수준, 기능의 변화 같은 폭넓은 결과를 다루면 방임 예방·개입으로 지정합니다. 이런 결과는 방임의 중요한 상관요인일 수 있지만 <strong>방임 그 자체는 아닙니다.</strong> 둘째는 근거 기준의 성격입니다. 무작위통제실험, 대규모 양적 분석, 의료 모델식 개입 설계와 평가를 강조하는 기준은, 방임을 다수준·구조적 요인의 결과로 보는 현대 이론에 기반한 개입(예: 소득지원)을 평가하기에 맞지 않을 수 있다는 것입니다.</p>
+  </div>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">🍳 비유</span><br>
+  "충치 예방 효과가 입증된 치약"이라는 광고가 있다고 합시다. 근거 논문을 열어 보니 대부분은 "입 냄새가 줄었다", "잇몸 출혈이 줄었다"를 보고하고, 충치 개수를 센 논문은 한두 편입니다. 입 냄새와 충치는 관련이 있겠지만 같은 것은 아닙니다. 이 논문이 한 일은 광고 문구가 아니라 <strong>근거 논문의 결과 변수 칸</strong>을 읽은 것입니다.
+</div>
+
+<!-- §06 -->
+<div class="section-head" id="r2">
+  <div class="section-num">06</div>
+  <div class="section-title-block"><h2>결과 2: 누구를 대상으로 했는가</h2><p class="section-subtitle">4.2 Target populations in neglect intervention research · Table 2</p></div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">원문 Table 2. Results of content analysis of articles supporting "evidence-based interventions" identified as addressing neglect</div>
+  <span class="fig-tag orig">원문 그대로</span>
+  <div class="fig-orig"><a href="figs/blumenthal-2026-table2a.png" target="_blank" rel="noopener"><img src="figs/blumenthal-2026-table2a.png" alt="Blumenthal et al. 2026 Table 2: 내용분석 결과" loading="lazy"></a></div>
+  <p class="fig-cap">방임을 다룬 5편 각각에 대한 내용분석 결과입니다. 열은 왼쪽부터 개입, 논문, 표본 설명, 표본 크기, 방임을 결과로 명시했는가, 방임의 1차 예방을 결과로 명시했는가, 방임 결과 측정치, 틀로 명명된 이론, 확인된 방임 위험요인, 빈곤이나 경제적 곤란을 위험요인으로 확인했는가입니다. 원문에서 표가 두 쪽에 걸쳐 있어 아래에 이어지는 부분을 함께 실었습니다.</p>
+  <p class="fig-lic">출처: Blumenthal, White-Wolfe, &amp; Thomas (2026), <em>Child Abuse &amp; Neglect, 181</em>, 108296, Table 2. 원문에서 변형 없이 가져왔으며 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> 라이선스를 따릅니다. 그림을 누르면 크게 볼 수 있습니다.</p>
+
+  <div class="fig-orig" style="margin-top:10px"><a href="figs/blumenthal-2026-table2b.png" target="_blank" rel="noopener"><img src="figs/blumenthal-2026-table2b.png" alt="Blumenthal et al. 2026 Table 2 (continued)" loading="lazy"></a></div>
+  <p class="fig-cap">원문 Table 2 (continued): Child First 줄의 나머지 부분.</p>
+  <div class="fig-implies"><b>📊 표 읽는 법.</b> 이 표는 이 논문의 결과 전체입니다. 세로로 한 번, 가로로 한 번 읽으면 됩니다. <b>세로로</b> "Sample description" 열을 내려가며 "Eligibility"를 보십시오. 0~5세 자녀의 부모, 0~5세 자녀의 어머니, 첫 아이를 임신한 어머니, 아동보호서비스에 연루된 가족, 6~36개월 자녀의 어머니입니다. <b>가로로</b>는 맨 오른쪽 세 열을 함께 보십시오. "Specific theories named in framing"에 생태학적 틀이 적힌 줄에서도 "Identified neglect risk factors?"에는 부모의 우울, 물질남용, 친밀한 파트너 폭력, 스트레스처럼 개인과 가족 수준의 요인이 적혀 있고, 맨 오른쪽 열에는 "빈곤을 직접 논의하지 않았다" 또는 "빈곤과 자원 부족을 위험으로 명명했지만 더 서술하거나 결과의 맥락에서 논의하지 않았다"가 적혀 있습니다. 이론 칸과 측정 칸이 서로 다른 층을 가리키는 것, 그것이 저자들이 말하는 불일치입니다.</div>
+</div>
+
+<div class="panel">
+  <div class="tbl-wrap">
+  <table class="mini-table">
+    <tr><th>논문 (프로그램)</th><th class="num">표본</th><th>대상</th><th>방임을 결과로 명시</th><th>1차 예방을 명시</th><th>방임 측정치</th></tr>
+    <tr><td>Dubowitz et al. (2009) · SEEK</td><td class="num">558</td><td>0~5세 자녀의 부모. 92%가 어머니, 89%가 Medicaid 또는 CHIP</td><td>No</td><td>No</td><td>CPS 신고, 의료 기록</td></tr>
+    <tr><td>Dubowitz et al. (2012) · SEEK</td><td class="num">1,119</td><td>0~5세 자녀의 어머니. 87% 기혼, 연소득 25,000달러 미만 9%</td><td>Yes</td><td>No</td><td>없음</td></tr>
+    <tr class="hi"><td>Eckenrode et al. (2000) · Nurse Family Partnership</td><td class="num">324</td><td>1978~80년 첫 아이를 임신한 어머니. 61%가 낮은 SES</td><td>Yes</td><td>Yes</td><td>확인된 방임 CPS 신고</td></tr>
+    <tr><td>Gershater-Molko et al. (2002) · SafeCare</td><td class="num">82</td><td>0~5세 자녀가 있고 최근 CPS 확인 판정을 받은 가족</td><td>Yes</td><td>No</td><td>없음</td></tr>
+    <tr><td>Lowell et al. (2011) · Child First</td><td class="num">157</td><td>6~36개월 자녀의 어머니. 93%가 공공부조 이용</td><td>Yes</td><td>Yes</td><td>없음</td></tr>
+  </table>
+  </div>
+  <p class="fig-cap">원문 Table 2에서 대상과 결과 측정에 관한 열만 뽑아 옮겼습니다. 강조한 줄이 방임의 1차 예방을 논의하고 방임을 결과로 측정한 유일한 논문입니다.</p>
+  <p>다섯 연구 가운데 넷이 어머니를, 그것도 첫 출산이거나 0~5세 자녀를 둔 어머니를 대상으로 했습니다. 넷은 빈곤, 한부모, 아동보호서비스 연루 같은 학대 위험요인이 확인된 참여자를 대상으로 했고, 하나(Dubowitz 등, 2012)는 의도적으로 중산층, 기혼, 고학력의 "저위험" 어머니를 대상으로 했습니다. 표본 크기는 82명에서 1,119명, 평균 448명이며, 다섯 논문이 대표하는 부모는 모두 합쳐 2,000명을 조금 넘습니다.</p>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">2</div>
+    <div class="cond-titles"><div class="cond-code">Chain link · 대상 집단</div><h3>대상 고리: 표본은 가난한데, 분석은 가난을 말하지 않는다</h3><div class="cond-en">Target participants were predominantly mothers</div></div>
+    <span class="verdict mixed">대상은 일관, 연결은 부재</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">연구에 참여한 사람들은 대부분 경제적으로 불안정한 어머니였는데, 그 경제적 불안정이 방임과 어떤 관계인지는 다루지 않았습니다.</div>
+    <p>저자들은 논의에서 이 점을 강조합니다. 한 연구를 제외하면 참여자들은 사회적·경제적으로 불안정하고 방임의 사회인구학적 위험요인을 여럿 가진 부모였습니다. 참여자 특성이 이렇게 분명한데도, 근거 문헌은 표본에서 뚜렷이 보이는 개인적·구조적 위험과 방임 사이에 명확한 연결을 그리지 않았습니다. 여러 연구가 참여자나 연구 맥락을 "저소득"으로 기술하면서도 저소득과 학대, 특히 방임의 강한 연관은 직접 다루지 않았습니다.</p>
+  </div>
+</div>
+
+<div class="quote-box">
+  "Indeed, none of the articles explicitly linked any structural factors to neglect, parenting, or child well-being."
+  <span class="trans">실제로 어느 논문도 <strong>구조적 요인을 방임, 양육, 또는 아동의 안녕과 명시적으로 연결하지 않았다.</strong></span>
+  <span class="attr">출처: 5. Discussion</span>
+</div>
+
+<!-- §07 -->
+<div class="section-head" id="r3">
+  <div class="section-num">07</div>
+  <div class="section-title-block"><h2>결과 3: 이론은 이름으로만 있는가, 측정 안에 있는가</h2><p class="section-subtitle">4.3 Theory in neglect intervention research · 4.4 Operationalizing theory in neglect intervention research</p></div>
+</div>
+
+<div class="panel">
+  <p>다섯 논문 가운데 셋이 서론, 배경, 논의, 결론 어딘가에서 생태학적 틀을 사용했습니다. 그러나 사용 방식은 셋이 모두 달랐습니다.</p>
+</div>
+
+<div class="three-grid">
+  <div class="mod-card">
+    <h4>이름은 있고 층은 없다</h4>
+    <div class="en">Dubowitz et al. (2009) · SEEK</div>
+    <p>Garbarino와 Sherman(1980), Belsky(1993)를 인용하며 생태발달이론으로 "다중적이고 상호작용하는 기여 문제"를 설명합니다. 그러나 논의하고 측정한 요인은 <strong>모두 개인 수준</strong>이었고, 방임을 구조적 요인이나 지역사회 수준 요인과 관련짓지 않았습니다.</p>
+  </div>
+  <div class="mod-card protect">
+    <h4>이름은 없고 층은 있다</h4>
+    <div class="en">Gershater-Molko et al. (2002) · SafeCare</div>
+    <p>생태발달이론이라는 이름이나 "체계", "수준" 같은 용어는 쓰지 않았습니다. 그러나 Belsky(1984)를 인용하고, <strong>서로 다른 생태학적 수준</strong>에서 방임과 연관된 여러 요인을 서술한 뒤 맥락적 위험요인 연구를 개입과 연결했습니다.</p>
+  </div>
+  <div class="mod-card risk">
+    <h4>이름만 있고 인용도 없다</h4>
+    <div class="en">Lowell et al. (2011) · Child First</div>
+    <p>Child First가 생태학적 틀 위에 서 있다고 진술하지만 그 틀을 선행 연구와 연결하는 <strong>인용이 없고</strong>, 방임과 생태학적 요인 사이의 명시적 연결도 없습니다. 개입은 발달심리학에 뿌리를 둔 것으로 제시됩니다. 다만 양육 관계의 강화와, 음식, 주거, 난방 같은 구체적 자원 접근이라는 두 경로를 가정합니다.</p>
+  </div>
+</div>
+
+<div class="panel">
+  <p>저자들의 판정은 이렇습니다. 생태학적 이론을 명시적 또는 암묵적으로 언급한 세 논문 가운데 둘은 방임에 대한 생태체계적 관점에 어느 정도 무게를 두었고, 하나는 개인 심리학적 관점을 강조했습니다. 나머지 두 논문(Dubowitz 등, 2012; Eckenrode 등, 2000)은 방임 예방을 이해하는 <strong>어떤 이론적 렌즈도 제시하지 않았습니다.</strong></p>
+  <p>이론이 실제로 어떻게 <strong>조작화</strong>되었는지도 살펴보았습니다. 다섯 논문 모두 물질사용을 연구 집단에서 전제하거나 측정한 문제 행동으로 기술했고, 넷은 표본의 양육 스트레스나 모의 우울을 기술했습니다. 일부 프로그램은 양육 스트레스나 지역 자원과의 단절 같은 특정 위험요인을 줄이도록 개입을 맞추었습니다. 그러나 결정적인 고리가 빠져 있었습니다.</p>
+</div>
+
+<div class="quote-box">
+  "However, none of the articles explicitly linked changes in these behaviors or states to changes in measures of neglect."
+  <span class="trans">그러나 어느 논문도 이러한 행동이나 상태의 <strong>변화</strong>를 방임 측정치의 <strong>변화</strong>와 명시적으로 연결하지 않았다.</span>
+  <span class="attr">출처: 4.4 Operationalizing theory in neglect intervention research</span>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">이론이 가리키는 층과 연구가 측정한 층 (4.3절, 4.4절, Discussion 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 380" width="100%" style="max-width:900px" role="img" aria-label="생태학적 수준별 이론과 측정의 불일치">
+    <g font-size="13">
+      <g fill="none" stroke-width="2">
+        <ellipse cx="300" cy="200" rx="270" ry="160" stroke="#aab4c1" stroke-dasharray="7 5"/>
+        <ellipse cx="300" cy="212" rx="205" ry="118" stroke="#aab4c1" stroke-dasharray="7 5"/>
+        <ellipse cx="300" cy="226" rx="140" ry="78" stroke="#1f4e79" fill="#e9eff6"/>
+        <ellipse cx="300" cy="240" rx="72" ry="40" stroke="#1f4e79" fill="#cfe0f0"/>
+      </g>
+      <text x="300" y="66" text-anchor="middle" fill="#828d9b" font-weight="600">문화 · 정책 (소득지원, 주거, 보육)</text>
+      <text x="300" y="116" text-anchor="middle" fill="#828d9b" font-weight="600">지역사회 (자원 가용성, 지역 불리)</text>
+      <text x="300" y="174" text-anchor="middle" fill="#1f4e79" font-weight="700">가족 (스트레스, 파트너 폭력)</text>
+      <text x="300" y="238" text-anchor="middle" fill="#1f4e79" font-weight="700">부모 개인</text>
+      <text x="300" y="256" text-anchor="middle" fill="#1f4e79" font-size="11.5">우울 · 물질사용 · 양육기술</text>
+      <!-- right legend -->
+      <rect x="610" y="50" width="270" height="130" rx="12" fill="#fff" stroke="#aab4c1" stroke-dasharray="7 5" stroke-width="1.5"/>
+      <text x="745" y="78" text-anchor="middle" font-weight="700" fill="#46505c">점선 층: 이론이 말하는 곳</text>
+      <text x="745" y="102" text-anchor="middle" fill="#46505c" font-size="12">서론에서 생태학적 틀로 언급되거나</text>
+      <text x="745" y="120" text-anchor="middle" fill="#46505c" font-size="12">현대 이론이 원인으로 지목하는 층.</text>
+      <text x="745" y="144" text-anchor="middle" fill="#46505c" font-size="12">근거 논문에서는 거의</text>
+      <text x="745" y="162" text-anchor="middle" fill="#46505c" font-size="12">측정되거나 개입되지 않음</text>
+      <rect x="610" y="204" width="270" height="130" rx="12" fill="#e9eff6" stroke="#1f4e79" stroke-width="2"/>
+      <text x="745" y="232" text-anchor="middle" font-weight="700" fill="#1f4e79">실선 층: 연구가 잰 곳</text>
+      <text x="745" y="256" text-anchor="middle" fill="#46505c" font-size="12">개입 요소와 결과 변수가 놓인 층:</text>
+      <text x="745" y="274" text-anchor="middle" fill="#46505c" font-size="12">아동과 부모의 정신건강, 행동 개입,</text>
+      <text x="745" y="292" text-anchor="middle" fill="#46505c" font-size="12">심리교육, 양육 스트레스</text>
+      <text x="745" y="316" text-anchor="middle" fill="#1f4e79" font-size="12" font-weight="600">5편 중 4편이 어머니 대상</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 생태학적 모델은 개인과 가족 수준의 요인도 중요하다고 말하므로, 안쪽 두 층을 측정한 것 자체가 이론에 어긋나는 것은 아닙니다. 문제는 <b>바깥 두 층이 서론의 문장으로만 존재한다</b>는 점입니다. 저자들의 표현으로는, 일부 근거 문헌이 여러 환경 수준에 걸친 요인의 관련성을 "명명"하지만, 생태체계 틀이 적용될 때 그것은 개인과 가족 수준에서 "조작화"됩니다. 구체적 욕구나 지역 자원의 중요성을 언급하면서도 개입 요소와 관심 결과는 개인 요인에 맞추어져 있다는 것입니다.</div>
+</div>
+
+<div class="quote-box">
+  "When theories appear, they nominally lean towards the structural, but typically operationalize individual behavior."
+  <span class="trans">이론이 등장할 때, 그것은 <strong>명목상으로는 구조적인 쪽</strong>으로 기울지만 전형적으로는 <strong>개인의 행동을 조작화</strong>한다.</span>
+  <span class="attr">출처: 5. Discussion</span>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">비판적 읽기 · 초록의 "단 한 편"과 Table 2</span><br>
+  초록은 "only one article addressed a structural risk factor for neglect (poverty)"라고 적습니다. 그런데 Table 2의 맨 오른쪽 열을 보면 두 논문(Dubowitz 등, 2012; Gershater-Molko 등, 2002)이 "빈곤과 자원 부족을 학대의 위험으로 명명했으나 더 서술하거나 결과의 맥락에서 논의하지 않았다"로 코딩되어 있고, 논의 절에는 "어느 논문도 구조적 요인을 방임과 명시적으로 연결하지 않았다"는 문장이 있습니다. "addressed"를 어떤 기준으로 셌는지에 따라 0편, 1편, 2편으로 읽힐 수 있습니다. 논문의 논지(구조적 요인이 거의 다루어지지 않았다)는 어느 쪽으로 읽어도 유지되지만, 이 수치를 인용할 때는 초록의 문장과 표의 내용을 함께 제시하는 것이 안전합니다. <strong>확인 필요.</strong>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 ② : 분모를 확인하라</span><br>
+  초록의 백분율은 분모가 서로 다릅니다. "11%"는 46편 가운데 5편입니다. 그러나 "80%가 어머니를 대상으로 했다"와 "60%가 생태학적 이론을 참조했다"는 <strong>그 5편 가운데</strong> 4편과 3편입니다. 5편에서 나온 80%, 60%는 논문 한 편이 달라지면 20%p씩 움직이는 수치입니다. 저자들이 틀린 것은 아니지만, 백분율로 쓰면 실제보다 큰 표본에서 나온 것처럼 읽히기 쉽습니다. 작은 n에서는 "5편 중 4편"처럼 빈도로 보고하는 편이 정직하고, 다른 사람의 백분율을 인용할 때는 언제나 분모부터 확인해야 합니다.
+</div>
+
+<!-- §08 -->
+<div class="section-head" id="disc">
+  <div class="section-num">08</div>
+  <div class="section-title-block"><h2>논의와 정책적 함의: 긍정 결과와 부정 결과를 함께 읽기</h2><p class="section-subtitle">5. Discussion · 5.1 Policy implications · 6. Limitations · 7. Conclusion</p></div>
+</div>
+
+<div class="panel">
+  <p>저자들은 논의를 독특한 방식으로 엽니다. 기준을 충족한 5편에 대한 결과를 <strong>"긍정 결과(positive results)"</strong>, 기준을 충족하지 못한 89%에 대한 결과를 <strong>"부정 결과(negative results)"</strong>라고 부르고, 둘 다를 발견으로 다룹니다. 긍정 결과는 현재 인정되는 개입이 방임을 어떻게 측정하고 이론화하는지를 보여 주고, 부정 결과는 방임 이론, 개입 설계, 기대 결과 사이의 부조화를 드러냅니다.</p>
+  <p>부정 결과에 대한 해석도 흥미롭습니다. 방임을 따로 다루지 않은 연구들은 대부분 학대 전반을 겨냥했습니다. 학대가 부모의 <strong>행위</strong>로 정의되면 부모의 행위를 바꾸는 개입을 설계하는 것이 논리적으로 자연스럽습니다. 방임은 흔히 <strong>부작위</strong>로 규정되는데도, 학대와 한 묶음으로 다루어지면서 "문제적 양육"에 초점을 둔 이론이 그대로 적용된 셈입니다. 부모 행동을 바꾸는 개입도 지역사회 보건 사업, 지역 사회적 지지 자원에 대한 투자, 접근 가능한 보육 제공처럼 개인을 넘어선 수준에서 이루어질 수 있었지만, 대부분은 부모의 행동, 건강, 지식을 개인 수준에서 바꾸는 데 초점을 두었습니다.</p>
+  <p>저자들은 근거 문헌을 위한 변론도 덧붙입니다. 여러 연구가 의학 학술지에 실렸고 의학 학술지는 분량 제한이 엄격하다는 점, 그리고 근거 논문들이 모두 10년도 더 전(2000~2012년)에 출판되어 당시의 지배적 사고를 반영한다는 점입니다.</p>
+</div>
+
+<div class="mod-grid">
+  <div class="mod-card">
+    <h4>정책: FFPSA는 방임의 1차 예방에 닿지 않는다</h4>
+    <div class="en">5.1 Policy implications</div>
+    <p>Family First Prevention Services Act는 아동복지 정책을 예방 쪽으로 옮겼지만, 물질남용, 모의 정신건강, 양육기술을 겨냥한 승인 개입을 <strong>이미 아동보호서비스와 접촉한 가족</strong>에게 제공할 때 주에 비용을 상환합니다. 가족이 CPS의 관리를 받아야만 서비스 자격이 생기므로 2차, 3차 예방은 가능해도 방임의 1차 예방에는 영향을 주기 어렵다고 저자들은 봅니다.</p>
+  </div>
+  <div class="mod-card protect">
+    <h4>제안: 방임을 결과로 측정하라</h4>
+    <div class="en">A simple and cost-effective way</div>
+    <p>기본소득 무작위실험 같은 경제적 지원 연구는 방임 감소의 가능성이 있지만 대부분 방임을 따로 재지 않고 "아동학대"라는 범주로 뭉뚱그립니다. 저자들은 개입 연구에서 방임을 결과로 측정하는 데 더 주의를 기울이는 것이 근거를 쌓는 단순하고 비용효과적인 방법이라고 제안합니다.</p>
+  </div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 ③ : 근거의 기준이 근거가 될 수 있는 것을 정한다</span><br>
+  논의에서 가장 깊은 논점은 근거 기준 자체에 관한 것입니다. 무작위통제실험을 최상위에 두는 기준은 개인에게 전달되는 구획된 프로그램을 평가하기에 적합합니다. 그러나 빈곤 완화 정책 같은 구조적 개입은 무작위 배정이 어렵고 교란요인과 분리하기 어렵습니다. 저자들은 고급 준실험 방법이 이 문제를 상당히 다룰 수 있지만, 근거기반으로 인정받는 데 필요한 강한 결론을 낼 만큼 개입과 방임 결과에 대한 자료가 충분히 상세한 연구는 드물다고 지적합니다. 그 결과 <strong>평가하기 쉬운 종류의 개입만 "근거기반" 목록에 오르고</strong>, 이론이 가장 중요하다고 말하는 층의 개입은 목록에 오르지 못합니다. 근거 위계는 중립적인 여과 장치가 아니라 특정한 종류의 개입을 선호하는 구조라는 점을 생각해 볼 대목입니다.
+</div>
+
+<div class="subhead"><span class="code">8.1</span><h3>저자들이 밝힌 한계</h3><span class="en">6. Limitations</span></div>
+
+<div class="panel">
+  <p>저자들이 밝힌 한계는 세 가지입니다. 첫째, "근거기반"의 정의는 여러 가지이고 CEBC의 정의가 그 모두를 반영하지는 않습니다. 표본을 CEBC가 확인한 논문으로 한정했고 외부 문헌 검색은 하지 않았으므로, 방임 개입의 근거 전체에 대해 결정적으로 말할 수는 없습니다. 둘째, 내용분석은 절차를 문서화하고 재현 가능하게 했더라도 코딩에 주관성이 개입합니다. 셋째, 논문 묶음은 <strong>2023년에 수집</strong>되었으며 현재의 근거 문헌을 완전히 대표하지 않습니다.</p>
+  <p>독자로서 덧붙일 점도 있습니다. 이론과 대상에 관한 결과는 5편에 기반합니다. 그리고 이 논문은 프로그램의 효과를 평가하지 않았으므로, "이 프로그램들이 방임에 효과가 없다"는 결론은 이 논문에서 나오지 않습니다. 나오는 결론은 <strong>"효과가 있는지 알 수 있을 만큼 방임이 측정되지 않았다"</strong>입니다.</p>
+</div>
+
+<div class="quote-box">
+  "Greater attention to measurement of neglect as an outcome in intervention studies is a simple and cost-effective way to build the research evidence on ways to prevent and reduce neglect."
+  <span class="trans">개입 연구에서 <strong>방임을 결과로 측정하는 데 더 큰 주의를 기울이는 것</strong>은 방임을 예방하고 줄이는 방법에 관한 연구 근거를 쌓는 단순하고 비용효과적인 길이다.</span>
+  <span class="attr">출처: 5.1 Policy implications</span>
+</div>
+
+<!-- §09 phrases -->
+<div class="section-head" id="phrases">
+  <div class="section-num">09</div>
+  <div class="section-title-block"><h2>명문장: 영어 논문에 다시 쓸 수 있는 문장들</h2><p class="section-subtitle">Notable sentences · 표현의 구조와 쓰임새</p></div>
+</div>
+
+<div class="phrase-grid">
+  <div class="phrase">
+    <div class="en">"However, the frameworks guiding interventions are not always the most recent ones, and it remains unclear whether evidence clearinghouses are continuing to prioritize interventions that seek to modify factors proximal to the child, primarily parents."</div>
+    <div class="kr">그러나 개입을 이끄는 틀이 언제나 가장 최근의 것은 아니며, 근거 정보센터들이 아동에게 근접한 요인, 주로 부모를 바꾸려는 개입을 계속 우선시하고 있는지는 여전히 불분명하다.</div>
+    <div class="why"><b>왜 좋은가.</b> 이론과 실천 사이의 시차를 연구 공백으로 제시합니다. "it remains unclear whether ..."는 가설을 단정하지 않으면서 연구의 필요성을 세우는 표준 표현입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Coherence between explanatory theory, intervention design, target population, and target outcomes may be critical to an intervention's success."</div>
+    <div class="kr">설명 이론, 개입 설계, 대상 집단, 목표 결과 사이의 정합성은 개입의 성공에 결정적일 수 있다.</div>
+    <div class="why"><b>왜 좋은가.</b> 프로그램 평가 논문의 이론적 배경에 그대로 쓸 수 있는 문장입니다. 네 요소를 나열하는 것만으로 평가의 틀이 됩니다. 자신의 개입 연구가 이 네 가지를 어떻게 맞추었는지 서술하는 단락의 주제문으로 삼기 좋습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"It is important to note that there were no community or structural-level interventions that were CEBC-rated."</div>
+    <div class="kr">CEBC가 평정한 개입 가운데 지역사회 수준이나 구조적 수준의 개입은 하나도 없었다는 점에 주목할 필요가 있다.</div>
+    <div class="why"><b>왜 좋은가.</b> 표본 설명 안에 부재의 발견을 넣는 문장입니다. 자료에 "없는 것"이 중요한 정보일 때 "It is important to note that there were no ..."로 독자의 주의를 끕니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"The negative results of this study [...] shed light on the incongruity between theories related to neglect, neglect intervention design, and anticipated neglect-related outcomes."</div>
+    <div class="kr">본 연구의 부정 결과는 방임 관련 이론, 방임 개입 설계, 기대되는 방임 관련 결과 사이의 부조화를 드러낸다.</div>
+    <div class="why"><b>왜 좋은가.</b> 기준을 충족하지 못한 사례를 "빠진 자료"가 아니라 "부정 결과"로 명명해 발견의 지위를 줍니다. 체계적 문헌고찰에서 제외된 문헌의 패턴을 논의할 때 응용할 수 있습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Our final sample reflects minimal theorizing."</div>
+    <div class="kr">우리의 최종 표본은 최소한의 이론화만을 보여 준다.</div>
+    <div class="why"><b>왜 좋은가.</b> 다섯 단어로 된 판정문입니다. 긴 설명 뒤에 짧은 문장을 두어 결론을 못 박는 리듬을 배울 수 있습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"When theories appear, they nominally lean towards the structural, but typically operationalize individual behavior."</div>
+    <div class="kr">이론이 등장할 때, 그것은 명목상으로는 구조적인 쪽으로 기울지만 전형적으로는 개인의 행동을 조작화한다.</div>
+    <div class="why"><b>왜 좋은가.</b> "nominally ... but typically ..."의 대비로 선언과 실행의 간극을 한 문장에 담습니다. 이론적 틀과 측정 변수의 불일치를 비판할 때 가장 유용한 문형입니다.</div>
+  </div>
+  <div class="phrase span2">
+    <div class="en">"Given the prevalence of neglect, its direct harm to children, families, and society, and the economic costs of neglect, this disconnect between accepted interventions and our best understanding of the causes of neglect is particularly alarming."</div>
+    <div class="kr">방임의 유병률, 그것이 아동과 가족과 사회에 미치는 직접적 해악, 그리고 방임의 경제적 비용을 고려할 때, 인정된 개입과 방임의 원인에 대한 우리의 최선의 이해 사이의 이 단절은 특히 우려스럽다.</div>
+    <div class="why"><b>왜 좋은가.</b> "Given A, B, and C, this disconnect between X and Y is particularly alarming."은 결론에서 문제의 무게를 근거와 함께 제시하는 구조입니다. "our best understanding of"라는 표현은 현재의 이론이 잠정적임을 인정하면서도 그것을 기준으로 삼겠다는 태도를 담습니다.</div>
+  </div>
+</div>
+
+<!-- §10 our study -->
+<div class="section-head" id="ourstudy">
+  <div class="section-num">10</div>
+  <div class="section-title-block"><h2>AIR Lab 연구와의 연결</h2><p class="section-subtitle">아동보호체계 진단, 프로그램 평가, 그리고 이론적 틀을 쓰는 방식</p></div>
+</div>
+
+<div class="panel">
+  <p>이 논문은 미국의 근거 정보센터와 연방법을 다루지만, 던지는 질문은 어느 나라의 아동보호체계에도 적용됩니다. 지역의 아동보호체계를 진단하는 연구를 한다면, 서비스 목록을 세는 데서 한 걸음 더 나아가 각 서비스가 <strong>어느 생태학적 층을 겨냥하는지</strong>, 방임 사례에 제공되는 서비스가 부모 교육과 상담에 치우쳐 있지는 않은지, 성과 지표에 방임의 재발이 따로 잡히는지를 물을 수 있습니다. 이 논문의 코딩 틀(방임을 별도로 명시했는가, 1차 예방을 목표로 했는가, 방임을 결과로 쟀는가, 어떤 위험요인을 측정했는가)은 그런 진단에 바로 옮겨 쓸 수 있는 도구입니다.</p>
+  <p>랩 자신의 연구에도 같은 거울을 댈 수 있습니다. 우리 논문의 이론적 배경에도 생태체계이론이 자주 등장합니다. 그 이론이 변수 선택과 가설에 실제로 반영되어 있는지, 아니면 서론의 한 문단으로만 있는지를 점검하는 것은 이 논문이 주는 가장 직접적인 과제입니다. 개입 연구에서는 정합성의 사슬(이론, 개입 요소, 대상, 결과)을 논문 안에 명시적으로 서술하는 습관으로 이어질 수 있습니다.</p>
+  <div class="tbl-wrap">
+  <table class="mini-table">
+    <tr><th>우리 연구 요소</th><th>이 논문에서의 대응</th><th>가져올 점</th></tr>
+    <tr class="hi"><td>지역 아동보호체계 진단 연구</td><td>근거 문헌의 내용분석 틀 (결과, 대상, 이론, 위험요인 코딩)</td><td>지역 서비스와 사업을 "겨냥하는 생태학적 층"과 "방임을 별도 성과로 측정하는가"로 분류하는 진단 항목</td></tr>
+    <tr><td>개입 프로그램 효과 연구</td><td>정합성의 사슬과 "변화를 변화에 연결하지 않았다"는 지적</td><td>매개 변수(예: 가족기능)의 변화가 최종 결과의 변화로 이어지는지를 사전 지정해 검정</td></tr>
+    <tr><td>이론적 배경의 생태체계이론 인용</td><td>"nominally structural, typically individual"</td><td>이론이 지목하는 각 층에 대응하는 변수가 모형에 있는지 표로 점검. 없는 층은 한계로 명시</td></tr>
+    <tr><td>ACE 연구에서의 방임 문항</td><td>방임을 학대와 한 묶음으로 다루면 고유한 원인과 결과가 가려진다는 논지</td><td>방임 문항을 학대 문항과 분리해 분석하고, 가구 경제 변수와의 관계를 따로 검토</td></tr>
+    <tr><td>정책 제언의 작성</td><td>근거 기준이 구조적 개입을 걸러 낸다는 논점</td><td>"근거기반 프로그램 도입"을 제언할 때 그 근거가 무엇을 결과로 측정한 것인지 함께 제시</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">스터디 토론 질문</span><br>
+  <strong>1.</strong> 방임의 원인이 구조적이라면, 부모 교육과 상담 중심의 개입은 무의미한가요? 저자들이 생태학적 모델이 개인과 가족 수준 요인의 중요성도 인정한다고 쓴 대목을 고려해, 개인 수준 개입과 구조적 개입의 관계를 어떻게 설정할 수 있을지 논의해 봅시다.<br>
+  <strong>2.</strong> 소득지원 정책이 방임을 줄이는지를 무작위통제실험 없이 평가하려면 어떤 설계가 가능할까요? 그 설계의 결과를 "근거기반"으로 인정하려면 어떤 기준이 필요할까요?<br>
+  <strong>3.</strong> 우리가 최근에 읽거나 쓴 논문 한 편을 골라 이 논문의 다섯 가지 코딩 질문을 적용해 봅시다. 이론적 틀이 가리키는 층과 측정한 변수의 층은 일치합니까?
+</div>
+
+<!-- §11 worksheet -->
+<div class="section-head" id="work">
+  <div class="section-num">11</div>
+  <div class="section-title-block"><h2>정리 활동</h2><p class="section-subtitle">입력한 내용은 이 브라우저에 자동 저장됩니다</p></div>
+</div>
+
+<div class="worksheet">
+  <h4>활동 1 · 내 연구의 정합성 사슬 그리기</h4>
+  <div class="prompt">진행 중이거나 계획 중인 연구 하나를 골라 네 고리를 한 줄씩 적어 보세요. 그리고 가장 약하게 맞물린 고리를 하나 고르고 어떻게 보강할지 씁니다.</div>
+  <textarea data-key="w1" placeholder="설명 이론: ...&#10;개입 또는 핵심 예측변수: ...&#10;대상 집단: ...&#10;목표 결과: ...&#10;가장 약한 고리와 보강 방법: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 2 · 원문 Table 2에서 한 줄 골라 다시 쓰기</h4>
+  <div class="prompt">Table 2의 다섯 연구 가운데 하나를 골라, 그 연구가 "과부하" 틀에 맞게 설계되었다면 대상, 개입 요소, 결과 측정이 어떻게 달라졌을지 적어 보세요.</div>
+  <textarea data-key="w2" placeholder="고른 연구: ...&#10;대상: ...&#10;개입 요소: ...&#10;결과 측정: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 3 · "명목상 A, 실제로는 B" 문장 만들기</h4>
+  <div class="prompt">자신의 연구 분야에서 선언과 실행이 어긋나는 사례를 하나 떠올리고, 이 논문의 문형을 빌려 영어 한 문장으로 써 보세요. ("... nominally ..., but typically ...")</div>
+  <textarea data-key="w3" placeholder="사례: ...&#10;English sentence: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="closing">
+  <div class="closing-inner">
+    <h2>이 논문이 보여 주는 것: 이론이 바뀌어도 근거는 저절로 따라 바뀌지 않는다</h2>
+    <p>방임에 대한 이론은 부모의 결함에서 생태학적 과부하로 옮겨 갔습니다. 그러나 "근거기반"이라는 이름표를 받은 개입의 근거 논문들은 2000년에서 2012년 사이에 출판되었고, 그 논문들의 측정 변수 안에는 옛 이론이 그대로 들어 있습니다. 이론은 서론에서 바뀌지만, 근거는 측정에서 만들어집니다. 그리고 한번 만들어진 근거는 정보센터의 목록과 재정 지원 규칙을 통해 제도 안에 고정됩니다. <strong>이론의 진보와 근거의 축적 사이에는 시차가 있고, 그 시차를 메우는 일은 누군가 근거의 내용을 실제로 열어 볼 때에야 시작됩니다.</strong></p>
+    <p>이 논문의 방법은 소박합니다. 46편을 읽고, 다섯 가지를 묻고, 표 하나를 만들었습니다. 새로운 자료도 복잡한 통계도 없습니다. 그런데도 "방임 개입에는 근거가 있다"는 문장의 의미를 바꾸어 놓습니다. 좋은 연구 질문은 때로 새로운 것을 발견하는 질문이 아니라, <strong>모두가 이미 있다고 믿는 것이 정말 거기 있는지를 확인하는 질문</strong>이라는 것을 이 논문이 보여 줍니다.</p>
+    <div class="signature">Blumenthal, A., White-Wolfe, H., &amp; Thomas, M. (2026). Still blaming parents? Describing the "evidence base" underpinning child neglect intervention programs. Child Abuse &amp; Neglect, 181, 108296. · AIR Lab Journal Club</div>
+  </div>
+</div>
+
+
+</main>
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(31,78,121,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#1f4e79"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#1f4e79"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<footer class="footer">
+  이 페이지는 AIR Lab(ACEs-Informed Recovery Lab) 대학원 세미나의 교육 목적으로 제작되었습니다. 원문의 짧은 인용은 출처를 밝혀 사용했습니다. "원문 Figure"와 "원문 Table"로 표시한 이미지는 CC BY-NC-ND 4.0 라이선스로 공개된 원문에서 변형 없이 가져와 출처와 함께 실은 것이고, "AIR Lab 개념도"로 표시한 그림은 원문의 수치와 서술을 바탕으로 랩에서 따로 그린 설명용 그림입니다. 정확한 수치와 전체 내용은 원문과 보충자료를 확인하십시오.
+</footer>
+
+<script>
+(function(){
+  var PREFIX='jc_blumenthal2026_';
+  var areas=document.querySelectorAll('.worksheet textarea[data-key]');
+  function store(k,v){try{localStorage.setItem(PREFIX+k,v);return true;}catch(e){return false;}}
+  function load(k){try{return localStorage.getItem(PREFIX+k);}catch(e){return null;}}
+  function flash(ta){var s=ta.parentNode.querySelector('.save-status');if(!s)return;s.classList.add('show');clearTimeout(s._t);s._t=setTimeout(function(){s.classList.remove('show');},1400);}
+  areas.forEach(function(ta){
+    var v=load(ta.getAttribute('data-key'));
+    if(v!==null)ta.value=v;
+    var timer;
+    ta.addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(function(){if(store(ta.getAttribute('data-key'),ta.value))flash(ta);},400);});
+  });
+  window.saveAll=function(){var ok=true;areas.forEach(function(ta){if(store(ta.getAttribute('data-key'),ta.value))flash(ta);else ok=false;});if(!ok)alert('이 브라우저에서는 저장 공간을 사용할 수 없습니다. 내용을 따로 복사해 두세요.');};
+})();
+</script>
+</body>
+</html>
