@@ -35,6 +35,9 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; background:rgba(255,2
 .nav-logo-dot span { display:block; width:6px; height:6px; border-radius:50%; }
 .nav-logo-dot .d1 { background:var(--sky-deep); } .nav-logo-dot .d2 { background:var(--sky); } .nav-logo-dot .d3 { background:var(--sky-bright); }
 .nav-links { display:flex; gap:1.6rem; list-style:none; }
+.nav-links a { white-space:nowrap; }
+@media (max-width:1200px) { .nav-links { gap:1.05rem; } }
+@media (max-width:1100px) { .nav-links { gap:0.8rem; } .nav-links a { font-size:0.76rem; } }
 .nav-links a { font-size:0.82rem; letter-spacing:-0.01em; color:var(--mid); text-decoration:none; font-weight:400; transition:color 0.15s; }
 .nav-links a:hover { color:var(--sky-deep); }
 .nav-links a.active { color:var(--sky-deep); font-weight:600; }
@@ -147,6 +150,7 @@ footer { max-width:1200px; margin:0 auto; padding:3rem 2.5rem; display:grid; gri
       <li><a href="statistics.html">Statistics</a></li>
       <li><a href="journal-club.html" class="active">Journal Club</a></li>
       <li><a href="research.html">Research</a></li>
+      <li><a href="practice.html">Practice</a></li>
     </ul>
   </div>
 </nav>

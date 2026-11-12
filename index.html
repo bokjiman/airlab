@@ -106,6 +106,9 @@ nav {
 .nav-logo-dot .d3 { background: var(--sky-bright); }
 
 .nav-links { display: flex; gap: 1.9rem; list-style: none; }
+.nav-links a { white-space: nowrap; }
+@media (max-width: 1280px) { .nav-links { gap: 1.25rem; } }
+@media (max-width: 1120px) { .nav-links { gap: 0.95rem; } .nav-links a { font-size: 0.78rem; } }
 .nav-links a {
   font-size: 0.82rem; letter-spacing: -0.01em; text-transform: none;
   color: var(--mid); text-decoration: none; font-weight: 400;
@@ -434,6 +437,55 @@ a.nc-link { text-decoration: none; color: inherit; cursor: pointer; }
 .nc-go::after { content: "→"; transition: transform 0.2s; }
 a.nc-link:hover .nc-go { box-shadow: 0 7px 20px rgba(31,78,121,0.5); transform: translateY(-1px); }
 a.nc-link:hover .nc-go::after { transform: translateX(4px); }
+
+/* ── CALL card (2027 현장 참여형 공모) ── */
+a.nc-call {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: flex; align-items: center; justify-content: space-between; gap: 1.6rem; flex-wrap: wrap;
+  margin: 0.2rem 0 1rem; padding: 1.9rem 2rem; border-radius: 22px;
+  color: #fff; text-decoration: none; word-break: keep-all;
+  background: linear-gradient(112deg, #102a44 0%, #1b4b74 48%, #22655f 100%);
+  box-shadow: 0 18px 44px rgba(21,50,79,0.32), 0 2px 8px rgba(21,50,79,0.12);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+a.nc-call:hover { transform: translateY(-3px); box-shadow: 0 24px 54px rgba(21,50,79,0.4), 0 2px 8px rgba(21,50,79,0.14); }
+a.nc-call::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(60% 120% at 100% 0%, rgba(224,87,62,0.42) 0%, rgba(224,87,62,0) 60%), radial-gradient(50% 90% at 0% 100%, rgba(108,176,228,0.35) 0%, rgba(108,176,228,0) 60%);
+}
+a.nc-call::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px;
+  background: linear-gradient(90deg, #7fa9d1 0 33.3%, #fff 33.3% 66.6%, #e0573e 66.6% 100%);
+}
+.ncc-glow {
+  position: absolute; top: 0; left: -60%; width: 40%; height: 100%; pointer-events: none;
+  background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%);
+  transform: skewX(-18deg); animation: shimmer 3.6s ease-in-out infinite;
+}
+.ncc-main { flex: 1 1 420px; min-width: 0; }
+.ncc-top { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.ncc-status {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.01em;
+  background: #fff; color: #15324f; padding: 0.28rem 0.85rem; border-radius: 980px;
+}
+.ncc-status i { width: 8px; height: 8px; border-radius: 50%; background: #e0573e; animation: nccPulse 1.5s ease-out infinite; }
+@keyframes nccPulse { 0% { box-shadow: 0 0 0 0 rgba(224,87,62,0.7); } 100% { box-shadow: 0 0 0 9px rgba(224,87,62,0); } }
+.ncc-kicker { font-size: 0.8rem; color: #cfe6e2; font-weight: 500; }
+.ncc-title { font-family: var(--font-display); font-size: clamp(1.35rem, 2.4vw, 1.85rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.25; }
+.ncc-body { margin-top: 0.55rem; font-size: 0.98rem; line-height: 1.65; color: #dce8f2; max-width: 640px; }
+.ncc-facts { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.05rem; }
+.ncc-facts span { font-size: 0.8rem; padding: 0.3rem 0.8rem; border-radius: 980px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22); color: #fff; }
+.ncc-facts b { font-weight: 800; color: #bfe6df; margin-right: 0.45rem; }
+.ncc-btn {
+  flex: none; display: inline-flex; align-items: center; gap: 0.5rem;
+  background: #fff; color: #15324f; font-weight: 700; font-size: 0.95rem;
+  padding: 0.85rem 1.5rem; border-radius: 980px; box-shadow: 0 8px 22px rgba(0,0,0,0.22);
+}
+.ncc-btn em { font-style: normal; transition: transform 0.2s; }
+a.nc-call:hover .ncc-btn em { transform: translateX(4px); }
+@media (max-width: 640px) { a.nc-call { padding: 1.5rem 1.3rem; } .ncc-btn { width: 100%; justify-content: center; } }
+@media (prefers-reduced-motion: reduce) { .ncc-glow, .ncc-status i { animation: none; } }
 
 /* ── FEATURED news card (shiny "I just made this!" spotlight) ── */
 .nc-featured {
@@ -991,6 +1043,7 @@ footer {
       <li><a href="statistics.html">Statistics</a></li>
       <li><a href="journal-club.html">Journal Club</a></li>
       <li><a href="research.html">Research</a></li>
+      <li><a href="practice.html">Practice</a></li>
     </ul>
   </div>
 </nav>
@@ -1704,6 +1757,8 @@ footer {
 
 <script>
 const NEWS_DATA = [
+  { date:"2026.11.12", type:"call", title:"2027 현장 참여형 실천 매뉴얼 개발 및 연구 지원 사업", body:"실무에서 막힌 어려움 하나를 알려 주세요. 연구와 근거로 풀어 현장에서 바로 쓰는 매뉴얼로 돌려 드립니다.", link:"field/" },
+  { date:"2026.11.12", type:"practice", featured:true, title:"🤝 Practice 페이지 개설: 연구성과 확산", body:"지역 기관과 함께 만든 결과물을 공개합니다. 2025년 「병식이 없는 정신장애 어르신과 함께 일하기」 실천 매뉴얼(원칙 12, 도구 15, 문답 16)과 2026년 「당사자연구 안내서」(네 장면, 여덟 번의 시간)를 볼 수 있습니다.", link:"practice.html" },
   { date:"2026.11.08", type:"club", featured:true, title:"🧠 신경사회사업연구회 홈페이지 개설", body:"Neurobiology for Clinical Social Work를 함께 읽는 신경사회사업연구회의 홈페이지를 열었습니다. 회차별 공부모임 정리와 번역 작업 소식을 모아 둡니다.", link:"https://bokjiman.github.io/neuro-socialwork/" },
   { date:"2026.10.17", type:"bigaward", featured:true, title:"🏆 우수포스터상 수상", body:"2026년 대한신경정신의학회 추계학술대회에서 우수포스터상을 받았습니다. 계명대학교 동산병원 김태호 선생님, 김정현 박사님, 김동현 선생님과 함께한 연구입니다. 축하합니다!", sub:"Typologies of Allostatic Load and Social Disadvantage: A Dose-Response Analysis of Social Determinants Using the KNHANES · 김준범, 김태호, 김정현, 김동현 · 2026년 10월 16~17일, 대구" },
   { date:"2026.09.04", type:"bigaward", featured:true, title:"🏆 우수 학술포스터상 수상", body:"한국자살예방협회가 주최한 「2026년도 자살예방종합학술대회」에서 우수 학술포스터로 선정되어 수상했습니다.", sub:"닿지 못한 도움, 서로 다른 이유 · 김준범, 이재은, 정화영 · 2026년 9월 4일" },
@@ -1872,9 +1927,27 @@ function renderTicker() {
 }
 
 function renderNews() {
-  const bm = { award:'badge-award', recruit:'badge-recruit', paper:'badge-paper', project:'badge-project', member:'badge-member', study:'badge-study', club:'badge-club', bigaward:'badge-bigaward' };
-  const lm = { award:'Award', recruit:'Recruit', paper:'Paper', project:'Research', member:'Members', study:'Study', club:'Journal Club', bigaward:'Award' };
+  const bm = { award:'badge-award', recruit:'badge-recruit', paper:'badge-paper', project:'badge-project', member:'badge-member', study:'badge-study', club:'badge-club', bigaward:'badge-bigaward', practice:'badge-study', call:'badge-study' };
+  const lm = { award:'Award', recruit:'Recruit', paper:'Paper', project:'Research', member:'Members', study:'Study', club:'Journal Club', bigaward:'Award', practice:'Practice', call:'Call' };
   document.getElementById('newsCards').innerHTML = NEWS_DATA.map(n => {
+    if (n.type === 'call') {
+      const now = Date.now(), open = Date.parse('2026-11-16T00:00:00+09:00'), close = Date.parse('2026-11-30T23:59:59+09:00');
+      const day = 86400000;
+      let st = '모집 마감', live = false;
+      if (now < open) { st = '모집 시작까지 D-' + Math.ceil((open - now) / day); }
+      else if (now <= close) { const d = Math.floor((close - now) / day); st = d === 0 ? '오늘 마감' : '모집 중 · 마감 D-' + d; live = true; }
+      return `
+    <a class="nc-call${live ? ' live' : ''}" href="${n.link}">
+      <span class="ncc-glow" aria-hidden="true"></span>
+      <div class="ncc-main">
+        <div class="ncc-top"><span class="ncc-status"><i></i>${st}</span><span class="ncc-kicker">충청북도 소재 사회복지기관 대상 · 기관 부담 비용 없음</span></div>
+        <div class="ncc-title">${n.title}</div>
+        <div class="ncc-body">${n.body}</div>
+        <div class="ncc-facts"><span><b>모집</b>2026. 11. 16.(월) ~ 11. 30.(월)</span><span><b>유형</b>A 실천 매뉴얼 개발 · B 근거 기반 실무 지침 · C 현장 연구와 매뉴얼</span><span><b>발표</b>2026년 12월 중</span></div>
+      </div>
+      <span class="ncc-btn">사업 안내와 신청 <em>→</em></span>
+    </a>`;
+    }
     const isBigAward = n.type === 'bigaward';
     const isAward = n.type === 'award' || isBigAward;
     const isMember = n.type === 'member';
