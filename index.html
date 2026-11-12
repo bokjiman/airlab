@@ -2402,5 +2402,87 @@ document.querySelectorAll('.tr, .nc').forEach((el, i) => {
   }
 })();
 </script>
+
+<!-- 2027 현장 참여형 공모 팝업: 마감(2026-11-30 23:59) 뒤에는 자동으로 뜨지 않습니다 -->
+<style>
+.fp-scrim{position:fixed;inset:0;z-index:900;background:rgba(18,32,48,.46);display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:fpFade .25s ease}
+.fp-scrim[hidden]{display:none}
+@keyframes fpFade{from{opacity:0}to{opacity:1}}
+.fp-box{position:relative;width:min(760px,100%);max-height:100%;overflow:auto;background:#fff;border-radius:22px;box-shadow:0 24px 70px rgba(18,32,48,.28);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);animation:fpUp .3s ease}
+@keyframes fpUp{from{transform:translateY(14px);opacity:.6}to{transform:none;opacity:1}}
+.fp-poster{background:#eef3f9;display:flex;align-items:center;justify-content:center;padding:1.2rem;border-right:1px solid #e6ebf1}
+.fp-poster img{width:100%;height:auto;border-radius:8px;box-shadow:0 6px 20px rgba(31,78,121,.18);display:block}
+.fp-body{padding:2rem 1.8rem 1.6rem;display:flex;flex-direction:column;gap:.9rem;min-width:0}
+.fp-eyebrow{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#2f8f84}
+.fp-title{word-break:keep-all;font-family:var(--font-display);font-size:1.45rem;font-weight:700;letter-spacing:-.03em;line-height:1.3;color:#20262e;margin:0;text-wrap:balance}
+.fp-tags{display:flex;gap:.35rem;flex-wrap:wrap}
+.fp-tags span{font-size:.7rem;font-weight:600;color:#1f4e79;background:#e9eff6;border-radius:980px;padding:.2rem .65rem}
+.fp-meta{display:grid;grid-template-columns:auto 1fr;gap:.35rem .9rem;font-size:.86rem;margin:.2rem 0}
+.fp-meta dt{color:#828d9b;font-size:.78rem;padding-top:.05rem}
+.fp-meta dd{margin:0;color:#20262e;font-weight:600}
+.fp-lead{word-break:keep-all;font-size:.86rem;color:#46505c;line-height:1.7;margin:0}
+.fp-btns{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.3rem}
+.fp-btn{display:inline-flex;align-items:center;justify-content:center;font-size:.86rem;font-weight:600;padding:.62rem 1.15rem;border-radius:980px;text-decoration:none;border:1px solid #1f4e79;transition:background .15s}
+.fp-btn.pri{background:#1f4e79;color:#fff}.fp-btn.pri:hover{background:#2d6a9f}
+.fp-btn.sec{background:#fff;color:#1f4e79;border-color:#d8e0ea}.fp-btn.sec:hover{background:#eef3f9}
+.fp-foot{display:flex;justify-content:space-between;align-items:center;gap:.8rem;border-top:1px solid #e6ebf1;padding-top:.8rem;margin-top:auto;font-size:.78rem;color:#828d9b;flex-wrap:wrap}
+.fp-foot label{display:inline-flex;align-items:center;gap:.4rem;cursor:pointer}
+.fp-foot button{border:0;background:none;color:#46505c;font:inherit;font-weight:600;cursor:pointer;padding:.2rem .4rem;border-radius:6px}
+.fp-foot button:hover{background:#eef3f9}
+.fp-x{position:absolute;top:.7rem;right:.7rem;width:34px;height:34px;border-radius:50%;border:1px solid #e6ebf1;background:#fff;color:#46505c;font-size:1.1rem;line-height:1;cursor:pointer;display:grid;place-items:center}
+.fp-x:hover{background:#eef3f9}
+.fp-x:focus-visible,.fp-btn:focus-visible,.fp-foot button:focus-visible{outline:2px solid #2d6a9f;outline-offset:2px}
+@media (max-width:640px){.fp-box{grid-template-columns:1fr}.fp-poster{border-right:0;border-bottom:1px solid #e6ebf1;padding:1rem 1rem .8rem}.fp-poster img{max-width:200px;margin:0 auto}.fp-body{padding:1.3rem 1.2rem 1.1rem}.fp-title{font-size:1.2rem}}
+@media (prefers-reduced-motion:reduce){.fp-scrim,.fp-box{animation:none}}
+</style>
+<div class="fp-scrim" id="fieldPopup" hidden role="dialog" aria-modal="true" aria-labelledby="fpTitle">
+  <div class="fp-box">
+    <button class="fp-x" type="button" id="fpClose" aria-label="닫기">&times;</button>
+    <a class="fp-poster" href="field/"><img src="field/poster-thumb.jpg" alt="2027 현장 참여형 실천 매뉴얼 개발 및 연구 지원 사업 포스터"></a>
+    <div class="fp-body">
+      <div class="fp-eyebrow">AIR Lab · 기관 공모</div>
+      <h2 class="fp-title" id="fpTitle">2027 현장 참여형 실천 매뉴얼 개발 및 연구 지원 사업</h2>
+      <div class="fp-tags"><span>연구 기반</span><span>근거 기반</span><span>현장 참여형</span></div>
+      <dl class="fp-meta">
+        <dt>모집 기간</dt><dd>2026. 11. 16.(월) ~ 11. 30.(월)</dd>
+        <dt>지원 대상</dt><dd>충청북도 소재 사회복지기관</dd>
+        <dt>선정</dt><dd>1개 기관</dd>
+      </dl>
+      <p class="fp-lead">실무에서 겪는 어려움을 보내 주세요. 연구 근거를 찾아 정리하고, 기관과 함께 써 보면서 실무자가 바로 쓸 수 있는 매뉴얼과 지침으로 만들어 드립니다. 선정된 기관과는 2027년 한 해 동안 함께합니다.</p>
+      <div class="fp-btns"><a class="fp-btn pri" href="field/">자세히 보고 신청하기</a><a class="fp-btn sec" href="field/poster.html">포스터 보기</a></div>
+      <div class="fp-foot"><label><input type="checkbox" id="fpToday"> 오늘 하루 보지 않기</label><button type="button" id="fpClose2">닫기</button></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var CLOSE_AT = new Date('2026-11-30T23:59:59+09:00');
+  var KEY = 'airlabFieldPopupHideUntil';
+  var el = document.getElementById('fieldPopup');
+  if (!el || new Date() > CLOSE_AT) return;
+  var until = 0;
+  try { until = +localStorage.getItem(KEY) || 0; } catch (e) {}
+  if (Date.now() < until) return;
+  var last = null;
+  function close(){
+    if (document.getElementById('fpToday').checked) {
+      var t = new Date(); t.setHours(23,59,59,999);
+      try { localStorage.setItem(KEY, String(t.getTime())); } catch (e) {}
+    }
+    el.hidden = true; document.body.style.overflow = '';
+    if (last && last.focus) last.focus();
+  }
+  function open(){
+    last = document.activeElement;
+    el.hidden = false; document.body.style.overflow = 'hidden';
+    document.getElementById('fpClose').focus();
+  }
+  document.getElementById('fpClose').addEventListener('click', close);
+  document.getElementById('fpClose2').addEventListener('click', close);
+  el.addEventListener('click', function(e){ if (e.target === el) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !el.hidden) close(); });
+  setTimeout(open, 600);
+})();
+</script>
 </body>
 </html>

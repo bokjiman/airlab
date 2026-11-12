@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2027 현장 참여형 실천 매뉴얼 개발 및 연구 지원 사업 | 공모 포스터</title>
+<style>
+@font-face{font-family:'Freesentation';font-weight:400;font-style:normal;font-display:swap;src:local('Freesentation 4 Regular'),local('Freesentation-4Regular'),url('fonts/Freesentation-4Regular.woff2') format('woff2'),url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2') format('woff2');}
+@font-face{font-family:'Freesentation';font-weight:500;font-style:normal;font-display:swap;src:local('Freesentation 5 Medium'),local('Freesentation-5Medium'),url('fonts/Freesentation-5Medium.woff2') format('woff2'),url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');}
+@font-face{font-family:'Freesentation';font-weight:600;font-style:normal;font-display:swap;src:local('Freesentation 6 SemiBold'),local('Freesentation-6SemiBold'),url('fonts/Freesentation-6SemiBold.woff2') format('woff2'),url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-6SemiBold.woff2') format('woff2');}
+@font-face{font-family:'Freesentation';font-weight:700;font-style:normal;font-display:swap;src:local('Freesentation 7 Bold'),local('Freesentation-7Bold'),url('fonts/Freesentation-7Bold.woff2') format('woff2'),url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');}
+@font-face{font-family:'Freesentation';font-weight:800;font-style:normal;font-display:swap;src:local('Freesentation 8 ExtraBold'),local('Freesentation-8ExtraBold'),url('fonts/Freesentation-8ExtraBold.woff2') format('woff2'),url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-8ExtraBold.woff2') format('woff2');}
+@font-face{font-family:'Freesentation';font-weight:900;font-style:normal;font-display:swap;src:local('Freesentation 9 Black'),local('Freesentation-9Black'),url('fonts/Freesentation-9Black.woff2') format('woff2'),url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');}
+
+:root{--navy:#15324f;--navy2:#1f4e79;--sky:#2d6a9f;--mint:#3a9a8f;--mint-soft:#eaf5f2;--sky-soft:#e9eff6;--off:#f4f7fb;--ink:#20262e;--mid:#46505c;--light:#828d9b;--rule:#e1e7ee;--coral:#e0573e;--coral-soft:#fdeee9;
+ --f:'Freesentation','Noto Sans KR','Noto Sans CJK KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:#dfe5ec;font-family:var(--f);color:var(--ink);word-break:keep-all;-webkit-font-smoothing:antialiased}
+.stage{max-width:900px;margin:0 auto;padding:24px 14px 40px}
+.sheet{container-type:inline-size;width:100%;aspect-ratio:210/297;background:#fff;box-shadow:0 2px 6px rgba(21,50,79,.08),0 20px 50px rgba(21,50,79,.16);overflow:hidden;display:flex;flex-direction:column;position:relative}
+/* 머리 */
+.hero{position:relative;color:#fff;padding:2.8cqw 5.6cqw 2.4cqw;isolation:isolate;display:grid;grid-template-columns:1fr 27cqw;gap:1.5cqw;align-items:end}
+.hero::before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(90% 120% at 100% 0%,rgba(58,154,143,.45) 0%,rgba(58,154,143,0) 60%),linear-gradient(110deg,#102a44 0%,#1b4569 55%,#21625d 100%)}
+.hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:.7cqw;background:linear-gradient(90deg,#7fa9d1 0 33.3%,#fff 33.3% 66.6%,var(--coral) 66.6% 100%);z-index:-1}
+.top{display:flex;align-items:center;gap:1.2cqw;flex-wrap:wrap;grid-column:1/-1;margin-bottom:.4cqw}
+.year{font-size:1.9cqw;font-weight:900;letter-spacing:.02em;background:#fff;color:var(--navy);padding:.45cqw 1.5cqw;border-radius:99px}
+.org{font-size:1.65cqw;font-weight:600;color:#cfe1ee}
+.org b{color:#fff;font-weight:700}
+h1{margin:1.2cqw 0 0;font-weight:900;line-height:1.08;letter-spacing:-.035em}
+h1 .s{display:block;font-size:3.4cqw;font-weight:700;color:#bfe6df;letter-spacing:-.02em;margin-bottom:.6cqw}
+h1 .m{display:block;font-size:5.9cqw}
+h1 .m em{font-style:normal;color:#fff;background:linear-gradient(transparent 62%,rgba(224,87,62,.85) 62% 92%,transparent 92%);padding:0 .3cqw}
+.tags{display:flex;gap:.9cqw;margin:1.4cqw 0 0;flex-wrap:wrap}
+.tags span{font-size:1.75cqw;font-weight:700;padding:.45cqw 1.4cqw;border-radius:99px;border:1.5px solid rgba(255,255,255,.55);color:#fff}
+.tags span:first-child{background:#fff;color:var(--navy);border-color:#fff}
+.lead{margin:1.2cqw 0 0;font-size:1.85cqw;line-height:1.6;color:#dbe7f1;font-weight:500}
+.lead b{color:#fff;font-weight:700}
+.art{align-self:end;background:rgba(255,255,255,.96);border-radius:2.2cqw;padding:.8cqw .8cqw .2cqw}
+/* 핵심 정보 */
+.facts{display:grid;grid-template-columns:1.45fr 1fr .8fr;margin:0 5.6cqw;transform:translateY(-.1cqw);border-bottom:1px solid var(--rule)}
+.fact{padding:1.15cqw 1.6cqw 1.05cqw;border-right:1px solid var(--rule)}
+.fact:last-child{border-right:0}
+.fact .k{font-size:1.55cqw;font-weight:700;color:var(--mint);letter-spacing:.02em}
+.fact .v{font-size:2.25cqw;font-weight:800;color:var(--navy);line-height:1.3;margin-top:.35cqw;white-space:nowrap}
+.fact .v small{display:block;white-space:normal;font-size:1.5cqw;font-weight:500;color:var(--mid);margin-top:.35cqw;line-height:1.45}
+/* 본문 */
+.body{padding:1.4cqw 5.6cqw 0;display:flex;flex-direction:column;gap:1.25cqw;flex:1}
+.sec-h{display:flex;align-items:baseline;gap:1.2cqw;margin:0 0 .7cqw}
+.sec-h h2{margin:0;font-size:2.6cqw;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.sec-h p{margin:0;font-size:1.55cqw;color:var(--light);font-weight:500}
+.types{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4cqw}
+.type{border:1px solid var(--rule);border-radius:1.4cqw;padding:1.15cqw 1.4cqw 1.05cqw;position:relative;background:#fff}
+.type .lv{display:flex;gap:.45cqw;margin-bottom:.7cqw;align-items:center}
+.type .lv i{width:3.2cqw;height:.7cqw;border-radius:99px;background:var(--sky-soft)}
+.type .lv i.on{background:var(--mint)}
+.type .lv span{font-size:1.4cqw;color:var(--light);margin-left:.4cqw;font-weight:600}
+.type h3{margin:0;font-size:2.15cqw;font-weight:800;color:var(--ink);line-height:1.3;letter-spacing:-.02em}
+.type h3 b{color:var(--mint);margin-right:.5cqw}
+.type p{margin:.5cqw 0 0;font-size:1.5cqw;line-height:1.5;color:var(--mid)}
+.type ul{margin:.6cqw 0 0;padding:.6cqw 0 0;border-top:1px dashed var(--rule);list-style:none}
+.type li{font-size:1.5cqw;line-height:1.45;color:var(--ink);padding-left:1.4cqw;position:relative;margin:.25cqw 0}
+.type li::before{content:'';position:absolute;left:.15cqw;top:.7cqw;width:.6cqw;height:.6cqw;border-radius:50%;background:var(--sky)}
+.type .ex{font-size:1.2cqw;font-weight:700;color:var(--sky);margin-top:.7cqw;display:block}
+.type.c{background:linear-gradient(180deg,#f3faf8,#fff 40%)}
+.note{margin:.8cqw 0 0;font-size:1.5cqw;color:var(--mid);line-height:1.55}
+.note b{color:var(--navy)}
+/* 진행 */
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:.7cqw;counter-reset:s}
+.step{background:var(--off);border-radius:1.1cqw;padding:.85cqw 1.1cqw .75cqw;position:relative}
+.step::before{counter-increment:s;content:counter(s);position:absolute;top:.9cqw;right:1cqw;font-size:2cqw;font-weight:900;color:#d3dde8;line-height:1}
+.step b{display:block;font-size:1.8cqw;font-weight:800;color:var(--navy);line-height:1.3;padding-right:2.2cqw}
+.step span{display:block;font-size:1.42cqw;color:var(--mid);line-height:1.4;margin-top:.3cqw}
+/* 지난 사업 */
+.past{display:grid;grid-template-columns:1fr 1fr;gap:1.4cqw}
+.case{border-radius:1.4cqw;border:1px solid var(--rule);overflow:hidden}
+.case .hd{display:flex;align-items:center;gap:1cqw;padding:.7cqw 1.4cqw;background:var(--navy);color:#fff}
+.case .hd .y{font-size:2.1cqw;font-weight:900}
+.case .hd .w{font-size:1.7cqw;font-weight:700}
+.case .hd .t{margin-left:auto;font-size:1.35cqw;font-weight:700;background:rgba(255,255,255,.16);border-radius:99px;padding:.3cqw 1cqw}
+.case dl{margin:0;padding:.8cqw 1.4cqw .85cqw;display:grid;grid-template-columns:7.4cqw 1fr;row-gap:.5cqw;column-gap:1cqw}
+.case dt{font-size:1.4cqw;font-weight:800;color:var(--mint);line-height:1.5}
+.case dd{margin:0;font-size:1.5cqw;line-height:1.45;color:var(--ink)}
+.case dd q{font-weight:700;color:var(--navy)}
+/* 신청 */
+.apply{margin-top:auto;display:grid;grid-template-columns:12.5cqw 1fr 1fr;gap:2.2cqw;align-items:center;background:var(--sky-soft);margin-left:-5.6cqw;margin-right:-5.6cqw;padding:1.15cqw 5.6cqw}
+.qr{background:#fff;border-radius:1.4cqw;padding:1cqw;box-shadow:0 1px 3px rgba(21,50,79,.12)}
+.qr svg{display:block;width:100%;height:auto;aspect-ratio:1}
+.how h4,.ask h4{margin:0 0 .5cqw;font-size:2.05cqw;font-weight:800;color:var(--navy)}
+.how ol{margin:0;padding:0;list-style:none;counter-reset:h}
+.how li{font-size:1.6cqw;line-height:1.5;color:var(--ink);padding-left:2.4cqw;position:relative;margin:.25cqw 0}
+.how li::before{counter-increment:h;content:counter(h);position:absolute;left:0;top:.15cqw;width:1.75cqw;height:1.75cqw;border-radius:50%;background:var(--navy);color:#fff;font-size:1.15cqw;font-weight:700;display:flex;align-items:center;justify-content:center}
+.url{display:inline-block;margin-top:.5cqw;font-size:1.6cqw;font-weight:700;color:var(--sky);background:#fff;border-radius:.6cqw;padding:.3cqw .9cqw;letter-spacing:.01em}
+.ask .mail{font-size:2.4cqw;font-weight:800;color:var(--ink);letter-spacing:.005em}
+.ask p{margin:.4cqw 0 0;font-size:1.55cqw;color:var(--mid);line-height:1.5}
+.foot{display:flex;justify-content:space-between;align-items:center;padding:.9cqw 5.6cqw 1cqw;font-size:1.4cqw;color:var(--mid);border-top:1px solid var(--rule)}
+.foot b{color:var(--ink);font-weight:700}
+.dots{display:inline-flex;gap:.45cqw;margin-right:.9cqw;vertical-align:middle}
+.dots i{width:1cqw;height:1cqw;border-radius:50%;display:block}
+.tools{max-width:900px;margin:0 auto 30px;padding:0 14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.tools a,.tools button{font:600 14px var(--f);color:var(--navy2);background:#fff;border:1px solid #c9d4e0;border-radius:99px;padding:8px 18px;text-decoration:none;cursor:pointer}
+@media print{body{background:#fff}.stage{padding:0;max-width:none}.tools{display:none}.sheet{box-shadow:none;width:210mm;height:297mm;aspect-ratio:auto}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4;margin:0}}
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="sheet" id="sheet">
+  <header class="hero">
+    <div class="top"><span class="year">2027 공모</span><span class="org"><b>충북대학교 아동복지학과 AIR Lab</b> · 정신건강 서포터즈 숨표</span></div>
+    <div>
+      <h1><span class="s">현장 참여형</span><span class="m"><em>실천 매뉴얼</em> 개발 및</span><span class="m"><em>연구</em> 지원 사업</span></h1>
+      <div class="tags"><span>연구 기반</span><span>근거 기반</span><span>현장 참여형</span></div>
+      <p class="lead">실무에서 겪는 어려움을 보내 주세요. <b>연구 근거를 찾아 정리하고,<br>기관과 함께 써 보면서</b> 실무자가 바로 쓸 수 있는 매뉴얼로 만들어 드립니다.</p>
+    </div>
+    <div class="art" id="fig-art"></div>
+  </header>
+
+  <section class="facts">
+    <div class="fact"><div class="k">모집 기간</div><div class="v">2026. 11. 16.(월) ~ 11. 30.(월)<small>온라인 신청서로 접수합니다</small></div></div>
+    <div class="fact"><div class="k">지원 대상</div><div class="v">충청북도 소재<br>사회복지기관<small>시설, 센터, 단체 등 기관 단위 신청</small></div></div>
+    <div class="fact"><div class="k">선정</div><div class="v">1개 기관<small>2027년 한 해 동안 함께합니다</small></div></div>
+  </section>
+
+  <main class="body">
+    <section>
+      <div class="sec-h"><h2>이런 일을 함께합니다</h2><p>기관의 필요에 맞춰 범위를 함께 정합니다</p></div>
+      <div class="types">
+        <article class="type">
+          <div class="lv"><i class="on"></i><i></i><i></i><span>자문 중심</span></div>
+          <h3><b>A</b>실천 매뉴얼 개발</h3>
+          <p>정신건강의 어려움이 있는 이용자를 만나는 실무자를 위한 매뉴얼을 만듭니다.</p>
+          <ul><li>서비스를 거부하는 이용자를 만나는 방법</li><li>자조모임, 집단 프로그램 운영 안내서</li><li>신규 직원 교육자료</li></ul>
+        </article>
+        <article class="type">
+          <div class="lv"><i class="on"></i><i class="on"></i><i></i><span>근거 정리</span></div>
+          <h3><b>B</b>근거 기반 실무 지침</h3>
+          <p>국내외 연구와 공식 지침을 정리해 기관의 실무 지침과 서식을 만듭니다.</p>
+          <ul><li>사정 도구, 관찰 기록지 만들기</li><li>위기 대응, 기관 연계 기준 정하기</li><li>사례 종결, 실무자 안전 규정</li></ul>
+        </article>
+        <article class="type c">
+          <div class="lv"><i class="on"></i><i class="on"></i><i class="on"></i><span>연구 중심</span></div>
+          <h3><b>C</b>현장 연구와 매뉴얼</h3>
+          <p>기관과 함께 연구를 설계하고 진행해 그 결과를 매뉴얼로 엮습니다.</p>
+          <ul><li>새 프로그램의 시범 운영과 효과 확인</li><li>이용자, 실무자 면담 연구</li><li>당사자가 참여하는 연구</li></ul>
+        </article>
+      </div>
+      <p class="note">어느 쪽인지 정하지 못해도 괜찮습니다. 신청서에 어려움만 적어 주시면 <b>함께 범위를 정합니다.</b> 연구가 필요하면 연구윤리 심의를 거쳐 진행합니다.</p>
+    </section>
+
+    <section>
+      <div class="sec-h"><h2>이렇게 진행합니다</h2><p>교수와 학생이 기관을 찾아가 함께 만듭니다</p></div>
+      <div class="flow">
+        <div class="step"><b>문제 정리</b><span>기관 방문, 실무자와 어려움 나누기</span></div>
+        <div class="step"><b>근거 찾기</b><span>논문, 공식 지침, 법령 정리</span></div>
+        <div class="step"><b>초안과 자문</b><span>지침, 도구, 매뉴얼 초안</span></div>
+        <div class="step"><b>현장 적용</b><span>함께 써 보고 고치기, 필요하면 연구</span></div>
+        <div class="step"><b>완성과 배포</b><span>최종본 제작, 교육과 공유</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-h"><h2>지난 사업</h2><p>어려움 하나에서 시작했습니다</p></div>
+      <div class="past">
+        <div class="case">
+          <div class="hd"><span class="y">2025</span><span class="w">노인복지관</span><span class="t">A + B</span></div>
+          <dl>
+            <dt>기관의 질문</dt><dd><q>병식이 없어 도움을 거부하시는 어르신, 어떻게 도와야 할까요?</q></dd>
+            <dt>함께한 일</dt><dd>사례관리 자문에서 시작해, 국내외 연구와 해외 서비스 기준을 찾아 실천 원칙 12가지를 근거와 함께 정리</dd>
+            <dt>결과물</dt><dd>실천 매뉴얼로 발전. 관찰 기록지, 생활 이야기표 등 현장 도구 15종과 현장 문답 수록</dd>
+          </dl>
+        </div>
+        <div class="case">
+          <div class="hd"><span class="y">2026</span><span class="w">정신건강복지센터</span><span class="t">C</span></div>
+          <dl>
+            <dt>기관의 질문</dt><dd><q>당사자연구를 우리 센터에 맞게 운영하고 남기고 싶습니다.</q></dd>
+            <dt>함께한 일</dt><dd>운영 설계를 자문하고, 8회기 시범 운영의 기록과 녹취를 함께 분석</dd>
+            <dt>결과물</dt><dd>당사자연구 안내서 개발. 다른 기관도 따라 할 수 있게 진행 예시, 활동지, 운영 사례 수록</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="apply">
+      <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" width="100%" height="100%" shape-rendering="crispEdges" class="segno"><path class="qrline" stroke="#15324f" d="M2 2.5h7m6 0h2m2 0h2m3 0h7m-29 1h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h2m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m3 0h1m1 0h4m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h2m2 0h5m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m4 0h2m1 0h1m2 0h1m4 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h1m1 0h3m2 0h2m1 0h1m-19 1h1m5 0h1m1 0h1m1 0h1m1 0h4m1 0h1m1 0h1m1 0h2m2 0h3m-28 1h5m2 0h2m1 0h1m1 0h1m1 0h2m1 0h3m3 0h2m1 0h2m-27 1h1m1 0h5m1 0h1m1 0h1m2 0h3m1 0h1m2 0h2m-23 1h2m1 0h3m1 0h1m1 0h2m4 0h2m3 0h2m3 0h1m-25 1h1m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1m1 0h1m2 0h1m2 0h2m4 0h1m-27 1h3m2 0h1m1 0h2m2 0h1m1 0h1m1 0h4m1 0h3m2 0h2m-28 1h2m1 0h1m1 0h4m1 0h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h2m-26 1h2m2 0h1m1 0h4m4 0h2m3 0h3m3 0h1m1 0h1m-27 1h2m1 0h4m1 0h1m1 0h1m2 0h1m1 0h3m5 0h2m-27 1h1m3 0h1m5 0h1m1 0h1m2 0h6m1 0h3m1 0h3m-29 1h3m3 0h3m2 0h1m1 0h3m3 0h1m1 0h2m2 0h1m2 0h1m-29 1h1m2 0h3m2 0h3m1 0h1m6 0h3m1 0h1m-24 1h1m1 0h8m2 0h1m2 0h1m1 0h1m2 0h5m1 0h3m-21 1h1m2 0h5m2 0h1m1 0h1m3 0h2m-26 1h7m2 0h2m1 0h4m2 0h3m1 0h1m1 0h3m-27 1h1m5 0h1m3 0h1m2 0h1m2 0h1m2 0h2m3 0h1m-25 1h1m1 0h3m1 0h1m3 0h1m2 0h1m2 0h1m2 0h7m1 0h1m-28 1h1m1 0h3m1 0h1m2 0h5m1 0h4m1 0h2m3 0h2m1 0h1m-29 1h1m1 0h3m1 0h1m4 0h1m3 0h1m2 0h10m-28 1h1m5 0h1m5 0h1m1 0h3m4 0h1m3 0h2m1 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h4m3 0h2m1 0h1m1 0h1"/></svg></div>
+      <div class="how">
+        <h4>신청 방법</h4>
+        <ol><li>QR 코드나 아래 주소로 접속</li><li>온라인 신청서 작성(10분 정도)</li><li>접수 확인 메일 받기</li></ol>
+        <span class="url">bokjiman.github.io/airlab/field</span>
+      </div>
+      <div class="ask">
+        <h4>문의</h4>
+        <div class="mail">jayb.kim@cbnu.ac.kr</div>
+        <p>충북대학교 아동복지학과 김준범 교수<br>문의는 이메일로만 받습니다</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span><span class="dots"><i style="background:#1f4e79"></i><i style="background:#2d6a9f"></i><i style="background:#3a9a8f"></i></span><b>충북대학교 아동복지학과 AIR Lab</b> · 정신건강 서포터즈 숨표</span>
+    <span>지역 기관의 신청을 기다립니다</span>
+  </footer>
+</div>
+</div>
+<div class="tools"><button onclick="window.print()">인쇄하거나 PDF로 저장</button><a href="./">사업 안내와 신청서</a><a href="qr-field.png" download>QR 코드 내려받기</a></div>
+
+<script>
+/* 당사자연구 안내서 일러스트 v3 규격에 준한 인물 라이브러리
+   굵은 외곽선(#2B2B2B), 파스텔 단색, 둥근 머리, 볼 홍조, 한 줄 테두리 말풍선, 회색 둥근 패널 */
+(function(){
+const L='#2B2B2B', SKIN='#FBE3CF', ACC='#1f4e79';
+const KIND={
+ A:{top:'#A8D5B0',dark:'#5E9B6E',pants:'#6E7B8F',shoe:'#5E9B6E',hair:'#3B2F2A',style:'part',wear:'hoodie'},   // 학생1 연두 후드
+ B:{top:'#F6D27A',dark:'#D9A93A',pants:'#7A6A58',shoe:'#D9A93A',hair:'#6B4E3D',style:'bob',wear:'cardigan'},  // 학생2 노랑 가디건
+ C:{top:'#AFC8F0',dark:'#6F93CF',pants:'#56627A',shoe:'#6F93CF',hair:'#2F2A28',style:'spiky',wear:'knit'},    // 학생3 하늘 니트
+ D:{top:'#F5B5AE',dark:'#D9827A',pants:'#6E7B8F',shoe:'#D9827A',hair:'#4A3A32',style:'bun',wear:'tee',tag:1}, // 기관 실무자 산호
+ F:{top:'#CFC3EE',dark:'#9A88D4',pants:'#4F5870',shoe:'#3B3B3B',hair:'#3B2F2A',style:'part',wear:'vest',tag:1,glasses:1}, // 교수 라벤더 조끼
+ P:{top:'#EBD3B5',dark:'#C9A77A',pants:'#8A8072',shoe:'#8A8072',hair:'#DADADA',style:'part',wear:'cardigan'}, // 어르신 베이지
+ G:{top:'#D6D6D6',dark:'#A9A9A9',pants:'#5A5A5A',shoe:'#3B3B3B',hair:'#3B3B3B',style:'crew',wear:'suit'},     // 바깥 사람
+ I:{top:'#9FD6CF',dark:'#4FA79C',pants:'#56627A',shoe:'#4FA79C',hair:'#3B2F2A',style:'long',wear:'hoodie'}    // 학생4 청록
+};
+const POSE={
+ down:{l:[[-36,-88],[-38,-62]],r:[[36,-88],[38,-62]]},
+ wave:{l:[[-36,-88],[-38,-62]],r:[[46,-128],[54,-160]]},
+ point:{l:[[-36,-88],[-38,-62]],r:[[50,-112],[76,-120]]},
+ pointL:{l:[[-50,-112],[-76,-120]],r:[[36,-88],[38,-62]]},
+ open:{l:[[-46,-98],[-62,-84]],r:[[46,-98],[62,-84]]},
+ cheer:{l:[[-44,-140],[-52,-172]],r:[[44,-140],[52,-172]]},
+ hold:{l:[[-36,-92],[-14,-86]],r:[[36,-92],[14,-86]]},
+ think:{l:[[-36,-88],[-38,-62]],r:[[42,-100],[22,-128]]},
+ hips:{l:[[-48,-96],[-31,-78]],r:[[48,-96],[31,-78]]}
+};
+function arm(sx,pts,col){const d=`M${sx} -116 L${pts[0][0]} ${pts[0][1]} L${pts[1][0]} ${pts[1][1]}`;
+ return `<path d="${d}" fill="none" stroke="${L}" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>`+
+        `<path d="${d}" fill="none" stroke="${col}" stroke-width="12.5" stroke-linecap="round" stroke-linejoin="round"/>`+
+        `<circle cx="${pts[1][0]}" cy="${pts[1][1]}" r="8.5" fill="${SKIN}" stroke="${L}" stroke-width="2.6"/>`;}
+function hair(k){const h=k.hair, st=`fill="${h}" stroke="${L}" stroke-width="2.6" stroke-linejoin="round"`;
+ const cap=`<path d="M-33 -164 Q-37 -198 0 -197 Q38 -198 33 -162 Q22 -181 -2 -179 Q-22 -177 -33 -164Z" ${st}/>`;
+ switch(k.style){
+  case 'bob': return `<path d="M-36 -134 Q-44 -200 0 -199 Q44 -200 36 -134 Q30 -142 31 -160 Q12 -184 -31 -168 Q-30 -142 -36 -134Z" ${st}/>`;
+  case 'spiky': return `<path d="M-33 -164 L-36 -184 L-26 -180 L-22 -198 L-10 -188 L-2 -203 L8 -189 L20 -199 L24 -183 L36 -186 L33 -162 Q20 -180 -2 -178 Q-22 -176 -33 -164Z" ${st}/>`;
+  case 'bun': return `<circle cx="0" cy="-203" r="12" ${st}/>`+cap;
+  case 'crew': return `<path d="M-33 -166 Q-34 -194 0 -194 Q34 -194 33 -166 Q20 -178 0 -177 Q-20 -178 -33 -166Z" ${st}/>`;
+  case 'long': return `<path d="M-37 -112 Q-46 -200 0 -199 Q46 -200 37 -112 Q28 -122 31 -160 Q12 -184 -31 -168 Q-28 -122 -37 -112Z" ${st}/>`;
+  default: return cap;}}
+function wear(k){const w=k.wear,d=k.dark;let s='';
+ if(w==='hoodie') s=`<path d="M-14 -84 Q0 -76 14 -84 L14 -70 L-14 -70Z" fill="${d}" stroke="${L}" stroke-width="2"/><path d="M-6 -128 L-7 -108 M6 -128 L7 -108" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>`;
+ if(w==='cardigan') s=`<path d="M-9 -130 L0 -96 L9 -130Z" fill="#fff" stroke="${L}" stroke-width="2"/><path d="M0 -96 L0 -60" stroke="${L}" stroke-width="2"/><circle cx="5" cy="-86" r="2" fill="${L}"/><circle cx="5" cy="-72" r="2" fill="${L}"/>`;
+ if(w==='knit') s=`<path d="M-29 -104 H29 M-29 -90 H29" stroke="${d}" stroke-width="5"/>`;
+ if(w==='vest') s=`<path d="M-10 -130 L0 -104 L10 -130Z" fill="#fff" stroke="${L}" stroke-width="2"/><path d="M0 -104 L0 -60" stroke="${L}" stroke-width="2"/>`;
+ if(w==='suit') s=`<path d="M-10 -130 L0 -100 L10 -130Z" fill="#fff" stroke="${L}" stroke-width="2"/><path d="M0 -124 L-4 -100 L0 -92 L4 -100Z" fill="#6B7A8F" stroke="${L}" stroke-width="1.6"/>`;
+ if(k.tag) s+=`<path d="M-9 -128 L-3 -98 M9 -128 L3 -98" stroke="${ACC}" stroke-width="2" fill="none"/><rect x="-10" y="-99" width="20" height="14" rx="2.5" fill="#fff" stroke="${L}" stroke-width="2"/><path d="M-6 -93 H6" stroke="${ACC}" stroke-width="2.2" stroke-linecap="round"/>`;
+ return s;}
+function face(f,k){let m='',x='';
+ const eyes=`<ellipse cx="-12" cy="-158" rx="3.4" ry="4.6" fill="${L}"/><ellipse cx="12" cy="-158" rx="3.4" ry="4.6" fill="${L}"/><circle cx="-10.8" cy="-160" r="1.2" fill="#fff"/><circle cx="13.2" cy="-160" r="1.2" fill="#fff"/>`;
+ const st=`fill="none" stroke="${L}" stroke-width="2.6" stroke-linecap="round"`;
+ if(f==='big') m=`<path d="M-9 -147 Q0 -133 9 -147Z" fill="#8C3B3B" stroke="${L}" stroke-width="2.2" stroke-linejoin="round"/>`;
+ else if(f==='neutral') m=`<path d="M-6 -143 H6" ${st}/>`;
+ else if(f==='worried'){m=`<path d="M-7 -141 Q0 -147 7 -141" ${st}/>`;x=`<path d="M-19 -167 L-8 -171 M19 -167 L8 -171" ${st}/><path d="M30 -176 Q26 -168 30 -165 Q34 -168 30 -176Z" fill="#9CC9F0" stroke="${L}" stroke-width="1.6"/>`;}
+ else if(f==='think'){m=`<circle cx="3" cy="-143" r="3" ${st}/>`;x=`<path d="M-17 -169 L-7 -170 M7 -171 L17 -167" ${st}/>`;}
+ else m=`<path d="M-8 -146 Q0 -137 8 -146" ${st}/>`;
+ const g=k.glasses?`<circle cx="-12" cy="-158" r="9" fill="none" stroke="${L}" stroke-width="2.2"/><circle cx="12" cy="-158" r="9" fill="none" stroke="${L}" stroke-width="2.2"/><path d="M-3 -158 H3" stroke="${L}" stroke-width="2.2"/>`:'';
+ return eyes+`<circle cx="-21" cy="-148" r="5.5" fill="#F4A9A0" opacity=".55"/><circle cx="21" cy="-148" r="5.5" fill="#F4A9A0" opacity=".55"/>`+m+x+g;}
+function person(cx,base,kind,o){o=o||{};const k=KIND[kind]||KIND.A,p=POSE[o.pose||'down'],s=o.s||1;
+ const sleeve=(k.wear==='vest')?'#fff':k.top;
+ let g=`<g transform="translate(${cx},${base}) scale(${s})">`;
+ g+=`<rect x="-23" y="-74" width="18" height="64" rx="8" fill="${k.pants}" stroke="${L}" stroke-width="2.6"/><rect x="5" y="-74" width="18" height="64" rx="8" fill="${k.pants}" stroke="${L}" stroke-width="2.6"/>`;
+ g+=`<ellipse cx="-16" cy="-7" rx="16" ry="8.5" fill="#fff" stroke="${L}" stroke-width="2.6"/><path d="M-30 -9 Q-16 -22 -3 -9Z" fill="${k.shoe}" stroke="${L}" stroke-width="2.2"/>`;
+ g+=`<ellipse cx="16" cy="-7" rx="16" ry="8.5" fill="#fff" stroke="${L}" stroke-width="2.6"/><path d="M3 -9 Q16 -22 30 -9Z" fill="${k.shoe}" stroke="${L}" stroke-width="2.2"/>`;
+ g+=`<rect x="-7" y="-134" width="14" height="12" fill="${SKIN}" stroke="${L}" stroke-width="2.4"/>`;
+ g+=`<path d="M-30 -66 L-30 -112 Q-30 -130 -12 -130 L12 -130 Q30 -130 30 -112 L30 -66 Q30 -58 22 -58 L-22 -58 Q-30 -58 -30 -66Z" fill="${k.top}" stroke="${L}" stroke-width="2.8" stroke-linejoin="round"/>`;
+ g+=wear(k);
+ g+=arm(-27,p.l,sleeve)+arm(27,p.r,sleeve);
+ if(o.item==='paper') g+=`<rect x="-17" y="-112" width="34" height="42" rx="3" fill="#fff" stroke="${L}" stroke-width="2.4" transform="rotate(-4 0 -90)"/><path d="M-10 -102 H10 M-10 -94 H10 M-10 -86 H4" stroke="${ACC}" stroke-width="2.2" stroke-linecap="round"/>`+
+   `<circle cx="-14" cy="-86" r="8.5" fill="${SKIN}" stroke="${L}" stroke-width="2.6"/><circle cx="14" cy="-86" r="8.5" fill="${SKIN}" stroke="${L}" stroke-width="2.6"/>`;
+ if(o.item==='book') g+=`<rect x="-20" y="-110" width="40" height="46" rx="4" fill="${ACC}" stroke="${L}" stroke-width="2.6"/><path d="M-12 -98 H12 M-12 -90 H6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>`+
+   `<circle cx="-14" cy="-86" r="8.5" fill="${SKIN}" stroke="${L}" stroke-width="2.6"/><circle cx="14" cy="-86" r="8.5" fill="${SKIN}" stroke="${L}" stroke-width="2.6"/>`;
+ g+=`<circle cx="-33" cy="-157" r="6" fill="${SKIN}" stroke="${L}" stroke-width="2.4"/><circle cx="33" cy="-157" r="6" fill="${SKIN}" stroke="${L}" stroke-width="2.4"/>`;
+ g+=`<circle cx="0" cy="-160" r="33" fill="${SKIN}" stroke="${L}" stroke-width="2.8"/>`+hair(k)+face(o.face||'smile',k);
+ if(o.label) g+=`<text x="0" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#333">${o.label}</text>`;
+ return g+'</g>';}
+/* 말풍선: 상자와 꼬리가 한 경로 */
+function bubble(x,y,w,h,lines,o){o=o||{};const r=14,t=o.tail||'down',at=o.at==null?(t==='down'?w*0.3:h*0.55):o.at;
+ let d=`M${x+r} ${y} H${x+w-r} Q${x+w} ${y} ${x+w} ${y+r}`;
+ if(t==='right') d+=` V${y+at-8} L${x+w+22} ${y+at+2} L${x+w} ${y+at+10}`;
+ d+=` V${y+h-r} Q${x+w} ${y+h} ${x+w-r} ${y+h}`;
+ if(t==='down') d+=` H${x+at+16} L${x+at+2} ${y+h+22} L${x+at-2} ${y+h}`;
+ d+=` H${x+r} Q${x} ${y+h} ${x} ${y+h-r}`;
+ if(t==='left') d+=` V${y+at+10} L${x-22} ${y+at+2} L${x} ${y+at-8}`;
+ d+=` V${y+r} Q${x} ${y} ${x+r} ${y} Z`;
+ const fill=o.fill||'#fff',tc=o.fill?'#fff':'#20262e',fs=o.fs||15,lh=fs*1.42,ty=y+h/2-(lines.length-1)*lh/2+fs*0.36;
+ return `<path d="${d}" fill="${fill}" stroke="${L}" stroke-width="2.6" stroke-linejoin="round"/>`+
+  lines.map((s,i)=>`<text x="${x+w/2}" y="${ty+i*lh}" text-anchor="middle" font-size="${fs}" font-weight="${o.bold?700:500}" fill="${tc}">${s}</text>`).join('');}
+function card(x,y,w,h,num,lines,o){o=o||{};const key=o.key;
+ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${key?'#e9eff6':'#fff'}" stroke="${key?ACC:L}" stroke-width="2.5"/>`+
+  `<circle cx="${x+24}" cy="${y+24}" r="14" fill="${key?ACC:'#fff'}" stroke="${key?ACC:L}" stroke-width="2.2"/><text x="${x+24}" y="${y+29}" text-anchor="middle" font-size="14" font-weight="700" fill="${key?'#fff':L}">${num}</text>`+
+  lines.map((s,i)=>`<text x="${x+w/2}" y="${y+58+i*21}" text-anchor="middle" font-size="${i?13:15.5}" font-weight="${i?400:700}" fill="${i?'#46505c':(key?ACC:'#20262e')}">${s}</text>`).join('');}
+function arrow(x1,y1,x2,y2){return `<path d="M${x1} ${y1} L${x2} ${y2}" stroke="#9AA3AD" stroke-width="3.5" stroke-linecap="round" fill="none" marker-end="url(#ah)"/>`;}
+function ground(x1,x2,y){return `<path d="M${x1} ${y} H${x2}" stroke="#C9D1DA" stroke-width="3" stroke-linecap="round"/>`;}
+function svg(w,h,inner,label){return `<svg viewBox="0 0 ${w} ${h}" width="100%" role="img" aria-label="${label||''}" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#9AA3AD"/></marker></defs>${inner}</svg>`;}
+function mount(id,w,h,inner,label){const el=document.getElementById(id);if(el)el.innerHTML=svg(w,h,inner,label);}
+window.Fig={person,bubble,card,arrow,ground,svg,mount,L,ACC};
+})();
+
+</script>
+<script>
+const {person:P,bubble:B,ground:G,mount}=Fig;
+mount('fig-art',380,300,
+  G(14,366,288)+
+  P(78,288,'D',{face:'think',pose:'think',s:.8})+
+  P(190,288,'F',{pose:'open',s:.8,item:'book'})+
+  P(298,288,'A',{pose:'wave',face:'big',s:.74})+
+  B(8,10,162,58,['이 어려움,','어디서부터 풀까요?'],{tail:'down',at:66,fs:14})+
+  B(196,26,176,46,['근거를 찾아 함께'],{tail:'down',at:36,fill:Fig.ACC,bold:1,fs:15}),
+  '기관 실무자와 교수, 학생');
+</script>
+</body>
+</html>
