@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>많을수록 나쁘다는 공식을 넘어서</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+  /* ════════ AIR Lab theme: navy → recovery-teal (synced with index) ════════ */
+  :root{ --sky:#2d6a9f; --sky-deep:#1f4e79; --sky-bright:#7fa9d1; --sky-soft:#e9eff6; --sky-soft2:#f4f7fb; --sky-soft-2:#f4f7fb; --mint:#3a9a8f; --mint-soft:#eaf5f2; --hover-bg:#eef3f9; }
+  .stripe{background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+  .stripe span{background:transparent!important}
+  .nav-logo-dot .d3{background:#3a9a8f}
+  .hero{isolation:isolate}
+  .hero::before{background:radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%), linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%)!important}
+  .overline{color:#9fd3ca!important}
+  .overline::before{background:#8cc7bd!important}
+  .hero h1{color:#fff!important}
+  .hero h1 em{color:#bfe6df!important}
+  .hero .citation{color:#b7c9da!important;border-left-color:#8cc7bd!important}
+  .hero .citation em{color:#d6e5f2!important}
+  .hero .citation a{color:#bfe6df!important}
+  .hero .subtitle{color:#d2e0ec!important}
+  .hero .subtitle strong,.hero .subtitle b{color:#fff!important}
+  .hero .subtitle em{color:#bfe6df}
+  .hero .stat{background:rgba(255,255,255,0.08)!important;border-color:rgba(255,255,255,0.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .hero .stat .num{color:#fff!important}
+  .hero .stat .lbl{color:#a9c1d6!important}
+  .paper-meta,.condition-header{background:linear-gradient(120deg,#1c4a73 0%,#22655f 100%)!important}
+  .section-num{background:linear-gradient(120deg,#1f4e79 0%,#2d7d78 100%)!important}
+
+  /* ════════ figure originals + line-drawing helpers ════════ */
+  .fig-orig a{display:block}
+  .fig-orig img{display:block;margin:0 auto;background:#fff}
+  .fig-lic{font-size:11.5px;color:var(--light);line-height:1.55;margin:8px 2px 0;text-align:left}
+  .fig-lic a{color:var(--sky-deep)}
+  .guide-list{margin:6px 0 0;padding-left:20px}
+  .guide-list li{margin-bottom:5px}
+  .mini-table td.num,.mini-table th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .mini-table td small{color:var(--light)}
+  .tbl-wrap{overflow-x:auto}
+  .three-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+  @media (max-width:900px){.three-grid{grid-template-columns:1fr}}
+  svg .ink{stroke:#20262e;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  svg .inkthin{stroke:#46505c;stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+</style>
+
+</head>
+<body id="top">
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">문제 제기</a></li>
+      <li><a href="#methods">방법</a></li>
+      <li><a href="#construct">구인의 혼란</a></li>
+      <li><a href="#four">네 가지 접근</a></li>
+      <li><a href="#theory">이론</a></li>
+      <li><a href="#disc">논의</a></li>
+      <li><a href="#phrases">명문장</a></li>
+      <li><a href="#ourstudy">우리 연구</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">Wang, Emery &amp; Ho 2026 · Journal Club</div>
+    <h1>많을수록 나쁘다는 공식을 넘어서:<br><em>성학대는 고유하게 해로운가, 아니면 다중피해의 일부일 뿐인가</em></h1>
+    <div class="citation">Wang, K., Emery, C. R., &amp; Ho, R. T. H. (2026). Beyond cumulative risk: A scoping review of the application of the polyvictimization framework in child sexual abuse research. <em>Trauma, Violence, &amp; Abuse</em>. Advance online publication. https://doi.org/10.1177/15248380261439129</div>
+    <p class="subtitle">아동 성학대(CSA)를 겪은 아이는 대개 다른 학대도 함께 겪습니다. 그렇다면 생존자에게 나타나는 어려움은 <strong>성학대 고유의 독성</strong> 때문일까요, 아니면 <strong>여러 피해가 쌓인 다중피해(polyvictimization, PV)</strong> 때문일까요? 이 scoping review는 그 질문에 답하기 전에, 지금까지의 연구가 성학대를 다중피해 틀에 어떻게 넣어 왔는지를 지도로 그립니다. 읽을 때는 세 가지를 따라가면 됩니다: 왜 "많을수록 나쁘다"는 누적위험 가정이 문제가 되는가, 연구들이 쓴 네 가지 접근은 각각 무엇을 보고 무엇을 놓치는가, 그리고 저자들이 왜 결국 "답할 수 없다"고 결론 내리는가.</p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">62편</span><div class="lbl">포함 연구 (학술지 59 · 학위논문 3)</div></div>
+      <div class="stat"><span class="num">4가지</span><div class="lbl">상호연결 · 누적위험 · 비교 · 배열</div></div>
+      <div class="stat"><span class="num">21편</span><div class="lbl">가장 빠르게 늘고 있는 배열(configural) 접근</div></div>
+      <div class="stat"><span class="num">22편</span><div class="lbl">CSA를 명시적으로 정의하지 않은 연구</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>Wang, Emery &amp; Ho (2026)</div>
+
+<!-- §01 -->
+<div class="section-head" id="paper">
+  <div class="section-num">01</div>
+  <div class="section-title-block"><h2>논문 소개</h2><p class="section-subtitle">한 가지 학대 유형을 다중피해 틀 안에서 본다는 것</p></div>
+</div>
+
+<div class="panel">
+  <p>다중피해(polyvictimization)는 Finkelhor 등(2007)이 제안한 개념으로, 한 아동이 여러 종류의 피해를 겪는 현상을 가리킵니다. 그 이후 다중피해는 어떤 단일 피해보다 건강 결과와 더 강하게 연관된다는 근거가 쌓였고, 연구의 표준 틀 가운데 하나가 되었습니다. 그 바탕에는 대개 <strong>누적위험(cumulative risk) 모형</strong>, 즉 피해 유형이 많을수록 부적응 가능성이 높아진다는 용량-반응 가정이 있습니다.</p>
+  <p>홍콩대학교 연구팀은 이 틀을 <strong>특정한 피해 유형</strong>, 여기서는 아동 성학대에 적용할 때 문제가 생긴다고 봅니다. 성학대 자체가 온라인 성착취부터 상업적 성착취까지, 접촉의 정도, 강제력, 만성성, 시작 연령, 가해자와의 관계가 모두 다른 이질적인 경험이기 때문입니다. 성학대를 "1"로 세어 다른 피해와 더하는 순간, 이 이질성은 사라집니다.</p>
+  <p>이 논문은 효과를 통합하는 메타분석이 아니라 <strong>scoping review</strong>입니다. 저자들은 이 분야의 정의와 측정이 너무 제각각이어서 체계적 고찰이나 메타분석이 현 단계에서는 불가능하다고 밝힙니다. 그래서 이 논문의 기여는 답이 아니라 <strong>답을 가로막는 것들의 목록</strong>입니다.</p>
+</div>
+
+<div class="paper-meta">
+  <h3>Beyond Cumulative Risk: A Scoping Review of the Application of the Polyvictimization Framework in Child Sexual Abuse Research</h3>
+  <div class="sub">Kewen Wang · Clifton R. Emery · Rainbow T. H. Ho (The University of Hong Kong)</div>
+  <div class="paper-meta-grid">
+    <div class="paper-meta-item"><div class="label">Journal</div><div class="value">Trauma, Violence, &amp; Abuse (SSCI)<br>온라인 선출판 2026년 4월 21일 · 권·호·쪽수는 확인 필요</div></div>
+    <div class="paper-meta-item"><div class="label">Type</div><div class="value">Scoping review (JBI PCC 틀). 6개 데이터베이스, 2007년 이후 영어 1차 연구 62편. 질 평가는 하지 않음</div></div>
+    <div class="paper-meta-item"><div class="label">Core claim</div><div class="value">CSA 연구의 다중피해 적용은 "많을수록 나쁘다"를 넘어, 피해들이 어떻게 연결되고 상호작용하고 누적되고 집적되는지를 탐구해야 한다</div></div>
+  </div>
+</div>
+
+<div class="quote-box">
+  "The review concludes that a comprehensive PV framework for driving CSA studies should move beyond the simplistic "more is worse" posit to explore how different types of victimization interconnect, interact, accumulate, and aggregate to differentially impact psycho-behavioral development."
+  <span class="trans">이 리뷰는 CSA 연구를 이끌 포괄적인 다중피해 틀이 <strong>단순한 "많을수록 나쁘다"는 가정</strong>을 넘어, 서로 다른 피해 유형들이 어떻게 <strong>연결되고, 상호작용하고, 누적되고, 집적되어</strong> 심리행동 발달에 차별적으로 영향을 미치는지를 탐구해야 한다고 결론 내린다.</span>
+  <span class="attr">출처: Abstract</span>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">🧭 길잡이 · 이 리뷰의 세 가지 목표</span><br>
+  <strong>목표 1.</strong> CSA 연구에서 다중피해의 개념적·조작적 정의를 밝힌다.<br>
+  <strong>목표 2.</strong> CSA를 다중피해 틀 안에 배치해 온 근거를 지도로 그린다.<br>
+  <strong>목표 3.</strong> 현재 적용 방식의 강점과 약점을 비판적으로 평가하고 연구 동향과 공백을 짚는다.
+</div>
+
+<!-- §02 -->
+<div class="section-head" id="intro">
+  <div class="section-num">02</div>
+  <div class="section-title-block"><h2>문제 제기: 고유한 독성인가, 전체 경험인가</h2><p class="section-subtitle">Introduction</p></div>
+</div>
+
+<div class="panel">
+  <p>서론은 하나의 근본 질문에서 출발합니다. 성학대 생존자의 부정적 결과는 <strong>성학대의 특정한 독성</strong>에서 오는가, 아니면 <strong>다중피해라는 전체 경험</strong>에서 오는가. 저자들은 선행연구가 서로 부딪힌다는 것을 세 연구로 보여 줍니다. Choi와 Oh(2013)는 다른 대인 외상을 함께 겪은 성학대 아동이 성학대 특성과 상관없이 더 많은 정신과적 동반이환을 보인다고 했고, Racine 등(2021)은 외상 증상이 다중피해 여부와도 성학대 특성과도 무관하다고 했으며, McElroy 등(2016)은 가해자 수 같은 성학대 특성이 정신병리와 강하게 연관되지만 함께 겪은 방임이나 신체학대는 그렇지 않다고 보고했습니다.</p>
+  <p>저자들은 이 혼란의 뿌리를 <strong>뭉뚱그리기(lumping) 접근</strong>에서 찾습니다. 다중피해를 단일 차원의 이분 변수(있다/없다)나 연속 변수(겪은 유형의 수)로 넣으면, 모든 피해 유형이 결과에 똑같이 기여하고 특정 유형보다 전체 개수가 더 중요하다고 가정하게 됩니다. 가해자, 심각도, 빈도, 발달적 시기 같은 <strong>피해 안의 특성</strong>과, 피해들이 어떤 <strong>조합</strong>으로 함께 나타나는지는 보이지 않게 됩니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">"똑같이 2점": 누적 합산이 지우는 것 (Discussion에 나오는 저자들의 예시 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 300" width="100%" style="max-width:900px" role="img" aria-label="같은 합산 점수를 받는 두 아동의 비교">
+    <g font-size="13">
+      <rect x="20" y="16" width="400" height="230" rx="14" fill="#fff" stroke="#c78a1e" stroke-width="1.5"/>
+      <text x="220" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#c78a1e">아동 A</text>
+      <circle cx="90" cy="110" r="16" class="ink"/><path d="M90 126 L90 172 M90 138 L70 156 M90 138 L110 156 M90 172 L77 204 M90 172 L103 204" class="ink"/>
+      <rect x="150" y="72" width="240" height="36" rx="8" fill="#fbf1dc" stroke="#c78a1e"/><text x="270" y="95" text-anchor="middle" fill="#20262e">단 한 번의 성폭행</text>
+      <rect x="150" y="120" width="240" height="36" rx="8" fill="#fbf1dc" stroke="#c78a1e"/><text x="270" y="143" text-anchor="middle" fill="#20262e">가벼운 신체학대</text>
+      <text x="270" y="196" text-anchor="middle" fill="#46505c" font-size="12">짧은 기간, 두 사건</text>
+      <rect x="480" y="16" width="400" height="230" rx="14" fill="#fff" stroke="#e0573e" stroke-width="1.5"/>
+      <text x="680" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#e0573e">아동 B</text>
+      <circle cx="550" cy="110" r="16" class="ink"/><path d="M550 126 L550 172 M550 138 L530 156 M550 138 L570 156 M550 172 L537 204 M550 172 L563 204" class="ink"/>
+      <rect x="610" y="72" width="240" height="36" rx="8" fill="#fdeee9" stroke="#e0573e"/><text x="730" y="95" text-anchor="middle" fill="#20262e">만성적인 방임</text>
+      <rect x="610" y="120" width="240" height="36" rx="8" fill="#fdeee9" stroke="#e0573e"/><text x="730" y="143" text-anchor="middle" fill="#20262e">은밀한 가족 내 성학대</text>
+      <text x="730" y="196" text-anchor="middle" fill="#46505c" font-size="12">오랜 기간, 가까운 가해자</text>
+      <rect x="320" y="258" width="260" height="34" rx="17" fill="#1f4e79"/><text x="450" y="280" text-anchor="middle" fill="#fff" font-weight="700">다중피해 점수: 둘 다 2</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 이 예시는 저자들이 논의에서 직접 든 것입니다. 누적위험 접근은 계산과 해석이 쉽고 통계적 검정력이 높다는 장점이 있지만, 피해 경험이 <b>동질적이고 가산적</b>이라고 가정합니다. 두 아동의 외상 이후 기능이 다를 가능성은 모형 안에서 표현될 자리가 없습니다. ACEs 합산 점수를 쓰는 모든 연구에 똑같이 적용되는 비판입니다.</div>
+</div>
+
+<!-- §03 methods -->
+<div class="section-head" id="methods">
+  <div class="section-num">03</div>
+  <div class="section-title-block"><h2>방법: "다중피해"라는 말을 실제로 쓴 연구만</h2><p class="section-subtitle">Eligibility criteria · search · selection</p></div>
+</div>
+
+<div class="panel">
+  <p>포함기준은 JBI의 PCC(Population, Concept, Context) 틀로 정했습니다. <strong>대상</strong>은 성학대 생존자로만 구성된 표본이거나 성학대를 주된 초점으로 삼은 연구입니다. "주된 초점"은 성학대를 다중피해 합산에 묻지 않고 <strong>별도 변수로 분석</strong>했거나, 잠재계층분석 같은 사람 중심 분석에서 성학대로 특징지어지는 집단을 찾은 경우로 정의했습니다. <strong>개념</strong>은 "polyvictimization" 또는 그 파생어를 명시적으로 쓴 연구로 한정했습니다. ACEs, polytraumatization, 누적외상처럼 겹치는 개념은 검색에 넣지 않았는데, 다중피해의 개념적 경계를 더 분명히 하려는 리뷰의 목적과 맞지 않는다는 이유입니다. <strong>맥락</strong>은 다중피해라는 용어가 생긴 2007년 이후의 영어 1차 연구(학술지 논문과 학위논문)입니다.</p>
+  <p>제1저자가 검색, 선별, 자료추출을 하고 제2저자가 독립적으로 적격성과 추출의 정확성을 확인했습니다. 전문 선별의 평정자 간 일치도는 Cohen's κ = .95였고, 의견이 다른 19편은 논의와 제3저자 자문으로 해결했습니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">문헌 선정 흐름 (원문 Figure 1의 수치 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 재구성</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 330" width="100%" style="max-width:900px" role="img" aria-label="문헌 선정 흐름도">
+    <defs><marker id="arW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#46505c"/></marker></defs>
+    <g font-size="12.5">
+      <rect x="40" y="20" width="300" height="62" rx="10" fill="#fff" stroke="#46505c"/>
+      <text x="190" y="44" text-anchor="middle" font-weight="700" fill="#20262e">데이터베이스 검색 1,064건</text>
+      <text x="190" y="66" text-anchor="middle" fill="#828d9b" font-size="11.5">ProQuest 437 · Web of Science 449 · PubMed 178</text>
+      <rect x="40" y="112" width="300" height="44" rx="10" fill="#fff" stroke="#46505c"/>
+      <text x="190" y="139" text-anchor="middle" fill="#20262e">제목·초록 선별 508건</text>
+      <rect x="40" y="186" width="300" height="44" rx="10" fill="#fff" stroke="#46505c"/>
+      <text x="190" y="213" text-anchor="middle" fill="#20262e">전문 검토 225건 (수작업 검색 8건 포함)</text>
+      <rect x="40" y="260" width="300" height="50" rx="10" fill="#1f4e79"/>
+      <text x="190" y="290" text-anchor="middle" fill="#fff" font-weight="700" font-size="14">최종 포함 62편</text>
+      <line x1="190" y1="82" x2="190" y2="108" stroke="#46505c" stroke-width="1.6" marker-end="url(#arW)"/>
+      <line x1="190" y1="156" x2="190" y2="182" stroke="#46505c" stroke-width="1.6" marker-end="url(#arW)"/>
+      <line x1="190" y1="230" x2="190" y2="256" stroke="#46505c" stroke-width="1.6" marker-end="url(#arW)"/>
+      <line x1="340" y1="100" x2="420" y2="100" stroke="#aab4c1" stroke-width="1.4" marker-end="url(#arW)"/>
+      <text x="430" y="104" fill="#828d9b">중복 564건 제거 · 제목·초록 단계 283건 제외</text>
+      <line x1="340" y1="208" x2="420" y2="208" stroke="#aab4c1" stroke-width="1.4" marker-end="url(#arW)"/>
+      <rect x="425" y="150" width="440" height="128" rx="10" fill="#fdeee9" stroke="#e0573e"/>
+      <text x="445" y="174" fill="#e0573e" font-weight="700">전문 단계 제외 163건</text>
+      <text x="445" y="198" fill="#20262e">CSA가 주된 초점이 아님 92</text>
+      <text x="445" y="218" fill="#20262e">다중피해 구인을 실질적으로 다루지 않음 49</text>
+      <text x="445" y="238" fill="#20262e">CSA를 다중피해 틀로 평가하지 않음 20</text>
+      <text x="445" y="258" fill="#20262e">학회 발표 1 · 비영어 1</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 전문 단계에서 가장 많이 탈락한 이유는 <b>"CSA가 주된 초점이 아님"(92건)</b>이었습니다. 다중피해 연구에서 성학대는 대부분 합산 점수 속 문항 하나로만 등장한다는 뜻입니다. 다음으로 많은 것은 "다중피해"라는 말을 쓰긴 했지만 실질적으로 다루지 않은 연구(49건)였습니다.</div>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">비판적 읽기 · 본문과 흐름도의 숫자 차이</span><br>
+  본문에는 전문 검토 대상이 <strong>217건</strong>이고, 163건을 제외한 뒤 참고문헌 검색으로 8건을 더해 62편이 되었다고 적혀 있습니다. 원문 Figure 1의 흐름도에는 전문 검토 대상이 <strong>225건</strong>으로 나옵니다. 225는 217에 수작업 검색 8건을 더한 수이므로, 흐름도는 8건을 전문 검토 단계에 포함해 그린 것으로 보입니다. 최종 62편이라는 결론에는 영향이 없지만, 인용할 때는 어느 수치를 썼는지 밝히는 편이 안전합니다. 또 초록은 "여섯 개 데이터베이스"라고 쓰는데, 흐름도에는 ProQuest 아래 네 개(PsycINFO, ASSIA, Sociological Abstracts, PTSDPub)와 Web of Science, PubMed가 표시되어 있습니다.
+</div>
+
+<div class="panel">
+  <p><strong>포함 연구의 모습.</strong> 62편은 학술지 논문 59편과 학위논문 3편이고, 18개 관할권에서 나왔습니다. 미국(30편, 48.4%)과 캐나다(9편, 14.5%)가 가장 많았습니다. 표본 크기는 25명에서 123,609명까지였고, 18개 표본은 성학대 생존자로만 구성되었습니다(아동·청소년 15, 성인 3). 아동 성매매 표본도 다섯 편 있었습니다. 성학대 표본은 대부분 여성이 다수(62.2%~100%)였습니다. 설계는 횡단 양적 연구가 50편으로 압도적이었고, 종단 양적 8편, 질적 3편, 혼합방법 2편, 준실험 1편이었습니다.</p>
+</div>
+
+<!-- §04 construct -->
+<div class="section-head" id="construct">
+  <div class="section-num">04</div>
+  <div class="section-title-block"><h2>구인의 혼란: 같은 이름, 다른 내용</h2><p class="section-subtitle">Construct of PV and CSA</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">PV</div>
+    <div class="cond-titles"><div class="cond-code">Construct 1</div><h3>다중피해 Polyvictimization</h3><div class="cond-en">what counts, and how it is counted</div></div>
+    <span class="verdict weak">inconsistent</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">"여러 피해"의 범위가 연구마다 성학대 외 두세 가지에서 열 가지 이상까지 다르고, 세는 방법도 이분, 합산, 잠재계층, 개별 변수로 제각각이다.</div>
+    <p>좁게는 신체학대, 정서학대, 방임, 가정폭력 목격 같은 두세 유형만 더한 연구가 있고, 넓게는 사고, 가족 기능 이상, 괴롭힘, 지역사회 폭력까지 열 가지 이상을 평가한 연구가 있었습니다. 성매매를 다룬 질적 연구 세 편은 성매매 이전과 도중의 폭력을 다중피해로 개념화했고, 다른 세 편은 성적 피해 <strong>안의</strong> 다차원성, 즉 여러 강압 전략, 여러 가해자, 생애에 걸친 여러 사건을 다중피해라고 불렀습니다. 가장 많이 쓰인 도구는 CTQ, JVQ, ACE 체크리스트, CTS-2였고, 평가 기간은 지난 6개월부터 아동기 전체나 생애까지 다양했습니다.</p>
+    <p>분석에서도 다중피해는 기준점으로 나눈 명목변수(예: 36문항 중 8개 이상), 미리 정한 조합, 잠재계층분석이나 주성분분석으로 도출한 유형, 영역이나 사건을 합산한 연속변수, 구조방정식의 잠재변수 등으로 다르게 쓰였습니다. 다중피해라는 개념을 언급하면서도 실제로는 각 영역을 별개 변수로 분석한 연구도 있었습니다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle weak">CSA</div>
+    <div class="cond-titles"><div class="cond-code">Construct 2</div><h3>아동 성학대 Child Sexual Abuse</h3><div class="cond-en">definition and characteristics</div></div>
+    <span class="verdict weak">inconsistent</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">62편 가운데 22편은 성학대를 아예 정의하지 않았고, 정의한 연구도 가족 내로 한정하거나, 비부모 가해로 한정하거나, 접촉 성학대로 한정하는 등 범위가 달랐다.</div>
+    <p>또래 성폭력을 성학대와 구별한 연구도, 성학대를 우산 개념으로 쓴 연구도 있었고, 아홉 편은 성착취(CSE)에 초점을 두었습니다. 성학대의 발생 여부만 이분으로 본 연구가 있는 반면, 심각도, 빈도, 기간, 시작 연령, 가해자 관계, 접촉 정도, 강제력, 장소, 노출 지연, 책임 지각 같은 다차원 특성을 본 연구도 많았습니다. 그런데 같은 "심각도"도 연구마다 빈도로, 삽입이나 폭력의 정도로, 질과 기간으로, 여러 특성의 합성 점수로 측정되었습니다. 성학대 생존자 표본 가운데 여섯 편은 성학대 특성을 하나도 조사하지 않았습니다.</p>
+  </div>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">🍳 비유</span><br>
+  여러 나라의 물가를 비교하는데, 어떤 나라는 장바구니에 빵과 우유만 넣고, 어떤 나라는 집세와 교통비까지 넣고, 어떤 나라는 "비싸다/안 비싸다"로만 기록했다고 생각해 보세요. 모두 "생활비"라는 같은 이름을 쓰지만, 그 숫자들을 모아 평균을 내는 것은 의미가 없습니다. 저자들이 메타분석 대신 scoping review를 택한 이유가 바로 이것입니다.
+</div>
+
+<!-- §05 four approaches -->
+<div class="section-head" id="four">
+  <div class="section-num">05</div>
+  <div class="section-title-block"><h2>네 가지 접근: CSA를 다중피해 틀에 놓는 방식</h2><p class="section-subtitle">Mapping CSA onto the PV framework</p></div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">상호연결, 누적위험, 비교, 배열 (Results 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 300" width="100%" style="max-width:900px" role="img" aria-label="네 가지 접근의 도식">
+    <g font-size="12.5">
+      <!-- interconnection -->
+      <rect x="8" y="10" width="212" height="280" rx="12" fill="#fff" stroke="#3a9a8f" stroke-width="1.5"/>
+      <text x="114" y="34" text-anchor="middle" font-weight="700" fill="#2c7d73" font-size="14">상호연결</text>
+      <text x="114" y="52" text-anchor="middle" fill="#828d9b" font-size="11">interconnection · 14 + 15편</text>
+      <circle cx="114" cy="130" r="24" fill="#fdeee9" stroke="#e0573e" stroke-width="1.6"/><text x="114" y="135" text-anchor="middle" font-weight="700" fill="#e0573e">CSA</text>
+      <circle cx="54" cy="92" r="16" fill="#fff" stroke="#46505c"/><text x="54" y="96" text-anchor="middle" font-size="10.5">PA</text>
+      <circle cx="174" cy="92" r="16" fill="#fff" stroke="#46505c"/><text x="174" y="96" text-anchor="middle" font-size="10.5">DV</text>
+      <circle cx="54" cy="172" r="16" fill="#fff" stroke="#46505c"/><text x="54" y="176" text-anchor="middle" font-size="10.5">IPV</text>
+      <circle cx="174" cy="172" r="16" fill="#fff" stroke="#46505c"/><text x="174" y="176" text-anchor="middle" font-size="10.5">재피해</text>
+      <path d="M68 100 L94 118 M160 100 L134 118 M68 164 L94 144 M160 164 L134 144 M70 92 H158 M54 108 V156" class="inkthin"/>
+      <text x="114" y="228" text-anchor="middle" fill="#46505c">CSA는 무엇과</text>
+      <text x="114" y="246" text-anchor="middle" fill="#46505c">함께 일어나는가</text>
+      <text x="114" y="272" text-anchor="middle" fill="#828d9b" font-size="11">생애·세대 간 연결</text>
+      <!-- cumulative -->
+      <rect x="232" y="10" width="212" height="280" rx="12" fill="#fff" stroke="#c78a1e" stroke-width="1.5"/>
+      <text x="338" y="34" text-anchor="middle" font-weight="700" fill="#c78a1e" font-size="14">누적위험</text>
+      <text x="338" y="52" text-anchor="middle" fill="#828d9b" font-size="11">cumulative risk · 4편</text>
+      <rect x="270" y="160" width="26" height="30" fill="#fbf1dc" stroke="#c78a1e"/><rect x="304" y="130" width="26" height="60" fill="#fbf1dc" stroke="#c78a1e"/><rect x="338" y="100" width="26" height="90" fill="#fbf1dc" stroke="#c78a1e"/><rect x="372" y="72" width="26" height="118" fill="#fbf1dc" stroke="#c78a1e"/>
+      <text x="283" y="208" text-anchor="middle" font-size="11">1</text><text x="317" y="208" text-anchor="middle" font-size="11">2</text><text x="351" y="208" text-anchor="middle" font-size="11">3</text><text x="385" y="208" text-anchor="middle" font-size="11">4+</text>
+      <text x="338" y="246" text-anchor="middle" fill="#46505c">많이 겪을수록</text>
+      <text x="338" y="264" text-anchor="middle" fill="#46505c">더 나쁜가</text>
+      <!-- comparative -->
+      <rect x="456" y="10" width="212" height="280" rx="12" fill="#fff" stroke="#1f4e79" stroke-width="1.5"/>
+      <text x="562" y="34" text-anchor="middle" font-weight="700" fill="#1f4e79" font-size="14">비교</text>
+      <text x="562" y="52" text-anchor="middle" fill="#828d9b" font-size="11">comparative · 24편</text>
+      <path d="M562 82 V178 M502 106 H622" class="ink"/><path d="M548 178 H576" class="ink"/>
+      <path d="M502 106 L482 150 H522 Z" fill="#fdeee9" stroke="#e0573e"/><text x="502" y="170" text-anchor="middle" fill="#e0573e" font-weight="700">CSA</text>
+      <path d="M622 106 L602 140 H642 Z" fill="#e8f1fa" stroke="#1f4e79"/><text x="622" y="160" text-anchor="middle" fill="#1f4e79" font-weight="700">PV/기타</text>
+      <text x="562" y="228" text-anchor="middle" fill="#46505c">CSA 고유의 효과가</text>
+      <text x="562" y="246" text-anchor="middle" fill="#46505c">남는가</text>
+      <!-- configural -->
+      <rect x="680" y="10" width="212" height="280" rx="12" fill="#e6f5f0" stroke="#3fa88a" stroke-width="2"/>
+      <text x="786" y="34" text-anchor="middle" font-weight="700" fill="#2c7d73" font-size="14">배열</text>
+      <text x="786" y="52" text-anchor="middle" fill="#828d9b" font-size="11">configural · 21편</text>
+      <ellipse cx="740" cy="110" rx="38" ry="28" fill="#fff" stroke="#3fa88a"/><g fill="#e0573e"><circle cx="728" cy="104" r="4"/><circle cx="744" cy="116" r="4"/><circle cx="752" cy="100" r="4"/></g>
+      <ellipse cx="830" cy="104" rx="40" ry="30" fill="#fff" stroke="#3fa88a"/><g fill="#1f4e79"><circle cx="818" cy="98" r="4"/><circle cx="836" cy="112" r="4"/><circle cx="846" cy="96" r="4"/></g><g fill="#e0573e"><circle cx="824" cy="116" r="4"/></g>
+      <ellipse cx="786" cy="172" rx="44" ry="26" fill="#fff" stroke="#3fa88a"/><g fill="#aab4c1"><circle cx="770" cy="170" r="4"/><circle cx="790" cy="178" r="4"/><circle cx="804" cy="166" r="4"/></g>
+      <text x="786" y="228" text-anchor="middle" fill="#46505c">어떤 조합으로</text>
+      <text x="786" y="246" text-anchor="middle" fill="#46505c">함께 나타나는가</text>
+      <text x="786" y="272" text-anchor="middle" fill="#2c7d73" font-size="11" font-weight="600">새로운 최전선</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 네 접근은 서로 다른 질문에 답합니다. 상호연결은 <b>무엇이 함께 일어나는가</b>, 누적위험은 <b>얼마나 많은가</b>, 비교는 <b>무엇이 더 해로운가</b>, 배열은 <b>어떤 모양으로 묶이는가</b>를 묻습니다. 같은 "다중피해 연구"라는 이름 아래 이렇게 다른 질문이 섞여 있으니 결과가 엇갈리는 것은 자연스럽습니다. 각 접근의 연구 수는 원문 본문의 수치입니다.</div>
+</div>
+
+<div class="subhead"><span class="code">5.1</span><h3>상호연결 접근</h3><span class="en">Interconnection approach</span><span class="verdict promising">descriptive</span></div>
+<div class="panel">
+  <p>14편은 성학대와 다른 피해의 동시발생을 기술적으로 보고했고, 15편은 그 통계적 관계를 검증했습니다. 예를 들어 Pereda 등(2016)과 Milne(2011)의 성학대 피해자는 모두 다른 형태의 폭력도 보고했고, 성매매 혐의로 사법체계에 들어온 청소년의 93.6%가 이전 피해 경험이 있었습니다. 성학대 이력은 성인 초기의 친밀한 파트너 폭력 피해와 가해, 성인기 성적 재피해의 위험을 높였고, 어머니의 성학대 이력이 자녀의 다중피해와 연결되는 <strong>세대 간 연속성</strong>도 보고되었습니다. 저자들은 이 결과가 성학대가 고립되어 일어나는 일이 드물다는 것, 따라서 성학대 연구에 다중피해 틀이 필요하다는 것을 다시 확인한다고 봅니다. 다만 대부분 횡단 설계라 인과를 말하기 어렵고, 연관의 크기가 어떻게 다른지, 그것이 건강과 어떻게 이어지는지는 거의 탐구되지 않았습니다.</p>
+</div>
+
+<div class="subhead"><span class="code">5.2</span><h3>누적위험 접근</h3><span class="en">Cumulative risk approach</span><span class="verdict mixed">dose-response only</span></div>
+<div class="panel">
+  <p>성학대 생존자만으로 구성된 표본에서 다중피해의 누적 효과를 본 연구는 네 편이었습니다. 더 많은 유형의 학대를 겪은 성학대 피해 여아는 부적응적 대처가 많았고, 성착취 청소년은 외상 범주가 많을수록 부적응적 외상 후 인지가 많았으며, 성인기 외상 증상과 소득에서도 비슷한 결과가 나왔습니다. Hébert 등(2018)은 정서조절과 해리를 거치는 기제까지 밝혔습니다. 이 연구들은 <strong>용량-반응</strong> 양상, 즉 단일 유형보다 전체 부담이 중요하다는 것을 시사합니다. 그러나 저자들은 이 네 편 가운데 <strong>어느 연구도 성학대의 특성을 고려하지 않았다</strong>고 지적합니다.</p>
+</div>
+
+<div class="subhead"><span class="code">5.3</span><h3>비교 접근</h3><span class="en">Comparative approach</span><span class="verdict mixed">inconclusive</span></div>
+<div class="panel">
+  <p>포함 연구의 40% 가까이(24편)가 성학대의 고유한 영향을 다른 학대나 다중피해 전체와 비교하려 했습니다. 이 접근은 두 갈래로 나뉩니다.</p>
+  <p><strong>성학대 대 다른 개별 유형.</strong> 성학대와 다른 학대를 각각 별개 예측변수로 넣은 12편에서는 한 편을 빼고 모두 성학대의 고유한 기여를 시사했습니다. 스웨덴 표본에서 24가지 아동기 역경 가운데 성학대는 성인기 성적 재피해의 일관된 예측변수였고, 신체학대, 부모 폭력 목격, 또래 괴롭힘을 통제해도 성학대는 공격성 결과에서 고유한 분산을 설명했습니다. 성학대 특성을 고려하면, 함께 겪은 방임이나 신체학대가 아니라 <strong>더 심각한 성학대</strong>(가해자가 많고, 기간이 길고, 행위가 많은)가 정신건강 악화와 연관되었습니다(McElroy et al., 2016). 예외는 위탁보호에 들어온 13세 이전 아동에서 성학대나 신체학대가 아니라 정서학대와 방임이 PTSD의 주된 예측변수였던 McGuire 등(2021)입니다.</p>
+  <p><strong>성학대 대 다중피해 전체.</strong> 결과는 훨씬 엇갈렸습니다. "성학대를 당한 사람이 성학대 가해자가 된다"는 가설은 지지되지 않았고, 성인기 성범죄를 예측한 것은 성학대가 아니라 다중피해였습니다. 여러 연구에서 성착취나 성매매 노출 자체는 결과와 연관이 없거나 반대 방향이었지만 ACE 점수와 피해 지표는 일관되게 연관되었습니다. 한국 연구(Choi &amp; Oh, 2013)에서도 여러 대인 외상을 겪은 아동은 성학대 특성과 관계없이 성학대만 겪은 아동보다 진단과 행동문제가 많았습니다. 반대로 다중피해를 모두 고려하면 다중피해 자체는 효과가 없고 성적 피해만 자살경향성이나 우울의 고유한 예측변수로 남는다는 연구도 두 편 있었습니다.</p>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">비판적 읽기 · 하위 집계가 맞지 않는 곳</span><br>
+  본문은 비교 접근을 24편이라고 쓴 뒤, 그 가운데 "12편"이 성학대를 다른 학대 유형과 나란히 평가했고, "14편"이 성학대를 다중피해 전체와 비교했다고 적습니다. 12와 14를 더하면 26이므로, 두 하위 묶음에 모두 들어간 연구가 있는 것으로 보입니다. 원문은 이 중복을 따로 설명하지 않으므로 <strong>확인 필요</strong>입니다. 리뷰를 인용할 때는 하위 집계보다 전체 집계(24편)를 쓰는 편이 안전합니다.
+</div>
+
+<div class="subhead"><span class="code">5.4</span><h3>배열 접근</h3><span class="en">Configural approach</span><span class="verdict new">emerging</span></div>
+<div class="panel">
+  <p>21편은 피해들이 <strong>어떤 조합으로</strong> 결과와 연관되는지를 봤습니다. 방법은 세 가지입니다.</p>
+  <p>첫째, <strong>미리 정한 조합으로 집단 나누기</strong>. Malthaner 등(2024)은 신체학대, 성학대, 방임의 모든 조합으로 여덟 집단을 만들었는데, 행동 결과의 위험은 신체학대와 방임을 함께 겪은 집단이 가장 높았고, 성학대만 겪은 집단은 가장 약하고 유의하지 않았습니다. 반면 성학대가 포함된 다중피해 조합이 성학대가 없는 조합보다 물질사용장애와 해리가 더 나빴다는 연구도 있습니다.</p>
+  <p>둘째, <strong>상호작용 검증</strong>. 성학대와 방임이 청소년 우울을 <strong>곱셈적으로</strong> 높였고(Emery et al., 2022), 부모·형제의 신체학대와 부모 간 폭력 노출이 성학대와 성적 공격성의 연관을 키웠습니다. Niu 등(2025)은 머신러닝으로 비선형 배열을 모형화해, 자살사고에서 자살계획으로 넘어가는 데 비자살적 자해, 정서학대, 정서방임, 신체학대가 상위 네 요인이라는 결과를 냈습니다.</p>
+  <p>셋째, <strong>자료에서 유형 도출</strong>. 잠재계층분석이나 군집분석을 쓴 12편은 2~5개 계층을 찾았고 4계층이 가장 흔했습니다(6편). 피해가 없거나 낮은 계층과 다중피해 계층은 거의 언제나 나타났고, 다섯 편은 <strong>성학대 중심 계층</strong>을 따로 찾았습니다. 반면 두 연구에서는 성학대가 언제나 다른 학대와 함께 나타나 성학대만의 계층이 생기지 않았습니다. 다중피해 계층이 대체로 결과가 나빴지만, 결정적인 용량-반응 양상이 늘 나타나지는 않았습니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">접근별 연구 출판 추이, 2007~2025 (원문 Figure 2를 근사치로 다시 그림)</div>
+  <span class="fig-tag kr">AIR Lab 재구성</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 330" width="100%" style="max-width:900px" role="img" aria-label="접근별 연간 평균 출판 수 추이">
+    <g font-size="12.5">
+      <line x1="90" y1="270" x2="680" y2="270" stroke="#46505c" stroke-width="1.4"/>
+      <line x1="90" y1="40" x2="90" y2="270" stroke="#46505c" stroke-width="1.4"/>
+      <g stroke="#e6ebf1"><line x1="90" y1="194" x2="680" y2="194"/><line x1="90" y1="117" x2="680" y2="117"/><line x1="90" y1="40" x2="680" y2="40"/></g>
+      <g fill="#828d9b" text-anchor="end"><text x="82" y="274">0</text><text x="82" y="198">1</text><text x="82" y="121">2</text><text x="82" y="44">3</text></g>
+      <g fill="#46505c" text-anchor="middle"><text x="170" y="292">2007~2012</text><text x="385" y="292">2013~2018</text><text x="600" y="292">2019~2025</text></g>
+      <text x="36" y="160" text-anchor="middle" fill="#46505c" transform="rotate(-90 36 160)">연간 평균 출판 수 (근사)</text>
+      <polyline points="170,245 385,90 600,138" fill="none" stroke="#3a9a8f" stroke-width="2.6" stroke-dasharray="7 5"/>
+      <polyline points="170,257 385,129 600,127" fill="none" stroke="#1f4e79" stroke-width="2.6"/>
+      <polyline points="170,270 385,206 600,83" fill="none" stroke="#e0573e" stroke-width="3"/>
+      <polyline points="170,257 385,257 600,248" fill="none" stroke="#c78a1e" stroke-width="2.4" stroke-dasharray="3 4"/>
+      <g><line x1="710" y1="96" x2="740" y2="96" stroke="#3a9a8f" stroke-width="2.6" stroke-dasharray="7 5"/><text x="748" y="100" fill="#20262e">상호연결</text>
+      <line x1="710" y1="126" x2="740" y2="126" stroke="#c78a1e" stroke-width="2.4" stroke-dasharray="3 4"/><text x="748" y="130" fill="#20262e">누적위험</text>
+      <line x1="710" y1="156" x2="740" y2="156" stroke="#1f4e79" stroke-width="2.6"/><text x="748" y="160" fill="#20262e">비교</text>
+      <line x1="710" y1="186" x2="740" y2="186" stroke="#e0573e" stroke-width="3"/><text x="748" y="190" fill="#e0573e" font-weight="700">배열</text></g>
+    </g>
+  </svg>
+  </div>
+  <p class="fig-cap">원문 Figure 2는 각 기간의 연간 평균 출판 수를 보여 주며, 마지막 기간(2019~2025)이 7년으로 더 길다는 점을 보정한 값입니다. 이 그림의 선 위치는 원문 그래프를 눈으로 읽은 근사치이므로, 정확한 값은 원문을 확인하십시오.</p>
+  <div class="fig-implies"><b>📊 그림 읽는 법.</b> 상호연결(초록 점선)과 비교(파란 실선) 접근은 2013~2018년에 정점에 이르렀다가 정체하거나 줄었습니다. 반면 <b>배열 접근(빨간 굵은 선)은 세 기간 내내 늘어나</b> 2019~2025년에는 네 접근 가운데 가장 많아졌습니다. 누적위험 접근은 처음부터 끝까지 바닥에 머뭅니다. 저자들은 배열 접근이 "새로운 최전선(a new frontier)"으로 떠오르고 있다고 해석합니다. 다만 이 그림은 성학대 생존자 표본에서 다중피해를 명시적으로 쓴 연구만 센 것이라, 일반 다중피해 연구 전체의 추이와는 다를 수 있습니다.</div>
+</div>
+
+<!-- §06 theory -->
+<div class="section-head" id="theory">
+  <div class="section-num">06</div>
+  <div class="section-title-block"><h2>이론: 인용은 많지만 검증은 없다</h2><p class="section-subtitle">Use of theory</p></div>
+</div>
+
+<div class="panel">
+  <p>62편 가운데 48편이 어떤 이론을 인용했고, 14편은 이론을 언급하지 않았습니다. 이론은 크게 두 계열이었습니다. <strong>복합외상 이론</strong> 계열은 여러 만성적 외상의 광범위한 효과를 설명하며, 애착과 배신, 발달·신경생물학 모형, 외상 후 인지, 정서조절과 해리, 행동조절, 대인관계 문제, 누적적 불이익 같은 경로를 끌어왔습니다. 일부는 동시발생 폭력이 상승적으로 피해를 키운다는 <strong>신데믹(syndemic) 이론</strong>을 썼습니다. <strong>폭력의 순환 이론</strong> 계열은 아동기 학대가 이후의 가해와 재피해 위험을 높인다는 Widom(1989)의 틀 위에서, 성학대가 성범죄, 친밀한 파트너 폭력, 비행을 고유하게 설명하는지 검증했습니다.</p>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">저자들의 핵심 비판 · 사후적으로 불려 나온 이론</span><br>
+  저자들이 보기에 이 분야의 더 근본적인 문제는 이론의 <strong>쓰임새</strong>입니다. 연구들은 처음부터 이론으로 가설을 세우기보다 결과를 해석하기 위해 이론을 <strong>사후적으로</strong> 불러왔습니다. 많은 연구가 다중피해의 용량-반응 효과를 설명하려고 신경생물학 모형을 인용했지만, 그 경로를 실제로 검증한 연구는 하나도 없었습니다. 그 결과 다중피해와 성학대가 결과로 이어지는 관계는 여전히 <strong>"블랙박스"</strong>로 남아 있다고 저자들은 결론 내립니다.
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">성학대와 정신병리를 잇는 세 범주의 기제 (Noll, 2021; Future Directions 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 340" width="100%" style="max-width:900px" role="img" aria-label="고유 기제, 공유 기제, 복합 수렴의 벤다이어그램">
+    <g font-size="13">
+      <circle cx="350" cy="165" r="150" fill="#e0573e" fill-opacity=".10" stroke="#e0573e" stroke-width="2"/>
+      <circle cx="550" cy="165" r="150" fill="#1f4e79" fill-opacity=".10" stroke="#1f4e79" stroke-width="2"/>
+      <text x="290" y="140" text-anchor="middle" font-weight="700" fill="#e0573e" font-size="14">CSA 고유 기제</text>
+      <text x="290" y="168" text-anchor="middle" fill="#46505c" font-size="12">예: 외상적 성애화</text>
+      <text x="290" y="186" text-anchor="middle" fill="#46505c" font-size="11.5">traumatic sexualization</text>
+      <text x="612" y="128" text-anchor="middle" font-weight="700" fill="#1f4e79" font-size="14">학대 유형 공유 기제</text>
+      <text x="612" y="156" text-anchor="middle" fill="#46505c" font-size="12">스트레스의 생물학적 각인</text>
+      <text x="612" y="176" text-anchor="middle" fill="#46505c" font-size="12">불안정 애착</text>
+      <text x="612" y="196" text-anchor="middle" fill="#46505c" font-size="12">정서조절곤란</text>
+      <text x="450" y="160" text-anchor="middle" font-weight="700" fill="#20262e">복합 수렴</text>
+      <text x="450" y="180" text-anchor="middle" fill="#46505c" font-size="11.5">둘이 함께</text>
+      <text x="450" y="334" text-anchor="middle" fill="#828d9b" font-size="12">다중피해 틀은 세 영역을 구별할 수 있어야 한다</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 저자들이 앞으로의 방향으로 제시한 틀입니다. 누적 합산은 오른쪽 원, 즉 모든 학대가 공유하는 기제만 가정합니다. 비교 접근은 왼쪽 원을 찾으려 하지만 공유 기제와 분리하기 어렵습니다. Noll(2021)의 세 범주를 받아들이면, 연구 질문은 "성학대가 고유하게 해로운가 아닌가"의 양자택일이 아니라 <b>"어떤 결과에서 어떤 기제가 얼마나 작동하는가"</b>로 바뀝니다.</div>
+</div>
+
+<!-- §07 discussion -->
+<div class="section-head" id="disc">
+  <div class="section-num">07</div>
+  <div class="section-title-block"><h2>논의: 네 접근의 강점과 약점, 그리고 남은 질문</h2><p class="section-subtitle">Discussion · Future directions · Limitations</p></div>
+</div>
+
+<div class="tbl-wrap">
+<table class="mini-table">
+  <tr><th>접근</th><th>강점</th><th>약점</th></tr>
+  <tr><td><strong>상호연결</strong></td><td>학대 간 상호관계와 외상의 발달적 궤적을 그릴 잠재력</td><td>대부분 횡단 설계, 연관의 크기와 건강 결과와의 관계는 거의 탐구되지 않음</td></tr>
+  <tr><td><strong>누적위험</strong></td><td>전체 학대 이력을 보게 함, 계산과 해석이 단순, 통계적 검정력</td><td>피해의 동질성과 가산성을 가정, 유형 내 변이와 동시발생 패턴을 무시. 상호작용·곱셈 효과 근거와 충돌</td></tr>
+  <tr><td><strong>비교 (개별 유형)</strong></td><td>성학대 고유의 기여를 식별할 수 있음</td><td>큰 표본 필요, 다중공선성. 학대들이 서로 상관되어 있어 특정 유형만 떼어 내는 것은 임상적 의미가 적음</td></tr>
+  <tr><td><strong>비교 (다중피해 전체)</strong></td><td>간명하고 성학대 특성을 분석할 여력이 생김</td><td>누적위험과 같은 한계, 다중피해 경험의 이질성을 가림</td></tr>
+  <tr class="hi"><td><strong>배열</strong></td><td>상승작용과 군집 패턴을 포착. 사람 중심 접근은 개인 안의 동시발생 패턴을 보여 줌</td><td>사전 조합은 유형 수가 늘면 실행 불가, 고차 상호작용은 해석이 어려움, 머신러닝은 대규모 대표 자료 필요. 잠재계층은 지표 선택과 계층 이름 붙이기가 자의적이라 연구 간 종합이 어려움</td></tr>
+</table>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 · 사람 중심 분석도 만능은 아니다</span><br>
+  배열 접근의 약점 가운데 마지막 항목은 랩에서 LCA와 LPA를 쓰는 연구자 모두가 기억해야 할 문장입니다. 저자들은 잠재계층분석이 개인 안의 동시발생 패턴을 보여 주는 "사람 중심" 접근이라는 장점을 인정하면서도, <strong>어떤 피해 지표를 넣을지의 자의적 선택, 서로 다른 표본, 도출된 계층에 이름을 붙이는 주관성</strong> 때문에 연구들을 모아 비교하거나 검증하기 어렵다고 지적합니다. LCA 논문을 쓸 때 지표 선택의 이론적 근거, 계층 이름의 기준, 다른 연구와의 대응을 명시해야 하는 이유입니다.
+</div>
+
+<div class="panel">
+  <p><strong>앞으로의 방향.</strong> 저자들은 일반 아동학대 연구에서 흔히 쓰는 누적위험 모형을 넘어, 성학대와 다른 피해의 얽힘을 풀고 그 고유한 경로와 공유된 경로를 구별하는 <strong>통합적 틀</strong>이 필요하다고 말합니다. 그렇지 않으면 다중피해는 서로 다른 경험을 하나의 포괄적 용어로 균질화하는 단순한 구인이 되어, 표적 예방과 개입을 위한 쓸모를 잃게 됩니다. 방법론적으로는 개인이 자기 경험을 어떻게 구성하는지 이해하기 위한 질적·혼합방법 연구, 발달 궤적을 그리기 위한 종단 연구, 임상과 일반 표본을 모두 쓰는 연구, 남성과 성소수자 참여자를 의도적으로 모집하는 연구, 북미 밖의 표본, 그리고 무엇보다 이론에 근거한 가설과 표준화된 측정을 요구합니다.</p>
+  <p><strong>한계.</strong> 저자들은 처음의 근본 질문, 즉 성학대의 후유증이 성학대 자체 때문인지 다중피해 때문인지에 대해서는 <strong>답하지 못했다</strong>고 분명히 밝힙니다. 또 성학대에 초점을 둔 검색 전략은 성학대의 유의한 효과를 보고한 연구 쪽으로 치우칠 수 있고(다른 피해에 초점을 두었을 때 성학대 효과가 사라진 연구는 놓칠 수 있음), scoping review라서 근거의 질을 평가하지 않았으며, 영어 문헌으로 한정했다고 적습니다.</p>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">🧪 용어 정리</span><br>
+  <strong>다중피해(polyvictimization)</strong>: 한 개인이 여러 종류의 피해를 겪는 것(Finkelhor et al., 2007). 사건 기반, 영역 기반, 표본 상위 X% 등으로 다르게 정의됨.<br>
+  <strong>뭉뚱그리기(lumping) 접근</strong>: 모든 피해 유형이 결과에 동등하게 기여하고, 특정 유형보다 전체 개수가 중요하다고 가정하는 분석 방식.<br>
+  <strong>배열(configural) 접근</strong>: 피해들이 결합, 상호작용, 군집하는 방식이 결과와 어떻게 연관되는지 보는 접근.<br>
+  <strong>신데믹(syndemic)</strong>: 둘 이상의 문제가 함께 나타나 상승적으로 해를 키우는 현상.<br>
+  <strong>PCC 틀</strong>: Joanna Briggs Institute의 scoping review 포함기준 틀. 대상(Population), 개념(Concept), 맥락(Context).
+</div>
+
+<!-- §08 phrases -->
+<div class="section-head" id="phrases">
+  <div class="section-num">08</div>
+  <div class="section-title-block"><h2>명문장</h2><p class="section-subtitle">영어 논문에서 다시 쓸 수 있는 문장과 그 이유</p></div>
+</div>
+
+<div class="phrase-grid">
+  <div class="phrase span2">
+    <div class="en">"Then a fundamental question emerges for CSA-focused research: Do these adverse outcomes stem from specific toxicity of child sexual abuse, or overall experience of polyvictimization?"</div>
+    <div class="kr">그렇다면 CSA에 초점을 둔 연구에는 근본적인 질문이 생긴다: 이 부정적 결과들은 아동 성학대의 특정한 독성에서 비롯되는가, 아니면 다중피해의 전체 경험에서 비롯되는가?</div>
+    <div class="why"><b>왜 유용한가.</b> 서론 첫 단락을 하나의 양자택일 질문으로 압축합니다. "a fundamental question emerges for ...:" 뒤에 콜론과 의문문을 두는 구조는 연구 문제를 독자의 머릿속에 선명하게 남깁니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"For instance, an individual who experienced a single event of sexual assault and mild physical abuse would receive the same "count" of 2 as someone who endured chronic neglect and insidious intrafamilial CSA ..."</div>
+    <div class="kr">예를 들어, 한 번의 성폭행과 가벼운 신체학대를 겪은 사람은 만성적 방임과 은밀한 가족 내 성학대를 견뎌 온 사람과 똑같이 "2"라는 점수를 받게 된다.</div>
+    <div class="why"><b>왜 유용한가.</b> 추상적 비판(동질성 가정)을 구체적인 두 사람의 대비로 바꿉니다. 합산 점수의 한계를 지적할 때 이 구조를 빌려 자기 연구의 변수로 예시를 만들 수 있습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"These findings reiterate that CSA rarely occurs in isolation, necessitating the application of the PV framework in conducting CSA research."</div>
+    <div class="kr">이 결과들은 CSA가 고립되어 일어나는 일이 드물다는 것을 다시 확인시켜 주며, 따라서 CSA 연구에 다중피해 틀을 적용할 필요가 있다.</div>
+    <div class="why"><b>왜 유용한가.</b> 결과 요약과 그 함의를 분사구문(necessitating)으로 한 문장에 잇습니다. 리뷰에서 한 하위절을 마무리할 때 쓰기 좋은 리듬입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"It is also of less clinical significance to isolate the unique contribution of any specific type, given that different forms of abuse are often correlated ..."</div>
+    <div class="kr">서로 다른 형태의 학대가 흔히 상관되어 있다는 점을 고려하면, 특정 유형의 고유한 기여를 떼어 내는 것은 임상적 의미도 덜하다.</div>
+    <div class="why"><b>왜 유용한가.</b> 통계적 한계(다중공선성)에서 한 걸음 더 나아가 임상적 의미를 따집니다. 분석 전략을 정당화할 때 "통계적으로 가능한가"와 "실천적으로 의미 있는가"를 나눠 쓰는 법입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Instead, they retrospectively invoke theories to interpret findings, making minimal contribution to advance a mechanistic understanding of CSA and/or PV on adverse outcomes."</div>
+    <div class="kr">대신 연구들은 결과를 해석하기 위해 이론을 사후적으로 끌어오며, 그 결과 CSA나 다중피해가 부정적 결과에 미치는 기제에 대한 이해를 진전시키는 데 거의 기여하지 못한다.</div>
+    <div class="why"><b>왜 유용한가.</b> "이론을 인용하는 것"과 "이론으로 가설을 세우는 것"을 구별하는 문장입니다. 리뷰나 심사에서 이론적 기반의 부족을 지적할 때 "retrospectively invoke"라는 동사 조합이 정확합니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Consequently, what underlies the PV/CSA-outcome relationships remains a "black box," limiting scientific progress or targeted interventions."</div>
+    <div class="kr">결국 다중피해·CSA와 결과의 관계 밑에 무엇이 있는지는 "블랙박스"로 남아, 과학적 진전과 표적 개입을 가로막는다.</div>
+    <div class="why"><b>왜 유용한가.</b> 기제 연구의 필요성을 주장하는 연구 목적 단락의 마무리 문장으로 쓸 수 있습니다. 연구 공백과 그 실천적 비용을 한 문장에 함께 담습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Failure to do so would render PV a simplistic construct, homogenizing distinct experiences under an all-inclusive term and diluting its utility for developing targeted prevention or intervention."</div>
+    <div class="kr">그렇게 하지 못하면 다중피해는 서로 다른 경험을 포괄적인 하나의 용어 아래 균질화하는 단순한 구인이 되어, 표적 예방과 개입을 개발하는 데의 쓸모를 잃게 될 것이다.</div>
+    <div class="why"><b>왜 유용한가.</b> "Failure to do so would ..."는 제언의 필요성을 그 반대 상황의 비용으로 보여 주는 표현입니다. 두 개의 분사구문(homogenizing, diluting)으로 비용을 구체화합니다.</div>
+  </div>
+  <div class="phrase span2">
+    <div class="en">"While this review might reveal more problems than answers, it reinforces the need to move beyond the simplistic "more is worse" premise in explaining adverse outcomes."</div>
+    <div class="kr">이 리뷰가 답보다 문제를 더 많이 드러냈을지 모르지만, 부정적 결과를 설명할 때 단순한 "많을수록 나쁘다"는 전제를 넘어서야 할 필요성을 강화한다.</div>
+    <div class="why"><b>왜 유용한가.</b> 결정적 결론을 내리지 못한 리뷰의 기여를 정직하면서도 당당하게 주장하는 결론 문장입니다. "might reveal more problems than answers"라는 겸손한 양보 뒤에 "it reinforces the need"로 기여를 세웁니다.</div>
+  </div>
+</div>
+
+<!-- §09 our study -->
+<div class="section-head" id="ourstudy">
+  <div class="section-num">09</div>
+  <div class="section-title-block"><h2>AIR Lab 연구와의 연결</h2><p class="section-subtitle">ACE 합산 점수와 잠재계층, 그리고 피해 유형의 고유성</p></div>
+</div>
+
+<div class="panel">
+  <p>이 리뷰는 성학대를 다루지만, 질문의 구조는 랩의 거의 모든 ACEs 연구에 그대로 옮겨집니다. 랩이 KNYPI 자료로 잠재계층·잠재프로파일 유형을 찾는 연구는 저자들이 말하는 <strong>배열 접근</strong>에 속하고, ACE 합산 점수를 쓰는 연구는 <strong>누적위험 접근</strong>에, 특정 학대 유형의 효과를 통제 후 보는 연구는 <strong>비교 접근</strong>에 속합니다. 같은 랩 안에서도 연구마다 다른 질문을 하고 있다는 것을 의식하고, 서론에서 "우리는 어떤 질문에 답하려는가"를 이 네 범주로 명시하면 논문의 논리가 훨씬 분명해집니다.</p>
+  <p>특히 배열 접근에 대한 저자들의 비판은 랩의 LCA 연구에 직접 적용됩니다. 지표 선택의 근거, 계층 이름의 기준, 다른 연구의 계층과의 대응을 밝혀야 하고, 다중피해 계층이 언제나 결과가 가장 나쁜 것은 아니었다는 점(예: 일부 결과에서 성학대 단독 계층과 차이가 없음)은 "피해가 많은 계층이 가장 위험하다"는 해석을 자동으로 하지 말라는 경고입니다. 또 Emery 등의 곱셈적 상호작용 연구와 Noll(2021)의 세 범주 기제 틀은, 정서학대와 방임의 결합이 자해에 미치는 영향을 보는 연구에서 이론적 근거로 쓸 수 있습니다.</p>
+</div>
+
+<div class="tbl-wrap">
+<table class="mini-table">
+  <tr><th>우리 연구 요소</th><th>이 리뷰에서의 대응</th></tr>
+  <tr><td>ACE 합산 점수</td><td>누적위험 접근. 동질성·가산성 가정을 명시하고 한계로 다뤄야 함</td></tr>
+  <tr class="hi"><td>KNYPI 잠재계층·프로파일 유형</td><td>배열 접근. 지표 선택의 근거, 계층 이름의 기준, 다른 연구와의 대응 명시 필요</td></tr>
+  <tr><td>특정 학대 유형 효과 (예: 정서학대 → 자해)</td><td>비교 접근. 다중공선성과 "고유 효과 분리의 임상적 의미" 문제 고려</td></tr>
+  <tr><td>학대 유형 간 상호작용</td><td>배열 접근의 상호작용 검증. 곱셈적 효과(Emery et al., 2022) 근거</td></tr>
+  <tr><td>기제 변수 (정서조절, 해리)</td><td>Noll(2021)의 고유·공유·복합 기제 틀로 가설 설정</td></tr>
+  <tr><td>가정 밖 청소년 표본</td><td>다중피해 계층이 대부분일 표본. 다중피해 "안의" 이질성을 볼 필요</td></tr>
+</table>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">스터디 토론 질문</span><br>
+  <strong>Q1.</strong> 저자들은 "다중피해"라는 단어를 명시적으로 쓴 연구만 포함했습니다. 이 선택은 리뷰의 결론을 어떻게 제한할까요? ACEs나 누적외상이라는 용어로 같은 질문을 다룬 연구를 포함했다면 결과가 달라졌을까요?<br>
+  <strong>Q2.</strong> 성학대가 언제나 다른 학대와 함께 나타나 성학대 단독 계층이 생기지 않는 표본이라면, 성학대의 고유 효과라는 질문 자체가 의미가 있을까요? 그 표본에서 던질 수 있는 더 나은 질문은 무엇일까요?<br>
+  <strong>Q3.</strong> 우리 연구 하나를 골라, 그 연구가 네 가지 접근 가운데 어디에 해당하는지, 그리고 그 접근의 약점을 서론이나 한계에서 어떻게 다뤘는지(혹은 다루지 않았는지) 점검해 봅시다.
+</div>
+
+<!-- §10 worksheet -->
+<div class="section-head" id="work">
+  <div class="section-num">10</div>
+  <div class="section-title-block"><h2>정리 활동</h2><p class="section-subtitle">입력한 내용은 이 브라우저에 자동 저장됩니다</p></div>
+</div>
+
+<div class="worksheet">
+  <h4>활동 1 · 내 연구의 접근 이름 붙이기</h4>
+  <div class="prompt">진행 중인 연구 하나를 골라 네 접근(상호연결, 누적위험, 비교, 배열) 가운데 어디에 속하는지 쓰고, 표에서 그 접근의 약점 하나를 골라 내 연구에서 어떻게 보완할지 적어 보세요.</div>
+  <textarea data-key="w1" placeholder="연구: ...&#10;접근: ...&#10;약점과 보완 방안: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 2 · "똑같이 2점" 예시 만들기</h4>
+  <div class="prompt">내 연구의 ACE 또는 피해 문항으로, 합산 점수는 같지만 경험의 질이 크게 다른 두 청소년의 예시를 만들어 보세요. 이 예시를 논문의 한계 절에 넣는다면 어떤 영어 문장이 될까요?</div>
+  <textarea data-key="w2" placeholder="청소년 A: ...&#10;청소년 B: ...&#10;Limitation sentence: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 3 · 이론으로 가설 먼저 세우기</h4>
+  <div class="prompt">Noll(2021)의 세 범주(고유 기제, 공유 기제, 복합 수렴) 가운데 하나를 골라, 분석 전에 세울 수 있는 구체적인 가설 하나를 써 보세요. 결과를 본 뒤 이론을 불러오는 것과 무엇이 다른지도 한 줄로 적습니다.</div>
+  <textarea data-key="w3" placeholder="선택한 범주: ...&#10;사전 가설: ...&#10;사후 해석과의 차이: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="closing">
+  <div class="closing-inner">
+    <h2>이 논문이 보여 주는 것: 답할 수 없다는 것을 정확히 보여 주는 일도 이론의 진전이다</h2>
+    <p>이 리뷰는 처음 던진 질문, 성학대가 고유하게 해로운가 아니면 다중피해의 일부인가에 답하지 못합니다. 저자들도 그 사실을 숨기지 않습니다. 그러나 왜 답할 수 없는지를 <strong>정확하게</strong> 보여 줍니다. 22편은 성학대를 정의하지 않았고, 다중피해의 범위는 두 가지에서 열 가지 이상까지 흩어져 있으며, 같은 질문처럼 보이는 연구들이 사실은 네 가지 서로 다른 질문을 하고 있었습니다. 그리고 대부분의 연구는 이론을 가설의 출발점이 아니라 결과의 해설로 썼습니다.</p>
+    <p>이론은 이렇게 자라기도 합니다. "많을수록 나쁘다"는 공식이 틀렸다고 증명하는 대신, 그 공식이 무엇을 볼 수 없게 만드는지를 보여 주고, 그 자리에 <strong>연결, 상호작용, 누적, 집적</strong>이라는 더 정교한 질문의 목록을 세웁니다. 다음 세대의 연구가 무엇을 재고 어떻게 분석해야 하는지가 이 목록에서 나옵니다. 답보다 문제를 더 많이 드러낸 리뷰가 그 분야를 앞으로 움직이는 방식입니다.</p>
+    <div class="signature">Wang, K., Emery, C. R., &amp; Ho, R. T. H. (2026). Beyond cumulative risk: A scoping review of the application of the polyvictimization framework in child sexual abuse research. Trauma, Violence, &amp; Abuse. https://doi.org/10.1177/15248380261439129 · AIR Lab Journal Club</div>
+  </div>
+</div>
+
+
+</main>
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(31,78,121,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#1f4e79"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#1f4e79"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<footer class="footer">
+  이 페이지는 AIR Lab(ACEs-Informed Recovery Lab) 대학원 세미나의 교육 목적으로 제작되었습니다. 원문의 짧은 인용은 출처를 밝혀 사용했습니다. 이 논문은 오픈액세스로 공개되지 않았으므로 원문의 그림과 표를 이미지로 싣지 않았습니다. "AIR Lab 재구성"과 "AIR Lab 개념도"로 표시한 그림은 원문의 수치와 서술을 바탕으로 랩에서 새로 그린 설명용 그림이며, 원문 Figure 2를 다시 그린 그림의 값은 그래프를 눈으로 읽은 근사치입니다. 정확한 수치와 전체 내용은 원문과 보충자료를 확인하십시오.
+</footer>
+
+<script>
+(function(){
+  var PREFIX='jc_wang2026_';
+  var areas=document.querySelectorAll('.worksheet textarea[data-key]');
+  function store(k,v){try{localStorage.setItem(PREFIX+k,v);return true;}catch(e){return false;}}
+  function load(k){try{return localStorage.getItem(PREFIX+k);}catch(e){return null;}}
+  function flash(ta){var s=ta.parentNode.querySelector('.save-status');if(!s)return;s.classList.add('show');clearTimeout(s._t);s._t=setTimeout(function(){s.classList.remove('show');},1400);}
+  areas.forEach(function(ta){
+    var v=load(ta.getAttribute('data-key'));
+    if(v!==null)ta.value=v;
+    var timer;
+    ta.addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(function(){if(store(ta.getAttribute('data-key'),ta.value))flash(ta);},400);});
+  });
+  window.saveAll=function(){var ok=true;areas.forEach(function(ta){if(store(ta.getAttribute('data-key'),ta.value))flash(ta);else ok=false;});if(!ok)alert('이 브라우저에서는 저장 공간을 사용할 수 없습니다. 내용을 따로 복사해 두세요.');};
+})();
+</script>
+</body>
+</html>

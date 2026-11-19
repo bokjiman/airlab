@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>관계의 설계도를 다시 그리다</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+  /* ════════ AIR Lab theme: navy → recovery-teal (synced with index) ════════ */
+  :root{ --sky:#2d6a9f; --sky-deep:#1f4e79; --sky-bright:#7fa9d1; --sky-soft:#e9eff6; --sky-soft2:#f4f7fb; --sky-soft-2:#f4f7fb; --mint:#3a9a8f; --mint-soft:#eaf5f2; --hover-bg:#eef3f9; }
+  .stripe{background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+  .stripe span{background:transparent!important}
+  .nav-logo-dot .d3{background:#3a9a8f}
+  .hero{isolation:isolate}
+  .hero::before{background:radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%), linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%)!important}
+  .overline{color:#9fd3ca!important}
+  .overline::before{background:#8cc7bd!important}
+  .hero h1{color:#fff!important}
+  .hero h1 em{color:#bfe6df!important}
+  .hero .citation{color:#b7c9da!important;border-left-color:#8cc7bd!important}
+  .hero .citation em{color:#d6e5f2!important}
+  .hero .citation a{color:#bfe6df!important}
+  .hero .subtitle{color:#d2e0ec!important}
+  .hero .subtitle strong,.hero .subtitle b{color:#fff!important}
+  .hero .subtitle em{color:#bfe6df}
+  .hero .stat{background:rgba(255,255,255,0.08)!important;border-color:rgba(255,255,255,0.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .hero .stat .num{color:#fff!important}
+  .hero .stat .lbl{color:#a9c1d6!important}
+  .paper-meta,.condition-header{background:linear-gradient(120deg,#1c4a73 0%,#22655f 100%)!important}
+  .section-num{background:linear-gradient(120deg,#1f4e79 0%,#2d7d78 100%)!important}
+
+  /* ════════ figure originals + line-drawing helpers ════════ */
+  .fig-orig a{display:block}
+  .fig-orig img{display:block;margin:0 auto;background:#fff}
+  .fig-lic{font-size:11.5px;color:var(--light);line-height:1.55;margin:8px 2px 0;text-align:left}
+  .fig-lic a{color:var(--sky-deep)}
+  .guide-list{margin:6px 0 0;padding-left:20px}
+  .guide-list li{margin-bottom:5px}
+  .mini-table td.num,.mini-table th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .mini-table td small{color:var(--light)}
+  .tbl-wrap{overflow-x:auto}
+  .three-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+  @media (max-width:900px){.three-grid{grid-template-columns:1fr}}
+  svg .ink{stroke:#20262e;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  svg .inkthin{stroke:#46505c;stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+</style>
+
+</head>
+<body id="top">
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">논문 소개</a></li>
+      <li><a href="#intro">모형</a></li>
+      <li><a href="#methods">방법</a></li>
+      <li><a href="#m1">신뢰</a></li>
+      <li><a href="#m2">정신화</a></li>
+      <li><a href="#m3">행위주체감</a></li>
+      <li><a href="#m4">대인 정서조절</a></li>
+      <li><a href="#disc">논의·권고</a></li>
+      <li><a href="#phrases">명문장</a></li>
+      <li><a href="#ourstudy">우리 연구</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">Chokhani et al. 2026 · Journal Club</div>
+    <h1>관계의 설계도를 다시 그리다:<br><em>아동기 대인관계 역경은 어떻게 사회적 세계를 바꾸고, 그 세계가 다시 마음을 바꾸는가</em></h1>
+    <div class="citation">Chokhani, R., Lloyd, A., Viding, E., Gerin, M., &amp; McCrory, E. (2026). Linking interpersonal childhood adversity to mental health: A scoping review of trust, mentalizing, agency and interpersonal emotion regulation as candidate social-transactional mechanisms. <em>Clinical Psychology Review, 125</em>, 102722. https://doi.org/10.1016/j.cpr.2026.102722</div>
+    <p class="subtitle">ACEs 연구는 오랫동안 역경이 <strong>몸과 뇌에 어떻게 새겨지는가</strong>를 물어 왔습니다. 이 리뷰는 질문의 방향을 바꿉니다. 역경을 겪은 아이는 <strong>사람을 믿는 방식, 마음을 읽는 방식, 자신이 세상을 움직일 수 있다고 느끼는 방식, 다른 사람에게 기대어 감정을 다루는 방식</strong>이 달라지고, 그 변화가 시간이 지나며 관계망 자체를 바꾼다는 것입니다. 읽을 때는 세 가지를 따라가면 됩니다: 사회적 거래(social-transactional) 모형이 무엇을 주장하는가, 네 기제 각각의 근거는 얼마나 단단한가, 그리고 저자들이 이 분야의 연구 설계에 대해 어떤 처방을 내리는가.</p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">78편 · 84개 보고</span><div class="lbl">포함 연구 · 보고서 수</div></div>
+      <div class="stat"><span class="num">15 / 37 / 26 / 3</span><div class="lbl">신뢰 / 정신화 / 행위주체감 / 대인 정서조절</div></div>
+      <div class="stat"><span class="num">87%</span><div class="lbl">횡단 설계 비율</div></div>
+      <div class="stat"><span class="num">사전등록</span><div class="lbl">OSF 프로토콜 (osf.io/rt7cy)</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>Chokhani et al. (2026)</div>
+
+<!-- §01 -->
+<div class="section-head" id="paper">
+  <div class="section-num">01</div>
+  <div class="section-title-block"><h2>논문 소개</h2><p class="section-subtitle">이 리뷰는 어떤 전통 위에 서 있고, 무엇을 넓히려 하는가</p></div>
+</div>
+
+<div class="panel">
+  <p>아동기 역경과 정신건강의 연결을 설명하는 이론은 크게 두 갈래로 발전해 왔습니다. 하나는 <strong>생물학적 각인(biological embedding)</strong>의 전통입니다. 역경이 전전두피질과 편도체, 시상하부-뇌하수체-부신(HPA) 축, 염증 체계에 오래 남는 변화를 만든다는 설명입니다. 다른 하나는 <strong>개인 내적 정서조절</strong>의 전통으로, 역경이 감정을 다루는 능력을 손상시키고 물질 사용 같은 대처를 부른다는 설명입니다.</p>
+  <p>이 리뷰를 쓴 UCL 연구팀(Viding, McCrory)은 두 전통 모두 중요한 것을 놓친다고 봅니다. 사람은 늘 사회적 환경과 주고받는 관계 속에 있고, 역경 이후에 일어나는 <strong>사회적 과정</strong>도 정신건강으로 가는 경로가 될 수 있다는 것입니다. 이 생각은 McCrory, Foulkes, Viding(2022)이 제안한 <strong>신경인지적 사회적 거래 모형(neurocognitive social-transactional model)</strong>으로 정리되었고, 이 리뷰는 그 모형의 핵심 고리인 네 가지 후보 기제의 근거를 처음으로 체계적으로 모은 작업입니다.</p>
+  <p>형식은 사전등록된 <strong>scoping review</strong>입니다. 효과크기를 통합하는 메타분석이 아니라, "이 기제를 지지하는 연구가 얼마나, 어떤 설계로 존재하는가"를 지도로 그리는 작업입니다. 그래서 이 논문의 가장 큰 기여는 결론의 크기보다 <strong>근거의 모양</strong>을 보여 주는 데 있습니다.</p>
+</div>
+
+<div class="paper-meta">
+  <h3>Linking Interpersonal Childhood Adversity to Mental Health: A Scoping Review of Trust, Mentalizing, Agency and Interpersonal Emotion Regulation</h3>
+  <div class="sub">Ritika Chokhani · Alex Lloyd · Essi Viding · Mattia Gerin · Eamon McCrory (University College London 외)</div>
+  <div class="paper-meta-grid">
+    <div class="paper-meta-item"><div class="label">Journal</div><div class="value">Clinical Psychology Review (SSCI)<br>2026, 125, 102722 · Open Access (CC BY 4.0)</div></div>
+    <div class="paper-meta-item"><div class="label">Type</div><div class="value">사전등록 scoping review (PRISMA-ScR). 같은 표본에서 노출, 기제, 결과를 모두 측정한 양적 연구 78편, 서사적 종합</div></div>
+    <div class="paper-meta-item"><div class="label">Core claim</div><div class="value">신뢰, 정신화, 행위주체감은 대인관계 역경과 여러 정신병리를 잇는 유망한 진단횡단적 기제이지만, 근거는 대부분 횡단·자기보고에 머물러 있다</div></div>
+  </div>
+</div>
+
+<div class="quote-box">
+  "Trust, Mentalizing and Agency emerged as promising transdiagnostic social-transactional mechanisms though which interpersonal childhood adversity may shape mental health outcomes, with more limited evidence for IER."
+  <span class="trans">신뢰, 정신화, 행위주체감은 아동기 대인관계 역경이 정신건강 결과를 형성할 수 있는 <strong>유망한 진단횡단적 사회적 거래 기제</strong>로 드러났고, 대인관계적 정서조절(IER)의 근거는 <strong>더 제한적</strong>이었다.</span>
+  <span class="attr">출처: Abstract · Conclusion</span>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">🧭 길잡이 · 이 리뷰의 세 가지 질문</span><br>
+  <strong>질문 1.</strong> 대인관계적 ACEs(노출), 후보 기제(신뢰, 정신화, 행위주체감, 대인관계적 정서조절), 정신건강(결과)을 <strong>같은 표본 안에서</strong> 모두 측정한 연구는 무엇을 보여 주는가?<br>
+  <strong>질문 2.</strong> 이 기제들은 한 가지 장애가 아니라 여러 장애에 걸쳐 작동하는 <strong>진단횡단적(transdiagnostic)</strong> 기제인가?<br>
+  <strong>질문 3.</strong> 이 문헌의 설계와 측정은 인과적 주장을 얼마나 뒷받침할 수 있으며, 앞으로 무엇이 필요한가?
+</div>
+
+<!-- §02 -->
+<div class="section-head" id="intro">
+  <div class="section-num">02</div>
+  <div class="section-title-block"><h2>모형: 역경은 사람을 바꾸고, 바뀐 사람은 관계를 바꾼다</h2><p class="section-subtitle">Neurocognitive social-transactional model · social architecture</p></div>
+</div>
+
+<div class="panel">
+  <p>모형의 출발점은 McCrory와 Viding(2015)의 <strong>잠재적 취약성(latent vulnerability)</strong> 관점입니다. 역경은 신경인지 체계를 "재보정(calibrate)"합니다. 위협에 대한 과잉경계는 위험한 환경에서는 적응적이지만, 다른 환경에서는 불안장애로 이어질 수 있습니다. 여기까지는 개인 안에서 일어나는 <strong>직접 경로</strong>입니다.</p>
+  <p>사회적 거래 모형은 여기에 <strong>간접 경로</strong>를 더합니다. 재보정된 신경인지 체계는 사람이 사회적 세계와 관계 맺는 방식을 바꾸고, 그 방식이 시간이 지나며 관계의 질과 양을 바꿉니다. 저자들은 이렇게 쌓여 가는 관계 패턴과 지지의 구성을 개인의 <strong>사회적 설계도(social architecture)</strong>라고 부릅니다. 외로움이나 지각된 지지 같은 주관적 측면과 친구 수나 실제 지지의 가용성 같은 객관적 측면을 모두 포함합니다.</p>
+  <p>사회적 설계도가 나빠지는 과정은 두 가지로 설명됩니다. 하나는 관계망에서 점점 물러나며 관계의 양과 질이 줄어드는 <strong>사회적 희박화(social thinning)</strong>이고, 다른 하나는 관계 안에서 대인 스트레스와 갈등을 더 자주 겪게 되는 <strong>스트레스 생성(stress generation)</strong>입니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">신경인지적 사회적 거래 모형의 구조 (Introduction §1.1 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 360" width="100%" style="max-width:900px" role="img" aria-label="사회적 거래 모형의 흐름도">
+    <defs><marker id="arC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1f4e79"/></marker>
+    <marker id="arG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#828d9b"/></marker></defs>
+    <g font-size="13">
+      <!-- ACE child -->
+      <circle cx="70" cy="120" r="16" class="ink"/><path d="M70 136 L70 180 M70 148 L50 166 M70 148 L90 166 M70 180 L56 210 M70 180 L84 210" class="ink"/>
+      <path d="M100 74 h70 a8 8 0 0 1 8 8 v20 a8 8 0 0 1 -8 8 h-50 l-14 12 l2 -12 h-8 a8 8 0 0 1 -8 -8 v-20 a8 8 0 0 1 8 -8z" fill="#fdeee9" stroke="#e0573e" stroke-width="1.5"/>
+      <text x="139" y="98" text-anchor="middle" font-size="12" fill="#e0573e" font-weight="600">학대 · 방임</text>
+      <text x="70" y="240" text-anchor="middle" font-weight="700" fill="#20262e">대인관계적 ACEs</text>
+      <!-- box 1 -->
+      <rect x="190" y="150" width="150" height="70" rx="12" fill="#fff" stroke="#46505c" stroke-width="1.6"/>
+      <text x="265" y="178" text-anchor="middle" font-weight="700" fill="#20262e">신경인지 체계의</text>
+      <text x="265" y="198" text-anchor="middle" font-weight="700" fill="#20262e">재보정</text>
+      <line x1="112" y1="185" x2="186" y2="185" stroke="#1f4e79" stroke-width="2" marker-end="url(#arC)"/>
+      <!-- box 2 mechanisms -->
+      <rect x="380" y="118" width="190" height="134" rx="12" fill="#e8f1fa" stroke="#1f4e79" stroke-width="2"/>
+      <text x="475" y="142" text-anchor="middle" font-weight="700" fill="#1f4e79">사회적 거래 기제</text>
+      <text x="475" y="166" text-anchor="middle" fill="#20262e">신뢰 Trust</text>
+      <text x="475" y="186" text-anchor="middle" fill="#20262e">정신화 Mentalizing</text>
+      <text x="475" y="206" text-anchor="middle" fill="#20262e">행위주체감 Agency</text>
+      <text x="475" y="226" text-anchor="middle" fill="#20262e">대인 정서조절 IER</text>
+      <line x1="340" y1="185" x2="376" y2="185" stroke="#1f4e79" stroke-width="2" marker-end="url(#arC)"/>
+      <!-- box 3 social architecture -->
+      <rect x="610" y="118" width="150" height="134" rx="12" fill="#e6f5f0" stroke="#3fa88a" stroke-width="2"/>
+      <text x="685" y="142" text-anchor="middle" font-weight="700" fill="#2c7d73">사회적 설계도</text>
+      <text x="685" y="170" text-anchor="middle" fill="#20262e" font-size="12">사회적 희박화</text>
+      <text x="685" y="188" text-anchor="middle" fill="#828d9b" font-size="11">관계의 양과 질 감소</text>
+      <text x="685" y="214" text-anchor="middle" fill="#20262e" font-size="12">스트레스 생성</text>
+      <text x="685" y="232" text-anchor="middle" fill="#828d9b" font-size="11">대인 갈등과 단절 증가</text>
+      <line x1="570" y1="185" x2="606" y2="185" stroke="#1f4e79" stroke-width="2" marker-end="url(#arC)"/>
+      <!-- outcome -->
+      <rect x="790" y="150" width="100" height="70" rx="12" fill="#fdeee9" stroke="#e0573e" stroke-width="1.6"/>
+      <text x="840" y="178" text-anchor="middle" font-weight="700" fill="#e0573e">정신병리</text>
+      <text x="840" y="198" text-anchor="middle" font-size="11" fill="#46505c">진단횡단적</text>
+      <line x1="760" y1="185" x2="786" y2="185" stroke="#1f4e79" stroke-width="2" marker-end="url(#arC)"/>
+      <!-- direct path -->
+      <path d="M265 150 C 300 40, 760 40, 830 146" fill="none" stroke="#828d9b" stroke-width="1.6" stroke-dasharray="6 5" marker-end="url(#arG)"/>
+      <text x="548" y="56" text-anchor="middle" fill="#828d9b" font-size="12">직접 경로 (예: 위협 과잉경계 → 불안)</text>
+      <!-- feedback loop -->
+      <path d="M685 252 C 685 320, 475 320, 475 256" fill="none" stroke="#3fa88a" stroke-width="1.6" marker-end="url(#arG)"/>
+      <text x="580" y="336" text-anchor="middle" fill="#2c7d73" font-size="12">악순환: 빈약해진 관계가 다시 기제를 강화</text>
+      <rect x="380" y="270" width="190" height="24" rx="6" fill="#fff" stroke="#c78a1e"/>
+      <text x="475" y="287" text-anchor="middle" fill="#c78a1e" font-size="11.5" font-weight="600">이 리뷰가 근거를 모은 구간</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 회색 점선이 기존 연구가 주로 다뤄 온 직접 경로라면, 파란 실선은 이 모형이 새로 강조하는 간접 경로입니다. 이 리뷰는 그 가운데 <b>노란 상자 구간</b>, 즉 ACEs가 네 기제를 거쳐 정신건강으로 이어지는지에 대한 근거만 모았습니다. 기제가 사회적 설계도(초록 상자)를 실제로 바꾸는지는 이 리뷰의 체계적 검토 대상이 아니었고, 논의 §4.2에서 서사적으로만 다룹니다. 그림의 오른쪽 절반은 아직 <b>이론적 제안</b>이라는 점을 기억해야 합니다.</div>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">🍳 비유</span><br>
+  집의 설계도를 생각해 보면 쉽습니다. 생물학적 각인 이론은 "벽돌이 금이 갔다"고 말합니다. 사회적 거래 모형은 여기에 "금 간 벽돌 때문에 집주인이 창문을 막고 문을 잠그기 시작했고, 그래서 찾아오는 사람이 줄었고, 집은 점점 더 어둡고 습해졌다"는 이야기를 더합니다. 벽돌의 금은 그대로여도, 집이 사람을 들이는 방식이 바뀌면 그 집에서 사는 경험 전체가 달라집니다.
+</div>
+
+<div class="panel">
+  <p>저자들이 네 기제를 고른 기준은 세 가지입니다. 첫째, 사회적 세계에 <strong>가까운(proximal)</strong> 영향을 준다. 둘째, ACEs와도, 정신건강과도 연관된다는 선행 근거가 있다. 셋째, 하나의 장애가 아니라 여러 장애에 걸쳐 작동할 가능성이 있다. 그리고 노출은 <strong>대인관계적 ACEs</strong>로 한정합니다. 자연재해 같은 비대인 외상, 빈곤과 지역 박탈은 제외했습니다. 반복적이고 대인관계적인 외상, 즉 복합외상(complex trauma)이 단일 사건 외상과는 결과의 양과 질이 다르다는 근거 때문입니다.</p>
+</div>
+
+<div class="mod-grid">
+  <div class="mod-card">
+    <h4>신뢰 Trust</h4><div class="en">interpersonal / epistemic trust</div>
+    <p>사회적 위험을 감수하고 상대에게 긍정적 기대를 거는 것. 배신을 동반한 역경은 <strong>불신</strong>을 키울 수도, 반대로 아무나 믿는 <strong>맹신(credulity)</strong>을 남길 수도 있다. 사회적으로 전달되는 정보 자체를 믿지 못하는 <strong>인식적 불신(epistemic mistrust)</strong>도 포함.</p>
+  </div>
+  <div class="mod-card">
+    <h4>정신화 Mentalizing</h4><div class="en">reflective functioning · theory of mind</div>
+    <p>자신과 타인을 감정, 바람, 의도 같은 마음 상태로 이해하는 능력. 역경은 양육자와의 상호작용 결핍을 통해 이 능력의 발달을 막고, 느리고 통제된 정신화 대신 <strong>빠르고 방어적인 정신화</strong>를 부른다고 이론화된다.</p>
+  </div>
+  <div class="mod-card">
+    <h4>행위주체감 Agency</h4><div class="en">perceived control · locus of control</div>
+    <p>내가 환경에 미칠 수 있는 영향의 범위에 대한 지각. 이유 없이 벌을 받는 것처럼 <strong>행동과 결과가 연결되지 않는 경험</strong>이 반복되면, 새로운 상황도 통제 밖이라고 일반화한다. 리뷰는 수행 기반 통제가 아니라 주관적 통제감에 초점을 둔다.</p>
+  </div>
+  <div class="mod-card">
+    <h4>대인 정서조절 IER</h4><div class="en">intrinsic interpersonal emotion regulation</div>
+    <p>자기 감정을 다루기 위해 다른 사람을 활용하는 것. 사회적 수단을 찾는 <strong>성향</strong>과 그것이 도움이 된다고 느끼는 <strong>효능감</strong>으로 측정된다. 개인 내적 정서조절과 달리 최근에야 연구되기 시작했다.</p>
+  </div>
+</div>
+
+<!-- §03 -->
+<div class="section-head" id="methods">
+  <div class="section-num">03</div>
+  <div class="section-title-block"><h2>방법: "같은 표본에서 세 가지를 모두 잰 연구"만 모으기</h2><p class="section-subtitle">Eligibility · study identification · data extraction</p></div>
+</div>
+
+<div class="panel">
+  <p>이 리뷰의 가장 중요한 설계 결정은 포함기준입니다. 저자들은 <strong>같은 참여자 표본 안에서</strong> (1) 대인관계적 ACEs, (2) 네 기제 중 하나 이상, (3) 정신건강 결과를 모두 측정한 양적 연구만 포함했습니다. ACEs와 기제의 관계만 본 연구, 기제와 정신건강의 관계만 본 연구는 아무리 많아도 들어오지 않습니다. 그래야 "ACEs → 기제 → 결과"라는 경로를 하나의 연구 안에서 말할 수 있기 때문입니다.</p>
+  <p>검색은 PsycInfo, Medline, Web of Science, PTSDPubs에서 2024년 10월 22일에 했고, 2025년 3월과 10월에 갱신했습니다. 제목·초록 선별의 10%를 두 명이 독립적으로 선별해 Cohen's κ = .77(일치율 95.5%)을 얻었습니다. 전문 선별에서는 사전등록한 일치도 기준에 미치지 못해 연구설계에 관한 기준을 더 세분화했고, 이 변경을 <strong>사전등록 이탈</strong>로 명시한 뒤 다시 선별했습니다(κ = .66, 일치율 84.6%).</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">원문 Figure 1. PRISMA Flow Diagram for Scoping Review</div>
+  <span class="fig-tag orig">원문 그대로</span>
+  <div class="fig-orig"><a href="figs/chokhani-2026-fig1.jpg" target="_blank" rel="noopener"><img src="figs/chokhani-2026-fig1.jpg" alt="Chokhani et al. 2026 Figure 1: PRISMA 흐름도" loading="lazy"></a></div>
+  <p class="fig-cap">왼쪽은 최초 데이터베이스 검색(3,825건), 오른쪽은 인용 추적(72건)과 갱신 검색(570건)입니다. 최종적으로 78편의 연구에서 나온 84개 보고가 포함되었습니다.</p>
+  <p class="fig-lic">출처: Chokhani et al. (2026), <em>Clinical Psychology Review, 125</em>, 102722, Figure 1. 원문에서 변형 없이 가져왔으며 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> 라이선스를 따릅니다. 그림을 누르면 크게 볼 수 있습니다.</p>
+  <div class="fig-implies"><b>📊 그림 읽는 법.</b> 왼쪽 열 아래쪽의 "Reports excluded" 상자를 보세요. 전문 검토 261건 가운데 가장 많이 탈락한 사유는 <b>Wrong design(88건)</b>이었고, 그다음이 기제를 측정하지 않은 연구(59건)였습니다. 즉 이 분야에는 ACEs와 기제, 기제와 결과를 따로 본 연구는 많지만, <b>세 가지를 한 표본에서 함께 본 연구는 드물다</b>는 사실이 흐름도에 그대로 드러납니다. 맨 아래 각주도 놓치지 마세요. 기제별 연구 수를 더하면 81편이 되는데, 세 편이 둘 이상의 기제를 함께 다뤘기 때문입니다.</div>
+</div>
+
+<div class="panel">
+  <p>포함 연구에서 나온 설계는 네 가지 유형으로 정리됩니다. 원문 Figure 2는 이 리뷰를 읽는 열쇠이자, 대학원 수업에서 매개와 조절을 가르칠 때 그대로 쓸 수 있는 그림입니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">원문 Figure 2. Main Types of Study Designs found in Review</div>
+  <span class="fig-tag orig">원문 그대로</span>
+  <div class="fig-orig"><a href="figs/chokhani-2026-fig2.jpg" target="_blank" rel="noopener"><img src="figs/chokhani-2026-fig2.jpg" alt="Chokhani et al. 2026 Figure 2: 연구설계의 네 유형" loading="lazy" style="max-width:720px;width:100%"></a></div>
+  <p class="fig-cap">1. 매개 모형, 2. 역경과 기제의 관계를 본 뒤 역경 집단 안에서 기제와 결과의 관계를 본 설계, 3. 조절 모형, 4. 역경 집단과 비역경 집단에서 기제와 결과의 관계를 각각 본 설계. 오른쪽 열은 각 설계가 경로에 대해 말해 주는 것입니다.</p>
+  <p class="fig-lic">출처: Chokhani et al. (2026), <em>Clinical Psychology Review, 125</em>, 102722, Figure 2. 원문에서 변형 없이 가져왔으며 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> 라이선스를 따릅니다.</p>
+  <div class="fig-implies"><b>📊 그림 읽는 법.</b> 오른쪽 열의 문장을 하나씩 비교해 보세요. 설계 2와 4의 설명에는 공통으로 <b>"consistent with ... but does not formally test or establish"</b>라는 표현이 들어 있습니다. 두 설계는 매개나 조절과 <b>모순되지 않는</b> 연관의 묶음을 보여 줄 뿐, 그것을 검정하지는 않는다는 뜻입니다. 저자들이 이런 설계까지 포함한 것은 scoping review라는 목적 때문이고, 결과를 읽을 때는 "몇 편이 지지했다"는 숫자 안에 이 네 수준이 섞여 있다는 점을 기억해야 합니다.</div>
+</div>
+
+<div class="subhead"><span class="code">3.1</span><h3>포함 연구의 모습: 원문 Table 1 요약</h3><span class="en">Study characteristics</span></div>
+
+<div class="tbl-wrap">
+<table class="mini-table">
+  <tr><th>기제</th><th class="num">연구(보고)</th><th class="num">횡단 설계</th><th class="num">고소득국가</th><th class="num">기제 자기보고</th><th class="num">진단면접 결과</th><th class="num">매개/조절 모형</th></tr>
+  <tr><td>신뢰</td><td class="num">15 (16)</td><td class="num">87%</td><td class="num">100%</td><td class="num">73%</td><td class="num">7%</td><td class="num">11 / 2</td></tr>
+  <tr><td>정신화</td><td class="num">37 (41)</td><td class="num">97%</td><td class="num">84%</td><td class="num">81%</td><td class="num">11%</td><td class="num">37 / 2</td></tr>
+  <tr><td>행위주체감</td><td class="num">26 (27)</td><td class="num">73%</td><td class="num">77%</td><td class="num">100%</td><td class="num">12%</td><td class="num">19 / 9</td></tr>
+  <tr><td>대인 정서조절</td><td class="num">3 (3)</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td><td class="num">0%</td><td class="num">2 / 0</td></tr>
+  <tr class="hi"><td>전체</td><td class="num">78 (84)</td><td class="num">87%</td><td class="num">85%</td><td class="num">86%</td><td class="num">10%</td><td class="num">66 / 13</td></tr>
+</table>
+</div>
+<p class="fig-cap">원문 Table 1에서 일부 열을 골라 한글로 옮겼습니다. 기제별 연구 수의 합이 78보다 큰 것은 세 연구가 여러 기제를 함께 다뤘기 때문입니다. 행위주체감의 전체 표본 수(246,580명)는 한 연구(n = 207,919)에 크게 치우쳐 있다고 원문이 각주로 밝힙니다.</p>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 · 숫자가 말하는 근거의 모양</span><br>
+  이 표에서 가장 중요한 숫자는 결과가 아니라 <strong>설계의 분포</strong>입니다. 포함 연구의 87%가 횡단 설계이고, 기제의 86%를 자기보고로 쟀고, 결과를 진단면접으로 확인한 연구는 10%뿐입니다. 횡단 매개모형은 시간적 선후를 확립하지 못하고, 노출과 기제와 결과를 모두 같은 사람의 자기보고로 재면 <strong>공통방법분산</strong>이 연관을 부풀릴 수 있습니다. 따라서 이 리뷰에서 "일관되게 지지되었다"는 표현은 "같은 종류의 약한 설계에서 같은 방향의 결과가 반복되었다"는 뜻으로 읽어야 합니다. 리뷰의 저자들도 정확히 이 점을 논의의 중심에 둡니다.
+</div>
+
+<!-- §04 trust -->
+<div class="section-head" id="m1">
+  <div class="section-num">04</div>
+  <div class="section-title-block"><h2>신뢰: 믿지 못하는 것과 아무나 믿는 것</h2><p class="section-subtitle">Results §3.1 · 15 studies</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">1</div>
+    <div class="cond-titles"><div class="cond-code">Mechanism 1 · 15 studies</div><h3>신뢰 Trust</h3><div class="cond-en">mistrust, credulity, and trust processing</div></div>
+    <span class="verdict promising">promising</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">학대를 겪은 사람은 남을 덜 믿고, 그 불신이 우울, PTSD, 경계성 성격 증상과 함께 나타난다. 그런데 반대로 "너무 쉽게 믿는 것"도 같은 경로에 있을 수 있다.</div>
+    <p><strong>자기보고 연구.</strong> 가장 많이 쓰인 도구는 인식적 신뢰·불신·맹신 질문지(ETMCQ, 7편)입니다. 이 연구들은 대인관계적 ACEs가 높을수록 <strong>인식적 불신</strong>이 높고, 불신이 높을수록 일반적 심리적 고통, 외현화 행동, 신체증상장애, PTSD, 경계성 성격장애, 우울 증상이 높다는 결과를 일관되게 보고했습니다.</p>
+    <p>흥미로운 것은 같은 연구 가운데 여섯 편이 <strong>인식적 맹신(credulity)</strong>, 즉 사회적 정보에 대한 경계와 분별이 부족한 상태도 같은 경로의 매개변수로 확인했다는 점입니다. 저자들은 이를 근거로 적응적인 사회적 기능은 신뢰를 최대화하는 것이 아니라 <strong>환경에 맞게 보정하는 것</strong>일 수 있다고 해석합니다. 다만 여러 매개변수를 한 모형에 넣은 분석은 강한 통계적 가정을 요구한다고 덧붙입니다.</p>
+    <p><strong>과제 기반 연구.</strong> 얼굴의 신뢰성 판단이나 신뢰 학습 과제를 쓴 연구들은 다른 그림을 보여 줍니다. 역경 경험 집단은 믿을 만하지 않은 얼굴을 알아보는 능력은 보존되거나 오히려 좋았지만, <strong>믿을 만한 얼굴을 믿을 만하다고 판단하는 데</strong> 덜 정확했습니다. 그러나 이렇게 달라진 신뢰 처리가 정신건강 문제로 이어진다는 근거는 한 연구에서만 확인되었습니다.</p>
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">불신, 맹신, 보정된 신뢰 (Results §3.1과 Discussion §4.1 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 260" width="100%" style="max-width:900px" role="img" aria-label="신뢰의 세 상태 비교">
+    <g font-size="13">
+      <rect x="20" y="16" width="270" height="228" rx="14" fill="#fff" stroke="#e0573e" stroke-width="1.5"/>
+      <text x="155" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#e0573e">불신 mistrust</text>
+      <circle cx="105" cy="96" r="15" class="ink"/><path d="M105 111 L105 158 M105 124 L84 142 M105 124 L126 142 M105 158 L92 190 M105 158 L118 190" class="ink"/>
+      <path d="M150 80 v100" stroke="#e0573e" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="205" cy="96" r="15" class="inkthin"/><path d="M205 111 L205 158 M205 124 L186 142 M205 124 L224 142 M205 158 L193 190 M205 158 L217 190" class="inkthin"/>
+      <text x="155" y="214" text-anchor="middle" fill="#46505c" font-size="12">믿을 만한 사람도 막는다</text>
+      <text x="155" y="232" text-anchor="middle" fill="#46505c" font-size="12">→ 고립, 사회적 학습의 단절</text>
+      <rect x="315" y="16" width="270" height="228" rx="14" fill="#e6f5f0" stroke="#3fa88a" stroke-width="2"/>
+      <text x="450" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#2c7d73">보정된 신뢰</text>
+      <circle cx="400" cy="96" r="15" class="ink"/><path d="M400 111 L400 158 M400 124 L379 142 M400 124 L421 142 M400 158 L387 190 M400 158 L413 190" class="ink"/>
+      <rect x="434" y="70" width="32" height="22" rx="4" fill="#fff" stroke="#3fa88a"/><text x="450" y="86" text-anchor="middle" font-size="12" fill="#2c7d73">?</text>
+      <circle cx="500" cy="96" r="15" class="inkthin"/><path d="M500 111 L500 158 M500 124 L481 142 M500 124 L519 142 M500 158 L488 190 M500 158 L512 190" class="inkthin"/>
+      <text x="450" y="214" text-anchor="middle" fill="#46505c" font-size="12">상대와 상황을 보고</text>
+      <text x="450" y="232" text-anchor="middle" fill="#46505c" font-size="12">신뢰 수준을 조정한다</text>
+      <rect x="610" y="16" width="270" height="228" rx="14" fill="#fff" stroke="#c78a1e" stroke-width="1.5"/>
+      <text x="745" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#c78a1e">맹신 credulity</text>
+      <circle cx="695" cy="96" r="15" class="ink"/><path d="M695 111 L695 158 M695 124 L716 136 M695 124 L674 142 M695 158 L682 190 M695 158 L708 190" class="ink"/>
+      <circle cx="795" cy="96" r="15" class="inkthin"/><path d="M795 111 L795 158 M795 124 L774 136 M795 124 L816 142 M795 158 L783 190 M795 158 L807 190" class="inkthin"/>
+      <path d="M786 92 l6 4 l6 -4" stroke="#e0573e" stroke-width="1.6" fill="none"/>
+      <text x="745" y="214" text-anchor="middle" fill="#46505c" font-size="12">믿지 말아야 할 사람도 믿는다</text>
+      <text x="745" y="232" text-anchor="middle" fill="#46505c" font-size="12">→ 재피해 위험</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 신뢰를 "많을수록 좋은" 한 줄의 척도로 보면, 불신만 위험요인으로 보입니다. ETMCQ는 신뢰, 불신, 맹신을 서로 상관은 있지만 <b>구별되는 세 차원</b>으로 잽니다. 리뷰의 결과는 위험이 양쪽 끝에 모두 있을 수 있다는 가능성을 열어 둡니다. 실천에서는 "더 믿게 하자"가 아니라 <b>"맞게 믿도록 돕자"</b>가 목표가 되어야 한다는 함의입니다.</div>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">🔬 가장 강한 근거 · 유일한 종단 과제 연구</span><br>
+  Green 등(2016)은 시설 양육 경험이 있는 아동을 추적한 fMRI 연구입니다. 이 아동들은 믿을 만한 얼굴과 믿을 만하지 않은 얼굴에 대한 반응 시간과 편도체 반응의 <strong>차이가 작았습니다</strong>. 믿을 만한 얼굴에 대한 편도체 반응이 커져서 믿을 만하지 않은 얼굴에 대한 반응과 비슷해졌기 때문입니다. 그리고 10세 때의 이 작은 차이가 2년 뒤 분리불안 증상의 증가를 예측했습니다. 리뷰 전체를 통틀어 <strong>기제의 변화가 증상보다 먼저 나타났다</strong>는 것을 보여 준 드문 사례입니다.
+</div>
+
+<!-- §05 mentalizing -->
+<div class="section-head" id="m2">
+  <div class="section-num">05</div>
+  <div class="section-title-block"><h2>정신화: 타인의 마음보다 내 마음이 문제다</h2><p class="section-subtitle">Results §3.2 · 37 studies</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">2</div>
+    <div class="cond-titles"><div class="cond-code">Mechanism 2 · 37 studies</div><h3>정신화 Mentalizing</h3><div class="cond-en">uncertainty about mental states, reflective functioning, theory of mind</div></div>
+    <span class="verdict mixed">self-report 일관 · 과제 혼재</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">가장 연구가 많은 기제다. 그런데 효과를 낸 것은 "다른 사람의 마음을 읽는 능력"이 아니라 "내 감정 상태에 대한 불확실성"이었다.</div>
+    <p><strong>자기보고 연구.</strong> 가장 많이 쓰인 도구는 반영적 기능 질문지(RFQ, 15편)입니다. 횡단 자기보고 연구들은 대인관계적 ACEs가 마음 상태에 대한 <strong>불확실성</strong>을 높이고, 그것이 우울, 자해, 자살경향성, 해리, PTSD, 불안, 조현형, 섭식장애, 외현화, 성격장애 증상과 연관된다는 결과를 일관되게 보고했습니다. 역경 유형을 나눠 본 연구에서는 <strong>정서학대와 정서방임</strong>이 불확실성을 거치는 간접경로를 가장 일관되게 보였습니다.</p>
+    <p>저자들이 주목한 것은 <strong>어떤 하위차원이 효과를 냈는가</strong>입니다. 정서 인식, 정서 조절, 자기 감정에 대한 주의 같은 하위척도는 매개변수로 나타났지만, 타인 관련 정신화나 심리적 등가(psychic equivalence) 같은 하위척도는 그렇지 않았습니다. 표본이 큰 Nonweiler 등(2023, n = 1,156)에서도 타인 정신화는 어떤 모형에서도 유의한 매개변수가 아니었습니다. 저자들은 이를 근거로, 정신화 경로로 보고된 결과가 사실은 <strong>정서 인식과 정서 조절에 가까운 구인</strong>을 잡고 있을 수 있다고 해석합니다.</p>
+    <p><strong>과제 기반 연구.</strong> Hinting Task를 쓴 두 연구는 비정동성 정신증 환자에서 아동기 학대가 정신화 손상을 거쳐 음성증상으로 이어지는 경로를 확인했지만, Director Task나 RMET를 쓴 연구에서는 매개효과가 없었습니다. 큰 표본의 Mansueto 등(2019, n = 757)에서 이 경로는 학대가 아니라 <strong>방임</strong>에서만, 그리고 <strong>남성</strong>에서만 유의했습니다.</p>
+  </div>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">비판적 읽기 · 화살표가 거꾸로일 수 있다</span><br>
+  정신화 문헌에서 확인된 <strong>유일한 종단 연구</strong>(Milan &amp; Dau, 2023)는 예상과 다른 결과를 냈습니다. 정신건강 문제 이력이 있는 어머니들에서 아동기 학대는 이후의 정신화 불확실성을 예측했지만, 정신화 불확실성은 이후의 경계성 성격장애(BPD) 증상을 예측하지 않았습니다. 오히려 <strong>BPD 증상이 이후의 불확실성을 예측</strong>했습니다. 37편 가운데 36편 남짓이 횡단 연구인 상황에서, 횡단 매개모형이 가정하는 "ACEs → 정신화 → 증상"의 순서는 아직 검증되지 않았다는 뜻입니다.
+</div>
+
+<div class="panel">
+  <p>측정의 문제도 있습니다. RFQ는 원래 불확실성과 "과도한 확실성"을 함께 재도록 개발되었지만, 실제로는 적응적 확실성에서 불확실성으로 이어지는 하나의 연속선을 재는 것일 수 있다는 지적이 있습니다(Müller et al., 2022). 같은 도구를 어떤 연구는 하나의 차원으로, 어떤 연구는 두 차원으로, 어떤 연구는 불확실성 하위척도만으로 썼습니다. 저자들은 이 때문에 편향된 가정을 동반하는 <strong>과잉정신화(hypermentalizing)</strong>의 근거를 찾지 못했을 수 있다고 봅니다.</p>
+  <p>그래서 저자들은 근본적인 질문을 던집니다. 정신화가 여러 구인을 포괄하는 "우산" 구인으로 자리 잡았지만, 이렇게 조작적 정의가 흩어져 있다면 <strong>더 좁고 구체적인 접근</strong>이 기제를 밝히는 데 더 유용하지 않은가, 또는 정서조절 문헌과 더 신중하게 통합해야 하지 않는가.</p>
+</div>
+
+<!-- §06 agency -->
+<div class="section-head" id="m3">
+  <div class="section-num">06</div>
+  <div class="section-title-block"><h2>행위주체감: 매개변수인가, 조절변수인가</h2><p class="section-subtitle">Results §3.3 · 26 studies</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">3</div>
+    <div class="cond-titles"><div class="cond-code">Mechanism 3 · 26 studies</div><h3>행위주체감 Agency</h3><div class="cond-en">external locus of control, perceived control</div></div>
+    <span class="verdict promising">promising · 종단 근거 최다</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">어려서 학대를 겪으면 "내 삶은 운이나 힘센 사람이 결정한다"는 믿음이 커지고, 그것이 우울과 정신증 증상으로 이어진다. 네 기제 가운데 종단 근거가 가장 많다.</div>
+    <p>26편 모두 자기보고로 통제감을 쟀습니다. 측정 방식은 세 가지였습니다. 내적에서 외적으로 이어지는 하나의 차원, 내적·타인·미지·운을 서로 다른 차원으로 보는 다차원 측정, 내외 구분 없는 전반적 통제감입니다.</p>
+    <p><strong>종단 연구.</strong> 아동기 초기의 대인관계적 역경이 아동기 후기와 청소년기의 외적 통제소재를 높이고, 그것이 청소년기 후기와 성인 초기의 정신증 및 우울 증상을 높인다는 결과가 여러 연구에서 나왔습니다(Cortes Hidalgo et al., 2024; Fisher et al., 2013; Yang et al., 2021). 그러나 세 변수를 <strong>모든 시점에서</strong> 잰 연구는 Yang 등(2021) 하나뿐이었고, 이 연구는 우울 증상이 외적 통제를 거쳐 다시 학대·방임으로 이어지는 <strong>양방향 경로</strong>도 발견했습니다. 14일간 매일 측정한 생태순간평가(EMA) 연구 두 편에서는 ACEs와 평균 통제감의 연관 자체가 없었습니다.</p>
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">같은 변수, 두 가지 역할: 행위주체감 문헌의 불일치 (Results §3.3과 Discussion §4.1 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 290" width="100%" style="max-width:900px" role="img" aria-label="매개와 조절의 비교">
+    <defs><marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#20262e"/></marker></defs>
+    <g font-size="13">
+      <rect x="10" y="10" width="430" height="270" rx="14" fill="#fff" stroke="#1f4e79" stroke-width="1.5"/>
+      <text x="225" y="38" text-anchor="middle" font-weight="700" fill="#1f4e79" font-size="15">매개: 외적 통제소재</text>
+      <circle cx="80" cy="170" r="44" fill="#fdeee9" stroke="#e0573e" stroke-width="1.5"/><text x="80" y="166" text-anchor="middle" font-size="12">대인관계적</text><text x="80" y="182" text-anchor="middle" font-size="12">ACEs</text>
+      <circle cx="225" cy="100" r="44" fill="#e8f1fa" stroke="#1f4e79" stroke-width="1.5"/><text x="225" y="96" text-anchor="middle" font-size="12">외적</text><text x="225" y="112" text-anchor="middle" font-size="12">통제소재 ↑</text>
+      <circle cx="370" cy="170" r="44" fill="#fff" stroke="#46505c" stroke-width="1.5"/><text x="370" y="166" text-anchor="middle" font-size="12">내재화 ·</text><text x="370" y="182" text-anchor="middle" font-size="12">정신증</text>
+      <line x1="114" y1="146" x2="184" y2="118" stroke="#20262e" stroke-width="1.8" marker-end="url(#arA)"/>
+      <line x1="266" y1="118" x2="332" y2="146" stroke="#20262e" stroke-width="1.8" marker-end="url(#arA)"/>
+      <text x="225" y="250" text-anchor="middle" fill="#46505c" font-size="12">역경이 통제감을 <tspan font-weight="700">바꾼다</tspan></text>
+      <text x="225" y="268" text-anchor="middle" fill="#828d9b" font-size="11.5">종단 4편 · 횡단 9편이 지지</text>
+      <rect x="460" y="10" width="430" height="270" rx="14" fill="#fff" stroke="#3fa88a" stroke-width="1.5"/>
+      <text x="675" y="38" text-anchor="middle" font-weight="700" fill="#2c7d73" font-size="15">조절: 높은 내적 통제감</text>
+      <circle cx="530" cy="180" r="44" fill="#fdeee9" stroke="#e0573e" stroke-width="1.5"/><text x="530" y="176" text-anchor="middle" font-size="12">대인관계적</text><text x="530" y="192" text-anchor="middle" font-size="12">ACEs</text>
+      <circle cx="820" cy="180" r="44" fill="#fff" stroke="#46505c" stroke-width="1.5"/><text x="820" y="176" text-anchor="middle" font-size="12">내재화</text><text x="820" y="192" text-anchor="middle" font-size="12">증상</text>
+      <line x1="574" y1="180" x2="774" y2="180" stroke="#20262e" stroke-width="1.8" marker-end="url(#arA)"/>
+      <circle cx="675" cy="90" r="40" fill="#e6f5f0" stroke="#3fa88a" stroke-width="1.5"/><text x="675" y="86" text-anchor="middle" font-size="12">내적</text><text x="675" y="102" text-anchor="middle" font-size="12">통제감 ↑</text>
+      <line x1="675" y1="130" x2="675" y2="174" stroke="#2c7d73" stroke-width="2" marker-end="url(#arA)"/>
+      <text x="675" y="250" text-anchor="middle" fill="#46505c" font-size="12">역경과는 <tspan font-weight="700">무관하지만</tspan> 영향을 줄인다</text>
+      <text x="675" y="268" text-anchor="middle" fill="#828d9b" font-size="11.5">3편 지지 · 대표본(n = 10,123) 1편 불지지</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이게 무슨 뜻인가.</b> 왼쪽 그림이 맞다면 높은 외적 통제는 역경이 <b>만든 결과</b>입니다. 오른쪽 그림에서 세 연구는 학대와 통제 신념의 연관을 찾지 못했지만, 높은 내적 통제감이 역경의 영향을 <b>줄였습니다</b>. 저자들이 제시한 해석 하나는 내적 통제와 외적 통제가 한 연속선의 양 끝이 아니라 <b>서로 다른 차원</b>이라는 것입니다(Gore et al., 2016). 다만 두 차원을 분리해서 잰 연구가 리뷰 안에 한 편뿐이어서, 이 불일치가 실제 구인의 차이인지 모형 선택의 차이인지는 판단할 수 없다고 저자들은 선을 긋습니다.</div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 · 큰 표본이 좋은 측정을 대신하지 않는다</span><br>
+  행위주체감 문헌의 표본 대부분은 Assari 등(2025)의 207,919명 한 연구에서 나옵니다. 그런데 저자들은 이 연구가 학대, 통제감, 정신건강을 <strong>모두 단일 문항</strong>으로 쟀기 때문에 구성타당도가 의심스럽다고 평가합니다. 표본이 크면 신뢰구간은 좁아지지만, 재고 있는 것이 무엇인지에 대한 불확실성은 줄어들지 않습니다. 리뷰를 쓸 때나 심사할 때 "총 N"을 그대로 인용하기 전에, 그 N이 어떤 연구에 몰려 있는지 확인해야 하는 이유입니다.
+</div>
+
+<!-- §07 IER -->
+<div class="section-head" id="m4">
+  <div class="section-num">07</div>
+  <div class="section-title-block"><h2>대인관계적 정서조절: 아직은 세 편</h2><p class="section-subtitle">Results §3.4 · 3 studies</p></div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">4</div>
+    <div class="cond-titles"><div class="cond-code">Mechanism 4 · 3 studies</div><h3>대인 정서조절 IER</h3><div class="cond-en">seeking others to regulate one's own emotions</div></div>
+    <span class="verdict weak">limited</span>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">힘들 때 다른 사람에게 기대는 능력이 역경으로 약해질 수 있다는 아이디어는 그럴듯하지만, 같은 표본에서 세 변수를 모두 본 연구는 세 편뿐이다.</div>
+    <p>두 연구에서는 아동기 학대가 IER 전략의 사용 감소와 연관되었고, 그것은 한 연구에서는 더 높은 PTSD 증상과, 다른 연구(Nakajima, 2025)에서는 뜻밖에도 <strong>더 낮은</strong> 심리적 스트레스와 연관되었습니다. 후자에서 IER은 지각된 사회적 지지를 거쳐서는 스트레스를 낮췄는데, 저자들은 지지의 효과를 빼고 나면 IER의 과잉 사용(예: 함께 곱씹기, co-rumination)의 부정적 측면이 드러난 것일 수 있다고 해석합니다. 세 번째 연구에서는 학대와 IER의 연관이 없었지만, 학대 생존 청소년 안에서는 낮은 IER이 높은 해리 증상과 연관되었습니다.</p>
+    <p>저자들은 IER에 대해서는 결론을 내릴 수 없다고 분명히 적습니다. 대신 IER이 기제라면 그것이 <strong>적응적으로도 부적응적으로도</strong> 쓰일 수 있다는 점(예: 강박장애에서 안심 구하기가 장애를 유지시키는 것)을 고려해야 한다고 봅니다.</p>
+  </div>
+</div>
+
+<!-- §08 discussion -->
+<div class="section-head" id="disc">
+  <div class="section-num">08</div>
+  <div class="section-title-block"><h2>논의: 그럴듯함에서 인과로 가려면</h2><p class="section-subtitle">Discussion §4.1~4.4</p></div>
+</div>
+
+<div class="panel">
+  <p>저자들은 결과를 두 층위로 나눠 정리합니다. 첫째, <strong>진단횡단성</strong>입니다. 신뢰, 정신화, 행위주체감은 모두 내재화, 외현화, 정신증, 성격장애 가운데 둘 이상의 범주와 연관되었습니다. 정신화가 가장 많은 결과와 연관되었지만, 이는 정신화 연구가 가장 많았던 탓도 있다고 저자들 스스로 밝힙니다. 둘째, <strong>인과적 결론의 한계</strong>입니다. 횡단 매개모형은 시간적 선후를 확립하지 못하고, 종단 연구 두 편에서는 정신건강에서 기제로 가는 역방향 경로가 확인되었으며, 임상표본 연구 상당수는 기존 증상을 통제하지 않았고, 여러 매개변수를 한 모형에 넣으면서 교란변수를 보정하지 않은 연구도 많았습니다.</p>
+  <p>논의 §4.2에서는 이 리뷰가 다루지 않은 다음 고리, 즉 기제가 사회적 설계도를 어떻게 바꾸는지에 대한 초기 근거를 서사적으로 검토합니다. 신뢰 손상은 재피해(스트레스 생성)와 외로움(사회적 희박화)으로, 정신화 손상은 또래 거절로, 낮은 통제감은 사회적 상호작용을 먼저 시작하지 않는 반응적 행동으로, IER은 실제 및 지각된 사회적 지지로 이어질 수 있다는 것입니다. 저자들은 이 과정이 사회적 관계망이 크게 바뀌는 <strong>청소년기</strong>에 특히 두드러질 것이라고 봅니다.</p>
+</div>
+
+<div class="subhead"><span class="code">8.1</span><h3>연구에 대한 네 가지 권고</h3><span class="en">Implications for future research and methodology</span></div>
+
+<div class="three-grid" style="grid-template-columns:1fr 1fr">
+  <div class="mod-card risk"><h4>1. 인과추론이 가능한 설계를 우선하라</h4><div class="en">Prioritize study designs that enable causal inference</div><p>정신화처럼 문헌이 쌓인 영역에서 <strong>횡단 매개연구를 더 하는 것은 효용이 낮다</strong>. 유전정보 기반 설계, 패널자료 설계, 성향점수 방법을 쓴 종단 관찰연구, 기제의 상태를 조작하는 실험연구, 생태순간평가를 권한다.</p></div>
+  <div class="mod-card risk"><h4>2. 구인을 분명히 정의하고 측정하라</h4><div class="en">Clearly operationalize and measure the construct</div><p>다른 현상에 같은 이름을 붙이거나 같은 현상에 다른 이름을 붙이는 <strong>jingle-jangle 오류</strong>를 피해야 한다. 자기보고와 과제 측정은 상관이 낮은 경우가 많으므로 한 연구 안에서 함께 써 삼각검증하라.</p></div>
+  <div class="mod-card"><h4>3. 통계모형을 정당화하고 가정을 밝혀라</h4><div class="en">Justify the statistical model used</div><p>매개변수는 역경에 의해 <strong>변화되는</strong> 것이고, 조절변수는 역경의 효과를 <strong>변화시키는</strong> 것이다. 둘 다라고 보려면 노출과 매개변수의 상호작용을 허용하는 모형과 적절한 효과분해가 필요하다(VanderWeele, 2013).</p></div>
+  <div class="mod-card"><h4>4. 검증과 해석이 가능하게 보고하라</h4><div class="en">Report findings with sufficient detail</div><p>2차 자료 분석인지 밝히고(같은 표본의 중복 보고를 알 수 있도록), 점추정치와 신뢰구간을 함께, 표준화 여부를 명시하고, 언급한 모든 결과를 보고하라.</p></div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">대학원생을 위한 방법론 포인트 · 매개와 조절은 이론이 결정한다</span><br>
+  권고 3은 이 리뷰에서 가장 실용적인 문장입니다. 많은 학위논문이 같은 변수를 "매개도 해 보고 조절도 해 보는" 방식으로 분석합니다. 저자들은 그 선택이 <strong>실질적 이유</strong>에서 나와야 하고, 그 가정을 밝혀야 한다고 말합니다. 전통적 매개분석은 노출과 매개변수 사이에 상호작용이 없다고 가정한다는 점도 함께 기억해 두면, 행위주체감 문헌에서 본 매개와 조절의 불일치가 왜 쉽게 풀리지 않는지 이해할 수 있습니다.
+</div>
+
+<div class="subhead"><span class="code">8.2</span><h3>실천에 대한 함의</h3><span class="en">Implications for clinical practice and intervention research</span></div>
+
+<div class="panel">
+  <p>저자들은 세 가지를 제안합니다. 첫째, 장애가 생긴 뒤 개입하기보다 아동·청소년을 위한 <strong>표적 예방 개입</strong>을 설계하되, 특정 장애가 아니라 사회적 거래 기제를 중심으로 한 진단횡단적 접근을 취하자는 것입니다. 정신화를 강화하고, 신뢰를 더 적응적으로 보정하도록 돕고, 행위주체감을 키우는 방식입니다. 둘째, 개입 연구가 증상 감소만 볼 것이 아니라 <strong>신뢰, 정신화, 행위주체감의 변화를 매개변수로 측정</strong>해 어떤 기제가 회복을 이끄는지 밝히자는 것입니다. 셋째, 학교, 사회복지, 보건의료처럼 복합외상을 겪은 아동이 처음 만나는 체계에 이 기제들에 대한 이해를 심자는 것입니다.</p>
+  <p>세 번째 제안에는 외상기반 접근(trauma-informed approaches)에 대한 비판이 들어 있습니다. 외상기반 접근은 조작적 정의가 일관되지 않고 명확하지 않다는 비판을 받아 왔는데(Berliner &amp; Kolko, 2016), 저자들은 근거에 기반한 기제를 고려하는 것이 <strong>더 견고하고 신뢰할 수 있으며 맥락을 넘어 옮겨질 수 있는</strong> 외상기반 체계를 만드는 데 기여할 수 있다고 봅니다.</p>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">🧪 용어 정리</span><br>
+  <strong>Scoping review</strong>: 효과를 통합하기보다 근거의 범위, 종류, 공백을 지도처럼 그리는 문헌고찰. 질 평가를 하지 않는 경우가 많다.<br>
+  <strong>진단횡단적(transdiagnostic)</strong>: 특정 장애 하나가 아니라 여러 장애에 공통으로 관여하는.<br>
+  <strong>Jingle-jangle 오류</strong>: 다른 현상에 같은 이름을 붙이는 jingle, 같은 현상에 다른 이름을 붙이는 jangle.<br>
+  <strong>사회적 희박화 / 스트레스 생성</strong>: 관계의 양과 질이 점차 줄어드는 과정 / 개인이 대인 스트레스를 더 자주 겪게 되는 과정.<br>
+  <strong>인식적 신뢰(epistemic trust)</strong>: 다른 사람이 전하는 지식을 자신과 관련 있고 믿을 만한 것으로 받아들이는 태도(Fonagy et al., 2017).
+</div>
+
+<!-- §09 phrases -->
+<div class="section-head" id="phrases">
+  <div class="section-num">09</div>
+  <div class="section-title-block"><h2>명문장</h2><p class="section-subtitle">영어 논문에서 다시 쓸 수 있는 문장과 그 이유</p></div>
+</div>
+
+<div class="phrase-grid">
+  <div class="phrase span2">
+    <div class="en">"We define this evolving configuration of relational patterns and supports as an individual's social architecture, encompassing both subjective (e.g., loneliness, perceived social support) and objective (e.g., number of friends, availability of support) aspects of the social environment."</div>
+    <div class="kr">우리는 이렇게 변화해 가는 관계 패턴과 지지의 구성을 개인의 사회적 설계도로 정의하며, 이는 사회적 환경의 주관적 측면(예: 외로움, 지각된 지지)과 객관적 측면(예: 친구 수, 지지의 가용성)을 모두 포함한다.</div>
+    <div class="why"><b>왜 유용한가.</b> 새 구인을 도입할 때의 모범 문장입니다. "We define X as..." 뒤에 범위(encompassing)와 하위차원, 그리고 괄호 속 예시를 한 문장에 담습니다. 이론 중심 서론에서 핵심 개념을 처음 꺼낼 때 그대로 빌릴 수 있는 구조입니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Particularly for constructs with well-developed literatures such as mentalizing, we would argue that conducting further cross-sectional mediation studies is of limited utility."</div>
+    <div class="kr">특히 정신화처럼 문헌이 잘 축적된 구인에 대해서는, 횡단 매개연구를 더 수행하는 것은 효용이 제한적이라고 우리는 주장한다.</div>
+    <div class="why"><b>왜 유용한가.</b> "we would argue that"과 "of limited utility"로 강한 주장을 정중하게 전달합니다. 리뷰의 연구 제언이나 심사 의견에서 기존 설계의 반복을 비판할 때 쓰기 좋습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"...adaptive social functioning does not involve maximizing trust in all situations, but rather optimally calibrating it to environmental demands ..."</div>
+    <div class="kr">적응적인 사회적 기능은 모든 상황에서 신뢰를 최대화하는 것이 아니라, 환경의 요구에 맞게 신뢰를 최적으로 보정하는 것이다.</div>
+    <div class="why"><b>왜 유용한가.</b> "not A but rather B" 구조로 "많을수록 좋다"는 가정을 뒤집습니다. 보호요인의 비선형성이나 맥락 의존성을 주장할 때 동사만 바꿔 쓸 수 있습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Overall, task-based studies more consistently linked adversity to trust processing than trust processing to mental health outcomes."</div>
+    <div class="kr">전반적으로 과제 기반 연구들은 신뢰 처리와 정신건강 결과를 연결한 것보다 역경과 신뢰 처리를 더 일관되게 연결했다.</div>
+    <div class="why"><b>왜 유용한가.</b> 매개 경로의 두 고리(a 경로와 b 경로)의 근거 강도를 구분해 말하는 문장입니다. 매개 근거를 리뷰할 때 "어느 고리가 약한가"를 짚는 표현으로 쓸 수 있습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Avoiding jingle-jangle fallacies ... is not a trivial issue in a fragmented literature ..."</div>
+    <div class="kr">파편화된 문헌에서 jingle-jangle 오류를 피하는 것은 사소한 문제가 아니다.</div>
+    <div class="why"><b>왜 유용한가.</b> 측정의 이질성을 지적할 때 "is not a trivial issue"라는 완곡한 강조가 효과적입니다. 측정도구 선택을 정당화하는 방법 절 서두에 쓰기 좋습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"Whether a construct is conceptualized as a mediator or moderator or both should be based on substantive reasons, and these assumptions should be clearly outlined."</div>
+    <div class="kr">어떤 구인을 매개변수로, 조절변수로, 혹은 둘 다로 개념화할지는 실질적 이유에 근거해야 하며, 그 가정은 분명히 제시되어야 한다.</div>
+    <div class="why"><b>왜 유용한가.</b> 자기 논문의 분석 모형을 정당화하는 문단을 시작하기에 좋은 원칙 진술입니다. 심사 의견에서 저자에게 모형 선택의 근거를 요구할 때도 그대로 쓸 수 있습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">"...the field remains methodologically uneven, with many studies relying on cross-sectional designs, inconsistent operationalizations of key constructs, and samples largely drawn from high-income countries."</div>
+    <div class="kr">이 분야는 방법론적으로 여전히 고르지 않으며, 많은 연구가 횡단 설계, 핵심 구인의 일관되지 않은 조작화, 주로 고소득국가에서 뽑은 표본에 의존한다.</div>
+    <div class="why"><b>왜 유용한가.</b> "methodologically uneven"이라는 표현 하나로 한계를 요약하고, with 뒤에 세 가지 근거를 병렬로 나열합니다. 리뷰의 결론부나 연구의 필요성 단락에서 쓸 수 있는 구조입니다.</div>
+  </div>
+  <div class="phrase span2">
+    <div class="en">"Ultimately, by studying how interpersonal adversity during childhood reshapes our engagement with our social world, we can move closer to identifying pathways that not only explain risk but also help to foster resilient outcomes following such adversity."</div>
+    <div class="kr">궁극적으로, 아동기 대인관계 역경이 우리가 사회적 세계와 관계 맺는 방식을 어떻게 다시 빚는지 연구함으로써, 우리는 위험을 설명할 뿐 아니라 그런 역경 이후의 회복탄력적 결과를 북돋는 데에도 도움이 되는 경로를 찾는 데 더 가까이 갈 수 있다.</div>
+    <div class="why"><b>왜 유용한가.</b> 결론의 마지막 문장으로, 위험 연구를 회복 연구로 연결하는 "not only explain risk but also..." 구조입니다. 랩 이름처럼 ACEs와 회복을 함께 다루는 논문의 마지막 문장 틀로 쓰기 좋습니다.</div>
+  </div>
+</div>
+
+<!-- §10 our study -->
+<div class="section-head" id="ourstudy">
+  <div class="section-num">10</div>
+  <div class="section-title-block"><h2>AIR Lab 연구와의 연결</h2><p class="section-subtitle">청소년 자해·자살, 심리부검, 사람 중심 방법</p></div>
+</div>
+
+<div class="panel">
+  <p>이 리뷰는 랩의 청소년 자해·자살 연구에 두 가지 질문을 던집니다. 첫째, 우리가 쓰는 매개변수는 <strong>개인 내적 기제</strong>에 치우쳐 있지 않은가. 우울, 정서조절곤란, 충동성은 많이 쓰지만 신뢰, 정신화, 통제감, 도움 요청처럼 <strong>관계를 향한</strong> 기제는 덜 다뤄 왔습니다. 정신화 문헌에서 자해와 자살경향성이 결과로 등장했다는 점, 역경 유형 가운데 정서학대와 정서방임이 가장 일관된 간접경로를 보였다는 점은 정서학대와 자해를 다루는 연구에 직접 연결됩니다.</p>
+  <p>둘째, 가족관계를 <strong>조절변수로 볼 것인가 매개변수로 볼 것인가</strong>. 랩에서 진행 중인 청소년 자해·자살과 가족관계 조절 연구는 이 리뷰의 권고 3에 정확히 해당합니다. 가족관계가 역경에 의해 바뀌는 것인지, 역경의 효과를 바꾸는 것인지는 통계가 아니라 이론으로 정해야 하고, 그 근거를 서론에서 밝혀야 합니다. 또 사람 중심 방법(LPA, LCA)으로 찾은 유형이 신뢰나 통제감 같은 사회적 거래 기제에서도 다른 모습을 보이는지 확인하는 것은 이 모형을 한국 청소년 자료로 확장하는 자연스러운 다음 단계입니다.</p>
+</div>
+
+<div class="tbl-wrap">
+<table class="mini-table">
+  <tr><th>우리 연구 요소</th><th>이 리뷰에서의 대응</th></tr>
+  <tr><td>ACEs 노출 (KNYPI, 가정 밖 청소년 자료)</td><td>대인관계적 ACEs로 한정. 비대인 외상과 빈곤은 별도로 다뤄야 한다는 입장</td></tr>
+  <tr><td>자해·자살 결과변수</td><td>정신화 경로의 결과로 자해, 자살경향성 보고. 다만 대부분 횡단 자기보고</td></tr>
+  <tr><td>가족관계·사회적 지지 변수</td><td>사회적 설계도(주관적·객관적 측면)와 IER의 관계. 지각된 지지가 IER 능력을 일부 반영할 수 있다는 지적(Marroquín, 2011)</td></tr>
+  <tr class="hi"><td>매개 vs 조절 분석 결정</td><td>권고 3: 실질적 이유에 근거하고 가정을 명시. 노출-매개변수 상호작용 고려</td></tr>
+  <tr><td>심리부검 자료</td><td>신뢰 상실, 관계 철수, 통제감 상실이 시간 순서로 기록될 수 있는 드문 자료원. 사회적 희박화 과정을 질적으로 재구성할 가능성</td></tr>
+  <tr><td>LPA·LCA 유형</td><td>"일관된 연구 결과"가 집단 평균에서 나왔다는 한계를 보완. 기제의 이질성을 사람 단위로 볼 수 있음</td></tr>
+</table>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">스터디 토론 질문</span><br>
+  <strong>Q1.</strong> 정신화의 효과가 타인의 마음 읽기가 아니라 자기 감정에 대한 불확실성에서 나왔다면, 이것을 여전히 "사회적 거래" 기제라고 부를 수 있을까요? 정서조절 문헌과 어떻게 구별해야 할까요?<br>
+  <strong>Q2.</strong> 신뢰에서 불신과 맹신이 모두 위험하다면, 회귀모형에 신뢰 점수를 하나의 연속변수로 넣는 분석은 무엇을 놓치게 될까요? 어떤 분석 방법이 대안이 될 수 있을까요?<br>
+  <strong>Q3.</strong> 저자들은 횡단 매개연구를 더 하는 것은 효용이 낮다고 말합니다. 횡단 자료밖에 없는 상황에서, 우리 연구가 기여할 수 있는 정직한 방법은 무엇일까요?
+</div>
+
+<!-- §11 worksheet -->
+<div class="section-head" id="work">
+  <div class="section-num">11</div>
+  <div class="section-title-block"><h2>정리 활동</h2><p class="section-subtitle">입력한 내용은 이 브라우저에 자동 저장됩니다</p></div>
+</div>
+
+<div class="worksheet">
+  <h4>활동 1 · 내 연구 모형을 Figure 2에 놓아 보기</h4>
+  <div class="prompt">지금 진행 중인 연구의 분석 모형은 원문 Figure 2의 네 설계 가운데 어디에 해당합니까? 그 설계가 말해 줄 수 있는 것과 말해 줄 수 없는 것을 한 문장씩 적어 보세요.</div>
+  <textarea data-key="w1" placeholder="해당 설계: ...&#10;말할 수 있는 것: ...&#10;말할 수 없는 것: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 2 · 사회적 거래 기제 하나를 추가한다면</h4>
+  <div class="prompt">신뢰, 정신화, 행위주체감, IER 가운데 하나를 골라 내 연구 자료에 추가한다고 가정해 보세요. 어떤 도구로 재고, 매개변수와 조절변수 가운데 무엇으로 볼 것이며, 그 이유는 무엇입니까?</div>
+  <textarea data-key="w2" placeholder="선택한 기제와 측정도구: ...&#10;매개 또는 조절: ...&#10;이론적 근거: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 3 · 한 문장 요약</h4>
+  <div class="prompt">이 리뷰의 결론을 과장하지 않으면서 영어 한 문장으로 요약해 보세요. "promising", "largely cross-sectional", "transdiagnostic" 가운데 두 개 이상을 써 봅니다.</div>
+  <textarea data-key="w3" placeholder="One-sentence summary: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="closing">
+  <div class="closing-inner">
+    <h2>이 논문이 보여 주는 것: 이론은 고리 하나씩 근거를 채워 가며 자란다</h2>
+    <p>사회적 거래 모형은 매력적인 이야기입니다. 역경을 겪은 아이가 사람을 믿지 못하게 되고, 그래서 관계에서 물러나고, 빈약해진 관계가 다시 마음을 해친다는 이야기는 현장의 사회복지사들이 매일 보는 장면과 닮아 있습니다. 그러나 이 리뷰는 그 이야기가 아직 <strong>그럴듯함(plausibility)의 단계</strong>에 있다는 것을 숫자로 보여 줍니다. 78편 가운데 87%가 횡단 연구이고, 기제의 변화가 증상보다 먼저 온다는 것을 보여 준 연구는 손에 꼽으며, 몇몇 종단 연구는 오히려 화살표가 거꾸로일 수 있음을 시사합니다.</p>
+    <p>이 리뷰가 이론의 성장에 대해 가르치는 것은 두 가지입니다. 하나는 이론을 <strong>검증 가능한 고리</strong>로 나누는 일입니다. 저자들은 모형 전체가 아니라 "ACEs → 기제 → 결과"라는 한 구간만 떼어 근거를 모았고, 다음 구간인 "기제 → 사회적 설계도"는 아직 비어 있다고 밝힙니다. 다른 하나는 근거를 모으는 일이 곧 <strong>구인을 다시 정의하는 일</strong>이 된다는 점입니다. 정신화의 효과가 자기 감정의 불확실성에서 나왔다는 발견, 신뢰의 위험이 양쪽 끝에 있을 수 있다는 발견, 통제감이 두 차원일 수 있다는 발견은 모두 처음의 개념을 고치라는 요구입니다.</p>
+    <div class="signature">Chokhani, R., Lloyd, A., Viding, E., Gerin, M., &amp; McCrory, E. (2026). Linking interpersonal childhood adversity to mental health: A scoping review of trust, mentalizing, agency and interpersonal emotion regulation as candidate social-transactional mechanisms. Clinical Psychology Review, 125, 102722. · AIR Lab Journal Club</div>
+  </div>
+</div>
+
+
+</main>
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(31,78,121,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#1f4e79"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#1f4e79"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<footer class="footer">
+  이 페이지는 AIR Lab(ACEs-Informed Recovery Lab) 대학원 세미나의 교육 목적으로 제작되었습니다. 원문의 짧은 인용은 출처를 밝혀 사용했습니다. "원문 Figure"로 표시한 이미지는 CC BY 4.0 라이선스로 공개된 원문(Chokhani et al., 2026, <em>Clinical Psychology Review</em>)에서 변형 없이 가져와 출처와 함께 실은 것이고, "AIR Lab 개념도"로 표시한 그림은 원문의 수치와 서술을 바탕으로 랩에서 따로 그린 설명용 그림입니다. 정확한 수치와 전체 내용은 원문과 보충자료를 확인하십시오.
+</footer>
+
+<script>
+(function(){
+  var PREFIX='jc_chokhani2026_';
+  var areas=document.querySelectorAll('.worksheet textarea[data-key]');
+  function store(k,v){try{localStorage.setItem(PREFIX+k,v);return true;}catch(e){return false;}}
+  function load(k){try{return localStorage.getItem(PREFIX+k);}catch(e){return null;}}
+  function flash(ta){var s=ta.parentNode.querySelector('.save-status');if(!s)return;s.classList.add('show');clearTimeout(s._t);s._t=setTimeout(function(){s.classList.remove('show');},1400);}
+  areas.forEach(function(ta){
+    var v=load(ta.getAttribute('data-key'));
+    if(v!==null)ta.value=v;
+    var timer;
+    ta.addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(function(){if(store(ta.getAttribute('data-key'),ta.value))flash(ta);},400);});
+  });
+  window.saveAll=function(){var ok=true;areas.forEach(function(ta){if(store(ta.getAttribute('data-key'),ta.value))flash(ta);else ok=false;});if(!ok)alert('이 브라우저에서는 저장 공간을 사용할 수 없습니다. 내용을 따로 복사해 두세요.');};
+})();
+</script>
+</body>
+</html>
