@@ -1,0 +1,1384 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>프레임워크 분석 제대로 쓰기 · AIR Lab Journal Club</title>
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --font-display:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-text:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,'Inter',system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --white:#ffffff; --off:#f4f7fb; --ink:#20262e; --mid:#46505c; --light:#828d9b; --xlight:#aab4c1;
+    --rule:#e6ebf1; --coral:#e0573e; --coral-soft:#fdeee9;
+    --sky:#3f86c4; --sky-deep:#2f6fa8; --sky-bright:#6cb0e4; --sky-soft:#e8f1fa; --sky-soft2:#f2f8fd;
+    --mint:#3fa88a; --mint-soft:#e6f5f0; --amber:#c78a1e; --amber-soft:#fbf1dc;
+    --shadow-card:0 1px 2px rgba(36,64,102,0.04),0 10px 30px rgba(36,64,102,0.06);
+    --shadow-soft:0 1px 2px rgba(36,64,102,0.03),0 4px 14px rgba(36,64,102,0.05);
+    --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:980px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font-text);color:var(--ink);background:var(--white);
+    line-height:1.7;font-size:15.5px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--sky-bright);color:#fff}
+  .stripe{display:flex;height:3px;width:100%}
+  .stripe span{flex:1}
+  .stripe .s1{background:var(--sky-deep)}.stripe .s2{background:var(--sky)}.stripe .s3{background:var(--sky-bright)}
+  .stripe .s4{background:var(--sky)}.stripe .s5{background:var(--sky-deep)}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,0.78);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;max-width:1180px;margin:0 auto;gap:1rem;}
+  .nav-logo{font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;}
+  .nav-logo-dot{display:flex;gap:3px;align-items:center}
+  .nav-logo-dot span{display:block;width:6px;height:6px;border-radius:50%}
+  .nav-logo-dot .d1{background:var(--sky-deep)}.nav-logo-dot .d2{background:var(--sky)}.nav-logo-dot .d3{background:var(--sky-bright)}
+  .nav-links{display:flex;gap:1.1rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+  .nav-links a{font-size:.78rem;letter-spacing:-.01em;color:var(--mid);text-decoration:none;font-weight:400;transition:color .15s;}
+  .nav-links a:hover{color:var(--sky-deep)}
+  .nav-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .tool-btn{background:var(--sky-deep);color:#fff;border:none;padding:6px 13px;border-radius:var(--r-pill);font-size:.74rem;font-weight:600;cursor:pointer;transition:.18s;font-family:inherit;}
+  .tool-btn:hover{background:var(--sky)}
+  .tool-btn.ghost{background:transparent;color:var(--sky-deep);border:1px solid var(--rule);}
+  .tool-btn.ghost:hover{background:var(--hover-bg,#eef5fc);border-color:var(--sky-bright)}
+  /* HERO */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--sky-soft) 0%,rgba(243,248,253,0.5) 46%,#fff 82%);z-index:-1;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:52px 2rem 60px;}
+  .overline{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-text);font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-deep);margin-bottom:20px;}
+  .overline::before{content:'';width:26px;height:1.5px;background:var(--sky);}
+  .hero h1{margin:0;font-family:var(--font-display);font-size:clamp(28px,4.6vw,50px);line-height:1.08;font-weight:600;letter-spacing:-.03em;color:var(--ink);}
+  .hero h1 em{color:var(--sky-deep);font-style:normal;font-weight:600;}
+  .hero .citation{margin-top:20px;color:var(--light);font-size:13.5px;font-family:'Inter',var(--font-text);border-left:2px solid var(--sky-bright);padding-left:14px;line-height:1.6;}
+  .hero .citation em{color:var(--mid);font-style:italic;}
+  .hero .subtitle{max-width:900px;margin-top:22px;color:var(--mid);font-size:16.5px;line-height:1.68;}
+  .hero .subtitle strong{color:var(--ink);font-weight:600;}
+  .hero-meta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-meta .stat{background:rgba(255,255,255,0.7);border:1px solid var(--rule);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-soft);}
+  .hero-meta .stat .num{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--sky-deep);display:block;line-height:1.1;letter-spacing:-.02em;}
+  .hero-meta .stat .lbl{font-size:11px;color:var(--light);letter-spacing:.04em;margin-top:4px;}
+  /* CONTAINER */
+  .container{max-width:1180px;margin:0 auto;padding:20px 2rem 96px}
+  .section-head{display:flex;align-items:flex-start;gap:16px;margin:72px 0 24px;padding-bottom:14px;border-bottom:1px solid var(--rule);}
+  .section-head:first-of-type{margin-top:36px}
+  .section-num{font-family:var(--font-display);font-size:15px;font-weight:800;color:#fff;background:var(--sky-deep);min-width:44px;height:30px;padding:0 10px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;letter-spacing:.02em;flex-shrink:0;margin-top:1px;}
+  .section-title-block{flex:1}
+  .section-title-block h2{margin:0;font-family:var(--font-display);color:var(--ink);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.3;}
+  .section-subtitle{margin:3px 0 0;color:var(--light);font-size:13px;font-weight:300;}
+  .panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:26px 30px;margin-bottom:16px;box-shadow:var(--shadow-soft);}
+  .panel p{margin:0 0 12px}
+  .panel p:last-child{margin-bottom:0}
+  strong{color:var(--sky-deep);font-weight:600}
+  /* SUBHEAD */
+  .subhead{display:flex;align-items:center;gap:12px;margin:36px 0 14px;flex-wrap:wrap;}
+  .subhead .code{font-family:var(--font-display);font-weight:600;color:#fff;background:var(--sky);font-size:12.5px;padding:4px 11px;border-radius:var(--r-pill);flex-shrink:0;letter-spacing:.01em;}
+  .subhead h3{margin:0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;}
+  .subhead .en{font-size:12.5px;color:var(--light);font-family:'Inter',var(--font-text);font-style:italic;}
+  .verdict{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.02em;}
+  .verdict.weak{background:var(--coral-soft);color:var(--coral)}
+  .verdict.promising{background:var(--sky-soft);color:var(--sky-deep)}
+  .verdict.mixed{background:var(--amber-soft);color:var(--amber)}
+  .verdict.new{background:var(--mint-soft);color:var(--mint)}
+  /* CONDITION CARD (filled header bar) */
+  .condition{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin:20px 0;box-shadow:var(--shadow-card);}
+  .condition-header{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .num-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .num-circle.weak{background:var(--coral)}
+  .num-circle.promising{background:var(--mint)}
+  .num-circle.newm{background:var(--sky-bright)}
+  .cond-titles{flex:1;min-width:0}
+  .cond-code{font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--sky-bright);text-transform:uppercase;}
+  .cond-titles h3{margin:1px 0 0;font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em;}
+  .cond-en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12.5px;color:#bcd6ee;}
+  .condition-header .verdict{margin-left:auto;}
+  .condition-body{padding:22px 26px;}
+  .condition-body>p{margin:0 0 12px}
+  .condition-body>p:last-child{margin-bottom:0}
+  .plain-meaning{background:var(--sky-soft);border-radius:var(--r-sm);padding:14px 16px;margin:0 0 14px;font-size:15px;font-weight:600;color:var(--sky-deep);line-height:1.5;}
+  .plain-meaning::before{content:'쉽게 풀면';display:block;font-family:'Inter',var(--font-text);font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:5px;text-transform:uppercase;}
+  /* QUOTE */
+  .quote-box{background:var(--sky-soft2);border-left:3px solid var(--sky);padding:16px 20px;margin:16px 0;border-radius:0 var(--r-sm) var(--r-sm) 0;
+    font-family:'Inter',var(--font-text);font-style:italic;color:var(--mid);font-size:14.5px;line-height:1.68;}
+  .quote-box .attr{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--xlight);}
+  .quote-box .trans{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed #d4e3f2;font-family:var(--font-text);font-style:normal;font-size:13.5px;color:var(--ink);line-height:1.68;}
+  .quote-box .trans strong{color:var(--sky-deep);}
+  /* CALLOUT */
+  .callout{border-radius:var(--r-md);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.68;}
+  .callout.sky{background:var(--sky-soft);border-left:3px solid var(--sky);}
+  .callout.warm{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  .callout.danger{background:var(--coral-soft);border-left:3px solid var(--coral);}
+  .callout.sage{background:var(--mint-soft);border-left:3px solid var(--mint);}
+  .callout strong{color:var(--ink);}
+  .callout-label{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;padding:2px 9px;border-radius:var(--r-pill);}
+  .sky .callout-label{background:var(--sky-deep);color:#fff}
+  .warm .callout-label{background:var(--amber);color:#fff}
+  .danger .callout-label{background:var(--coral);color:#fff}
+  .sage .callout-label{background:var(--mint);color:#fff}
+  /* PAPER META CARD */
+  .paper-meta{background:linear-gradient(135deg,var(--sky-deep) 0%,#255d8f 100%);color:#fff;border-radius:var(--r-lg);padding:32px 34px;margin:20px 0;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .paper-meta::before{content:'';position:absolute;right:-50px;top:-50px;width:190px;height:190px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .paper-meta-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:18px;}
+  .paper-meta-item .label{font-size:10px;color:var(--sky-bright);letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .paper-meta-item .value{font-size:14.5px;color:#eaf2fa;line-height:1.5;}
+  .paper-meta h3{margin:0 0 4px;font-family:var(--font-display);color:#fff;font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .paper-meta .sub{color:var(--sky-bright);font-style:italic;font-size:14px;font-family:'Inter',var(--font-text);}
+  /* FIGURE */
+  .figure-block{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px 22px;margin:20px 0;box-shadow:var(--shadow-soft);}
+  .figure-block .fig-title{font-family:var(--font-display);font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;}
+  .fig-orig{text-align:center;background:var(--off);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px;margin:8px 0 4px;}
+  .fig-orig img{max-width:100%;height:auto;border-radius:6px;}
+  .fig-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 10px;border-radius:var(--r-pill);margin-bottom:8px;}
+  .fig-tag.orig{background:var(--off);color:var(--light);border:1px solid var(--rule);}
+  .fig-tag.kr{background:var(--sky-soft);color:var(--sky-deep);}
+  .fig-cap{font-size:12px;color:var(--light);line-height:1.55;margin:6px 2px 0;}
+  .fig-kr{background:var(--sky-soft2);border:1px solid var(--rule);border-radius:var(--r-sm);padding:16px 14px 8px;margin-top:14px;text-align:center;}
+  .fig-implies{background:var(--sky-soft);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.7;color:var(--mid);}
+  .fig-implies b{color:var(--sky-deep);}
+  .stat-inline{display:inline-block;background:var(--sky-deep);color:#fff;font-weight:600;font-size:12.5px;padding:1px 10px;border-radius:var(--r-pill);margin:0 2px;}
+  /* MINI TABLE */
+  .mini-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+  .mini-table th{background:var(--off);font-weight:600;padding:9px 11px;text-align:left;border-bottom:2px solid var(--rule);color:var(--mid);}
+  .mini-table td{padding:8px 11px;border-bottom:1px solid var(--rule);}
+  .mini-table tr.hi td{background:var(--sky-soft2);font-weight:500;}
+  /* MOD GRID */
+  .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+  .mod-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-soft);border-top:3px solid var(--sky);}
+  .mod-card.risk{border-top-color:var(--coral)}
+  .mod-card.protect{border-top-color:var(--mint)}
+  .mod-card h4{margin:0 0 2px;font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .mod-card .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:12px;color:var(--light);margin-bottom:8px}
+  .mod-card p{margin:0;font-size:13.5px;line-height:1.62}
+  .mod-card .keynum{display:inline-block;margin-top:8px;background:var(--sky-soft);color:var(--sky-deep);font-weight:600;font-size:12px;padding:2px 11px;border-radius:var(--r-pill);}
+  /* PHRASES */
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .phrase{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:18px 22px;box-shadow:var(--shadow-soft);}
+  .phrase.span2{grid-column:1 / -1;}
+  .phrase .en{font-family:'Inter',var(--font-text);font-style:italic;font-size:14.5px;color:var(--ink);line-height:1.62;}
+  .phrase .kr{margin-top:8px;font-size:13.5px;color:var(--sky-deep);line-height:1.62;font-weight:500;}
+  .phrase .why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .phrase .why b{color:var(--mint);font-weight:600;}
+  /* REFLECTION / WORKSHEET */
+  .reflection{background:var(--amber-soft);border:1px solid #f0e0bf;border-radius:var(--r-md);padding:16px 20px;margin-top:16px;}
+  .reflection h4{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.02em;}
+  .reflection h4::before{content:"\1F4A1  "}
+  .reflection ul{margin:0;padding-left:20px}
+  .reflection li{margin-bottom:6px;font-size:14px;line-height:1.62;color:var(--mid)}
+  .worksheet{background:var(--white);border:1px dashed var(--sky);border-radius:var(--r-md);padding:20px 24px;margin:14px 0;box-shadow:var(--shadow-soft);}
+  .worksheet h4{margin:0 0 8px;font-family:var(--font-display);color:var(--ink);font-size:15px;font-weight:600;}
+  .worksheet .prompt{font-size:14px;color:var(--mid);margin-bottom:12px;line-height:1.62;}
+  .worksheet textarea{width:100%;min-height:88px;border:1.5px solid var(--rule);border-radius:var(--r-sm);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.6;resize:vertical;background:var(--sky-soft2);color:var(--ink);transition:.18s;}
+  .worksheet textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(63,134,196,0.15);background:#fff;}
+  .save-status{display:inline-block;font-size:11.5px;color:var(--mint);margin-top:6px;opacity:0;transition:opacity .3s;}
+  .save-status.show{opacity:1}
+  /* CLOSING */
+  .closing{background:linear-gradient(135deg,var(--sky-deep) 0%,#22537f 100%);color:#fff;border-radius:var(--r-lg);padding:38px 40px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
+  .closing::before{content:'';position:absolute;right:-70px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:rgba(108,176,228,0.18);}
+  .closing-inner{position:relative;z-index:1}
+  .closing h2{font-family:var(--font-display);color:var(--sky-bright);margin:0 0 14px;font-size:21px;font-weight:600;letter-spacing:-.02em;}
+  .closing p{color:#e6eef7;font-size:15px;line-height:1.72;margin:0 0 12px;}
+  .closing p strong{color:#fff;}
+  .closing .signature{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.18);font-family:'Inter',var(--font-text);font-style:italic;color:var(--sky-bright);font-size:13px;}
+  .footer{text-align:center;padding:28px 20px;color:var(--xlight);font-size:12px;border-top:1px solid var(--rule);margin-top:30px;}
+  svg text{font-family:var(--font-text);}
+  @media print{nav,.tool-btn{display:none!important}
+    .hero::before,.paper-meta,.closing{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.callout,.reflection,.phrase,.figure-block,.mod-card{break-inside:avoid}
+    body{font-size:11pt;line-height:1.55}.container{padding:20px}}
+  @media (max-width:900px){.mod-grid,.paper-meta-grid,.phrase-grid{grid-template-columns:1fr}
+    .nav-links{display:none}}
+  /* ════════ AIR Lab theme: navy → recovery-teal (synced with index) ════════ */
+  :root{ --sky:#2d6a9f; --sky-deep:#1f4e79; --sky-bright:#7fa9d1; --sky-soft:#e9eff6; --sky-soft2:#f4f7fb; --sky-soft-2:#f4f7fb; --mint:#3a9a8f; --mint-soft:#eaf5f2; --hover-bg:#eef3f9; }
+  .stripe{background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+  .stripe span{background:transparent!important}
+  .nav-logo-dot .d3{background:#3a9a8f}
+  .hero{isolation:isolate}
+  .hero::before{background:radial-gradient(120% 140% at 88% 0%, rgba(58,154,143,0.38) 0%, rgba(58,154,143,0) 55%), linear-gradient(100deg, #15324f 0%, #1c4a73 48%, #22655f 100%)!important}
+  .overline{color:#9fd3ca!important}
+  .overline::before{background:#8cc7bd!important}
+  .hero h1{color:#fff!important}
+  .hero h1 em{color:#bfe6df!important}
+  .hero .citation{color:#b7c9da!important;border-left-color:#8cc7bd!important}
+  .hero .citation em{color:#d6e5f2!important}
+  .hero .citation a{color:#bfe6df!important}
+  .hero .subtitle{color:#d2e0ec!important}
+  .hero .subtitle strong,.hero .subtitle b{color:#fff!important}
+  .hero .subtitle em{color:#bfe6df}
+  .hero .stat{background:rgba(255,255,255,0.08)!important;border-color:rgba(255,255,255,0.2)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .hero .stat .num{color:#fff!important}
+  .hero .stat .lbl{color:#a9c1d6!important}
+  .paper-meta,.condition-header{background:linear-gradient(120deg,#1c4a73 0%,#22655f 100%)!important}
+  .section-num{background:linear-gradient(120deg,#1f4e79 0%,#2d7d78 100%)!important}
+
+  /* ════════ figure originals + line-drawing helpers ════════ */
+  .fig-orig a{display:block}
+  .fig-orig img{display:block;margin:0 auto;background:#fff}
+  .fig-lic{font-size:11.5px;color:var(--light);line-height:1.55;margin:8px 2px 0;text-align:left}
+  .fig-lic a{color:var(--sky-deep)}
+  .guide-list{margin:6px 0 0;padding-left:20px}
+  .guide-list li{margin-bottom:5px}
+  .mini-table td.num,.mini-table th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .mini-table td small{color:var(--light)}
+  .tbl-wrap{overflow-x:auto}
+  .three-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+  @media (max-width:900px){.three-grid{grid-template-columns:1fr}}
+  svg .ink{stroke:#20262e;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  svg .inkthin{stroke:#46505c;stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ════════ framework page additions ════════ */
+  .mod-card .guide-list{font-size:13.5px;line-height:1.62;color:var(--ink)}
+  .mod-card svg{display:block;margin:0 0 8px}
+  .condition-body .callout{margin-bottom:0}
+  .hero .citation{line-height:1.75}
+  @media (max-width:900px){.hero-meta .stat .num{font-size:17px}}
+</style>
+
+</head>
+<body id="top">
+<div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-dot"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>
+      AIR Lab · Journal Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="#paper">네 편의 논문</a></li>
+      <li><a href="#what">정의</a></li>
+      <li><a href="#family">주제분석 안의 위치</a></li>
+      <li><a href="#when">선택 기준</a></li>
+      <li><a href="#steps">절차</a></li>
+      <li><a href="#cases">세 사례</a></li>
+      <li><a href="#crit">비판적 읽기</a></li>
+      <li><a href="#apply">적용</a></li>
+      <li><a href="#write">영어 논문</a></li>
+      <li><a href="#work">활동</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="tool-btn ghost" onclick="window.print()">인쇄</button>
+      <button class="tool-btn" onclick="saveAll()">저장</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="overline">Methods · Framework Analysis · Journal Club</div>
+    <h1>프레임워크 분석 제대로 쓰기:<br><em>사례 × 코드 매트릭스로 하는 주제분석, 그리고 그 이름을 정확히 부르는 법</em></h1>
+    <div class="citation">
+      Gale, N. K., Heath, G., Cameron, E., Rashid, S., &amp; Redwood, S. (2013). <em>BMC Medical Research Methodology, 13</em>, 117.<br>
+      Ward, D. J., Furber, C., Tierney, S., &amp; Swallow, V. (2013). <em>Journal of Advanced Nursing, 69</em>(11), 2423-2431.<br>
+      Parkinson, S., Eatough, V., Holmes, J., Stapley, E., &amp; Midgley, N. (2016). <em>Qualitative Research in Psychology, 13</em>(2), 109-129.<br>
+      Braun, V., &amp; Clarke, V. (2021). <em>Qualitative Research in Psychology, 18</em>(3), 328-352.
+    </div>
+    <p class="subtitle">면담 자료를 분석했다고 쓸 때 "주제분석을 했다"와 "프레임워크 분석을 했다"는 같은 말일까요, 다른 말일까요. 이번 회차는 방법론 논문 네 편을 한꺼번에 읽습니다. 앞의 세 편은 프레임워크 분석(Framework Method)을 <strong>어떻게 하는지</strong> 실제 연구를 예로 들어 보여 주고, 마지막 한 편은 그 방법이 주제분석이라는 큰 가족 안에서 <strong>어디에 놓이는지</strong>, 그리고 심사자가 무엇을 묻는지를 정리합니다. 읽을 때는 세 가지를 따라가면 됩니다: 매트릭스는 무엇을 가능하게 하는가, 자료 관리와 해석은 어디서 갈리는가, 방법의 이름과 실제 절차는 어떻게 맞춰 쓰는가.</p>
+    <div class="hero-meta">
+      <div class="stat"><span class="num">4편</span><div class="lbl">동료심사 방법론 논문</div></div>
+      <div class="stat"><span class="num">행 = 사례 · 열 = 코드</span><div class="lbl">이 방법을 정의하는 매트릭스</div></div>
+      <div class="stat"><span class="num">5단계 또는 7단계</span><div class="lbl">Ritchie &amp; Spencer 원안과 Gale 등의 재정리</div></div>
+      <div class="stat"><span class="num">약 반나절</span><div class="lbl">1시간 면담 1건을 색인하고 차트화하는 시간</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<div style="padding:1.3rem 0 0;font-size:0.8rem;color:var(--light);"><a href="../journal-club.html" style="color:var(--sky-deep);text-decoration:none;font-weight:500;">Journal Club</a><span style="margin:0 0.45rem;color:var(--xlight);">/</span>프레임워크 분석 (Gale et al., 2013 외 3편)</div>
+
+<!-- §01 -->
+<div class="section-head" id="paper">
+  <div class="section-num">01</div>
+  <div class="section-title-block"><h2>네 편의 논문, 네 가지 역할</h2><p class="section-subtitle">절차 안내서 한 편, 적용 사례 두 편, 지형도 한 편</p></div>
+</div>
+
+<div class="panel">
+  <p>프레임워크 분석은 영국의 사회정책 연구 현장에서 만들어진 방법입니다. 그런데 이 방법을 쓴 논문들은 대개 결과 보고에 지면을 쓰고, 분석을 실제로 어떻게 했는지는 몇 줄로 넘어갑니다. Parkinson 등(2016)은 이 방법의 단계는 여러 문헌에 소개되어 있지만 <strong>실제로 수행하는 과정</strong>을 보여 주는 글은 부족하다고 지적합니다. 이번에 읽는 앞의 세 편은 바로 그 공백을 메우려고 쓴 글입니다.</p>
+  <p>네 번째 논문은 성격이 다릅니다. Braun과 Clarke(2021)는 주제분석(thematic analysis, TA)이 하나의 방법이 아니라 철학과 절차가 서로 다른 여러 접근의 묶음이라고 보고, 프레임워크 분석을 그 가운데 <strong>코드북(codebook) 접근</strong>으로 분류합니다. 이 분류를 알아야 "주제분석을 했다"는 문장과 실제 절차가 어긋나는 일을 피할 수 있습니다.</p>
+</div>
+
+<div class="mod-grid">
+  <div class="mod-card">
+    <h4>① Gale 등 (2013): 절차 안내서</h4>
+    <div class="en">BMC Medical Research Methodology · Correspondence · Open Access (CC BY 2.0)</div>
+    <p>이 방법을 언제 쓰고 언제 피해야 하는지, 귀납과 연역 중 어디에 놓이는지를 정리하고 절차를 <strong>7단계</strong>로 풀어 씁니다. 임상가, 환자, 일반 시민이 섞인 다학제 팀이 함께 분석하는 상황을 전제로 합니다.</p>
+    <span class="keynum">핵심 용어 정의와 7단계</span>
+  </div>
+  <div class="mod-card protect">
+    <h4>② Ward 등 (2013): 간호 연구 적용 사례</h4>
+    <div class="en">Journal of Advanced Nursing · Discussion paper</div>
+    <p>간호학생 <strong>31명</strong>의 반구조화 면담을 예로 들어 Ritchie와 Spencer의 <strong>5단계</strong>를 따라갑니다. 연구책임자 한 사람이 종이 차트로 분석을 이끌고, 학내 프레임워크 분석 모임이 일부 전사본을 함께 검토했습니다.</p>
+    <span class="keynum">투명성과 감사 추적(audit trail)</span>
+  </div>
+  <div class="mod-card protect">
+    <h4>③ Parkinson 등 (2016): 청소년 우울 경험 연구 적용 사례</h4>
+    <div class="en">Qualitative Research in Psychology · Reflective article</div>
+    <p>우울 진단을 받은 11~17세 <strong>77명</strong>의 면담을 6명의 팀이 NVivo로 분석한 과정을 돌아봅니다. 틀을 만드는 첫 시도가 실패한 경위와, 팀이 그것을 어떻게 바로잡았는지를 숨기지 않고 씁니다.</p>
+    <span class="keynum">자료 관리와 해석의 구분</span>
+  </div>
+  <div class="mod-card risk">
+    <h4>④ Braun &amp; Clarke (2021): 주제분석의 지형도</h4>
+    <div class="en">Qualitative Research in Psychology · Quality in qualitative approaches 특별호</div>
+    <p>출판된 주제분석 연구에서 반복해서 보이는 <strong>열 가지 문제</strong>를 짚고, 심사자와 편집자를 위한 <strong>20개 점검 질문</strong>을 제시합니다. 프레임워크 분석은 코드북 접근의 한 예로 등장합니다.</p>
+    <span class="keynum">세 갈래 분류와 심사 기준</span>
+  </div>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">🧭 길잡이 · 이 페이지의 세 가지 질문</span><br>
+  <strong>질문 1.</strong> 프레임워크 분석을 다른 질적 분석과 구별하는 것은 무엇인가? (§02~§04)<br>
+  <strong>질문 2.</strong> 실제로는 어떤 순서로 하고, 어디에서 막히는가? (§05~§07)<br>
+  <strong>질문 3.</strong> 학술 면담 연구, 정책연구, 현장 실무에는 각각 어떻게 옮겨 쓰고, 영어 논문에는 어떻게 적는가? (§08~§10)
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">읽기 전에 · 근거의 성격</span><br>
+  앞의 세 편은 방법 간 비교 실험이 아니라, 각자 <strong>한 건의 연구</strong>에서 얻은 경험을 정리한 방법론 논의입니다(게재 유형도 각각 Correspondence, Discussion paper, 성찰적 논문입니다). 따라서 이 글들이 말하는 장점과 한계는 "이렇게 했더니 이런 점이 좋았고 이런 점이 어려웠다"는 수준의 근거로 읽어야 합니다. Parkinson 등의 내용은 저자 최종 원고(Birkbeck 기관 저장소 공개본)를 기준으로 정리했습니다.
+</div>
+
+<!-- §02 -->
+<div class="section-head" id="what">
+  <div class="section-num">02</div>
+  <div class="section-title-block"><h2>프레임워크 분석이란 무엇인가</h2><p class="section-subtitle">기원, 정의, 그리고 매트릭스</p></div>
+</div>
+
+<div class="panel">
+  <p><strong>기원.</strong> 이 방법은 1980년대 후반 영국 National Centre for Social Research의 질적연구 부서에서 Jane Ritchie와 Liz Spencer가 대규모 정책연구에 쓰려고 개발했습니다(Gale et al., 2013). Ward 등은 이를 현실 세계의 문제를 다루는 실용적 접근으로, 구체적인 질문에 답하려고 만든 응용연구 접근이어서 정책과 실천 모두에 정보를 줄 수 있다고 소개합니다. 이후 보건의료, 간호, 조산, 건강심리, 심리학으로 사용 범위가 넓어졌습니다.</p>
+  <p><strong>위치.</strong> Gale 등은 이 방법이 흔히 주제분석 또는 질적 내용분석이라 불리는 넓은 분석 가족 안에 놓인다고 씁니다. 자료에서 공통점과 차이점을 찾고, 자료의 부분들 사이의 관계에 주목해, 주제를 중심으로 기술적이거나 설명적인 결론을 끌어내는 접근들입니다. Ward 등은 이 방법이 문화기술지, 현상학, 근거이론 같은 <strong>연구 패러다임이 아니라 자료 분석 방법</strong>이라는 점을 분명히 합니다.</p>
+  <p><strong>정의 특징.</strong> 이 방법을 다른 주제분석과 구별하는 것은 결과물의 모양입니다. 행에 사례, 열에 코드를 두고 각 칸에 요약한 자료를 넣는 <strong>매트릭스</strong>가 그것입니다. 연구자는 이 구조에 자료를 체계적으로 줄여 넣고, 사례별로도 코드별로도 분석할 수 있습니다. 사례는 대개 면담 참여자 한 사람이지만, 미리 정한 집단이나 기관 같은 다른 분석 단위로 바꿀 수 있습니다(Gale et al., 2013).</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 1. 프레임워크 매트릭스의 구조와 두 가지 읽기 (Gale et al., 2013; Ward et al., 2013 서술 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 430" width="100%" style="max-width:900px" role="img" aria-label="사례가 행이고 코드가 열인 프레임워크 매트릭스. 가로로 읽으면 사례 안 분석, 세로로 읽으면 사례 간 분석">
+    <defs>
+      <marker id="arA" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#1f4e79"/></marker>
+      <marker id="arB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#3a9a8f"/></marker>
+    </defs>
+    <!-- header row -->
+    <g font-size="12.5">
+      <rect x="150" y="56" width="560" height="44" rx="8" fill="#1f4e79"/>
+      <text x="220" y="76" text-anchor="middle" fill="#fff" font-weight="600">코드 1.01</text>
+      <text x="220" y="92" text-anchor="middle" fill="#bcd6ee" font-size="11">의뢰 경위</text>
+      <text x="360" y="76" text-anchor="middle" fill="#fff" font-weight="600">코드 1.02</text>
+      <text x="360" y="92" text-anchor="middle" fill="#bcd6ee" font-size="11">어려움의 묘사</text>
+      <text x="500" y="76" text-anchor="middle" fill="#fff" font-weight="600">코드 1.03</text>
+      <text x="500" y="92" text-anchor="middle" fill="#bcd6ee" font-size="11">어려움에 대한 이해</text>
+      <text x="640" y="76" text-anchor="middle" fill="#fff" font-weight="600">코드 1.04</text>
+      <text x="640" y="92" text-anchor="middle" fill="#bcd6ee" font-size="11">가족 관계</text>
+      <text x="430" y="38" text-anchor="middle" fill="#1f4e79" font-weight="700" font-size="13">열 = 코드 (분석틀의 범주)</text>
+    </g>
+    <!-- row labels -->
+    <g font-size="12.5" fill="#20262e">
+      <text x="32" y="232" text-anchor="middle" font-weight="700" fill="#1f4e79" font-size="13" transform="rotate(-90 32 232)">행 = 사례 (참여자, 집단, 기관)</text>
+      <rect x="58" y="108" width="84" height="62" rx="8" fill="#e9eff6"/><text x="100" y="144" text-anchor="middle" font-weight="600">사례 01</text>
+      <rect x="58" y="176" width="84" height="62" rx="8" fill="#e9eff6"/><text x="100" y="212" text-anchor="middle" font-weight="600">사례 02</text>
+      <rect x="58" y="244" width="84" height="62" rx="8" fill="#e9eff6"/><text x="100" y="280" text-anchor="middle" font-weight="600">사례 03</text>
+      <rect x="58" y="312" width="84" height="62" rx="8" fill="#e9eff6"/><text x="100" y="348" text-anchor="middle" font-weight="600">사례 04</text>
+    </g>
+    <!-- cells -->
+    <g stroke="#cfd8e3" stroke-width="1.2" fill="#fff">
+      <rect x="150" y="108" width="140" height="62" rx="6"/><rect x="290" y="108" width="140" height="62" rx="6"/><rect x="430" y="108" width="140" height="62" rx="6"/><rect x="570" y="108" width="140" height="62" rx="6"/>
+      <rect x="150" y="176" width="140" height="62" rx="6"/><rect x="290" y="176" width="140" height="62" rx="6"/><rect x="430" y="176" width="140" height="62" rx="6"/><rect x="570" y="176" width="140" height="62" rx="6"/>
+      <rect x="150" y="244" width="140" height="62" rx="6"/><rect x="290" y="244" width="140" height="62" rx="6"/><rect x="430" y="244" width="140" height="62" rx="6" fill="#fdeee9" stroke="#e0573e" stroke-dasharray="5 4"/><rect x="570" y="244" width="140" height="62" rx="6"/>
+      <rect x="150" y="312" width="140" height="62" rx="6"/><rect x="290" y="312" width="140" height="62" rx="6"/><rect x="430" y="312" width="140" height="62" rx="6"/><rect x="570" y="312" width="140" height="62" rx="6"/>
+    </g>
+    <!-- summary scribbles -->
+    <g stroke="#aab4c1" stroke-width="3" stroke-linecap="round">
+      <path d="M164 128h100M164 140h84M164 152h60"/><path d="M304 128h104M304 140h70"/><path d="M444 128h96M444 140h108M444 152h50"/><path d="M584 128h90M584 140h104"/>
+      <path d="M164 196h92M164 208h70"/><path d="M444 196h100M444 208h60"/><path d="M584 196h108M584 208h80M584 220h50"/>
+      <path d="M164 264h104M164 276h60"/><path d="M304 264h96M304 276h108M304 288h44"/><path d="M584 264h84"/>
+      <path d="M164 332h80M164 344h104"/><path d="M304 332h100"/><path d="M444 332h108M444 344h72"/><path d="M584 332h96M584 344h60"/>
+    </g>
+    <!-- highlighted cell -->
+    <rect x="290" y="176" width="140" height="62" rx="6" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="2"/>
+    <text x="360" y="198" text-anchor="middle" font-size="11.5" fill="#20262e">요약한 자료</text>
+    <text x="360" y="214" text-anchor="middle" font-size="11.5" fill="#20262e">+ 인용 위치 표시</text>
+    <text x="360" y="230" text-anchor="middle" font-size="10.5" fill="#3a9a8f" font-weight="600">Q 02: p.4, l.12</text>
+    <text x="500" y="272" text-anchor="middle" font-size="11.5" fill="#e0573e" font-weight="600">빈 칸</text>
+    <text x="500" y="289" text-anchor="middle" font-size="10.5" fill="#e0573e">말하지 않은 것도 정보</text>
+    <!-- arrows -->
+    <line x1="150" y1="392" x2="704" y2="392" stroke="#1f4e79" stroke-width="2.2" marker-end="url(#arA)"/>
+    <text x="430" y="414" text-anchor="middle" font-size="13" fill="#1f4e79" font-weight="600">가로로 읽기: 사례 안 분석. 한 사람의 이야기가 맥락과 함께 남는다</text>
+    <line x1="738" y1="108" x2="738" y2="368" stroke="#3a9a8f" stroke-width="2.2" marker-end="url(#arB)"/>
+    <text x="760" y="170" font-size="13" fill="#2d7d78" font-weight="600">세로로 읽기:</text>
+    <text x="760" y="190" font-size="13" fill="#2d7d78" font-weight="600">사례 간 분석</text>
+    <text x="760" y="214" font-size="12" fill="#46505c">한 주제를</text>
+    <text x="760" y="232" font-size="12" fill="#46505c">모든 사례에 걸쳐</text>
+    <text x="760" y="250" font-size="12" fill="#46505c">비교한다</text>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>읽는 법.</b> 열 이름은 Parkinson 등(2016)이 최종 분석틀로 쓴 범주 가운데 네 개를 옮긴 것이고, 칸 안의 선은 요약문을 뜻합니다. Gale 등은 차트의 칸에 흥미롭거나 대표적인 인용의 위치를 함께 적으라고 권하며, 매트릭스가 모순되는 자료, 예외 사례, <strong>빈 칸</strong>에 눈이 가게 해 준다는 점을 장점으로 듭니다. 한 가지 주의할 점: Parkinson 등이 NVivo에서 만든 차트는 행이 범주, 열이 참여자로 방향이 반대입니다. 방향은 본질이 아니고, 사례와 코드의 교차 구조가 본질입니다.</div>
+</div>
+
+<div class="panel">
+  <p><strong>핵심 용어.</strong> Gale 등은 논문 앞부분에 용어집을 두었습니다. 논문을 쓸 때 용어가 흔들리지 않도록 아래 구분을 기억해 두면 좋습니다.</p>
+  <div class="tbl-wrap">
+  <table class="mini-table">
+    <tr><th style="width:22%">용어</th><th>Gale 등(2013)의 뜻</th><th style="width:28%">헷갈리기 쉬운 점</th></tr>
+    <tr><td><b>코드</b> code</td><td>원자료의 발췌 부분에 붙이는 기술적 또는 개념적 이름표</td><td>주제와 같은 말이 아님</td></tr>
+    <tr><td><b>범주</b> category</td><td>비슷하고 서로 연결된 생각을 중심으로 코드를 묶은 것. 추상화의 출발점</td><td>보통 나무 구조로 정리</td></tr>
+    <tr class="hi"><td><b>분석틀</b> analytical framework</td><td>분석에 참여한 연구자들이 함께 만든, 범주로 조직된 코드의 집합. 자료를 관리하고 정리하는 새 구조</td><td>마지막 전사본을 코딩할 때까지 확정이 아님</td></tr>
+    <tr><td><b>색인</b> indexing</td><td>합의한 분석틀의 코드를 전체 자료에 체계적으로 적용하는 일</td><td>이 단계의 "코딩"은 틀을 적용하는 코딩</td></tr>
+    <tr><td><b>차트화</b> charting</td><td>요약한 자료를 매트릭스에 넣는 일</td><td>발췌를 그대로 붙여 넣는 것이 아님</td></tr>
+    <tr class="hi"><td><b>주제</b> theme</td><td>자료의 어떤 측면을 기술하거나 설명하는 해석적 개념 또는 명제. 전체 자료 분석의 최종 산출물</td><td>분석틀의 범주와 구별해야 함 (§07)</td></tr>
+    <tr><td><b>분석 메모</b> analytic memo</td><td>특정 개념, 주제, 문제를 글로 따져 본 기록</td><td>팀 논의의 재료</td></tr>
+  </table>
+  </div>
+</div>
+
+<!-- §03 -->
+<div class="section-head" id="family">
+  <div class="section-num">03</div>
+  <div class="section-title-block"><h2>주제분석 가족 안의 위치</h2><p class="section-subtitle">Braun &amp; Clarke(2021)의 세 갈래: 코딩 신뢰도, 코드북, 성찰적</p></div>
+</div>
+
+<div class="panel">
+  <p>Braun과 Clarke는 2006년 논문에서 주제분석을 소개한 뒤, 자신들의 글을 인용하면서 실제로는 전혀 다른 절차를 쓴 논문을 수없이 보았다고 말합니다. 그 원인을 그들은 주제분석을 <strong>하나의 방법</strong>으로 여기는 가정에서 찾습니다. 2021년 논문에서 그들은 주제분석을 세 묶음으로 나눕니다. 나누는 기준은 연구 패러다임과 인식론, 그리고 거기서 따라 나오는 절차입니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 2. 주제분석의 세 갈래와 프레임워크 분석의 자리 (Braun &amp; Clarke, 2021 서술 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 400" width="100%" style="max-width:900px" role="img" aria-label="코딩 신뢰도 주제분석, 코드북 주제분석, 성찰적 주제분석의 세 갈래. 프레임워크 분석은 가운데 코드북 접근에 속한다">
+    <defs><linearGradient id="gq" x1="0" x2="1"><stop offset="0" stop-color="#c78a1e"/><stop offset="0.5" stop-color="#2d6a9f"/><stop offset="1" stop-color="#3a9a8f"/></linearGradient></defs>
+    <rect x="40" y="26" width="820" height="8" rx="4" fill="url(#gq)"/>
+    <text x="40" y="18" font-size="12.5" fill="#c78a1e" font-weight="700">small q: 질적 기법 + 실증주의 가치</text>
+    <text x="860" y="18" font-size="12.5" fill="#2d7d78" font-weight="700" text-anchor="end">Big Q: 질적 기법 + 질적 패러다임</text>
+    <!-- box 1 -->
+    <rect x="40" y="56" width="256" height="318" rx="14" fill="#fff" stroke="#c78a1e" stroke-width="1.6"/>
+    <rect x="40" y="56" width="256" height="50" rx="14" fill="#fbf1dc"/>
+    <text x="168" y="80" text-anchor="middle" font-size="15" font-weight="700" fill="#8a6a2f">코딩 신뢰도 TA</text>
+    <text x="168" y="97" text-anchor="middle" font-size="11" fill="#8a6a2f">coding reliability</text>
+    <g font-size="12.5" fill="#20262e">
+      <text x="56" y="132" font-weight="600" fill="#8a6a2f">관심</text><text x="56" y="150">"객관적이고 편향 없는" 코딩</text>
+      <text x="56" y="180" font-weight="600" fill="#8a6a2f">도구</text><text x="56" y="198">고정된 코드북, 독립된 다수 코더</text>
+      <text x="56" y="228" font-weight="600" fill="#8a6a2f">질 지표</text><text x="56" y="246">평가자 간 신뢰도, 합의</text>
+      <text x="56" y="276" font-weight="600" fill="#8a6a2f">주제가 생기는 때</text><text x="56" y="294">분석 초기 또는 분석 이전</text>
+      <text x="56" y="324" font-weight="600" fill="#8a6a2f">연구자 주관성</text><text x="56" y="342">통제해야 할 위협</text>
+    </g>
+    <!-- box 2 -->
+    <rect x="322" y="46" width="256" height="338" rx="14" fill="#fff" stroke="#1f4e79" stroke-width="2.6"/>
+    <rect x="322" y="46" width="256" height="60" rx="14" fill="#1f4e79"/>
+    <text x="450" y="72" text-anchor="middle" font-size="15.5" font-weight="700" fill="#fff">코드북 TA</text>
+    <text x="450" y="92" text-anchor="middle" font-size="11.5" fill="#bcd6ee">프레임워크 · 템플릿 · 매트릭스 분석</text>
+    <g font-size="12.5" fill="#20262e">
+      <text x="338" y="132" font-weight="600" fill="#1f4e79">관심</text><text x="338" y="150">구조화된 틀로 분석을 기록하고 관리</text>
+      <text x="338" y="180" font-weight="600" fill="#1f4e79">도구</text><text x="338" y="198">코딩 틀(프레임워크), 팀 작업</text>
+      <text x="338" y="228" font-weight="600" fill="#1f4e79">질 지표</text><text x="338" y="246">신뢰도 측정은 보통 쓰지 않음</text>
+      <text x="338" y="276" font-weight="600" fill="#1f4e79">주제가 생기는 때</text><text x="338" y="294">초기에 만들되 귀납적으로 다듬음</text>
+      <text x="338" y="324" font-weight="600" fill="#1f4e79">연구자 주관성</text><text x="338" y="342">인정함. 지식은 맥락적</text>
+    </g>
+    <rect x="350" y="352" width="200" height="24" rx="12" fill="#e9eff6"/><text x="450" y="368" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1f4e79">프레임워크 분석은 여기</text>
+    <!-- box 3 -->
+    <rect x="604" y="56" width="256" height="318" rx="14" fill="#fff" stroke="#3a9a8f" stroke-width="1.6"/>
+    <rect x="604" y="56" width="256" height="50" rx="14" fill="#eaf5f2"/>
+    <text x="732" y="80" text-anchor="middle" font-size="15" font-weight="700" fill="#2d7d78">성찰적 TA</text>
+    <text x="732" y="97" text-anchor="middle" font-size="11" fill="#2d7d78">reflexive (Braun &amp; Clarke)</text>
+    <g font-size="12.5" fill="#20262e">
+      <text x="620" y="132" font-weight="600" fill="#2d7d78">관심</text><text x="620" y="150">상황 속의 해석, 성찰</text>
+      <text x="620" y="180" font-weight="600" fill="#2d7d78">도구</text><text x="620" y="198">열린 코딩. 코딩 틀을 쓰지 않음</text>
+      <text x="620" y="228" font-weight="600" fill="#2d7d78">질 지표</text><text x="620" y="246">신뢰도 측정은 논리에 맞지 않음</text>
+      <text x="620" y="276" font-weight="600" fill="#2d7d78">주제가 생기는 때</text><text x="620" y="294">코딩과 주제 개발의 최종 산출물</text>
+      <text x="620" y="324" font-weight="600" fill="#2d7d78">연구자 주관성</text><text x="620" y="342">지식 생산의 자원</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>이 그림이 말하는 것.</b> 프레임워크 분석은 구조화된 틀과 이른 주제 개발이라는 점에서 왼쪽과 닮았고, 연구자의 주관성과 지식의 맥락성을 인정한다는 점에서 오른쪽과 닮았습니다. Braun과 Clarke는 이 접근들이 미리 정해진 정보 요구, 빠듯한 일정, 팀 작업이라는 현실 조건에 맞춘 <strong>질적 실용주의</strong>를 보이며 응용 연구에 잘 맞는다고 평가합니다. 좋고 나쁨의 문제가 아니라, 어느 갈래를 썼는지 밝히고 그 갈래의 기준으로 평가받아야 한다는 것이 요점입니다.</div>
+</div>
+
+<div class="callout danger">
+  <span class="callout-label">⚠️ 가장 흔한 어긋남</span><br>
+  방법 절에 "Braun과 Clarke(2006)의 주제분석을 따랐다"고 쓰고, 실제로는 미리 만든 코딩 틀, 여러 코더의 합의 코딩, 매트릭스 요약을 썼다면 이름과 절차가 어긋납니다. Braun과 Clarke는 자신들이 코드북, 합의 코딩, 신뢰도 측정, 코딩 전 주제 설정, 포화, 주제 빈도 보고를 권한 적이 없고 오히려 비판한다고 분명히 말합니다(문제 2 "읽지 않고 인용하기", 문제 3 "설명 없는 뒤섞기"). 20개 점검 질문 가운데 2번은 <strong>어떤 유형의 주제분석인지 명시하고 정당화했는가</strong>, 12번은 <strong>주장한 접근과 다른 절차가 기술되어 있지 않은가</strong>를 묻습니다.
+</div>
+
+<!-- §04 -->
+<div class="section-head" id="when">
+  <div class="section-num">04</div>
+  <div class="section-title-block"><h2>언제 쓰고, 언제 피할 것인가</h2><p class="section-subtitle">선택 기준과 귀납·연역의 문제</p></div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 3. 프레임워크 분석을 선택하기 전의 네 가지 점검 (Gale et al., 2013 서술 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 500" width="100%" style="max-width:900px" role="img" aria-label="프레임워크 분석 선택을 위한 의사결정 흐름도">
+    <defs>
+      <marker id="arC" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#46505c"/></marker>
+      <marker id="arD" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#e0573e"/></marker>
+    </defs>
+    <g font-size="13">
+      <!-- Q1 -->
+      <rect x="40" y="20" width="430" height="74" rx="12" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.4"/>
+      <text x="58" y="46" font-weight="700" fill="#1f4e79">점검 1 · 자료</text>
+      <text x="58" y="66" fill="#20262e">텍스트 자료이고, 사례들이 비슷한 주제와 쟁점을</text>
+      <text x="58" y="84" fill="#20262e">다루어 같은 틀로 범주화할 수 있는가</text>
+      <line x1="470" y1="57" x2="548" y2="57" stroke="#e0573e" stroke-width="1.8" marker-end="url(#arD)"/>
+      <text x="509" y="49" text-anchor="middle" font-size="11.5" fill="#e0573e" font-weight="600">아니오</text>
+      <rect x="556" y="24" width="304" height="66" rx="12" fill="#fdeee9" stroke="#e0573e" stroke-width="1.2"/>
+      <text x="572" y="50" fill="#20262e" font-size="12.5">매우 이질적인 자료는 이 방법으로</text>
+      <text x="572" y="70" fill="#20262e" font-size="12.5">담을 수 없다</text>
+      <!-- Q2 -->
+      <line x1="255" y1="94" x2="255" y2="128" stroke="#46505c" stroke-width="1.8" marker-end="url(#arC)"/>
+      <text x="268" y="116" font-size="11.5" fill="#46505c" font-weight="600">예</text>
+      <rect x="40" y="134" width="430" height="74" rx="12" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.4"/>
+      <text x="58" y="160" font-weight="700" fill="#1f4e79">점검 2 · 연구 질문</text>
+      <text x="58" y="180" fill="#20262e">사례별, 주제별로 나누어 비교하는 분석이</text>
+      <text x="58" y="198" fill="#20262e">질문에 답하는 데 알맞은가</text>
+      <line x1="470" y1="171" x2="548" y2="171" stroke="#e0573e" stroke-width="1.8" marker-end="url(#arD)"/>
+      <text x="509" y="163" text-anchor="middle" font-size="11.5" fill="#e0573e" font-weight="600">아니오</text>
+      <rect x="556" y="126" width="304" height="90" rx="12" fill="#fdeee9" stroke="#e0573e" stroke-width="1.2"/>
+      <text x="572" y="150" fill="#20262e" font-size="12.5">생애사 자료 → 내러티브 분석</text>
+      <text x="572" y="172" fill="#20262e" font-size="12.5">진료 대화 녹음 → 대화분석</text>
+      <text x="572" y="194" fill="#20262e" font-size="12.5">문서 자료 → 담론분석</text>
+      <text x="572" y="210" fill="#828d9b" font-size="11">(연구 질문에 따라 달라짐)</text>
+      <!-- Q3 -->
+      <line x1="255" y1="208" x2="255" y2="242" stroke="#46505c" stroke-width="1.8" marker-end="url(#arC)"/>
+      <text x="268" y="230" font-size="11.5" fill="#46505c" font-weight="600">예</text>
+      <rect x="40" y="248" width="430" height="74" rx="12" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.4"/>
+      <text x="58" y="274" font-weight="700" fill="#1f4e79">점검 3 · 인력</text>
+      <text x="58" y="294" fill="#20262e">경험 많은 질적 연구자가 분석 전체를</text>
+      <text x="58" y="312" fill="#20262e">이끌고 촉진할 수 있는가</text>
+      <line x1="470" y1="285" x2="548" y2="285" stroke="#e0573e" stroke-width="1.8" marker-end="url(#arD)"/>
+      <text x="509" y="277" text-anchor="middle" font-size="11.5" fill="#e0573e" font-weight="600">아니오</text>
+      <rect x="556" y="252" width="304" height="66" rx="12" fill="#fdeee9" stroke="#e0573e" stroke-width="1.2"/>
+      <text x="572" y="278" fill="#20262e" font-size="12.5">양적 연구자를 위한 "쉬운 질적 연구"가</text>
+      <text x="572" y="298" fill="#20262e" font-size="12.5">아니다. 책임자부터 확보한다</text>
+      <!-- Q4 -->
+      <line x1="255" y1="322" x2="255" y2="356" stroke="#46505c" stroke-width="1.8" marker-end="url(#arC)"/>
+      <text x="268" y="344" font-size="11.5" fill="#46505c" font-weight="600">예</text>
+      <rect x="40" y="362" width="430" height="74" rx="12" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.4"/>
+      <text x="58" y="388" font-weight="700" fill="#1f4e79">점검 4 · 자원</text>
+      <text x="58" y="408" fill="#20262e">색인, 차트화, 회의, 해석에 드는 시간을</text>
+      <text x="58" y="426" fill="#20262e">계획서 단계에서 잡아 두었는가</text>
+      <line x1="470" y1="399" x2="548" y2="399" stroke="#e0573e" stroke-width="1.8" marker-end="url(#arD)"/>
+      <text x="509" y="391" text-anchor="middle" font-size="11.5" fill="#e0573e" font-weight="600">아니오</text>
+      <rect x="556" y="366" width="304" height="66" rx="12" fill="#fdeee9" stroke="#e0573e" stroke-width="1.2"/>
+      <text x="572" y="392" fill="#20262e" font-size="12.5">다학제, 이해관계자 참여일수록 시간이</text>
+      <text x="572" y="412" fill="#20262e" font-size="12.5">더 든다. 일정을 다시 짠다</text>
+      <!-- result -->
+      <line x1="255" y1="436" x2="255" y2="456" stroke="#46505c" stroke-width="1.8" marker-end="url(#arC)"/>
+      <rect x="40" y="462" width="820" height="34" rx="17" fill="#3a9a8f"/>
+      <text x="450" y="484" text-anchor="middle" fill="#fff" font-weight="700" font-size="13.5">적합: 여러 사례를 주제별로 비교하면서 각 사례의 맥락도 지키고 싶을 때, 특히 팀 작업과 큰 자료에</text>
+    </g>
+  </svg>
+  </div>
+</div>
+
+<div class="panel">
+  <p><strong>귀납인가 연역인가.</strong> 절차가 워낙 체계적이라 프레임워크 분석은 연역적 방법으로 오해받곤 합니다. Gale 등은 이 도구 자체는 귀납에도 연역에도 매여 있지 않으며, 연구가 그 연속선의 어디에 놓이는지는 <strong>연구 질문</strong>이 정한다고 말합니다. 차이는 주제를 고르는 방식에서 드러납니다. 연역적 접근에서는 선행 문헌, 기존 이론, 연구 질문의 구체적 내용에 따라 주제와 코드를 미리 고르고, 귀납적 접근에서는 제한 없는 열린 코딩에서 주제를 만든 뒤 다듬습니다. 많은 경우에는 둘을 결합하는 편이 알맞습니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 4. 연구 질문이 귀납과 연역 사이의 자리를 정한다 (Gale et al., 2013의 예시 질문 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 250" width="100%" style="max-width:900px" role="img" aria-label="연역에서 귀납으로 이어지는 연속선 위의 세 가지 예시 연구 질문">
+    <defs><linearGradient id="gc" x1="0" x2="1"><stop offset="0" stop-color="#1f4e79"/><stop offset="1" stop-color="#3a9a8f"/></linearGradient></defs>
+    <rect x="50" y="52" width="800" height="10" rx="5" fill="url(#gc)"/>
+    <text x="50" y="38" font-size="14" font-weight="700" fill="#1f4e79">연역적</text>
+    <text x="850" y="38" font-size="14" font-weight="700" fill="#2d7d78" text-anchor="end">귀납적</text>
+    <text x="450" y="38" font-size="13" font-weight="600" fill="#46505c" text-anchor="middle">결합</text>
+    <circle cx="150" cy="57" r="9" fill="#fff" stroke="#1f4e79" stroke-width="3"/>
+    <circle cx="450" cy="57" r="9" fill="#fff" stroke="#2d6a9f" stroke-width="3"/>
+    <circle cx="750" cy="57" r="9" fill="#fff" stroke="#3a9a8f" stroke-width="3"/>
+    <g font-size="12.5" fill="#20262e">
+      <rect x="30" y="86" width="250" height="150" rx="12" fill="#fff" stroke="#cfd8e3"/>
+      <text x="46" y="110" font-weight="700" fill="#1f4e79">예/아니오에 가까운 질문</text>
+      <text x="46" y="132">환자는 자신의 심혈관 질환 발병을</text>
+      <text x="46" y="150">생의학적으로 정확히 설명할 수 있는가</text>
+      <text x="46" y="178" fill="#46505c" font-size="12">또는 기존 이론에 기대는 질문:</text>
+      <text x="46" y="196" fill="#46505c" font-size="12">계획된 행동 이론은 일반의의 처방을</text>
+      <text x="46" y="214" fill="#46505c" font-size="12">어떻게 설명하는가</text>
+      <rect x="325" y="86" width="250" height="150" rx="12" fill="#fff" stroke="#cfd8e3"/>
+      <text x="341" y="110" font-weight="700" fill="#2d6a9f">살펴볼 쟁점이 정해져 있지만</text>
+      <text x="341" y="128" font-weight="700" fill="#2d6a9f">예상 밖의 것에도 열려 있는 질문</text>
+      <text x="341" y="156">탐색할 구체적 쟁점이 있으면서도,</text>
+      <text x="341" y="174">참여자의 경험이나 의미 부여에서</text>
+      <text x="341" y="192">예상하지 못한 측면을 발견할</text>
+      <text x="341" y="210">여지를 남기고 싶을 때</text>
+      <rect x="620" y="86" width="250" height="150" rx="12" fill="#fff" stroke="#cfd8e3"/>
+      <text x="636" y="110" font-weight="700" fill="#2d7d78">구성 과정을 묻는 질문</text>
+      <text x="636" y="132">사람들은 자신의 심혈관 질환 발병에</text>
+      <text x="636" y="150">대한 설명을 어떻게 구성하는가</text>
+      <text x="636" y="178" fill="#46505c" font-size="12">문화적 신념, 운명 개념, 사별 같은</text>
+      <text x="636" y="196" fill="#46505c" font-size="12">삶의 사건처럼 연구자가 미리</text>
+      <text x="636" y="214" fill="#46505c" font-size="12">예측할 수 없는 응답을 허용</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>실천적 함의.</b> 어느 자리에 서든 프레임워크 분석으로 자료를 <strong>관리</strong>할 수 있습니다. Gale 등은 대체로 연역적인 연구라도 전사본 몇 건은 열린 코딩을 해서 자료의 중요한 측면을 놓치지 않도록 하라고 권합니다.</div>
+</div>
+
+<div class="panel">
+  <p><strong>이 방법으로 답할 수 있는 네 가지 질문.</strong> Parkinson 등은 Ritchie와 Spencer(1994)가 제시한 연구 질문의 네 유형을 소개하고, 심리학 연구에서도 이 유형론이 도움이 되었다고 말합니다. 정책연구와 프로그램 평가를 설계할 때 그대로 쓸 수 있는 틀입니다(§08에서 다시 다룹니다).</p>
+  <div class="tbl-wrap">
+  <table class="mini-table">
+    <tr><th style="width:16%">유형</th><th style="width:34%">묻는 것</th><th>Parkinson 등이 든 선행 연구의 예</th></tr>
+    <tr><td><b>맥락적</b> contextual</td><td>존재하는 것의 형태와 성격은 무엇인가</td><td>심리적 고통을 겪는 임신 여성의 경험 탐색 (Furber et al., 2009)</td></tr>
+    <tr><td><b>진단적</b> diagnostic</td><td>그것이 존재하는 이유와 원인은 무엇인가</td><td>섭식장애가 있는 젊은 여성의 도움 추구 장벽 (Evans et al., 2011)</td></tr>
+    <tr><td><b>평가적</b> evaluative</td><td>존재하는 것은 효과적인가</td><td>불안·우울 집단 개입에서 도움이 된 요소와 개선점 (Newbold et al., 2013)</td></tr>
+    <tr><td><b>전략적</b> strategic</td><td>어떤 새 이론, 정책, 계획, 행동이 필요한가</td><td>소아 진료를 집 가까이에서 제공하기 위한 요건 (Heath et al., 2012)</td></tr>
+  </table>
+  </div>
+</div>
+
+<!-- §05 -->
+<div class="section-head" id="steps">
+  <div class="section-num">05</div>
+  <div class="section-title-block"><h2>절차: 5단계와 7단계는 같은 길이다</h2><p class="section-subtitle">Ritchie &amp; Spencer(1994)의 원안과 Gale 등(2013)의 재정리</p></div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 5. 5단계 원안과 7단계 재정리의 대응 (Gale et al., 2013; Ward et al., 2013; Parkinson et al., 2016 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 420" width="100%" style="max-width:900px" role="img" aria-label="5단계와 7단계의 대응 관계와 자료 관리 구간, 해석 구간의 구분">
+    <text x="20" y="30" font-size="13" font-weight="700" fill="#2d7d78">Ritchie &amp; Spencer (1994) 5단계</text>
+    <g font-size="12.5" font-weight="600">
+      <rect x="140" y="46" width="120" height="52" rx="10" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.5"/><text x="200" y="68" text-anchor="middle" fill="#20262e">① 친숙화</text><text x="200" y="86" text-anchor="middle" fill="#2d7d78" font-size="10.5" font-weight="400">familiarization</text>
+      <rect x="294" y="46" width="130" height="52" rx="10" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.5"/><text x="359" y="68" text-anchor="middle" fill="#20262e">② 틀 확인</text><text x="359" y="86" text-anchor="middle" fill="#2d7d78" font-size="10.5" font-weight="400">identifying a framework</text>
+      <rect x="458" y="46" width="120" height="52" rx="10" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.5"/><text x="518" y="68" text-anchor="middle" fill="#20262e">③ 색인</text><text x="518" y="86" text-anchor="middle" fill="#2d7d78" font-size="10.5" font-weight="400">indexing</text>
+      <rect x="612" y="46" width="120" height="52" rx="10" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.5"/><text x="672" y="68" text-anchor="middle" fill="#20262e">④ 차트화</text><text x="672" y="86" text-anchor="middle" fill="#2d7d78" font-size="10.5" font-weight="400">charting</text>
+      <rect x="766" y="46" width="120" height="52" rx="10" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.5"/><text x="826" y="68" text-anchor="middle" fill="#20262e">⑤ 지도화와 해석</text><text x="826" y="86" text-anchor="middle" fill="#2d7d78" font-size="10.5" font-weight="400">mapping &amp; interpretation</text>
+    </g>
+    <!-- links -->
+    <g stroke="#aab4c1" stroke-width="1.6" fill="none">
+      <path d="M200 98 L185 180"/><path d="M359 98 L305 180"/><path d="M359 98 L429 180"/><path d="M518 98 L553 180"/><path d="M672 98 L677 180"/><path d="M826 98 L816 180"/>
+    </g>
+    <text x="20" y="166" font-size="13" font-weight="700" fill="#1f4e79">Gale 등 (2013) 7단계</text>
+    <g font-size="12" font-weight="600">
+      <rect x="20" y="180" width="100" height="58" rx="10" fill="#fff" stroke="#1f4e79" stroke-width="1.5" stroke-dasharray="5 4"/><text x="70" y="204" text-anchor="middle" fill="#20262e">1 전사</text><text x="70" y="222" text-anchor="middle" fill="#828d9b" font-size="10.5" font-weight="400">transcription</text>
+      <rect x="134" y="180" width="104" height="58" rx="10" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.5"/><text x="186" y="204" text-anchor="middle" fill="#20262e">2 친숙화</text><text x="186" y="222" text-anchor="middle" fill="#2d6a9f" font-size="10.5" font-weight="400">familiarisation</text>
+      <rect x="252" y="180" width="104" height="58" rx="10" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.5"/><text x="304" y="204" text-anchor="middle" fill="#20262e">3 코딩</text><text x="304" y="222" text-anchor="middle" fill="#2d6a9f" font-size="10.5" font-weight="400">coding</text>
+      <rect x="370" y="180" width="118" height="58" rx="10" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.5"/><text x="429" y="204" text-anchor="middle" fill="#20262e">4 작업 분석틀 개발</text><text x="429" y="222" text-anchor="middle" fill="#2d6a9f" font-size="10.5" font-weight="400">working framework</text>
+      <rect x="502" y="180" width="108" height="58" rx="10" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.5"/><text x="556" y="204" text-anchor="middle" fill="#20262e">5 분석틀 적용</text><text x="556" y="222" text-anchor="middle" fill="#2d6a9f" font-size="10.5" font-weight="400">indexing</text>
+      <rect x="624" y="180" width="108" height="58" rx="10" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.5"/><text x="678" y="204" text-anchor="middle" fill="#20262e">6 차트화</text><text x="678" y="222" text-anchor="middle" fill="#2d6a9f" font-size="10.5" font-weight="400">charting</text>
+      <rect x="746" y="180" width="140" height="58" rx="10" fill="#1f4e79"/><text x="816" y="204" text-anchor="middle" fill="#fff">7 자료 해석</text><text x="816" y="222" text-anchor="middle" fill="#bcd6ee" font-size="10.5" font-weight="400">interpreting</text>
+    </g>
+    <!-- bands -->
+    <rect x="134" y="262" width="598" height="40" rx="10" fill="#fbf1dc"/>
+    <text x="433" y="287" text-anchor="middle" font-size="13" font-weight="700" fill="#8a6a2f">자료 관리: 걸러 내고 정리하는 일 (sifting and sorting)</text>
+    <rect x="746" y="262" width="140" height="40" rx="10" fill="#1f4e79"/>
+    <text x="816" y="287" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">이해: 의미 찾기</text>
+    <!-- loop -->
+    <path d="M700 318 C 620 372, 380 372, 300 318" fill="none" stroke="#e0573e" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arD)"/>
+    <text x="500" y="382" text-anchor="middle" font-size="12.5" fill="#e0573e" font-weight="600">되돌아가기는 정상이다: 분석틀은 마지막 전사본을 코딩할 때까지 확정이 아니다</text>
+    <text x="500" y="404" text-anchor="middle" font-size="12" fill="#46505c">메모 쓰기와 성찰 일지는 모든 단계에 걸쳐 계속된다</text>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>차이는 세분화의 정도입니다.</b> Gale 등은 전사를 별도 단계로 세우고, 원안의 "틀 확인"을 열린 코딩과 작업 분석틀 합의의 두 단계로 나눴습니다. 노란 띠와 남색 칸의 구분은 Parkinson 등이 강조한 것입니다. 틀을 만들고 색인하고 차트화하는 일은 <strong>자료 관리</strong>이고, 해석은 그 뒤에 명시적으로 자리가 있습니다.</div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">1</div>
+    <div class="cond-titles"><div class="cond-code">Stage 1 · Gale et al.</div><h3>전사</h3><div class="cond-en">Transcription</div></div>
+  </div>
+  <div class="condition-body">
+    <p>음질 좋은 녹음과 축어 전사가 필요합니다. 이 방법은 <strong>내용</strong>에 관심을 두므로 휴지나 말 겹침 같은 대화 전사 규약까지 넣을 필요는 없습니다. 여백을 넓게, 줄 간격을 넉넉하게 두어 나중에 코드와 메모를 적을 수 있게 합니다. 전사는 자료에 잠기는 좋은 기회여서 초심 연구자에게 강하게 권하지만, 과제에 따라 전문 전사자에게 맡기는 편이 자원을 더 잘 쓰는 길일 수 있습니다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">2</div>
+    <div class="cond-titles"><div class="cond-code">Stage 2 · 원안 ①</div><h3>친숙화</h3><div class="cond-en">Familiarisation</div></div>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">녹음을 다시 듣고 전사본과 면담자의 메모를 읽어, 면담 하나하나를 통째로 안다.</div>
+    <p>다학제 과제나 큰 과제에서는 면담한 사람, 전사한 사람, 분석하는 사람이 다를 수 있어 이 단계가 더 중요해집니다(Gale et al.). Ward 등의 연구책임자는 31건을 모두 직접 면담했고, 면담 직후 쓴 현장 노트를 전사본과 나란히 읽어 맥락을 살렸습니다. Parkinson 등은 주간 팀 회의에서 녹음을 함께 들으며 전사본을 읽었습니다. 나이와 성별이 다양하도록, 말을 잘하는 참여자뿐 아니라 표현을 어려워한 참여자의 면담도 듣도록 골랐고, 가능하면 그 면담을 진행한 사람을 회의에 불러 현장의 분위기를 들었습니다.</p>
+    <p>이 단계에서 전 자료를 다 봐야 하는가에 대해서는 두 사례가 다르게 답합니다. Ward 등은 표본이 작아 전 전사본을 검토했고, Parkinson 등은 뒤 단계에서 어차피 전 자료를 다루므로 이 단계에서 모두 볼 필요는 없다는 점을 큰 자료의 이점으로 듭니다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">3</div>
+    <div class="cond-titles"><div class="cond-code">Stage 3 · 원안 ② 앞부분</div><h3>코딩</h3><div class="cond-en">Coding</div></div>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">전사본을 한 줄씩 읽으며, 그 대목에서 중요하다고 해석한 것에 이름표(코드)를 붙인다.</div>
+    <p>귀납적 성격이 강한 연구에서는 이 단계에서 열린 코딩을 합니다. 가능한 한 여러 관점에서 관련 있을 만한 것을 모두 코딩합니다. Gale 등에 따르면 코드는 실질적인 것(특정 행동, 사건, 구조), 가치(진술의 바탕에 있는 믿음), 정서(슬픔, 좌절, 사랑), 그리고 인상이나 방법에 관한 것(참여자가 설명을 어려워함, 면담자가 불편함을 느낌)을 가리킬 수 있습니다.</p>
+    <p>순수하게 연역적인 연구라면 코드가 미리 정해져 있어 이 단계를 건너뛰고 바로 색인으로 갈 수도 있습니다. 그래도 전사본 몇 건은 열린 코딩을 해 보기를 권합니다. 가능하면 <strong>연구자 두 명 이상</strong>(다학제 팀이라면 분야마다 한 명 이상)이 처음 몇 건을 <strong>독립적으로</strong> 코딩합니다. 환자, 시민 참여 대표, 임상가도 이 단계에 참여하면 한 관점이 지배하지 않게 하는 데 도움이 됩니다.</p>
+    <div class="callout sage"><span class="callout-label">요령</span><br>말해진 것의 전체 인상을 잡는 것과 함께 한 줄씩 코딩하면, 분명히 표현되지 않았거나 이야기의 나머지와 맞지 않아 평소라면 보이지 않았을 것에 눈이 갑니다. Gale 등은 자료 속 이례를 조정하고 설명하는 과정이 분석을 더 강하게 만든다고 말합니다.</div>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">4</div>
+    <div class="cond-titles"><div class="cond-code">Stage 4 · 원안 ② 뒷부분</div><h3>작업 분석틀 개발</h3><div class="cond-en">Developing a working analytical framework</div></div>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">처음 몇 건을 코딩한 연구자들이 모여 이름표를 비교하고, 이후 모든 전사본에 적용할 코드 집합에 합의한다.</div>
+    <p>코드를 범주로 묶고 각 범주를 분명하게 정의합니다. 더 이상 새 코드가 나오지 않을 때까지 틀은 여러 번 고쳐집니다. Gale 등과 Parkinson 등은 모두 범주마다 또는 틀 전체에 <strong>"기타" 코드</strong>를 두라고 권합니다. 틀에 맞지 않는 자료를 무시하지 않기 위해서입니다. Parkinson 등의 팀은 "기타"에 쌓인 자료, 곧 참여자가 설명을 어려워하며 거듭 사과하는 대목들에서 "면담자와 참여자의 상호작용"이라는 새 범주를 만들었습니다.</p>
+    <p>이 단계에서 가장 중요한 교훈은 Parkinson 등의 "잘못된 출발"입니다(§06 그림 7). 그들이 얻은 결론은 틀을 만드는 단계의 초점은 자료 관리에 두고, 해석은 뒤로 미루라는 것입니다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">5</div>
+    <div class="cond-titles"><div class="cond-code">Stage 5 · 원안 ③</div><h3>분석틀 적용 (색인)</h3><div class="cond-en">Applying the analytical framework · Indexing</div></div>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">합의한 범주와 코드를 나머지 전사본 전체에 체계적으로 붙인다.</div>
+    <p>코드마다 번호나 약어를 주어 전사본에 직접 적습니다. 질적 자료 분석 소프트웨어(CAQDAS)는 이 단계에서 특히 유용합니다. 속도를 높이고 나중에 자료를 쉽게 꺼내 볼 수 있게 해 줍니다. 다만 Gale 등과 Ward 등은 같은 경고를 합니다. 통계 소프트웨어와 달리 질적 소프트웨어는 <strong>자료를 분석해 주지 않습니다</strong>. 저장하고 정리해 줄 뿐입니다.</p>
+    <p><strong>이중 코딩 규칙.</strong> 한 대목이 여러 범주에 걸칠 때 어떻게 할지를 팀이 미리 정해 둡니다. Parkinson 등은 색인의 목적이 자료를 다루기 쉽게 만드는 것이므로, 이후 분석에 의미가 있을 때에만 한 대목을 여러 범주에 코딩하기로 했습니다. 함께 분석할 범주끼리는 중복해서 코딩하지 않았습니다.</p>
+  </div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle newm">6</div>
+    <div class="cond-titles"><div class="cond-code">Stage 6 · 원안 ④</div><h3>차트화</h3><div class="cond-en">Charting data into the framework matrix</div></div>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">전사본마다, 범주마다 색인된 자료를 요약해 매트릭스의 칸에 넣는다.</div>
+    <p>Gale 등은 좋은 차트화를 <strong>균형</strong>의 문제로 봅니다. 자료를 줄이는 것과, 참여자 말의 원래 의미와 느낌을 지키는 것 사이의 균형입니다. 칸에는 인용할 만한 대목의 위치를 적어 둡니다. 소프트웨어를 쓰지 않는다면 대문자 Q, 익명화한 전사본 번호, 쪽과 줄 번호면 충분합니다. Ward 등은 Word의 줄 번호 기능으로 위치를 적고, 특히 풍부한 인용에는 별표를 붙이는 방법을 소개합니다. 약어는 팀이 합의해서 씁니다.</p>
+    <p>초심자가 가장 자주 하는 실수는 <strong>너무 많이 적는 것</strong>입니다(Ward et al.; Parkinson et al.). Parkinson 등의 팀도 참여자의 말을 잃을까 걱정해 요약이 점점 길어졌고, 결국 전사본을 되풀이하는 꼴이 되었습니다. 그들은 해석 단계에서 어차피 원문으로 돌아간다는 점을 상기하고 요약을 간결하게 유지하기로 했습니다. 참여자의 말이 이미 간결해 그대로 쓴 경우에는 기울임체로 표시하는 규칙도 만들었습니다.</p>
+    <div class="callout warm"><span class="callout-label">시간</span><br>Gale 등은 팀이 틀에 익숙해지고 코딩과 차트화에 숙달되면 1시간 분량 전사본 한 건을 이 단계까지 가져오는 데 평균 <strong>약 반나절</strong>이 걸린다고 봅니다. 초기에는 훨씬 더 걸립니다. Parkinson 등도 1시간 면담 한 건을 색인하고 차트화하는 데 보통 반나절이 걸렸다고 보고합니다.</div>
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 6. 원자료에서 주제까지 이어지는 감사 추적 (Ward et al., 2013의 예시 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 250" width="100%" style="max-width:900px" role="img" aria-label="전사본 발췌가 색인, 차트 요약, 주제로 이어지고 언제든 거꾸로 되짚을 수 있는 감사 추적">
+    <g font-size="12.5">
+      <rect x="20" y="40" width="200" height="150" rx="12" fill="#fff" stroke="#828d9b" stroke-width="1.4"/>
+      <text x="36" y="64" font-weight="700" fill="#46505c">① 전사본 발췌</text>
+      <text x="36" y="90" fill="#20262e">학생이 부실한 실천을</text>
+      <text x="36" y="108" fill="#20262e">보고하지 않는 이유를</text>
+      <text x="36" y="126" fill="#20262e">묻자, 말을 꺼내면 실습</text>
+      <text x="36" y="144" fill="#20262e">통과에 영향이 갈까</text>
+      <text x="36" y="162" fill="#20262e">걱정된다고 답함</text>
+      <text x="36" y="182" fill="#828d9b" font-size="11">(원문 인용을 풀어 씀)</text>
+
+      <rect x="246" y="40" width="200" height="150" rx="12" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.4"/>
+      <text x="262" y="64" font-weight="700" fill="#1f4e79">② 색인</text>
+      <text x="262" y="90" fill="#20262e">핵심 주제:</text>
+      <text x="262" y="108" fill="#20262e" font-weight="600">부실한 실천 보고의 장벽</text>
+      <text x="262" y="136" fill="#20262e">하위 주제:</text>
+      <text x="262" y="154" fill="#20262e" font-weight="600">실습 결과와 관련된 장벽</text>
+
+      <rect x="472" y="40" width="200" height="150" rx="12" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.4"/>
+      <text x="488" y="64" font-weight="700" fill="#2d7d78">③ 차트의 칸</text>
+      <text x="488" y="94" fill="#20262e" font-weight="600">"실습 통과에 대한 걱정"</text>
+      <text x="488" y="122" fill="#46505c">+ 전사본 쪽 번호</text>
+      <text x="488" y="140" fill="#46505c">+ 풍부한 인용은 별표</text>
+
+      <rect x="698" y="40" width="182" height="150" rx="12" fill="#1f4e79"/>
+      <text x="714" y="64" font-weight="700" fill="#fff">④ 지도화와 해석</text>
+      <text x="714" y="92" fill="#eaf2fa">차트 전체를 놓고</text>
+      <text x="714" y="110" fill="#eaf2fa">주제와 하위 주제를</text>
+      <text x="714" y="128" fill="#eaf2fa">서로 비교하고,</text>
+      <text x="714" y="146" fill="#eaf2fa">원 전사본, 현장 노트,</text>
+      <text x="714" y="164" fill="#eaf2fa">녹음과 대조한다</text>
+    </g>
+    <g stroke="#46505c" stroke-width="1.8" marker-end="url(#arC)"><line x1="222" y1="100" x2="242" y2="100"/><line x1="448" y1="100" x2="468" y2="100"/><line x1="674" y1="100" x2="694" y2="100"/></g>
+    <path d="M790 196 C 700 240, 220 240, 120 196" fill="none" stroke="#e0573e" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arD)"/>
+    <text x="450" y="226" text-anchor="middle" font-size="12.5" fill="#e0573e" font-weight="600" paint-order="stroke" stroke="#f4f7fb" stroke-width="5">어느 단계에서든 원자료로 되짚어 갈 수 있다</text>
+    <text x="450" y="24" text-anchor="middle" font-size="13" fill="#46505c" font-weight="600">단계들이 서로 연결되어 있어 요약에서 실제 인용으로 돌아갈 수 있다</text>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>왜 중요한가.</b> Ward 등은 질적 분석이 불투명하다는 비판에 대한 답으로 이 연결 구조를 내세웁니다. 연구비 지원 기관을 포함한 검토자가 결과가 어떻게 도출되었는지 볼 수 있어야 한다는 것입니다. Gale 등도 원자료에서 최종 주제와 예시 인용까지 이어지는 분명한 감사 추적을 이 방법의 장점으로 꼽습니다.</div>
+</div>
+
+<div class="condition">
+  <div class="condition-header">
+    <div class="num-circle promising">7</div>
+    <div class="cond-titles"><div class="cond-code">Stage 7 · 원안 ⑤</div><h3>자료 해석 (지도화와 해석)</h3><div class="cond-en">Interpreting the data · Mapping and interpretation</div></div>
+  </div>
+  <div class="condition-body">
+    <div class="plain-meaning">매트릭스를 사례 안에서, 사례 사이에서 비교하며 범주를 캐물어 주제를 만든다.</div>
+    <p>Gale 등에 따르면 이 단계에서 자료의 특징과 차이가 차츰 드러나고, 그 과정에서 <strong>유형(typology)</strong>을 만들거나, 이론적 개념을 따져 보거나, 범주들 사이의 연결을 그려 관계와 인과를 탐색할 수 있습니다. 자료가 충분히 풍부하면 개별 사례의 기술을 넘어, 어떤 현상이 왜 나타났는지를 설명하거나 조직이나 체계 안에서 제대로 작동하지 않는 영역을 짚어 낼 수도 있습니다. 이 단계는 흔히 예상보다 오래 걸리므로, 회의와 개인 해석, 집필에 충분한 시간을 계획에 넣어야 합니다.</p>
+    <p>Parkinson 등은 이 단계가 선행 연구에서 가장 얼버무려진 부분이라고 지적하고, 자신들의 과정을 자세히 적습니다. 팀 전체가 해석하면 창의성이 막히는 "위원회식 분석"이 될 위험이 있다고 보고, <strong>두 사람</strong>이 초기 해석을 맡고 나머지는 해석의 설득력을 점검하는 역할을 했습니다. 두 사람은 차트화한 자료로 처음 40건을 10건씩 독립적으로 검토하고 논의하며 주제를 세웠고, 팀에 발표해 질문을 받은 뒤, 나머지 37건으로 그 이해가 유지되는지 확인했습니다.</p>
+    <div class="callout sky"><span class="callout-label">해석이 깊어지는 장면</span><br>Parkinson 등의 두 분석자는 처음 10건에서 "저조한 기분"이라는, 진단 기준과 맞아떨어지는 진술을 보았습니다. 다음 10건을 읽으며 여러 청소년이 절망을 몸으로 표현한다는 점, 저조한 기분을 견디지 못해 자해와 위험 행동으로 가는 경로가 보였습니다. 40건을 마쳤을 때 첫 주제의 이름은 저조한 기분이 아니라 "비참함, 절망, 눈물"이 되어 있었습니다. 범주(어려움의 묘사)는 자료를 담는 그릇이었고, 주제는 그 그릇을 여러 번 들여다본 끝에 나온 해석이었습니다.</div>
+  </div>
+</div>
+
+<!-- §06 -->
+<div class="section-head" id="cases">
+  <div class="section-num">06</div>
+  <div class="section-title-block"><h2>세 적용 사례 나란히 보기</h2><p class="section-subtitle">같은 방법, 다른 규모와 도구</p></div>
+</div>
+
+<div class="panel">
+  <div class="tbl-wrap">
+  <table class="mini-table">
+    <tr><th style="width:15%"></th><th>Gale 등 (2013)</th><th>Ward 등 (2013)</th><th>Parkinson 등 (2016)</th></tr>
+    <tr><td><b>예시 연구</b></td><td>소아 외래 진료를 지역사회에서 제공하는 것에 대한 NHS 직원과 이해관계자의 견해 (Heath et al., 2012)</td><td>임상 실습에서의 감염 예방·관리 경험과 교육 요구</td><td>IMPACT-ME 연구: 임상 의뢰된 청소년의 우울 경험</td></tr>
+    <tr><td><b>자료</b></td><td>반구조화 면담 (세부는 부록과 원 연구)</td><td>간호학생 31명, 각 1회, 최대 1시간</td><td>11~17세 77명, 치료 전 기초선 면담, 평균 15~20분</td></tr>
+    <tr><td><b>분석 인력</b></td><td>의료사회학자, 건강심리학자, 임상가로 구성된 다학제 팀</td><td>연구책임자 1명이 전 전사본 분석, 프레임워크 분석 모임이 표본 검토</td><td>6명. 경험 많은 질적 연구자 2명과 초심 연구자들</td></tr>
+    <tr><td><b>틀의 출발</b></td><td>열린 코딩 후 합의 (결합 접근)</td><td>친숙화에서 얻은 반복 주제</td><td>처음에는 자료에서, 재출발 후에는 면담 질문 영역에서</td></tr>
+    <tr><td><b>도구</b></td><td>스프레드시트 또는 CAQDAS</td><td>종이 차트 (벽이나 방에 펼쳐 전체를 한눈에)</td><td>NVivo (프레임워크 매트릭스 기능)</td></tr>
+    <tr><td><b>단계</b></td><td>7단계</td><td>5단계</td><td>5단계</td></tr>
+    <tr><td><b>명시한 존재론·인식론</b></td><td>특정 입장에 매이지 않음</td><td>미묘한 실재론(subtle realism)에 가장 가까움</td><td>대체로 비판적 실재론</td></tr>
+    <tr class="hi"><td><b>고유한 교훈</b></td><td>비전문가의 참여는 가능하고 바람직하나 질적 연구 책임자가 반드시 이끌어야 한다</td><td>어느 단계에서든 원자료와 대조할 수 있다는 점이 엄격성을 높인다</td><td>틀의 범주와 해석적 주제를 구별하라. 경험 자료일수록 그렇다</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 7. Parkinson 등(2016)의 "잘못된 출발"과 재출발</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 430" width="100%" style="max-width:900px" role="img" aria-label="예비 코드 150개를 주제처럼 묶으려다 실패하고, 면담 질문 영역에서 다시 틀을 세워 77건을 분석한 과정">
+    <g font-size="12.5">
+      <!-- top row : false start -->
+      <text x="20" y="26" font-size="13" font-weight="700" fill="#e0573e">첫 시도: 자료에서 곧바로 해석적 범주를 만들다</text>
+      <rect x="20" y="40" width="190" height="96" rx="12" fill="#fff" stroke="#828d9b" stroke-width="1.4"/>
+      <text x="36" y="64" font-weight="700" fill="#20262e">친숙화</text>
+      <text x="36" y="86" fill="#46505c">팀이 면담 10건을</text>
+      <text x="36" y="104" fill="#46505c">함께 듣고 읽음</text>
+      <text x="36" y="124" fill="#1f4e79" font-weight="700">예비 코드 150개</text>
+      <rect x="248" y="40" width="250" height="96" rx="12" fill="#fff" stroke="#828d9b" stroke-width="1.4"/>
+      <text x="264" y="64" font-weight="700" fill="#20262e">코드를 묶어 범주 만들기</text>
+      <text x="264" y="86" fill="#46505c">"문제적 자기감", "관계 문제",</text>
+      <text x="264" y="104" fill="#46505c">"내면화된 어려움" ...</text>
+      <rect x="536" y="40" width="344" height="96" rx="12" fill="#fdeee9" stroke="#e0573e" stroke-width="1.6"/>
+      <text x="552" y="64" font-weight="700" fill="#e0573e">막힘: 범주의 경계가 흐려짐</text>
+      <text x="552" y="86" fill="#20262e">"사랑받을 자격이 없다는 느낌"은 자기감인가</text>
+      <text x="552" y="104" fill="#20262e">관계인가. "고립"은 내면화인가 관계인가</text>
+      <text x="552" y="124" fill="#46505c" font-size="12">진단: 틀을 만들면서 이미 해석으로 건너뛰었다</text>
+      <g stroke="#46505c" stroke-width="1.8" marker-end="url(#arC)"><line x1="212" y1="88" x2="244" y2="88"/><line x1="500" y1="88" x2="532" y2="88"/></g>
+      <!-- turn -->
+      <path d="M708 136 C 708 196, 52 150, 52 236" fill="none" stroke="#e0573e" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arD)"/>
+      <text x="400" y="176" text-anchor="middle" fill="#e0573e" font-weight="700" paint-order="stroke" stroke="#f4f7fb" stroke-width="6">다시 시작: 먼저 자료 관리, 해석은 나중에</text>
+      <!-- bottom row -->
+      <text x="76" y="230" font-size="13" font-weight="700" fill="#2d7d78">재출발: 면담 질문 영역에서 틀을 세우고 자료로 다듬다</text>
+      <rect x="20" y="244" width="190" height="112" rx="12" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.4"/>
+      <text x="36" y="268" font-weight="700" fill="#2d7d78">선험적 범주</text>
+      <text x="36" y="290" fill="#20262e">면담 일정표의 핵심</text>
+      <text x="36" y="308" fill="#20262e">관심 영역을 초기 틀로</text>
+      <text x="36" y="328" fill="#46505c" font-size="12">예: 의뢰된 어려움,</text>
+      <text x="36" y="344" fill="#46505c" font-size="12">어려움에 대한 이해</text>
+      <rect x="236" y="244" width="200" height="112" rx="12" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.4"/>
+      <text x="252" y="268" font-weight="700" fill="#2d7d78">시범 적용과 수정</text>
+      <text x="252" y="290" fill="#20262e">매주 한 건씩, 각자 코딩 후</text>
+      <text x="252" y="308" fill="#20262e">한 줄씩 비교. 불일치가</text>
+      <text x="252" y="326" fill="#20262e">생긴 곳에서 틀을 고침</text>
+      <text x="252" y="346" fill="#1f4e79" font-weight="700">10건으로 시범</text>
+      <rect x="462" y="244" width="190" height="112" rx="12" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.4"/>
+      <text x="478" y="268" font-weight="700" fill="#2d7d78">최종 틀과 지침</text>
+      <text x="478" y="290" fill="#20262e">범주 6개 (1.01~1.06)와</text>
+      <text x="478" y="308" fill="#20262e">범주별 사용 지침</text>
+      <text x="478" y="328" fill="#46505c" font-size="12">자료에서 추가된 범주:</text>
+      <text x="478" y="344" fill="#46505c" font-size="12">가족 관계, 면담 상호작용</text>
+      <rect x="678" y="244" width="202" height="112" rx="12" fill="#1f4e79"/>
+      <text x="694" y="268" font-weight="700" fill="#fff">색인 · 차트화 · 해석</text>
+      <text x="694" y="290" fill="#eaf2fa">3명이 77건을 색인, 차트화</text>
+      <text x="694" y="308" fill="#eaf2fa">2명이 40건으로 주제 개발</text>
+      <text x="694" y="326" fill="#eaf2fa">나머지 37건으로 점검</text>
+      <text x="694" y="346" fill="#bcd6ee" font-size="12">팀은 설득력 점검 역할</text>
+      <g stroke="#46505c" stroke-width="1.8" marker-end="url(#arC)"><line x1="212" y1="300" x2="232" y2="300"/><line x1="438" y1="300" x2="458" y2="300"/><line x1="654" y1="300" x2="674" y2="300"/></g>
+      <rect x="20" y="376" width="860" height="40" rx="10" fill="#fbf1dc"/>
+      <text x="450" y="401" text-anchor="middle" fill="#8a6a2f" font-weight="700" font-size="13">부수 효과: 자료를 가장 가까이 다룬 연구보조원들이 자신감을 얻으며 팀의 위계가 얼마간 평평해졌다</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>왜 심리학 자료에서 더 어려웠나.</b> Parkinson 등은 정책과 보건의료 연구의 자료는 더 구체적이고 사실적이어서(예: 방문 진료와 전화 진료는 분명히 구별됨) 가르기 쉬운 반면, 감정과 경험에 초점을 둔 자료는 모든 측면이 서로 얽혀 범주로 나누기 어렵다고 설명합니다. 그래서 그들은 틀을 선험적 관심사 중심의 <strong>넓은 범주</strong>로 짜서 참여자 이야기의 흐름이 끊기지 않게 했습니다.</div>
+</div>
+
+<div class="panel">
+  <p><strong>도구는 무엇을 쓸 것인가.</strong> 세 논문에 나온 선택지를 모으면 아래와 같습니다. 어떤 도구를 쓰든 분석은 연구자가 한다는 점은 같습니다.</p>
+</div>
+
+<div class="three-grid">
+  <div class="mod-card">
+    <svg viewBox="0 0 120 70" width="120" height="70" role="img" aria-label="벽에 붙인 종이 차트와 접착 메모지"><rect x="6" y="8" width="70" height="52" rx="3" class="inkthin" fill="#fff"/><path class="inkthin" d="M6 22h70M6 36h70M6 50h70M30 8v52M53 8v52"/><rect x="84" y="12" width="26" height="22" fill="#fbf1dc" stroke="#c78a1e" stroke-width="1.4"/><rect x="88" y="40" width="26" height="22" fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.4"/><path d="M89 20h16M89 26h10M93 48h16M93 54h10" stroke="#828d9b" stroke-width="1.4"/></svg>
+    <h4>종이 차트와 접착 메모지</h4>
+    <div class="en">Ward et al. (2013)</div>
+    <p>시간은 더 들 수 있지만 차트를 벽이나 방 전체에 펼쳐 <strong>모든 자료를 한 번에</strong> 볼 수 있습니다. 메모지는 주제와 하위 주제의 관계를 생각하며 옮겨 붙이기 좋습니다.</p>
+  </div>
+  <div class="mod-card">
+    <svg viewBox="0 0 120 70" width="120" height="70" role="img" aria-label="스프레드시트가 열린 노트북"><rect x="18" y="8" width="84" height="48" rx="4" class="inkthin" fill="#fff"/><path class="inkthin" d="M8 62h104"/><rect x="24" y="14" width="72" height="8" fill="#e9eff6"/><path d="M24 30h72M24 38h72M24 46h72M42 14v36M60 14v36M78 14v36" stroke="#828d9b" stroke-width="1.2"/></svg>
+    <h4>Word와 Excel</h4>
+    <div class="en">Gale et al.; Ward et al.; Parkinson et al.</div>
+    <p>Gale 등은 스프레드시트로 매트릭스를 만드는 방법을 기본으로 설명합니다. Ward 등은 Word의 쪽·줄 번호 기능으로 요약과 원문을 잇는 방법을, 그리고 Excel을 쓴 선행 안내(Swallow et al., 2003)를 소개합니다.</p>
+  </div>
+  <div class="mod-card">
+    <svg viewBox="0 0 120 70" width="120" height="70" role="img" aria-label="코드 목록과 본문이 연결된 질적 자료 분석 소프트웨어 화면"><rect x="10" y="8" width="100" height="54" rx="4" class="inkthin" fill="#fff"/><path class="inkthin" d="M40 8v54"/><path d="M16 18h18M16 26h14M16 34h18M16 42h12" stroke="#1f4e79" stroke-width="2"/><path d="M48 18h54M48 26h40M48 34h54M48 42h30M48 50h46" stroke="#828d9b" stroke-width="1.4"/><path d="M34 26 C 44 26, 40 34, 48 34" stroke="#3a9a8f" stroke-width="1.6" fill="none"/></svg>
+    <h4>NVivo</h4>
+    <div class="en">Gale et al.; Parkinson et al.</div>
+    <p>Gale 등에 따르면 9판부터 프레임워크 매트릭스를 만들 수 있습니다. Parkinson 등은 요약을 클릭하면 연결된 전사 대목이 열리는 점, 팀원의 생각을 기록하고 추적할 수 있는 점을 장점으로 들고, 시스템이 불안정할 때가 있어 백업에 신경 썼다고 덧붙입니다.</p>
+  </div>
+</div>
+
+<!-- §07 -->
+<div class="section-head" id="crit">
+  <div class="section-num">07</div>
+  <div class="section-title-block"><h2>강점, 함정, 그리고 비판적 읽기</h2><p class="section-subtitle">네 편을 겹쳐 읽을 때 보이는 것</p></div>
+</div>
+
+<div class="mod-grid">
+  <div class="mod-card protect">
+    <h4>적용 논문 세 편이 꼽는 강점</h4>
+    <div class="en">Strengths</div>
+    <ul class="guide-list">
+      <li><b>사례와 주제를 함께 본다.</b> 주제별로 전 자료를 깊이 분석하면서도 각 참여자의 견해가 그 사람 이야기의 다른 부분과 이어진 채 남습니다.</li>
+      <li><b>감사 추적이 분명하다.</b> 원자료에서 최종 주제까지 되짚을 수 있습니다.</li>
+      <li><b>팀 작업에 맞다.</b> 요약된 차트 덕분에 전사본을 다 읽지 않은 구성원도 자료에 참여하고 의견을 낼 수 있습니다.</li>
+      <li><b>중단과 재개가 쉽다.</b> 진료 같은 다른 책임이 있는 연구자가 분석을 멈췄다가 그 자리에서 다시 이어 갈 수 있습니다(Ward et al.).</li>
+      <li><b>유연하다.</b> 귀납, 연역, 결합 접근 모두에 쓸 수 있고, 현장 노트 같은 비면담 자료도 매트릭스에 넣을 수 있습니다.</li>
+    </ul>
+  </div>
+  <div class="mod-card risk">
+    <h4>적용 논문 세 편이 경고하는 함정</h4>
+    <div class="en">Pitfalls</div>
+    <ul class="guide-list">
+      <li><b>수량화의 유혹.</b> 스프레드시트 모양 때문에 "20명 중 13명이 X라고 말했다"는 식으로 쓰고 싶어집니다. Gale 등은 질적 연구의 표집이 모집단 대표성이 아니라 현상의 다양성을 포착하려는 목적 표집이므로 이런 진술은 의미가 없다고 못박습니다.</li>
+      <li><b>기계적 처리.</b> 색인과 차트화가 연구 질문과 동떨어진 기계적 작업이 될 수 있습니다(Parkinson et al.).</li>
+      <li><b>유연성을 지름길로 오해.</b> 유연하다는 말이 생략해도 된다는 뜻은 아닙니다(Ward et al.).</li>
+      <li><b>시간과 훈련 비용.</b> 코딩, 색인, 차트화, 성찰적 사고, 일반화의 방식까지 배워야 합니다(Gale et al.).</li>
+      <li><b>모호한 자료에 약함.</b> 사실적 내용은 요약하기 쉽지만 덜 분명하고 주관적인 자료는 틀의 범주에 잘 담기지 않습니다(Parkinson et al.).</li>
+    </ul>
+  </div>
+</div>
+
+<div class="subhead"><span class="code">쟁점 1</span><h3>분석틀의 범주는 "주제"인가</h3><span class="en">topic summary vs. shared-meaning theme</span><span class="verdict weak">가장 중요한 쟁점</span></div>
+<div class="panel">
+  <p>세 적용 논문은 이 점에서 서로 다릅니다. Ward 등은 친숙화 단계에서 찾은 반복 주제를 곧바로 "이론적 틀"로 삼고, 틀의 구성 요소를 줄곧 주제와 하위 주제라고 부릅니다. Parkinson 등은 바로 이 대목을 인용하며, 문헌이 틀의 범주를 "주제 범주"라 부르는 탓에 연구자가 그것을 해석적 주제로 착각하기 쉽다고 지적합니다. Gale 등은 용어집에서 범주와 주제를 구분하고, 주제를 범주를 캐물어 얻는 <strong>최종 산출물</strong>로 정의합니다.</p>
+  <p>Braun과 Clarke는 이 문제를 한 단계 더 밀고 갑니다. 그들이 꼽은 문제 8은 <strong>주제와 화제(topic)의 혼동</strong>입니다. 면담 질문에서 온 화제에 대해 참여자들이 내놓은 제각각의 응답을 요약한 것은 공유된 화제일 뿐, 중심 개념으로 묶인 공유된 의미가 아닙니다. 그들은 주제를 분석 전에 정하면 화제 요약 이상이 되기 어렵다고 보고, 코드북 접근에서는 그런 요약이 주제로 취급되는 일이 많다고 말합니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 8. 화제 요약과 공유된 의미로서의 주제 (Braun &amp; Clarke, 2021; Parkinson et al., 2016 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 290" width="100%" style="max-width:900px" role="img" aria-label="왼쪽은 한 화제 아래 서로 다른 응답을 모아 둔 화제 요약, 오른쪽은 하나의 중심 개념으로 묶인 주제">
+    <g font-size="12.5">
+      <rect x="20" y="16" width="410" height="258" rx="14" fill="#fff" stroke="#c78a1e" stroke-width="1.6"/>
+      <text x="40" y="44" font-size="14.5" font-weight="700" fill="#8a6a2f">화제 요약 (틀의 범주)</text>
+      <text x="40" y="64" fill="#46505c">같은 서랍에 들어 있지만 서로 다른 이야기</text>
+      <rect x="60" y="82" width="330" height="34" rx="8" fill="#fbf1dc"/><text x="225" y="104" text-anchor="middle" font-weight="700" fill="#8a6a2f">범주 1.02 · 어려움의 묘사</text>
+      <g fill="#fff" stroke="#c78a1e" stroke-width="1.3">
+        <rect x="60" y="130" width="100" height="50" rx="8"/><rect x="175" y="130" width="100" height="50" rx="8"/><rect x="290" y="130" width="100" height="50" rx="8"/>
+        <rect x="60" y="192" width="100" height="50" rx="8"/><rect x="175" y="192" width="100" height="50" rx="8"/><rect x="290" y="192" width="100" height="50" rx="8"/>
+      </g>
+      <g text-anchor="middle" fill="#20262e" font-size="12">
+        <text x="110" y="160">기분이 가라앉음</text><text x="225" y="160">학교 문제</text><text x="340" y="160">눈물이 터짐</text>
+        <text x="110" y="222">자해</text><text x="225" y="222">잠을 못 잠</text><text x="340" y="222">혼자 있음</text>
+      </g>
+      <text x="225" y="262" text-anchor="middle" fill="#8a6a2f" font-weight="600">무엇에 대해 말했는가</text>
+
+      <rect x="470" y="16" width="410" height="258" rx="14" fill="#fff" stroke="#1f4e79" stroke-width="1.6"/>
+      <text x="490" y="44" font-size="14.5" font-weight="700" fill="#1f4e79">주제 (해석의 산출물)</text>
+      <text x="490" y="64" fill="#46505c">겉으로 달라 보이는 자료를 하나의 중심 개념이 묶음</text>
+      <circle cx="675" cy="170" r="52" fill="#1f4e79"/>
+      <text x="675" y="162" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">비참함,</text>
+      <text x="675" y="180" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">절망, 눈물</text>
+      <g fill="#e9eff6" stroke="#1f4e79" stroke-width="1.3">
+        <rect x="490" y="92" width="110" height="34" rx="17"/><rect x="750" y="92" width="110" height="34" rx="17"/>
+        <rect x="490" y="212" width="110" height="34" rx="17"/><rect x="750" y="212" width="110" height="34" rx="17"/>
+      </g>
+      <g text-anchor="middle" fill="#20262e" font-size="12">
+        <text x="545" y="114">저조한 기분</text><text x="805" y="114">몸으로 드러난 절망</text>
+        <text x="545" y="234">견딜 수 없다는 느낌</text><text x="805" y="234">자기 파괴의 경로</text>
+      </g>
+      <g stroke="#1f4e79" stroke-width="1.5"><line x1="596" y1="122" x2="634" y2="140"/><line x1="754" y1="122" x2="716" y2="140"/><line x1="596" y1="216" x2="634" y2="200"/><line x1="754" y1="216" x2="716" y2="200"/></g>
+      <text x="675" y="266" text-anchor="middle" fill="#1f4e79" font-weight="600">그 말들이 함께 무엇을 뜻하는가</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>실무 지침.</b> 두 가지 길이 있습니다. (가) Parkinson 등처럼 틀의 범주는 자료 관리 도구로만 쓰고, 주제는 해석 단계에서 새로 만든다. (나) 연구 목적이 화제별 정리로 충분하다면 화제 요약을 결과로 보고하되, 그것이 화제 요약임을 밝힌다. Braun과 Clarke의 점검 질문 15번은 보고된 주제가 화제 요약이라면 그것이 <strong>연구 목적에 적절한지</strong>를 묻습니다. 응용 연구에서는 (나)가 정당한 선택일 수 있습니다. 문제는 화제 요약을 깊은 해석처럼 포장하는 것입니다. 그림 왼쪽의 낱말들은 Parkinson 등이 서술한 내용에서 뽑은 예시입니다.</div>
+</div>
+
+<div class="subhead"><span class="code">쟁점 2</span><h3>"주제가 드러났다"는 표현</h3><span class="en">themes do not emerge</span><span class="verdict mixed">표현 점검</span></div>
+<div class="panel">
+  <p>Ward 등은 주제가 자료에서 "드러난다(emerge)"는 표현이 주제를 찾고 고르는 연구자의 역할을 가린다는 선행 비판을 소개하고 그 용어를 줄여야 한다고 말합니다. 그런데 같은 논문의 뒷부분에는 하위 주제가 드러났다는 식의 표현이 그대로 남아 있습니다. Parkinson 등에도 "드러나는 자료 주도적 주제" 같은 표현이 여러 번 나옵니다. Braun과 Clarke는 문제 9에서 이 표현이 주제를 자료 속에 미리 놓여 있는 것으로 그리고 연구자를 수동적 발굴자로 만든다고 비판합니다. 다만 그들은 이 비판을 성찰적 주제분석을 쓰는 연구자를 향해 제기하며, 화제를 주제로 보는 접근에서는 "분석 이전에 존재하는 주제"라는 개념이 나름대로 성립할 수 있다고도 인정합니다.</p>
+  <p>영어 논문에서는 themes emerged 대신 <em>we developed</em>, <em>we generated</em>, <em>we constructed</em>처럼 연구자가 주어인 능동 표현을 쓰면 어느 갈래에서든 안전합니다.</p>
+</div>
+
+<div class="subhead"><span class="code">쟁점 3</span><h3>"인식론에서 자유롭다"는 말의 한계</h3><span class="en">flexible is not atheoretical</span><span class="verdict mixed">방법 절 점검</span></div>
+<div class="panel">
+  <p>Gale 등과 Parkinson 등은 이 방법이 특정 인식론적, 철학적, 이론적 접근에 매이지 않는다는 점을 강점으로 듭니다. Ward 등은 이 방법이 근거이론이나 문화기술지 같은 이론적 토대가 없다는 비판을 받아 왔다는 점을 한계로 적으면서도, 존재론적으로는 미묘한 실재론에 가장 가깝다고 밝힙니다. Parkinson 등의 팀도 논의 끝에 비판적 실재론 입장을 택했습니다.</p>
+  <p>Braun과 Clarke의 문제 4는 여기에 선을 긋습니다. 방법에 이론이 내장되어 있지 않다는 것과 분석이 이론 없이 이루어진다는 것은 다릅니다. 연구자는 자료가 무엇을 나타내는지, 그 자료로 무엇을 주장할 수 있는지에 대해 언제나 가정을 합니다. 그러므로 프레임워크 분석을 쓰더라도 방법 절에는 <strong>어떤 입장에서</strong> 자료를 읽었는지를 한두 문장으로 밝혀야 합니다(점검 질문 9번).</p>
+</div>
+
+<div class="subhead"><span class="code">쟁점 4</span><h3>다른 방법의 개념을 빌려 쓸 때</h3><span class="en">saturation, constant comparison</span><span class="verdict mixed">방법 절 점검</span></div>
+<div class="panel">
+  <p>Ward 등은 자료 포화에 이를 때까지 면담했다고 쓰고, Parkinson 등은 나머지 37건으로 이해가 "포화"에 이르렀는지 확인했다며 근거이론 문헌을 인용합니다. Gale 등은 이 방법이 근거이론의 지속적 비교 기법을 매트릭스 검토를 통해 크게 도울 수 있다고 말합니다. Braun과 Clarke는 포화, 지속적 비교, 줄 단위 코딩 같은 근거이론 개념을 <strong>설명이나 정당화 없이</strong> 주제분석에 적용하는 것을 문제로 꼽습니다(문제 3, 점검 질문 7번). 빌려 쓰는 것 자체가 금지는 아닙니다. 그 개념을 어떤 뜻으로, 왜 썼는지를 적으라는 요구입니다.</p>
+</div>
+
+<div class="subhead"><span class="code">쟁점 5</span><h3>팀 코딩은 신뢰도 점검인가</h3><span class="en">consistency vs. reliability</span><span class="verdict promising">구분해서 쓰기</span></div>
+<div class="panel">
+  <p>세 적용 논문 모두 여러 사람이 코딩에 참여하지만, 어느 논문도 평가자 간 신뢰도 계수를 계산하지 않습니다. Gale 등이 두 명 이상의 독립 코딩을 권하는 이유는 한 관점이 지배하지 않게 하고 예상 밖의 것을 놓치지 않기 위해서입니다. Parkinson 등은 팀원 간 코딩 불일치를 범주 적용이 어려운 지점을 알려 주는 신호로 삼아 틀을 고쳤습니다. 이는 Braun과 Clarke의 분류에서 코드북 접근의 특징과 맞습니다. 코딩 신뢰도 접근과 달리 합의와 신뢰도 측정을 질의 지표로 삼지 않습니다. 따라서 방법 절에 팀 코딩을 적을 때는 "신뢰도를 확보했다"가 아니라 <strong>틀을 다듬고 관점을 넓히기 위해</strong> 했다고 쓰는 편이 절차의 논리와 맞습니다.</p>
+</div>
+
+<!-- §08 -->
+<div class="section-head" id="apply">
+  <div class="section-num">08</div>
+  <div class="section-title-block"><h2>적용: 면담 연구, 정책연구, 현장 실무</h2><p class="section-subtitle">네 편의 절차와 권고를 세 장면에 옮겨 보기</p></div>
+</div>
+
+<div class="callout warm">
+  <span class="callout-label">이 절을 읽는 법</span><br>
+  아래 내용은 네 편의 논문이 제시한 절차와 권고를 AIR Lab이 세 가지 장면에 맞춰 <strong>재배열한 것</strong>입니다. 각 항목 끝에 근거가 된 논문을 적었습니다. "가상 예시"라고 표시한 표와 그림의 내용물은 틀의 모양을 보여 주려고 지어낸 것이며 실제 연구 결과가 아닙니다.
+</div>
+
+<div class="subhead"><span class="code">장면 A</span><h3>학술 면담 연구 (학위논문, 학술지 논문)</h3><span class="en">interview study</span></div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 9. 면담 연구에서의 작업 흐름과 산출물</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 330" width="100%" style="max-width:900px" role="img" aria-label="면담 가이드에서 초기 틀을 세우고, 몇 건의 열린 코딩으로 다듬고, 전체에 색인하고, 매트릭스로 요약한 뒤, 주제와 유형을 개발하는 흐름">
+    <g font-size="12.5">
+      <rect x="20" y="30" width="150" height="120" rx="12" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.4"/>
+      <text x="36" y="54" font-weight="700" fill="#1f4e79">① 초기 틀</text>
+      <text x="36" y="78" fill="#20262e">면담 가이드의</text>
+      <text x="36" y="96" fill="#20262e">질문 영역을</text>
+      <text x="36" y="114" fill="#20262e">넓은 범주로</text>
+      <text x="36" y="138" fill="#828d9b" font-size="11">Parkinson et al.</text>
+      <rect x="196" y="30" width="150" height="120" rx="12" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.4"/>
+      <text x="212" y="54" font-weight="700" fill="#1f4e79">② 열린 코딩</text>
+      <text x="212" y="78" fill="#20262e">두 명 이상이</text>
+      <text x="212" y="96" fill="#20262e">처음 몇 건을</text>
+      <text x="212" y="114" fill="#20262e">독립적으로</text>
+      <text x="212" y="138" fill="#828d9b" font-size="11">Gale et al.</text>
+      <rect x="372" y="30" width="150" height="120" rx="12" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.4"/>
+      <text x="388" y="54" font-weight="700" fill="#1f4e79">③ 틀 합의</text>
+      <text x="388" y="78" fill="#20262e">범주 정의, 사용</text>
+      <text x="388" y="96" fill="#20262e">지침, "기타",</text>
+      <text x="388" y="114" fill="#20262e">이중 코딩 규칙</text>
+      <text x="388" y="138" fill="#828d9b" font-size="11">Gale; Parkinson</text>
+      <rect x="548" y="30" width="150" height="120" rx="12" fill="#e9eff6" stroke="#1f4e79" stroke-width="1.4"/>
+      <text x="564" y="54" font-weight="700" fill="#1f4e79">④ 색인과 차트화</text>
+      <text x="564" y="78" fill="#20262e">전 전사본에 적용,</text>
+      <text x="564" y="96" fill="#20262e">칸마다 간결한</text>
+      <text x="564" y="114" fill="#20262e">요약과 인용 위치</text>
+      <text x="564" y="138" fill="#828d9b" font-size="11">세 편 공통</text>
+      <rect x="724" y="30" width="156" height="120" rx="12" fill="#1f4e79"/>
+      <text x="740" y="54" font-weight="700" fill="#fff">⑤ 해석</text>
+      <text x="740" y="78" fill="#eaf2fa">소수가 주도해</text>
+      <text x="740" y="96" fill="#eaf2fa">주제와 유형 개발,</text>
+      <text x="740" y="114" fill="#eaf2fa">팀이 설득력 점검</text>
+      <text x="740" y="138" fill="#bcd6ee" font-size="11">Parkinson et al.</text>
+      <g stroke="#46505c" stroke-width="1.8" marker-end="url(#arC)"><line x1="172" y1="90" x2="192" y2="90"/><line x1="348" y1="90" x2="368" y2="90"/><line x1="524" y1="90" x2="544" y2="90"/><line x1="700" y1="90" x2="720" y2="90"/></g>
+      <!-- outputs -->
+      <text x="20" y="188" font-size="13" font-weight="700" fill="#2d7d78">남겨 둘 산출물 (심사와 감사 추적에 대비)</text>
+      <g fill="#eaf5f2" stroke="#3a9a8f" stroke-width="1.2">
+        <rect x="20" y="200" width="150" height="56" rx="10"/><rect x="196" y="200" width="150" height="56" rx="10"/><rect x="372" y="200" width="150" height="56" rx="10"/><rect x="548" y="200" width="150" height="56" rx="10"/><rect x="724" y="200" width="156" height="56" rx="10"/>
+      </g>
+      <g text-anchor="middle" fill="#20262e">
+        <text x="95" y="224">틀 버전 1</text><text x="95" y="242" font-size="11.5" fill="#46505c">출처를 적은 범주 목록</text>
+        <text x="271" y="224">코딩한 전사본</text><text x="271" y="242" font-size="11.5" fill="#46505c">코더별 사본</text>
+        <text x="447" y="224">틀 변경 기록</text><text x="447" y="242" font-size="11.5" fill="#46505c">무엇을 왜 고쳤는지</text>
+        <text x="623" y="224">매트릭스 파일</text><text x="623" y="242" font-size="11.5" fill="#46505c">사례 × 코드</text>
+        <text x="802" y="224">분석 메모</text><text x="802" y="242" font-size="11.5" fill="#46505c">주제가 만들어진 경로</text>
+      </g>
+      <rect x="20" y="276" width="860" height="40" rx="10" fill="#fbf1dc"/>
+      <text x="450" y="301" text-anchor="middle" fill="#8a6a2f" font-weight="700" font-size="13">전 과정: 연구자마다 성찰 일지를 쓴다 (Gale et al.; Ward et al.)</text>
+    </g>
+  </svg>
+  </div>
+</div>
+
+<div class="panel">
+  <p><strong>이럴 때 고려합니다.</strong> 반구조화 면담으로 모든 참여자에게 비슷한 영역을 물었고, 참여자 수가 한 사람씩 깊이 읽기에는 많으며, 연구 질문이 참여자 간 비교나 유형 구분을 필요로 할 때입니다. Parkinson 등은 77건이라는 규모에서 해석적 현상학 분석(IPA)의 개별 사례 중심 원칙과 동질 표본 요건이 맞지 않았다는 점을 선택 이유로 들었습니다.</p>
+  <p><strong>틀은 면담 가이드에서 출발하되 가이드로 끝내지 않습니다.</strong> 초기 범주를 질문 영역에서 가져오는 것은 Parkinson 등이 시행착오 끝에 택한 방식입니다. 다만 그들은 그 틀을 10건에 시범 적용하며 자료에서 올라온 범주를 더했습니다. Gale 등의 권고도 같습니다. 대체로 연역적이더라도 몇 건은 열린 코딩을 합니다.</p>
+  <p><strong>유형화가 목표라면 가로 읽기를 먼저 합니다.</strong> 매트릭스를 사례별로 가로로 읽어 각 사례의 윤곽을 잡고, 그다음 세로로 읽어 사례들이 어디서 갈리는지를 봅니다. Gale 등은 해석 단계의 가능한 산출물로 유형의 생성을 명시합니다.</p>
+  <p><strong>결과 절에서 수를 세지 않습니다.</strong> "대부분", "일부" 같은 표현이 필요하면 그것이 통계적 대표성을 뜻하지 않음을 분명히 하고, 빈도를 유병률처럼 읽히게 쓰지 않습니다(Gale et al.). Braun과 Clarke의 점검 질문 20번도 일반화를 통계적 확률 일반화로만 이해하는 서술을 문제로 봅니다.</p>
+</div>
+
+<div class="subhead"><span class="code">장면 B</span><h3>정책연구와 프로그램 평가</h3><span class="en">applied policy research</span></div>
+
+<div class="panel">
+  <p>이 방법은 본래 이 장면을 위해 만들어졌습니다. Braun과 Clarke는 코드북 접근이 쓰이는 전형적 조건을 이렇게 요약합니다. 알아내야 할 정보가 미리 정해져 있고, 결과를 내야 하는 기한이 엄격하며, 여러 연구자가 자료를 나누어 코딩해야 하고, 산출물은 실무자와 이해관계자가 이해하고 실행에 옮길 수 있어야 합니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 10. 네 가지 질문 유형으로 정책연구 매트릭스 설계하기 (Ritchie &amp; Spencer의 유형론, Parkinson et al., 2016 소개 기준)</div>
+  <span class="fig-tag kr">AIR Lab 개념도 · 가상 예시</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 400" width="100%" style="max-width:900px" role="img" aria-label="사례를 기관으로 두고 열을 맥락, 진단, 평가, 전략의 네 질문 유형으로 묶은 정책연구 매트릭스 설계">
+    <g font-size="12.5">
+      <text x="20" y="26" font-size="13" font-weight="700" fill="#1f4e79">열을 질문 유형으로 묶는다</text>
+      <rect x="150" y="40" width="175" height="56" rx="10" fill="#1f4e79"/><text x="237" y="64" text-anchor="middle" fill="#fff" font-weight="700">맥락</text><text x="237" y="84" text-anchor="middle" fill="#bcd6ee" font-size="11.5">지금 무엇이 어떻게 있는가</text>
+      <rect x="333" y="40" width="175" height="56" rx="10" fill="#2d6a9f"/><text x="420" y="64" text-anchor="middle" fill="#fff" font-weight="700">진단</text><text x="420" y="84" text-anchor="middle" fill="#dbe8f4" font-size="11.5">왜 그렇게 되었는가</text>
+      <rect x="516" y="40" width="175" height="56" rx="10" fill="#2d7d78"/><text x="603" y="64" text-anchor="middle" fill="#fff" font-weight="700">평가</text><text x="603" y="84" text-anchor="middle" fill="#d6efe9" font-size="11.5">무엇이 작동하고 안 하는가</text>
+      <rect x="699" y="40" width="181" height="56" rx="10" fill="#3a9a8f"/><text x="789" y="64" text-anchor="middle" fill="#fff" font-weight="700">전략</text><text x="789" y="84" text-anchor="middle" fill="#e3f4f0" font-size="11.5">무엇을 바꿔야 하는가</text>
+      <!-- rows -->
+      <rect x="20" y="106" width="122" height="50" rx="8" fill="#e9eff6"/><text x="81" y="128" text-anchor="middle" font-weight="600">기관 A</text><text x="81" y="145" text-anchor="middle" font-size="11" fill="#46505c">(도시, 대규모)</text>
+      <rect x="20" y="162" width="122" height="50" rx="8" fill="#e9eff6"/><text x="81" y="184" text-anchor="middle" font-weight="600">기관 B</text><text x="81" y="201" text-anchor="middle" font-size="11" fill="#46505c">(도시, 소규모)</text>
+      <rect x="20" y="218" width="122" height="50" rx="8" fill="#e9eff6"/><text x="81" y="240" text-anchor="middle" font-weight="600">기관 C</text><text x="81" y="257" text-anchor="middle" font-size="11" fill="#46505c">(농촌)</text>
+      <g fill="#fff" stroke="#cfd8e3" stroke-width="1.2">
+        <rect x="150" y="106" width="175" height="50" rx="6"/><rect x="333" y="106" width="175" height="50" rx="6"/><rect x="516" y="106" width="175" height="50" rx="6"/><rect x="699" y="106" width="181" height="50" rx="6"/>
+        <rect x="150" y="162" width="175" height="50" rx="6"/><rect x="333" y="162" width="175" height="50" rx="6"/><rect x="516" y="162" width="175" height="50" rx="6"/><rect x="699" y="162" width="181" height="50" rx="6"/>
+        <rect x="150" y="218" width="175" height="50" rx="6"/><rect x="333" y="218" width="175" height="50" rx="6"/><rect x="516" y="218" width="175" height="50" rx="6"/><rect x="699" y="218" width="181" height="50" rx="6"/>
+      </g>
+      <g stroke="#aab4c1" stroke-width="3" stroke-linecap="round">
+        <path d="M164 124h120M164 138h80M347 124h130M347 138h60M530 124h110M530 138h134M713 124h120M713 138h70"/>
+        <path d="M164 180h100M164 194h130M347 180h90M530 180h130M530 194h60M713 180h140M713 194h90"/>
+        <path d="M164 236h130M347 236h120M347 250h80M530 236h90M530 250h120M713 236h110"/>
+      </g>
+      <text x="20" y="296" font-size="12" fill="#46505c">사례의 단위는 개인이 아니라 집단이나 기관으로 바꿀 수 있다 (Gale et al.). 기관 안의 여러 면담은 기관 행으로 모으거나 하위 행으로 둔다.</text>
+      <!-- outputs -->
+      <line x1="450" y1="306" x2="450" y2="326" stroke="#46505c" stroke-width="1.8" marker-end="url(#arC)"/>
+      <rect x="20" y="332" width="275" height="54" rx="10" fill="#eaf5f2" stroke="#3a9a8f"/><text x="157" y="355" text-anchor="middle" font-weight="700" fill="#2d7d78">유형화</text><text x="157" y="374" text-anchor="middle" font-size="11.5" fill="#20262e">세로로 읽어 기관들이 갈리는 지점 찾기</text>
+      <rect x="312" y="332" width="275" height="54" rx="10" fill="#eaf5f2" stroke="#3a9a8f"/><text x="449" y="355" text-anchor="middle" font-weight="700" fill="#2d7d78">연결의 지도</text><text x="449" y="374" text-anchor="middle" font-size="11.5" fill="#20262e">가로로 읽어 진단과 평가를 잇기</text>
+      <rect x="604" y="332" width="276" height="54" rx="10" fill="#eaf5f2" stroke="#3a9a8f"/><text x="742" y="355" text-anchor="middle" font-weight="700" fill="#2d7d78">실행 가능한 제언</text><text x="742" y="374" text-anchor="middle" font-size="11.5" fill="#20262e">작동하지 않는 영역과 개선 전략</text>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>설계의 요점.</b> 과업지시서나 연구 질문이 이미 네 유형 가운데 무엇을 묻는지 정해 주는 경우가 많습니다. 그 질문을 열의 묶음으로 옮기면 면담 가이드, 분석틀, 보고서 목차가 한 줄로 이어집니다. 기관의 이름과 특성은 모양을 보여 주기 위한 가상 예시입니다. Gale 등이 예로 든 Heath 등(2012)의 연구는 방문형 진료소와 전화 진료 같은 서비스 전달 모형을 정리하고 범주화했고, Parkinson 등은 이를 체계적 접근이 자료와 잘 맞은 사례로 평가합니다.</div>
+</div>
+
+<div class="mod-grid">
+  <div class="mod-card">
+    <h4>일정은 계획서 단계에서 잡습니다</h4>
+    <div class="en">Gale et al.; Parkinson et al.</div>
+    <p>1시간 면담은 15~30쪽의 텍스트가 되고, 숙달된 팀도 한 건을 색인하고 차트화하는 데 약 반나절을 씁니다. 해석 단계는 예상보다 길어지고, 여러 이해관계자와 분야가 참여하면 더 길어집니다. Gale 등은 이 시간을 <strong>연구비를 받기 전</strong> 계획서에 반영하라고 말합니다.</p>
+    <span class="keynum">면담 20건 × 반나절 = 색인·차트화만 약 10일 (단순 곱셈)</span>
+  </div>
+  <div class="mod-card">
+    <h4>여러 연구가 한 틀을 공유할 수 있습니다</h4>
+    <div class="en">Ward et al.; Parkinson et al.</div>
+    <p>Ward 등은 서로 연결된 개별 연구를 따로 분석한 뒤 최종 분석에서 합쳐 공통 주제를 찾을 수 있다는 점을 장점으로 듭니다. Parkinson 등도 같은 접근을 과제의 뒤 단계에서 평가적, 전략적 질문에 다시 쓸 수 있다는 점에 끌렸다고 말합니다. 연차별, 대상별로 자료가 쌓이는 정책 과제에 맞는 특성입니다.</p>
+  </div>
+  <div class="mod-card risk">
+    <h4>보고서 문장에서 피할 것</h4>
+    <div class="en">Gale et al.; Braun &amp; Clarke</div>
+    <p>발주처는 숫자를 원하지만, 목적 표집한 면담에서 "몇 명 중 몇 명"은 모집단에 대해 아무것도 말해 주지 않습니다. 범위와 다양성, 그리고 어떤 조건에서 견해가 갈리는지를 보고합니다. 일반화는 통계적 일반화가 아니라 분석적 일반화와 전이 가능성의 언어로 씁니다.</p>
+  </div>
+  <div class="mod-card protect">
+    <h4>화제 요약이 목적에 맞다면 그렇게 밝힙니다</h4>
+    <div class="en">Braun &amp; Clarke, 점검 질문 15, 17</div>
+    <p>정책 보고서의 결과가 질문별 응답 정리라면 그것은 화제 요약입니다. 목적에 맞는 선택일 수 있으니 그대로 밝히면 됩니다. 응용 연구라면 보고한 주제가 <strong>실행 가능한 결과</strong>로 이어질 수 있는지를 스스로 물어야 합니다.</p>
+  </div>
+</div>
+
+<div class="subhead"><span class="code">장면 C</span><h3>현장 실무자, 당사자와 함께하는 분석</h3><span class="en">practitioners and service users in analysis</span></div>
+
+<div class="panel">
+  <p>Gale 등의 논문은 처음부터 이 장면을 겨냥합니다. 그들의 주장은 두 부분으로 되어 있습니다. 경험 많은 질적 방법론자의 지도가 반드시 필요하다는 것, 그리고 그 조건 아래에서 비전문가인 팀원이 분석 과정에 <strong>참여할 수 있고 참여해야 한다</strong>는 것입니다. Ward 등과 Parkinson 등은 서비스 이용자와 함께 분석한 선행 연구(Furber et al., 2009)를 들어 이 방법이 연구자, 임상가, 이용자의 협업을 뒷받침한다고 말합니다.</p>
+</div>
+
+<div class="figure-block">
+  <div class="fig-title">그림 11. 단계별로 누가 무엇을 하는가 (Gale et al., 2013 서술 재구성)</div>
+  <span class="fig-tag kr">AIR Lab 개념도</span>
+  <div class="fig-kr">
+  <svg viewBox="0 0 900 340" width="100%" style="max-width:900px" role="img" aria-label="질적 연구 책임자, 연구팀, 실무자와 당사자가 일곱 단계에서 맡는 역할을 보여 주는 표">
+    <g font-size="12">
+      <g text-anchor="middle" font-weight="600" fill="#1f4e79">
+        <text x="255" y="30">전사</text><text x="348" y="30">친숙화</text><text x="441" y="30">코딩</text><text x="534" y="30">틀 합의</text><text x="627" y="30">색인</text><text x="720" y="30">차트화</text><text x="822" y="30">해석과 집필</text>
+      </g>
+      <line x1="20" y1="42" x2="880" y2="42" stroke="#cfd8e3"/>
+      <g stroke="#e6ebf1"><line x1="301" y1="46" x2="301" y2="326"/><line x1="394" y1="46" x2="394" y2="326"/><line x1="487" y1="46" x2="487" y2="326"/><line x1="580" y1="46" x2="580" y2="326"/><line x1="673" y1="46" x2="673" y2="326"/><line x1="766" y1="46" x2="766" y2="326"/></g>
+      <!-- row 1 -->
+      <rect x="20" y="52" width="180" height="80" rx="10" fill="#1f4e79"/>
+      <text x="110" y="84" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">질적 연구 책임자</text>
+      <text x="110" y="104" text-anchor="middle" fill="#bcd6ee" font-size="11">경험 많은 방법론자</text>
+      <rect x="212" y="78" width="660" height="28" rx="14" fill="#e9eff6"/>
+      <text x="542" y="97" text-anchor="middle" fill="#1f4e79" font-weight="600">설계와 일정, 초심자 멘토링, 비전문가 훈련, 분석 회의 촉진, 집필 주도</text>
+      <!-- row 2 -->
+      <rect x="20" y="146" width="180" height="80" rx="10" fill="#2d6a9f"/>
+      <text x="110" y="178" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">연구팀</text>
+      <text x="110" y="198" text-anchor="middle" fill="#dbe8f4" font-size="11">질적 훈련이 얼마간 있는 연구자</text>
+      <g fill="#2d6a9f"><circle cx="255" cy="186" r="9"/><circle cx="348" cy="186" r="9"/><circle cx="441" cy="186" r="9"/><circle cx="534" cy="186" r="9"/><circle cx="627" cy="186" r="9"/><circle cx="720" cy="186" r="9"/><circle cx="822" cy="186" r="9"/></g>
+      <g text-anchor="middle" fill="#46505c" font-size="10.5"><text x="441" y="212">2인 이상 독립</text><text x="720" y="212">요약 방식 맞추기</text></g>
+      <!-- row 3 -->
+      <rect x="20" y="240" width="180" height="80" rx="10" fill="#3a9a8f"/>
+      <text x="110" y="272" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">실무자 · 당사자</text>
+      <text x="110" y="292" text-anchor="middle" fill="#e3f4f0" font-size="11">임상가, 이용자, 시민 참여자</text>
+      <g fill="#3a9a8f"><circle cx="441" cy="280" r="9"/><circle cx="534" cy="280" r="9"/><circle cx="822" cy="280" r="9"/></g>
+      <circle cx="720" cy="280" r="9" fill="#fff" stroke="#3a9a8f" stroke-width="2.4"/>
+      <g text-anchor="middle" fill="#46505c" font-size="10.5"><text x="441" y="306">다른 관점 제공</text><text x="534" y="306">코드 비교 회의</text><text x="720" y="306">요약본으로 자료 읽기</text><text x="822" y="306">메모 토론</text></g>
+    </g>
+  </svg>
+  </div>
+  <div class="fig-implies"><b>읽는 법.</b> 찬 원은 직접 수행, 빈 원은 산출물을 읽는 방식의 참여입니다. Gale 등은 차트화의 요약 덕분에 일반인, 임상가, 양적 연구자인 팀원이 전사본을 다 읽거나 분석의 기술적인 부분에 관여하지 않고도 자료와 만나 관점을 보탤 수 있다고 설명합니다. 실무자와 당사자가 코딩과 해석 논의에 들어오면 연구자의 한 가지 관점이 지배하는 일을 막을 수 있습니다.</div>
+</div>
+
+<div class="mod-grid">
+  <div class="mod-card protect">
+    <h4>현장에 맞는 이유</h4>
+    <div class="en">Ward et al.; Gale et al.</div>
+    <ul class="guide-list">
+      <li>차트화는 멈췄다가 그 자리에서 다시 시작할 수 있어, 본업이 있는 실무자의 시간 구조와 맞습니다.</li>
+      <li>종이 차트와 메모지처럼 소프트웨어 없이도 할 수 있습니다.</li>
+      <li>한 사람이 빠져도 다른 팀원이 처음부터 다시 하지 않고 이어 갈 수 있습니다.</li>
+      <li>결과가 원자료로 되짚어지므로 기관 내부와 외부 검토자에게 과정을 보여 줄 수 있습니다.</li>
+    </ul>
+  </div>
+  <div class="mod-card risk">
+    <h4>미리 정해 둘 것</h4>
+    <div class="en">Gale et al.</div>
+    <ul class="guide-list">
+      <li>누가 질적 분석을 책임지고 이끄는가. 이 자리가 비면 시작하지 않습니다.</li>
+      <li>참여자 훈련: 역할에 따라 코딩, 색인, 차트화, 그리고 자신의 정체성과 경험이 분석에 미치는 영향을 성찰하는 법.</li>
+      <li>의사결정에 드는 시간. 관점이 많을수록 길고 비판적인 대화가 필요합니다.</li>
+      <li>익명화: 차트에는 익명화한 전사본 번호로 인용 위치를 적습니다.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="callout sage">
+  <span class="callout-label">세 장면을 가로지르는 한 문장</span><br>
+  Gale 등의 결론을 빌리면, 이 방법은 <strong>많은 사례를 주제별로 비교하고 대조하는 것이 중요하면서도, 각 관점을 그 사람 이야기의 다른 부분과 이어 맥락 속에 두어야 할 때</strong> 알맞습니다. 그 조건이 맞지 않으면 다른 방법을 고르는 것이 옳습니다.
+</div>
+
+<!-- §09 -->
+<div class="section-head" id="write">
+  <div class="section-num">09</div>
+  <div class="section-title-block"><h2>영어 논문에 쓰기</h2><p class="section-subtitle">이름 붙이기, 방법 절 문장, 보고 점검표</p></div>
+</div>
+
+<div class="panel">
+  <p><strong>무엇이라고 부를 것인가.</strong> 네 편을 종합하면 선택지는 셋입니다. 어느 것을 고르든 Braun과 Clarke의 점검 질문 2번(유형을 명시하고 정당화했는가)과 6번(명시한 유형을 논문 전체에서 일관되게 수행했는가)을 통과해야 합니다.</p>
+  <div class="tbl-wrap">
+  <table class="mini-table">
+    <tr><th style="width:34%">방법 절의 표기</th><th>적절한 경우</th><th style="width:26%">주의</th></tr>
+    <tr class="hi"><td><b>thematic analysis using the Framework Method</b> (Gale et al., 2013)</td><td>사례 × 코드 매트릭스를 실제로 만들어 사례 간 비교나 유형화를 했을 때. Gale 등 스스로 이 방법을 주제분석을 뒷받침하는 도구로 규정합니다.</td><td>상위 범주(주제분석)와 구체적 갈래를 함께 밝히는 표기</td></tr>
+    <tr><td><b>framework analysis</b> (Ritchie &amp; Spencer, 1994)</td><td>5단계 원안을 그대로 따랐고, 독자가 이 명칭에 익숙한 분야일 때</td><td>범주를 주제로 보고했는지 화제 요약으로 보고했는지 밝힐 것</td></tr>
+    <tr><td><b>reflexive thematic analysis</b> (Braun &amp; Clarke)</td><td>코딩 틀 없이 열린 코딩에서 주제를 만들었을 때만</td><td>코딩 틀, 합의 코딩, 매트릭스 요약을 썼다면 이 표기는 절차와 어긋남</td></tr>
+  </table>
+  </div>
+  <p style="margin-top:12px">단순히 "thematic analysis"라고만 쓰는 것은 틀린 표기는 아니지만, 어떤 갈래인지 밝히지 않으면 Braun과 Clarke가 말하는 문제 1(주제분석을 하나의 접근으로 가정)에 해당합니다.</p>
+</div>
+
+<div class="callout sky">
+  <span class="callout-label">방법 절 문장 틀</span><br>
+  아래 영어 문장은 원문에서 옮긴 것이 아니라, 네 편의 권고를 충족하도록 AIR Lab이 새로 쓴 틀입니다. 대괄호 안을 자신의 연구에 맞게 바꾸고, 실제로 하지 않은 절차의 문장은 빼십시오.
+</div>
+
+<div class="phrase-grid">
+  <div class="phrase span2">
+    <div class="en">Interview data were analysed thematically using the Framework Method (Gale et al., 2013), a codebook approach to thematic analysis (Braun &amp; Clarke, 2021). We chose this method because the research question required systematic comparison across [N] cases while keeping each participant's account in context.</div>
+    <div class="kr">면담 자료는 주제분석의 코드북 접근(Braun &amp; Clarke, 2021)인 프레임워크 방법(Gale et al., 2013)으로 주제 분석하였다. 연구 질문이 [N]개 사례에 걸친 체계적 비교를 요구하면서도 각 참여자의 이야기를 맥락 속에 유지해야 했기 때문에 이 방법을 선택하였다.</div>
+    <div class="why"><b>무엇을 충족하나.</b> 유형 명시와 선택 이유(점검 질문 1~3). 선택 이유는 Gale 등이 결론에서 밝힌 적합 조건과 맞춰 썼습니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">The initial analytical framework was based on the topic areas of the interview guide and was refined through open coding of [n] transcripts, which two authors coded independently before agreeing on a working framework.</div>
+    <div class="kr">초기 분석틀은 면담 가이드의 주제 영역에 기초하였으며, 두 저자가 전사본 [n]건을 독립적으로 열린 코딩한 뒤 작업 분석틀에 합의하는 과정을 거쳐 다듬었다.</div>
+    <div class="why"><b>무엇을 충족하나.</b> 틀의 출처(선험과 귀납의 결합)와 누가 무엇을 했는지. 일반 절차가 아니라 실제로 한 일을 적으라는 점검 질문 11번에 대응합니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">The final framework ([k] codes in [m] categories) was applied to all transcripts. Coded data were then summarised in a case-by-code matrix, with references to illustrative quotations.</div>
+    <div class="kr">최종 분석틀([m]개 범주, [k]개 코드)을 모든 전사본에 적용하였다. 이어 코딩한 자료를 사례 × 코드 매트릭스에 요약하고, 대표 인용의 위치를 함께 기록하였다.</div>
+    <div class="why"><b>무엇을 충족하나.</b> 색인과 차트화를 구분해 적고, 매트릭스의 규모를 숫자로 밝혀 감사 추적을 보여 줍니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">Themes were developed by comparing the charted summaries within and across cases. Framework categories served to organise the data; themes were the product of this later interpretive stage.</div>
+    <div class="kr">주제는 차트화한 요약을 사례 안에서, 그리고 사례 간에 비교하여 개발하였다. 분석틀의 범주는 자료를 조직하는 역할을 하였고, 주제는 그 뒤의 해석 단계에서 산출되었다.</div>
+    <div class="why"><b>무엇을 충족하나.</b> 범주와 주제의 구분(§07 쟁점 1). 능동 동사 developed를 써서 "themes emerged"를 피합니다.</div>
+  </div>
+  <div class="phrase">
+    <div class="en">Independent coding was used to broaden the perspectives brought to the data and to refine the framework, not to establish inter-rater reliability.</div>
+    <div class="kr">독립 코딩은 평가자 간 신뢰도를 확립하기 위해서가 아니라, 자료를 보는 관점을 넓히고 분석틀을 다듬기 위해 사용하였다.</div>
+    <div class="why"><b>무엇을 충족하나.</b> 팀 코딩의 목적을 코드북 접근의 논리에 맞게 밝혀 개념적 충돌(점검 질문 18번)을 막습니다.</div>
+  </div>
+  <div class="phrase span2">
+    <div class="en">Because participants were sampled purposively to capture diversity of experience, we do not report frequencies as indicators of prevalence. The analysis was informed by a [critical realist] position; the authors kept reflexive notes throughout.</div>
+    <div class="kr">참여자는 경험의 다양성을 포착하기 위해 목적 표집하였으므로, 빈도를 모집단 내 분포의 지표로 보고하지 않는다. 분석은 [비판적 실재론] 입장에 기초하였으며, 저자들은 전 과정에서 성찰 노트를 기록하였다.</div>
+    <div class="why"><b>무엇을 충족하나.</b> 수량화의 함정(Gale et al.)에 대한 선제적 진술, 이론적 입장의 명시(점검 질문 9번), 성찰성(점검 질문 10번). 대괄호 안은 실제 입장으로 바꿉니다.</div>
+  </div>
+</div>
+
+<div class="panel">
+  <p><strong>투고 전 보고 점검표.</strong> 네 편의 권고를 방법 절과 결과 절의 순서로 묶었습니다.</p>
+  <div class="tbl-wrap">
+  <table class="mini-table">
+    <tr><th style="width:5%">#</th><th>점검 항목</th><th style="width:26%">근거</th></tr>
+    <tr><td>1</td><td>주제분석의 어떤 갈래인지, 왜 골랐는지 적었는가</td><td>Braun &amp; Clarke Q1~3</td></tr>
+    <tr><td>2</td><td>인용한 방법 문헌의 절차와 실제로 한 절차가 일치하는가</td><td>Braun &amp; Clarke 문제 2, Q12</td></tr>
+    <tr><td>3</td><td>자료를 어떤 입장에서 읽었는지(존재론·인식론) 밝혔는가</td><td>Braun &amp; Clarke Q9; Ward; Parkinson</td></tr>
+    <tr><td>4</td><td>분석틀이 어디서 왔는지(선험, 귀납, 결합), 몇 번 고쳤는지 적었는가</td><td>Gale; Parkinson</td></tr>
+    <tr><td>5</td><td>누가 몇 건을 코딩했고 불일치를 어떻게 다뤘는지 적었는가</td><td>Gale; Parkinson; Braun &amp; Clarke Q11</td></tr>
+    <tr><td>6</td><td>색인 규칙(이중 코딩, "기타" 범주)과 차트화 도구를 적었는가</td><td>Gale; Parkinson; Ward</td></tr>
+    <tr><td>7</td><td>매트릭스에서 주제로 어떻게 넘어갔는지, 누가 했는지 적었는가</td><td>Parkinson; Gale</td></tr>
+    <tr><td>8</td><td>보고한 "주제"가 화제 요약인지 공유된 의미인지 스스로 알고 밝혔는가</td><td>Braun &amp; Clarke 문제 8, Q15</td></tr>
+    <tr><td>9</td><td>포화 등 다른 방법의 개념을 썼다면 그 뜻과 이유를 적었는가</td><td>Braun &amp; Clarke Q7</td></tr>
+    <tr><td>10</td><td>빈도를 대표성처럼 읽히게 쓰지 않았고, 일반화의 언어가 적절한가</td><td>Gale; Braun &amp; Clarke Q20</td></tr>
+    <tr><td>11</td><td>성찰 일지와 분석 메모 등 감사 추적 자료가 남아 있는가</td><td>Gale; Ward</td></tr>
+  </table>
+  </div>
+</div>
+
+<!-- §10 -->
+<div class="section-head" id="discuss">
+  <div class="section-num">10</div>
+  <div class="section-title-block"><h2>토론 질문</h2><p class="section-subtitle">세미나에서 함께 따져 볼 것</p></div>
+</div>
+
+<div class="reflection">
+  <h4>함께 생각해 볼 질문</h4>
+  <ul>
+    <li><strong>Q1.</strong> 내가 최근에 읽었거나 쓴 질적 논문 한 편을 떠올려 봅시다. 방법 절의 명칭과 실제 절차는 그림 2의 세 갈래 가운데 각각 어디에 놓입니까? 둘은 일치합니까?</li>
+    <li><strong>Q2.</strong> Parkinson 등은 경험 자료에서는 넓은 선험적 범주가 낫다고 했고, Ward 등은 자료에서 얻은 반복 주제로 틀을 세웠습니다. 가정 밖 청소년이나 학대 피해 아동의 면담 자료라면 어느 쪽이 더 알맞겠습니까? 무엇이 그 판단을 좌우합니까?</li>
+    <li><strong>Q3.</strong> 정책 보고서의 발주처가 "응답자의 몇 퍼센트가 그렇게 답했는지"를 요구한다면, Gale 등의 경고를 지키면서 무엇을 대신 제시할 수 있겠습니까?</li>
+    <li><strong>Q4.</strong> 현장 실무자와 당사자가 분석에 참여할 때 얻는 것과 치르는 비용은 무엇입니까? 그림 11에서 참여 지점을 하나만 고른다면 어디를 고르겠습니까?</li>
+    <li><strong>Q5.</strong> 화제 요약을 결과로 보고하는 것이 정당한 연구 목적과 그렇지 않은 목적을 각각 하나씩 들어 봅시다.</li>
+  </ul>
+</div>
+
+<!-- §11 worksheet -->
+<div class="section-head" id="work">
+  <div class="section-num">11</div>
+  <div class="section-title-block"><h2>정리 활동</h2><p class="section-subtitle">입력한 내용은 이 브라우저에 자동 저장됩니다</p></div>
+</div>
+
+<div class="worksheet">
+  <h4>활동 1 · 내 연구의 매트릭스 설계</h4>
+  <div class="prompt">진행 중이거나 계획 중인 면담 연구 하나를 골라, 행(사례의 단위)과 열(초기 범주 4~6개)을 정해 보세요. 각 범주가 면담 가이드에서 왔는지, 자료에서 왔는지도 표시합니다.</div>
+  <textarea data-key="w1" placeholder="연구 질문: ...&#10;사례의 단위: ...&#10;초기 범주와 출처: ①... ②... ③... ④...&#10;이중 코딩 규칙: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 2 · 범주에서 주제로</h4>
+  <div class="prompt">활동 1의 범주 하나를 고르고, 그 범주에 담길 법한 서로 다른 응답 세 가지를 상상해 적어 보세요. 그 셋을 하나로 묶는 중심 개념이 있다면 문장으로 써 봅니다. 없다면 그 범주는 화제 요약으로 남겨도 되는지 판단합니다.</div>
+  <textarea data-key="w2" placeholder="범주: ...&#10;응답 1 / 2 / 3: ...&#10;중심 개념(있다면): ...&#10;판단: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="worksheet">
+  <h4>활동 3 · 방법 절 다시 쓰기</h4>
+  <div class="prompt">내 논문(또는 읽은 논문)의 분석 방법 단락을 §09의 문장과 점검표에 맞춰 영어로 다시 써 보세요. 점검표 11개 항목 가운데 빠진 것을 표시합니다.</div>
+  <textarea data-key="w3" placeholder="Data were analysed ...&#10;&#10;빠진 항목: ..."></textarea>
+  <span class="save-status">저장됨</span>
+</div>
+
+<div class="closing">
+  <div class="closing-inner">
+    <h2>네 편이 함께 말하는 것: 틀은 생각을 대신하지 않고, 이름은 절차와 맞아야 한다</h2>
+    <p>프레임워크 분석의 매력은 눈에 보인다는 데 있습니다. 행과 열이 있고, 칸이 채워지고, 어느 칸에서든 원자료로 돌아갈 수 있습니다. 여러 사람이 큰 자료를 기한 안에 다뤄야 하는 정책연구와 현장 연구에서 이 가시성은 큰 힘입니다. 그러나 세 적용 논문이 한목소리로 말하듯, 매트릭스를 채우는 일은 <strong>자료 관리</strong>이고 분석의 끝이 아닙니다. 칸을 채운 뒤에야 가로로, 세로로 읽으며 묻는 일이 시작됩니다.</p>
+    <p>Braun과 Clarke의 논문은 여기에 한 가지를 더합니다. 어떤 방법을 썼는지 정확히 말하는 것은 형식의 문제가 아니라 <strong>어떤 기준으로 평가받을 것인지를 정하는 일</strong>입니다. 코딩 틀과 매트릭스로 사례를 비교했다면 그렇게 쓰고, 화제별로 정리한 결과라면 그렇게 밝히고, 그 선택이 연구 질문에 맞는 이유를 적으면 됩니다. 좋은 방법 절은 독자가 같은 길을 따라 걸어 볼 수 있게 하는 글입니다.</p>
+    <div class="signature">Gale et al. (2013). BMC Medical Research Methodology, 13, 117. https://doi.org/10.1186/1471-2288-13-117 · Ward et al. (2013). Journal of Advanced Nursing, 69(11), 2423-2431. https://doi.org/10.1111/jan.12127 · Parkinson et al. (2016). Qualitative Research in Psychology, 13(2), 109-129. https://doi.org/10.1080/14780887.2015.1119228 · Braun &amp; Clarke (2021). Qualitative Research in Psychology, 18(3), 328-352. https://doi.org/10.1080/14780887.2020.1769238 · AIR Lab Journal Club</div>
+  </div>
+</div>
+
+</main>
+
+<div style="text-align:center;margin:2.6rem 0 0;"><a href="../journal-club.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.5rem;border-radius:980px;background:#fff;border:1px solid var(--rule);color:var(--sky-deep);font-weight:600;font-size:0.92rem;text-decoration:none;box-shadow:0 6px 22px rgba(31,78,121,0.12);"><span style="width:20px;height:20px;display:inline-flex;"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#1f4e79"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#3a9a8f"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#1f4e79"/></svg></span>Journal Club의 다른 리뷰 보기</a></div>
+
+<footer class="footer">
+  이 페이지는 AIR Lab(ACEs-Informed Recovery Lab) 대학원 세미나의 교육 목적으로 제작되었습니다. 네 편의 논문 내용은 원문을 풀어 정리한 것이며, 모든 그림은 원문의 서술을 바탕으로 랩에서 따로 그린 설명용 "AIR Lab 개념도"입니다. 원문의 그림과 표는 싣지 않았습니다. "가상 예시"로 표시한 내용은 틀의 모양을 보여 주기 위한 것으로 실제 연구 결과가 아닙니다. Ritchie &amp; Spencer(1994)는 네 편이 공통으로 인용하는 원 출처로, 이 페이지에서는 네 편에 소개된 범위 안에서만 언급했습니다. 정확한 내용은 원문을 확인하십시오.
+</footer>
+
+<script>
+(function(){
+  var PREFIX='jc_framework_';
+  var areas=document.querySelectorAll('.worksheet textarea[data-key]');
+  function store(k,v){try{localStorage.setItem(PREFIX+k,v);return true;}catch(e){return false;}}
+  function load(k){try{return localStorage.getItem(PREFIX+k);}catch(e){return null;}}
+  function flash(ta){var s=ta.parentNode.querySelector('.save-status');if(!s)return;s.classList.add('show');clearTimeout(s._t);s._t=setTimeout(function(){s.classList.remove('show');},1400);}
+  areas.forEach(function(ta){
+    var v=load(ta.getAttribute('data-key'));
+    if(v!==null)ta.value=v;
+    var timer;
+    ta.addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(function(){if(store(ta.getAttribute('data-key'),ta.value))flash(ta);},400);});
+  });
+  window.saveAll=function(){var ok=true;areas.forEach(function(ta){if(store(ta.getAttribute('data-key'),ta.value))flash(ta);else ok=false;});if(!ok)alert('이 브라우저에서는 저장 공간을 사용할 수 없습니다. 내용을 따로 복사해 두세요.');};
+})();
+</script>
+</body>
+</html>
