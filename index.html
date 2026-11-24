@@ -571,6 +571,7 @@ a.nc-call:hover .ncc-btn em { transform: translateX(4px); }
 }
 .pb-intl { background: var(--sky-deep); color: #fff; }
 .pb-kci  { background: #eef1f5; color: #5a6675; }
+.pb-informal { background: #fff; color: #7a8594; border: 1px solid #d6dde6; }
 .pb-new  { background: var(--red); color: #fff; }
 
 /* NEW badge (kept red per standing guideline; soft pulse) */
@@ -1463,6 +1464,7 @@ footer {
         <button onclick="fp('kci',this)">KCI</button>
         <button onclick="fp('review',this)">Under Review</button>
         <button onclick="fp('progress',this)">In Progress</button>
+        <button onclick="fp('informal',this)">Other Articles</button>
       </div>
       <span style="font-size:0.63rem;letter-spacing:0.14em;color:var(--xlight);" id="pubCount"></span>
     </div>
@@ -1836,6 +1838,9 @@ const NEWS_DATA = [
 ];
 
 const PUB_DATA = [
+  // ── 비공식 실적 (status:"informal"): KCI 등재지가 아닌 기관 간행물. 전체 편수와 통계에는 넣지 않음 ──
+  { no:null, year:2026, type:"", isNew:false, status:"informal", reviewStage:"Conditionally Accepted", title:"충북 사회복지시설 일선 인력의 임금격차에 관한 연구: 타 지역과의 비교 및 직급 간 비대칭을 중심으로", journal:"충북학 제28집 (충북학연구소)", authors:"김준범, 이재은", citation:"김준범, 이재은. (in press). 충북 사회복지시설 일선 인력의 임금격차에 관한 연구: 타 지역과의 비교 및 직급 간 비대칭을 중심으로. 충북학, 28.", doi:"" },
+  { no:null, year:2026, month:9, type:"", isNew:false, status:"informal", reviewStage:"Published", title:"청소년의 도박 인식과 행동에 따른 잠재유형과 온라인 도박 경험에 관한 연구: 충북형 예방정책 방안 도출을 중심으로", journal:"충북사회서비스연구 제3호 (충청북도사회서비스원)", authors:"김준범", citation:"김준범. (2026). 청소년의 도박 인식과 행동에 따른 잠재유형과 온라인 도박 경험에 관한 연구: 충북형 예방정책 방안 도출을 중심으로. 충북사회서비스연구, 3, 109.", doi:"https://cb.pass.or.kr/archives/view/id/1163" },
   // ── 2026 ──
   { no:null, year:2026, type:"SSCI", isNew:false, status:"review", reviewStage:"Under Review", title:"Health literacy, psychological distress, suicide planning or attempts, and mental health counseling use among Korean adults: a nationally representative survey analysis", journal:"Humanities and Social Sciences Communications", authors:"Lee, M. S., Kim, J., & Jheon, J.", citation:"Lee, M. S., Kim, J., & Jheon, J. (under review). Health literacy, psychological distress, suicide planning or attempts, and mental health counseling use among Korean adults: a nationally representative survey analysis. Humanities and Social Sciences Communications.", doi:"" },
   { no:null, year:2026, type:"KCI", isNew:false, status:"review", reviewStage:"Under Review", title:"배우자 폭력에서 강압적 통제의 양방향성에 관한 연구: 관계 유형의 도출과 가해 동기 및 원가족 폭력 경험을 중심으로", journal:"한국범죄심리연구", authors:"김태호, 김준범, 김슬기", citation:"김태호, 김준범, 김슬기. (under review). 배우자 폭력에서 강압적 통제의 양방향성에 관한 연구: 관계 유형의 도출과 가해 동기 및 원가족 폭력 경험을 중심으로. 한국범죄심리연구.", doi:"" },
@@ -2041,6 +2046,7 @@ function renderPubs(filter) {
   const published = PUB_DATA.filter(p => p.status === 'published');
   const under_review = PUB_DATA.filter(p => p.status === 'review');
   const in_progress = PUB_DATA.filter(p => p.status === 'progress');
+  const informal = PUB_DATA.filter(p => p.status === 'informal');
 
   let filtered;
   if (filter === 'all')    filtered = published;
@@ -2048,10 +2054,11 @@ function renderPubs(filter) {
   else if (filter === 'kci')  filtered = published.filter(p => p.type === 'KCI');
   else if (filter === 'review') filtered = under_review;
   else if (filter === 'progress') filtered = in_progress;
+  else if (filter === 'informal') filtered = informal;
   else filtered = published;
 
-  const isReviewMode = filter === 'review' || filter === 'progress';
-  document.getElementById('pubCount').textContent = `${filtered.length} papers`;
+  const isReviewMode = filter === 'review' || filter === 'progress' || filter === 'informal';
+  document.getElementById('pubCount').textContent = filter === 'informal' ? `${filtered.length} articles · 비공식, 편수 미포함` : `${filtered.length} papers`;
 
   const yearCount = {};
   filtered.forEach(p => { yearCount[p.year] = (yearCount[p.year] || 0) + 1; });
@@ -2084,7 +2091,7 @@ function renderPubs(filter) {
             <div class="pr-title-text">${newTitleBadge}${p.title}</div>
             <div class="pr-authors-preview">${authorsHi}${p.journal ? ` · <em>${p.journal}</em>` : ''}</div>
           </div>
-          <div class="pr-badges">${stageB}${p.type ? `<span class="pb ${cls}">${lbl}</span>` : ''}</div>
+          <div class="pr-badges">${stageB}${p.status === 'informal' ? `<span class="pb pb-informal">비공식</span>` : (p.type ? `<span class="pb ${cls}">${lbl}</span>` : '')}</div>
         </div>
         <div class="pr-detail">
           <div class="detail-inner">
