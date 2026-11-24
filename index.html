@@ -137,6 +137,9 @@ nav {
   color: var(--mid); border-right: 1px solid rgba(31,78,121,0.12);
 }
 .ticker-item strong { color: var(--sky-deep); font-weight: 600; }
+a.ticker-item { color: inherit; text-decoration: none; }
+a.ticker-item:hover strong { text-decoration: underline; }
+.ticker-date { font-size: 0.72em; font-weight: 700; color: var(--xlight); margin-right: 0.55rem; letter-spacing: 0.04em; }
 @keyframes ticker { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
 
 /* ── HERO ── */
@@ -1988,10 +1991,19 @@ function highlightPI(text) {
 }
 
 function renderTicker() {
-  const items = NEWS_DATA.map(n =>
-    `<div class="ticker-item"><strong>[${n.title}]</strong> ${n.body}</div>`
-  ).join('');
-  document.getElementById('tickerTrack').innerHTML = items + items;
+  // 최신 소식 5개만, 날짜 순으로 골라 짧게 보여 줌
+  const key = d => String(d).replace(/\./g, '').padEnd(8, '0');
+  const latest = NEWS_DATA.slice().sort((a, b) => key(b.date) - key(a.date)).slice(0, 5);
+  const cut = (t, n) => { t = String(t || '').replace(/<[^>]+>/g, ''); return t.length > n ? t.slice(0, n).replace(/[\s,.:]+$/, '') + '…' : t; };
+  const items = latest.map(n => {
+    const inner = `<span class="ticker-date">${n.date}</span><strong>${n.title}</strong> ${cut(n.body, 70)}`;
+    return n.link
+      ? `<a class="ticker-item" href="${n.link}"${/^https?:/.test(n.link) ? ' target="_blank" rel="noopener"' : ''}>${inner}</a>`
+      : `<div class="ticker-item">${inner}</div>`;
+  }).join('');
+  const track = document.getElementById('tickerTrack');
+  track.innerHTML = items + items;
+  track.style.animationDuration = Math.max(30, latest.length * 9) + 's';
 }
 
 function renderNews() {
