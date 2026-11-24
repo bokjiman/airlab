@@ -1818,6 +1818,8 @@ footer {
 
 <script>
 const NEWS_DATA = [
+  { date:"2026.11.24", type:"paper", featured:true, title:"🎉 축 게재 예정: 『충북학』 제28집", body:"「충북 사회복지시설 일선 인력의 임금격차에 관한 연구: 타 지역과의 비교 및 직급 간 비대칭을 중심으로」가 심사위원 3인의 심사를 거쳐 수정 후 게재로 결정되었습니다. 이재은 학생과 함께한 연구입니다. 축하합니다!", sub:"김준범, 이재은 · 충북학 제28집 (충북학연구소), 2026년 12월 발행 예정" },
+  { date:"2026.11.24", type:"paper", featured:true, title:"🎉 축 게재: 『충북사회서비스연구』 제3호", body:"「청소년의 도박 인식과 행동에 따른 잠재유형과 온라인 도박 경험에 관한 연구: 충북형 예방정책 방안 도출을 중심으로」가 충청북도사회서비스원 『충북사회서비스연구』 제3호(도박중독의 예방과 관리)에 실렸습니다.", sub:"김준범 · 충북사회서비스연구, 3, 109.", link:"https://cb.pass.or.kr/archives/view/id/1163" },
   { date:"2026.11.20", type:"bigaward", featured:true, title:"🏆 국립정신건강센터장상 수상: 우리 학생들 축하합니다!", body:"26-2학기 개신프론티어(학생 주도 교과설계 프로그램) 정신건강 서포터즈로 활동한 학생들이 「청년 정신건강 리더 영마인드 링크 3기」 해단식에서 국립정신건강센터장상을 받았습니다. 지금의 숨표로 이어진 활동입니다. 정말 자랑스럽습니다!", sub:"충북대학교 이재국, 이상준, 박하람, 박현은, 최정민 · 활동기간 2026년 5월~11월 · 2026년 11월 20일", link:"#gallery" },
   { date:"2026.11.12", type:"call", title:"2027 현장 참여형 실천 매뉴얼 개발 및 연구 지원 사업", body:"실무에서 막힌 어려움 하나를 알려 주세요. 연구와 근거로 풀어 현장에서 바로 쓰는 매뉴얼로 돌려 드립니다.", link:"field/" },
   { date:"2026.11.12", type:"practice", featured:true, title:"🤝 Practice 페이지 개설: 연구성과 확산", body:"지역 기관과 함께 만든 결과물을 공개합니다. 2025년 「병식이 없는 정신장애 어르신과 함께 일하기」 실천 매뉴얼(원칙 12, 도구 15, 문답 16)과 2026년 「당사자연구 안내서」(네 장면, 여덟 번의 시간)를 볼 수 있습니다.", link:"practice.html" },
@@ -1838,7 +1840,7 @@ const NEWS_DATA = [
 ];
 
 const PUB_DATA = [
-  // ── 비공식 실적 (status:"informal"): KCI 등재지가 아닌 기관 간행물. 전체 편수와 통계에는 넣지 않음 ──
+  // ── 비공식 실적 (status:"informal"): KCI 등재지가 아닌 기관 간행물. All과 전체 편수에는 넣고, SSCI/KCI 수에는 넣지 않음 ──
   { no:null, year:2026, type:"", isNew:false, status:"informal", reviewStage:"Conditionally Accepted", title:"충북 사회복지시설 일선 인력의 임금격차에 관한 연구: 타 지역과의 비교 및 직급 간 비대칭을 중심으로", journal:"충북학 제28집 (충북학연구소)", authors:"김준범, 이재은", citation:"김준범, 이재은. (in press). 충북 사회복지시설 일선 인력의 임금격차에 관한 연구: 타 지역과의 비교 및 직급 간 비대칭을 중심으로. 충북학, 28.", doi:"" },
   { no:null, year:2026, month:9, type:"", isNew:false, status:"informal", reviewStage:"Published", title:"청소년의 도박 인식과 행동에 따른 잠재유형과 온라인 도박 경험에 관한 연구: 충북형 예방정책 방안 도출을 중심으로", journal:"충북사회서비스연구 제3호 (충청북도사회서비스원)", authors:"김준범", citation:"김준범. (2026). 청소년의 도박 인식과 행동에 따른 잠재유형과 온라인 도박 경험에 관한 연구: 충북형 예방정책 방안 도출을 중심으로. 충북사회서비스연구, 3, 109.", doi:"https://cb.pass.or.kr/archives/view/id/1163" },
   // ── 2026 ──
@@ -2044,12 +2046,12 @@ function renderNews() {
 
 function renderPubs(filter) {
   const published = PUB_DATA.filter(p => p.status === 'published');
+  const informal = PUB_DATA.filter(p => p.status === 'informal');
   const under_review = PUB_DATA.filter(p => p.status === 'review');
   const in_progress = PUB_DATA.filter(p => p.status === 'progress');
-  const informal = PUB_DATA.filter(p => p.status === 'informal');
 
   let filtered;
-  if (filter === 'all')    filtered = published;
+  if (filter === 'all')    filtered = informal.concat(published);
   else if (filter === 'intl') filtered = published.filter(p => isIntl(p.type));
   else if (filter === 'kci')  filtered = published.filter(p => p.type === 'KCI');
   else if (filter === 'review') filtered = under_review;
@@ -2058,7 +2060,7 @@ function renderPubs(filter) {
   else filtered = published;
 
   const isReviewMode = filter === 'review' || filter === 'progress' || filter === 'informal';
-  document.getElementById('pubCount').textContent = filter === 'informal' ? `${filtered.length} articles · 비공식, 편수 미포함` : `${filtered.length} papers`;
+  document.getElementById('pubCount').textContent = filter === 'informal' ? `${filtered.length} articles · 비공식` : `${filtered.length} papers`;
 
   const yearCount = {};
   filtered.forEach(p => { yearCount[p.year] = (yearCount[p.year] || 0) + 1; });
@@ -2074,7 +2076,7 @@ function renderPubs(filter) {
     // Auto-determine NEW: prioritize pubDate-based 3-month window; fallback to manual isNew flag
     const showNew = isWithin3Months(p.pubDate) || p.isNew === true;
     const newTitleBadge = (showNew && !isReviewMode) ? `<span class="pr-new-badge">NEW</span>` : '';
-    const stageB = isReviewMode && p.reviewStage
+    const stageB = (isReviewMode || (p.status === 'informal' && p.reviewStage !== 'Published')) && p.reviewStage
       ? `<span class="pb pb-stage">${p.reviewStage}</span>` : '';
     const doiB = p.doi
       ? `<a class="detail-link" href="${p.doi}" target="_blank" onclick="event.stopPropagation()">View Paper ↗</a>`
@@ -2442,11 +2444,12 @@ document.querySelectorAll('.tr, .nc').forEach((el, i) => {
 /* ── PREVIEW v2: impact strip · key papers · scroll reveal ── */
 (function(){
   var pub = PUB_DATA.filter(function(p){ return p.status === 'published'; });
+  var pubAll = PUB_DATA.filter(function(p){ return p.status === 'published' || p.status === 'informal'; });
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* 5. Impact strip: counted live from the data on this page */
   var vals = {
-    pub: pub.length,
+    pub: pubAll.length,
     intl: pub.filter(function(p){ return p.type === 'SSCI' || p.type === 'SCIE'; }).length,
     kci: pub.filter(function(p){ return p.type === 'KCI'; }).length,
     proj: document.querySelectorAll('.project-item').length,
