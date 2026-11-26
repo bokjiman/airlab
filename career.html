@@ -1,0 +1,1142 @@
+<!doctype html><html lang="ko"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<title>복지영역 진로 로드맵 · AIR Lab</title>
+<meta name="description" content="충북대학교 아동복지학과 학생을 위한 복지영역 진로 로드맵: 기관, 실습처, 정신건강·학교 분야 채용, 자격증, 대학원 안내">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* AIR Lab chrome: glass nav + 3-tone stripe, navy→teal head band, white console below.
+   대상 칩 → 부처 줄 지도 → 기관 카드 → 안내(학교·월급·자격·연구). 그림은 미니멀 플랫(외곽선 없는 둥근 면)으로 밝은 타일 위에 놓아 두 테마에서 같은 모습으로 보인다. */
+:root{
+  --font:-apple-system,BlinkMacSystemFont,'SF Pro Text','Pretendard Variable',Pretendard,'Inter','Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;
+  --bg:#ffffff; --off:#f4f7fb; --ink:#20262e; --text:#46505c; --sub:#6b7684; --mute:#828d9b;
+  --line:#e6ebf1; --line2:#d8e0ea; --card:#ffffff; --hover:#eef3f9;
+  --accent:#1f4e79; --accent2:#2d6a9f; --accent-soft:#e9eff6; --on-accent:#ffffff;
+  --gray:#6f7b8a; --mint:#2f8f84; --mint-soft:#e7f4f1; --gold:#8a6a2f; --gold-soft:#f6efe0;
+  --violet:#6b5aa0; --violet-soft:#efecf7; --coral:#d4583f; --coral-soft:#fcece7;
+  --live:#8a6a2f; --live-soft:#f6efe0; --go:#2f8f84; --go-soft:#e7f4f1; --warn:#d4583f; --warn-soft:#fcece7;
+  --band-a:#15324f; --band-b:#1c4a73; --band-c:#22655f; --band-glow:rgba(58,154,143,.38);
+  --on-band:#ffffff; --on-band-2:#d2e0ec; --on-band-3:#9fd3ca;
+  --nav:rgba(255,255,255,.78); --art:#eef3f9; --art2:#e7f4f1;
+  --shadow:0 1px 2px rgba(36,64,102,.04),0 10px 30px rgba(36,64,102,.07);
+  --r-md:14px; --r-lg:20px; --pill:980px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10161d; --off:#151c25; --ink:#eef2f6; --text:#c5ced9; --sub:#9aa6b4; --mute:#7f8b99;
+  --line:#26303c; --line2:#344150; --card:#161e28; --hover:#1c2632;
+  --accent:#7fa9d1; --accent2:#9dc0e2; --accent-soft:#1a2c40; --on-accent:#0f1820;
+  --gray:#a3aebb; --mint:#6cc7ba; --mint-soft:#143029; --gold:#d6b473; --gold-soft:#332915;
+  --violet:#b3a5e0; --violet-soft:#262040; --coral:#f08d77; --coral-soft:#3a1f19;
+  --live:#d6b473; --live-soft:#332915; --go:#6cc7ba; --go-soft:#143029; --warn:#f08d77; --warn-soft:#3a1f19;
+  --band-a:#0f2439; --band-b:#153a5b; --band-c:#184d49;
+  --nav:rgba(16,22,29,.78); --art:#d5e0ec; --art2:#cfe6e0;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10161d; --off:#151c25; --ink:#eef2f6; --text:#c5ced9; --sub:#9aa6b4; --mute:#7f8b99;
+  --line:#26303c; --line2:#344150; --card:#161e28; --hover:#1c2632;
+  --accent:#7fa9d1; --accent2:#9dc0e2; --accent-soft:#1a2c40; --on-accent:#0f1820;
+  --gray:#a3aebb; --mint:#6cc7ba; --mint-soft:#143029; --gold:#d6b473; --gold-soft:#332915;
+  --violet:#b3a5e0; --violet-soft:#262040; --coral:#f08d77; --coral-soft:#3a1f19;
+  --live:#d6b473; --live-soft:#332915; --go:#6cc7ba; --go-soft:#143029; --warn:#f08d77; --warn-soft:#3a1f19;
+  --band-a:#0f2439; --band-b:#153a5b; --band-c:#184d49;
+  --nav:rgba(16,22,29,.78); --art:#d5e0ec; --art2:#cfe6e0;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35); color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;letter-spacing:-.01em;word-break:keep-all;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.gutter{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media(min-width:760px){.gutter{padding-left:max(2.5rem,env(safe-area-inset-left,0px));padding-right:max(2.5rem,env(safe-area-inset-right,0px))}}
+.inner{max-width:1120px;margin:0 auto}
+h1,h2,h3,h4{color:var(--ink);text-wrap:balance;letter-spacing:-.02em;margin:0}
+a{color:var(--accent2)}
+:focus-visible{outline:2px solid var(--accent2);outline-offset:2px;border-radius:6px}
+/* nav */
+nav.site{position:sticky;top:0;z-index:50;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+.stripe{height:3px;background:linear-gradient(90deg,#1f4e79 0%,#2d6a9f 45%,#3a9a8f 100%)}
+.nav-inner{display:flex;align-items:center;gap:1.2rem;height:52px}
+.logo{font-weight:600;font-size:1rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:.6rem;white-space:nowrap;flex:none}
+.dots{display:flex;gap:3px}.dots span{width:6px;height:6px;border-radius:50%;display:block}
+.dots .d1{background:#1f4e79}.dots .d2{background:#2d6a9f}.dots .d3{background:#3a9a8f}
+.logo small{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mint);font-weight:700}
+.nav-links{display:flex;gap:1.3rem;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-size:.8rem;color:var(--text);text-decoration:none;white-space:nowrap}
+.nav-links a:hover{color:var(--accent)}
+@media(max-width:560px){.logo small{display:none}}
+/* head band */
+.head{position:relative;isolation:isolate;color:var(--on-band)}
+.head::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(120% 140% at 88% 0%,var(--band-glow) 0%,rgba(58,154,143,0) 55%),linear-gradient(100deg,var(--band-a) 0%,var(--band-b) 48%,var(--band-c) 100%)}
+.head .inner{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2rem;align-items:end;padding-block:2.8rem 2.2rem}
+.sn{display:block;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--on-band-3);font-weight:600;margin-bottom:.7rem}
+.head h1{color:var(--on-band);font-size:clamp(1.8rem,4vw,2.9rem);font-weight:600;letter-spacing:-.03em;line-height:1.15}
+.head h1 em{font-style:normal;color:var(--on-band);display:block}
+.head h1 .pre{display:block;font-size:.42em;font-weight:500;letter-spacing:-.01em;color:var(--on-band-3);line-height:1.5;margin-bottom:.35rem}
+.head p{margin:.9rem 0 0;max-width:580px;font-size:.94rem;color:var(--on-band-2);line-height:1.7}
+.head-stats{display:flex;gap:1.6rem;margin-top:1.4rem;flex-wrap:wrap}
+.hs{display:flex;flex-direction:column;gap:.15rem}
+.hs b{font-size:1.6rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1}
+.hs span{font-size:.7rem;letter-spacing:.06em;color:var(--on-band-3);font-weight:600}
+.head-art{width:340px;max-width:100%;align-self:center;background:var(--art);border-radius:var(--r-lg);padding:8px 10px 4px}
+.head-art svg{display:block;width:100%;height:auto}
+@media(max-width:820px){.head .inner{grid-template-columns:1fr;padding-block:2rem 1.2rem}.head-art{width:100%;max-width:430px;justify-self:center;margin-top:.2rem}}
+main{padding-block:0 4rem}
+/* sections */
+.sec{margin-top:2.8rem}
+.sec-head{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;padding-bottom:.8rem;margin-bottom:1rem;border-bottom:1px solid var(--line)}
+.sec-head .tick{width:5px;height:1.25rem;border-radius:3px;background:var(--tc,var(--accent))}
+.sec-head h2{font-size:1.3rem;font-weight:700}
+.sec-head .en{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--tc,var(--accent2))}
+.sec>p.sub{color:var(--sub);margin:0 0 14px;max-width:70ch}
+.withart{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:1.2rem;align-items:center;margin-bottom:14px}
+.withart p.sub{margin:0;color:var(--sub);max-width:70ch}
+.art{background:var(--art);border-radius:var(--r-lg);padding:6px;aspect-ratio:240/224}
+.art.m{background:var(--art2)}
+.art svg{display:block;width:100%;height:100%}
+@media(max-width:640px){.withart{grid-template-columns:minmax(0,1fr) 96px;gap:.8rem}}
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:.86rem;font-weight:600;padding:.5rem 1.05rem;border-radius:var(--r-md);border:1px solid var(--line2);background:var(--card);color:var(--ink);cursor:pointer;text-align:left;transition:background .15s,border-color .15s}
+.chip:hover{background:var(--hover);border-color:var(--accent2)}
+.chip small{display:block;font-weight:400;font-size:.72rem;color:var(--mute)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.chip[aria-pressed="true"] small{color:var(--on-accent);opacity:.8}
+.chip.clear{border-style:dashed;color:var(--sub);background:transparent}
+.tools{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-top:14px}
+.tools input[type="search"]{font:inherit;font-size:.86rem;padding:.5rem 1rem;border:1px solid var(--line2);border-radius:var(--pill);background:var(--card);color:var(--ink);min-width:0;flex:1 1 240px;max-width:380px}
+.tools label{font-size:.84rem;color:var(--text);display:flex;gap:6px;align-items:center}
+.tools input[type="checkbox"]{accent-color:var(--mint)}
+.count{font-size:.78rem;color:var(--mute);font-weight:600;font-variant-numeric:tabular-nums}
+/* map */
+.map{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--card)}
+.mrow{display:grid;grid-template-columns:190px 1fr;border-top:1px solid var(--line)}
+.mrow:first-child{border-top:0}
+.mhead{background:var(--off);padding:12px 16px;border-left:4px solid var(--tc)}
+.mhead b{display:block;color:var(--ink);font-size:.95rem}
+.mhead span{font-size:.72rem;color:var(--sub);line-height:1.45;display:block}
+.mbody{padding:11px 12px;display:flex;flex-wrap:wrap;gap:6px;min-width:0;align-content:center}
+.node{font-size:.78rem;padding:.3rem .7rem;border-radius:var(--pill);border:1px solid var(--line2);background:var(--card);color:var(--text);text-decoration:none;transition:background .15s}
+.node:hover{background:var(--hover)}
+.node.dim{opacity:.3}
+.node.hit{border-color:var(--tc);color:var(--tc);font-weight:700;background:color-mix(in srgb,var(--tc) 10%,var(--card))}
+@media(max-width:640px){.mrow{grid-template-columns:1fr}.mhead{padding:8px 12px}}
+/* cards */
+.group{margin-top:2rem}
+.ghead{display:flex;gap:.9rem;align-items:center}
+.ghead .art{width:74px;flex:none;border-radius:16px;padding:4px}
+.ghead h3{font-size:1.1rem;font-weight:700}
+.ghead .en{display:block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--tc)}
+.ghead p{margin:.1rem 0 0;font-size:.78rem;color:var(--sub)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;margin-top:14px}
+@media(max-width:400px){.grid{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-top:3px solid var(--tc);border-radius:var(--r-md);background:var(--card);padding:1rem 1.05rem;min-width:0;transition:box-shadow .18s,transform .18s}
+.card:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.card:target{box-shadow:0 0 0 2px var(--tc),var(--shadow)}
+.card h4{font-size:1rem;font-weight:700;line-height:1.38}
+.law{font-size:.72rem;color:var(--mute);margin-top:2px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin:9px 0 11px}
+.tag{font-size:.7rem;padding:.12rem .5rem;border-radius:5px;background:var(--off);color:var(--text);font-weight:600}
+.tag.live{background:var(--live-soft);color:var(--live)}
+.tag.go{background:var(--go-soft);color:var(--go)}
+.tag.ba{background:var(--accent-soft);color:var(--accent)}
+dl{margin:0;display:grid;gap:8px}
+dt{font-size:.66rem;font-weight:700;color:var(--mint);letter-spacing:.1em}
+dd{margin:0;font-size:.84rem;line-height:1.62}
+.cb{margin-top:11px;padding:.7rem .8rem;border-radius:10px;background:var(--off);font-size:.82rem}
+.cb b{color:var(--ink)}
+.links{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.links a{font-size:.74rem;font-weight:600;text-decoration:none;border:1px solid var(--line2);border-radius:var(--pill);padding:.16rem .7rem;background:var(--card);color:var(--accent)}
+.links a:hover{background:var(--hover)}
+.links a.s{color:var(--sub);font-weight:500}
+.empty{display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:24px;border:1px dashed var(--line2);border-radius:var(--r-lg);color:var(--sub);text-align:center}
+.empty .art{width:120px}
+/* first screen: one question card, then a quiet jump row */
+.head .inner{padding-block:2.2rem 3.6rem}
+.head p.facts{margin-top:.7rem;font-size:.78rem;color:var(--on-band-3);font-weight:600;letter-spacing:.01em}
+.pickcard{position:relative;margin-top:-2.4rem;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:1.4rem 1.5rem 1.2rem}
+.pickcard h2{font-size:1.35rem;font-weight:700}
+.pickcard .hint{margin:.2rem 0 1rem;color:var(--sub);font-size:.88rem}
+.pickcard .chips{display:block}
+.cgrp+.cgrp{margin-top:14px}
+.glab{display:block;font-size:.72rem;font-weight:700;letter-spacing:.06em;color:var(--mint);margin-bottom:.45rem}
+.crow{display:grid;gap:10px}
+.crow.n4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.crow.n5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.pickcard .chip{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.55rem;padding:1rem .6rem .9rem;font-size:.95rem;border-width:1.5px}
+.ico{width:52px;height:52px;border-radius:50%;background:var(--ic);display:grid;place-items:center;flex:none;transition:transform .15s}
+.ico svg{width:30px;height:30px;display:block}
+.pickcard .chip:hover .ico{transform:scale(1.06)}
+.tx{min-width:0}
+.pickcard .chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--ink);box-shadow:0 0 0 1.5px var(--accent) inset}
+.pickcard .chip[aria-pressed="true"] small{color:var(--sub);opacity:1}
+.ck{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:.78rem;font-weight:700;display:grid;place-items:center}
+.pickcard .chip.clear{display:block;width:100%;margin-top:12px;text-align:center;padding:.45rem}
+.pickcard .chip.clear small{display:inline;margin-left:.4rem}
+@media(max-width:820px){.crow.n4,.crow.n5{grid-template-columns:repeat(2,minmax(0,1fr))}.pickcard .chip{flex-direction:row;text-align:left;gap:.6rem;padding:.55rem .7rem;font-size:.88rem}.ico{width:38px;height:38px}.ico svg{width:22px;height:22px}}
+.result{display:flex;flex-wrap:wrap;gap:.6rem .8rem;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.88rem;color:var(--text)}
+.result span{flex:1 1 260px}
+.result b{color:var(--ink)}
+.gobtn{font-size:.84rem;font-weight:700;text-decoration:none;padding:.5rem 1.1rem;border-radius:var(--pill);background:var(--accent);color:var(--on-accent);border:1px solid var(--accent);white-space:nowrap}
+.gobtn.ghost{background:transparent;color:var(--accent);border-color:var(--line2)}
+.gobtn:hover{filter:brightness(1.08)}
+.jump{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:1.3rem 0 0}
+.jl{font-size:.72rem;font-weight:700;letter-spacing:.1em;color:var(--mute);margin-right:.2rem}
+.jb{display:inline-flex;align-items:center;gap:.45rem;text-decoration:none;font-size:.86rem;font-weight:600;color:var(--ink);background:var(--card);border:1px solid var(--line2);border-radius:var(--pill);padding:.42rem .95rem;transition:background .15s,border-color .15s}
+.jb::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--tc);flex:none}
+.jb:hover{background:var(--hover);border-color:var(--tc)}
+.picked{margin-top:12px;font-size:.84rem;color:var(--sub)}
+.picked:empty{display:none}
+.picked b{color:var(--ink)}
+@media(max-width:820px){.head .inner{padding-block:1.6rem 3.2rem}.head-art{display:none}.pickcard{padding:1.1rem 1rem 1rem}}
+/* sector map */
+.sub2{font-size:.98rem;font-weight:700;color:var(--ink);margin:1.6rem 0 .3rem}
+.sub2+p{margin:0 0 .8rem;color:var(--sub);font-size:.86rem;max-width:72ch}
+.sectors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media(max-width:900px){.sectors{grid-template-columns:1fr}}
+.sx{border:1px solid var(--line);border-top:3px solid var(--tc);border-radius:var(--r-lg);background:var(--card);padding:1rem 1.05rem;min-width:0}
+.sx-top{display:flex;gap:.8rem;align-items:center}
+.sx-top .art{width:68px;flex:none;border-radius:16px;padding:4px}
+.sx .en{display:block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--tc)}
+.sx h3{font-size:1.02rem;font-weight:700}
+.sx .say{margin:.7rem 0 .2rem;font-size:.86rem;color:var(--ink);font-weight:600}
+.sx dl{gap:5px;margin:.5rem 0 .8rem}
+.sx dl div{display:grid;grid-template-columns:4.6rem minmax(0,1fr);gap:.5rem}
+.sx dt{letter-spacing:0;font-size:.72rem;color:var(--mute);padding-top:.1rem}
+.sx dd{font-size:.8rem;line-height:1.5}
+.sx .mbody{padding:0}
+.tag.pub{background:var(--accent-soft);color:var(--accent)}
+.tag.con{background:var(--mint-soft);color:var(--mint)}
+.tag.ngo{background:var(--coral-soft);color:var(--coral)}
+.one{margin:.55rem 0 0;font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.5}
+.secf{display:flex;gap:6px;flex-wrap:wrap}
+.pill{font:inherit;font-size:.78rem;font-weight:500;padding:.34rem .85rem;border-radius:var(--pill);border:1px solid var(--line2);background:var(--card);color:var(--text);cursor:pointer}
+.pill:hover{background:var(--hover)}
+.pill[aria-pressed="true"]{background:var(--mint);border-color:var(--mint);color:var(--on-accent)}
+/* grad school */
+.stairs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:end;margin-bottom:14px}
+.stair{border-radius:var(--r-md);padding:.9rem 1rem;background:var(--off);border-bottom:4px solid var(--tc)}
+.stair:nth-child(2){padding-top:1.7rem}.stair:nth-child(3){padding-top:2.5rem}
+.stair .en{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--tc);display:block}
+.stair b{display:block;color:var(--ink);font-size:1rem}
+.stair span.d{font-size:.82rem;display:block;margin-top:.15rem}
+@media(max-width:640px){.stairs{grid-template-columns:1fr}.stair:nth-child(n){padding-top:.9rem}}
+.deg{border-top:3px solid var(--tc)}
+.deg .withart{grid-template-columns:minmax(0,1fr) 96px;margin:0 0 .4rem}
+.deg dl{gap:9px}
+.tag.assoc{background:var(--off);color:var(--sub);border:1px dashed var(--line2)}
+.aside{margin-top:14px;border:1px dashed var(--line2);border-radius:var(--r-lg);padding:.9rem 1.05rem;font-size:.84rem;display:flex;gap:.8rem 1rem;flex-wrap:wrap;align-items:center}
+.aside b{color:var(--ink)}
+.aside p{margin:0;flex:1 1 320px}
+/* professor's note + one child, many doors */
+.prof{position:relative;margin-top:14px;background:var(--gold-soft);border-radius:var(--r-lg);padding:1.2rem 1.3rem 1.2rem 1.5rem}
+.prof::before{content:"";position:absolute;left:0;top:1.1rem;bottom:1.1rem;width:4px;border-radius:2px;background:var(--gold)}
+.prof .ph{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--gold);display:block;margin-bottom:.35rem}
+.prof h3{font-size:1.05rem;font-weight:700;margin-bottom:.4rem}
+.prof p{margin:.5rem 0 0;max-width:74ch;color:var(--ink);font-size:.9rem;line-height:1.75}
+.doors{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.doors li{margin:0;border:1px solid var(--line);border-radius:var(--r-md);background:var(--card);padding:.75rem .9rem;font-size:.84rem;line-height:1.55}
+.doors .when{display:block;font-size:.68rem;font-weight:700;letter-spacing:.06em;color:var(--coral)}
+.doors b{color:var(--ink);display:block}
+.doors a{font-weight:600}
+.cmp td:first-child{white-space:normal}
+.tag.star{background:var(--gold-soft);color:var(--gold)}
+.prac{font:inherit;font-size:.76rem;font-weight:700;margin-top:9px;padding:.3rem .8rem;border-radius:var(--pill);border:1px solid var(--gold);background:var(--gold-soft);color:var(--gold);cursor:pointer}
+.prac:hover{filter:brightness(.97)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.kpi{background:var(--off);border-radius:var(--r-md);padding:.8rem 1rem}
+.kpi b{display:block;font-size:1.5rem;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1.2}
+.kpi span{font-size:.74rem;color:var(--sub)}
+.prtools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0 10px}
+.prtools select,.prtools input{font:inherit;font-size:.86rem;padding:.48rem .9rem;border:1px solid var(--line2);border-radius:var(--pill);background:var(--card);color:var(--ink);min-width:0}
+.prtools input{flex:1 1 200px;max-width:320px}
+.pill .n{opacity:.6;font-weight:600;font-variant-numeric:tabular-nums}
+td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+#prTable td:first-child{white-space:normal;min-width:200px}
+.more{display:block;margin:12px auto 0}
+.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.job{border:1px solid var(--line);border-top:3px solid var(--tc);border-radius:var(--r-md);background:var(--card);padding:.9rem 1rem;font-size:.84rem}
+.job h4{font-size:.95rem;font-weight:700;margin-bottom:.3rem}
+.job .en{display:block;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--tc)}
+.job p{margin:.3rem 0 0;line-height:1.6}
+.job .roles{color:var(--sub);font-size:.78rem}
+.path{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:0 0 14px;padding:0;list-style:none}
+.path li{flex:1 1 150px;margin:0;background:var(--violet-soft);border-radius:var(--r-md);padding:.7rem .9rem;font-size:.82rem;line-height:1.5;position:relative}
+.path b{display:block;color:var(--violet);font-size:.9rem}
+/* notes */
+.note{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:1.2rem 1.3rem}
+.note.warn{background:var(--warn-soft);border-color:transparent}
+.note h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.note.warn h3{color:var(--warn)}
+.note .ph{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--mint);display:block;margin-bottom:.3rem}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.big{font-size:2.1rem;font-weight:600;color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}
+.big small{font-size:.9rem;font-weight:500;color:var(--sub)}
+ul{margin:6px 0 0;padding-left:18px}
+li{margin:4px 0}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:660px;font-size:.84rem}
+th{background:var(--off);color:var(--accent);text-align:left;padding:.65rem .9rem;font-weight:700;font-size:.72rem;letter-spacing:.06em;border-bottom:1px solid var(--line2)}
+td{padding:.7rem .9rem;border-top:1px solid var(--line);vertical-align:top}
+td:first-child{font-weight:700;color:var(--ink);white-space:nowrap}
+.footer-wrap{border-top:1px solid var(--line);background:var(--off)}
+footer{padding-block:1.8rem;font-size:.76rem;color:var(--sub);line-height:1.75}
+.f-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.9rem;font-weight:600;color:var(--text)}
+.f-stripe{display:flex;gap:4px}.f-stripe span{width:18px;height:3px;border-radius:2px;display:block}
+.f-stripe .a{background:#1f4e79}.f-stripe .b{background:#2d6a9f}.f-stripe .c{background:#3a9a8f}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="site">
+ <div class="stripe"></div>
+ <div class="gutter"><div class="inner nav-inner">
+  <a class="logo" href="index.html" title="AIR Lab 홈페이지로"><span class="dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></span>AIR Lab <small>Career Roadmap</small></a>
+  <div class="nav-links"><a href="index.html">← AIR Lab</a><a href="#pick">대상 고르기</a><a href="#map">지도</a><a href="#cards">기관</a><a href="#practice">실습처</a><a href="#mh">정신건강</a><a href="#school">아동 · 청소년</a><a href="#pay">월급</a><a href="#license">자격증</a><a href="#research">대학원</a></div>
+ </div></div>
+</nav>
+<header class="head gutter" id="top">
+ <div class="inner">
+  <div>
+   <span class="sn">충북대학교 아동복지학과 · 아동복지론 2026-2 · 진로 안내</span>
+   <h1><span class="pre">갈 곳을 찾아 헤매는 충북대학교 아동복지학과 학생을 위한</span><em>복지영역 진로 로드맵</em></h1>
+   <p>만나고 싶은 사람을 고르면, 갈 수 있는 기관과 하는 일, 충북의 실제 기관을 보여 줄게요.</p>
+   <p class="facts" id="headStats"></p>
+  </div>
+  <div class="head-art" id="headArt" aria-hidden="true"></div>
+ </div>
+</header>
+<main class="gutter"><div class="inner">
+<section class="pickcard" id="pick" aria-labelledby="pickH">
+ <h2 id="pickH">누구를 만나고 싶은가요?</h2>
+ <p class="hint">끌리는 대상을 눌러 보세요. 여러 개를 골라도 됩니다.</p>
+ <div class="chips" id="chips"></div>
+ <div class="result" id="result"></div>
+</section>
+<nav class="jump" aria-label="바로 가기">
+ <span class="jl">바로 가기</span>
+ <a class="jb" href="#map" style="--tc:var(--mint)">한눈 지도</a>
+ <a class="jb" href="#practice" style="--tc:var(--gold)">★ 실습처</a>
+ <a class="jb" href="#mh" style="--tc:var(--violet)">정신건강 분야</a>
+ <a class="jb" href="#school" style="--tc:var(--coral)">아동 · 청소년 분야</a>
+ <a class="jb" href="#pay" style="--tc:var(--gold)">종사자 월급은?</a>
+ <a class="jb" href="#license" style="--tc:var(--violet)">자격증</a>
+ <a class="jb" href="#research" style="--tc:var(--mint)">대학원은?</a>
+</nav>
+
+<section class="sec" id="map">
+ <div class="sec-head" style="--tc:var(--mint)"><span class="tick"></span><h2>한눈 지도 두 장</h2><span class="en">Two Maps</span></div>
+ <div class="withart"><p class="sub">같은 기관을 두 가지 눈으로 봅니다. 첫 장은 <b>"어느 부처 소관인가"</b>, 둘째 장은 <b>"누가 나를 고용하나"</b>예요. 기관 이름을 누르면 아래 카드로 갑니다.</p><div class="art m" data-scene="map" aria-hidden="true"></div></div>
+ <h3 class="sub2">지도 ① 어느 부처 아래에 있나</h3>
+ <p>같은 아이라도 부처가 다르면 법도, 기관 이름도, 필요한 자격증도 달라집니다. 그래서 부처를 알면 준비할 자격이 보여요.</p>
+ <div class="map" id="mapBox"></div>
+ <h3 class="sub2">지도 ② 누가 나를 고용하나: 공공과 민간</h3>
+ <p>"복지 일 = 공무원"이 아니에요. 사회복지 일자리의 대부분은 <b>나라가 예산을 대고 민간 법인이 운영하는 시설</b>에 있습니다. 여기에 후원금으로 움직이는 NGO가 더해져 세 갈래가 됩니다. 같은 종류의 기관이라도 지자체가 직접 운영하는 곳과 민간에 맡긴 곳이 섞여 있으니, 지원할 때는 공고의 운영 법인을 확인하세요.</p>
+ <div class="sectors" id="secBox"></div>
+ <div class="aside"><p><b>따로 봐야 하는 곳: 민간 협회 · 직능단체.</b> 한국자살예방협회, 한국사회복지사협회처럼 회원이 모여 만든 단체입니다. 이름이 공공기관과 비슷해 헷갈리지만 사무국 규모가 매우 작고 채용이 드물어요. 예를 들어 <b>한국생명존중희망재단</b>은 보건복지부 산하 공공기관이고, <b>한국자살예방협회</b>는 민간 협회입니다.</p><a class="node" href="#assoc">민간 협회 카드 보기</a></div>
+</section>
+
+<section class="sec" id="cards">
+ <div class="sec-head" style="--tc:var(--accent)"><span class="tick"></span><h2>기관 카드: 거기 가면 무슨 일을 하나요</h2><span class="en">Institutions</span></div>
+ <p class="sub"><span class="tag live">사는 곳</span> 은 아이가 먹고 자는 생활시설, <span class="tag go">다니는 곳</span> 은 집에서 오가는 이용시설입니다. <span class="tag ba">학부</span> 표시는 학부 졸업 + 기본 자격으로 지원할 수 있는 곳입니다. <span class="tag pub">공공</span> <span class="tag con">민간 운영 · 공공 재정</span> <span class="tag ngo">NGO</span> 는 고용 주체예요. <span class="tag star">★ 실습</span> 은 그 분야에 한국사회복지사협회 선정 실습기관이 충북에 몇 곳 있는지를 뜻합니다.</p>
+ <div class="tools">
+  <input id="q" type="search" placeholder="기관 이름 · 자격 · 하는 일로 찾기 (예: 쉼터, 수련, 사례관리)" aria-label="기관 검색">
+  <label><input type="checkbox" id="baOnly"> 학부 졸업으로 시작할 수 있는 곳만</label>
+  <span class="count" id="count"></span>
+ </div>
+ <div class="secf" id="secf" role="group" aria-label="고용 주체로 거르기" style="margin-top:10px"></div>
+ <div class="picked" id="picked"></div>
+ <div id="cardBox"></div>
+</section>
+
+<section class="sec" id="practice">
+ <div class="sec-head" style="--tc:var(--gold)"><span class="tick"></span><h2>실습처는 어디서 찾나요</h2><span class="en">Practicum</span></div>
+ <div class="withart"><p class="sub">사회복지현장실습은 아무 기관에서나 할 수 없어요. <b>한국사회복지사협회가 선정한 실습기관</b>에서 해야 실습으로 인정됩니다. 이 로드맵에서는 선정 실습기관을 <b>★</b>로 표시했습니다. 위 기관 카드의 "★ 공식 실습기관 보기"를 누르면 그 분야의 충북 실습기관만 아래 표에 나옵니다.</p><div class="art" data-scene="practice" aria-hidden="true"></div></div>
+ <div class="kpis">
+  <div class="kpi"><b>329곳</b><span>충북의 선정 실습기관(정상 상태)</span></div>
+  <div class="kpi"><b>150곳</b><span>그 가운데 청주시</span></div>
+  <div class="kpi"><b>7~20만 원</b><span>실습비 범위. 10만 · 20만 · 15만 원 순으로 많다</span></div>
+  <div class="kpi"><b>3년</b><span>선정 유효기간. 끝나는 달을 꼭 확인</span></div>
+ </div>
+ <div class="two">
+  <div class="note"><h3>실습처 고르는 순서</h3>
+   <ul>
+    <li><b>먼저 분야를 정한다.</b> 졸업 뒤 일하고 싶은 분야에서 실습하면 그 경험이 그대로 이력서가 된다.</li>
+    <li><b>★ 선정 기관인지 확인한다.</b> 아래 표나 협회 현장실습센터에서 기관 이름을 찾는다. 선정이 취소되거나 유효기간이 끝난 곳은 인정되지 않을 수 있다.</li>
+    <li><b>기관에 직접 문의한다.</b> 모집 시기, 인원, 실습비는 기관마다 다르다. 방학 실습은 몇 달 전에 마감되는 곳이 많다.</li>
+    <li><b>학과 실습 담당 교수님께 확인한다.</b> 실습 시간과 세미나 요건은 학과 안내가 기준이다.</li>
+   </ul></div>
+  <div class="note"><h3>표 읽는 법</h3>
+   <ul>
+    <li><b>실습비</b>: 기관이 협회에 등록한 금액이다. 실제 금액은 기관에 확인한다.</li>
+    <li><b>지도자</b>: 실습지도자로 등록된 사람 수. 많을수록 지도를 받을 여력이 있다.</li>
+    <li><b>유효기간</b>: 이 달까지 선정이 유효하다. 내 실습 기간이 그 안에 들어가는지 본다.</li>
+    <li>이 표에 없는 정신건강 · 학교 · 의료 분야의 <b>수련</b>은 실습과 다른 제도다(자격 사다리 참고).</li>
+   </ul>
+   <div class="links"><a href="https://www.welfare.net/prm/find-training-center/current-stat?searchType=orgNm&areaCode=20&currPage=1" target="_blank" rel="noopener">한국사회복지사협회 현장실습센터(충북)</a></div></div>
+ </div>
+ <div class="prtools">
+  <select id="prCity" aria-label="시 · 군 고르기"></select>
+  <input id="prQ" type="search" placeholder="기관 이름으로 찾기" aria-label="실습기관 검색">
+  <span class="count" id="prCount"></span>
+ </div>
+ <div class="secf" id="prCat" role="group" aria-label="분야로 거르기"></div>
+ <div class="tw" style="margin-top:12px"><table id="prTable">
+  <thead><tr><th>기관명</th><th>시 · 군</th><th>분야</th><th class="num">실습비</th><th class="num">지도자</th><th class="num">유효기간</th></tr></thead>
+  <tbody id="prBody"></tbody>
+ </table></div>
+ <button class="pill more" type="button" id="prMore"></button>
+ <p class="sub" style="margin-top:12px;font-size:.8rem">분야는 기관 이름을 보고 나눈 것이라 "협의회 · 기타"에는 이름만으로 분야를 알기 어려운 생활시설이 섞여 있습니다. 명단은 협회 현장실습센터에서 내려받은 충북 자료(전체 427건 가운데 취소 97건과 중복을 뺀 정상 329곳) 기준이며, 최신 상태는 협회 누리집에서 확인하세요.</p>
+</section>
+
+<section class="sec" id="mh">
+ <div class="sec-head" style="--tc:var(--violet)"><span class="tick"></span><h2>정신건강 분야로 가고 싶다면</h2><span class="en">Mental Health Special</span></div>
+ <div class="withart"><p class="sub">정신건강론을 듣고 "이 분야가 나한테 맞는 것 같다"고 느꼈다면 여기를 읽으세요. 정신건강 분야는 다른 분야와 달리 <b>졸업 뒤 1년의 수련</b>이 사실상 입장권입니다. 수련을 어디서 하는지, 충북에서는 실제로 어디가 사람을 뽑는지 한국정신건강사회복지사협회 게시판을 바탕으로 정리했습니다.</p><div class="art" data-scene="mh" aria-hidden="true"></div></div>
+ <ol class="path">
+  <li><b>① 사회복지사 1급</b>졸업하는 해 1월 국가시험. 수련 지원의 조건이다.</li>
+  <li><b>② 수련기관에 합격</b>보건복지부가 지정한 수련기관(병원 · 센터 · 재활시설)이 수련생을 따로 뽑는다.</li>
+  <li><b>③ 수련 1년, 1,000시간</b>이론 150 · 실습 830 · 학술활동 20시간. 일하면서 배우는 과정이다.</li>
+  <li><b>④ 정신건강사회복지사 2급</b>정신건강복지센터, 병원, 재활시설 채용에서 자격 요건이 된다.</li>
+ </ol>
+ <div class="two">
+  <div class="note"><span class="ph">Training · 수련</span><h3>충북에서 수련생을 모집한 곳</h3>
+   <p style="margin:.2rem 0 .4rem;font-size:.84rem">협회 수련 모집 · 구인 게시판에 정신건강사회복지사 2급 수련 공고를 올린 적이 있는 충북 기관입니다.</p>
+   <ul>
+    <li><b>혜광의료재단 충북병원</b>: 2025년 2급 수련과정 모집</li>
+    <li><b>음성소망병원</b>: 2024년 · 2025년도 수련생 모집</li>
+    <li><b>청주시청원정신건강복지센터</b>: 2023년 · 2024년 2급 과정 모집</li>
+    <li><b>우리들정신건강센터</b>: 2024년 · 2025년 2급 수련생 모집</li>
+   </ul>
+   <p style="margin:.6rem 0 0;font-size:.82rem">해마다 모집 여부와 인원이 달라지고, 여기 없는 지정 기관도 있습니다. <b>세종 · 대전을 포함한 전체 지정 기관</b>은 국립정신건강센터의 「정신건강전문요원 수련기관 지정 현황」 파일에서 확인하세요.</p>
+   <div class="links"><a href="https://kamhsw.or.kr/recruit2" target="_blank" rel="noopener">협회 수련사회복지사 모집 게시판</a><a href="https://www.ncmh.go.kr/ncmh/board/openDataPoplView.do?menu_cd=07_02&board_id=ncmh_OPEN_BOARD_DATA&no=273" target="_blank" rel="noopener">수련기관 지정 현황(국립정신건강센터)</a></div>
+  </div>
+  <div class="note"><span class="ph">Before you apply · 지원 전에</span><h3>수련을 준비하는 법</h3>
+   <ul>
+    <li><b>3학년 실습을 정신건강 기관에서 해 본다.</b> 청주시청원정신건강복지센터는 2026년 5월에 사회복지 하계 현장실습생을 모집했다.</li>
+    <li><b>12월부터 게시판을 매주 본다.</b> 구인 게시판에 올라온 충북의 수련 공고 두 건은 1~2월에 났고 접수 기간이 2주였다.</li>
+    <li><b>병원 수련과 센터 수련은 다르다.</b> 병원은 입원 환자 면담과 가족 교육, 센터는 지역사회 사례관리와 방문이 중심이다.</li>
+    <li><b>수련 조건을 꼭 읽는다.</b> 급여를 받는 직원 수련인지, 수련비를 내는 과정인지 기관마다 다르다.</li>
+    <li><b>수련 전의 자리도 살펴본다.</b> 정신재활시설은 생활지도원 · 재활활동요원 같은 자리를 따로 뽑는다. 자격 요건은 공고마다 다르니 첨부 파일을 확인한다.</li>
+   </ul></div>
+ </div>
+ <h3 class="sub2">충북에서 실제로 사람을 뽑은 곳</h3>
+ <p>협회 구인 게시판에서 근무지역 '충북'으로 2023년 4월부터 2026년 11월까지 올라온 공고의 제목을 정리했습니다. 이름이 여러 번 나오는 곳일수록 자리가 자주 난다는 뜻입니다.</p>
+ <div class="jobs">
+  <div class="job" style="--tc:var(--accent2)"><span class="en">Community Centers</span><h4>정신건강복지센터</h4><p>충청북도광역, 청주시 상당 · 서원 · 흥덕 · 청원, 증평 · 보은 · 진천 · 옥천 · 괴산</p><p class="roles">팀장 · 팀원, 응급개입, 자살예방사업, 정신건강증진사업, 재난 심리지원, 회계 · 행정. 공고가 가장 많다.</p></div>
+  <div class="job" style="--tc:var(--mint)"><span class="en">Rehabilitation</span><h4>정신재활시설 · 센터</h4><p>디딤터, 해피하우스다솜, 우리들정신건강센터, 청주정신건강센터, 충주어울림센터</p><p class="roles">생활지도원, 재활활동요원 · 보조원, 시설장</p></div>
+  <div class="job" style="--tc:var(--coral)"><span class="en">Addiction</span><h4>중독 · 도박</h4><p>청주시중독관리통합지원센터, 세종충북도박문제예방치유센터</p><p class="roles">상담 · 사례관리, 행정직</p></div>
+  <div class="job" style="--tc:var(--violet)"><span class="en">Hospitals</span><h4>병원</h4><p>예사랑병원, 도은병원(진천), 마음편한병원(보은), 혜광의료재단 충북병원, 영동제일병원, 온유한정신건강의학과의원 낮병원, 충북대학교병원 발달장애인 행동발달증진센터</p><p class="roles">정신건강전문요원, 정신건강사회복지사, 행동치료사</p></div>
+  <div class="job" style="--tc:var(--gold)"><span class="en">Education Office</span><h4>교육청</h4><p>충청북도교육청 마음건강증진센터</p><p class="roles">정신건강사회복지사 공개채용(2025년 공고). 학교와 정신건강이 만나는 자리다.</p></div>
+ </div>
+ <div class="two" style="margin-top:14px">
+  <div class="note"><h3>공고 제목에서 읽히는 것</h3>
+   <ul>
+    <li><b>계약직이 많다.</b> 광역센터의 응급개입 인력, 군 센터의 팀원은 계약직 공고가 반복된다.</li>
+    <li><b>육아휴직 대체인력</b> 공고가 자주 나온다. 경력을 시작하는 문이 되기도 한다.</li>
+    <li><b>재공고 · 긴급 공고가 흔하다.</b> 자격을 갖춘 지원자를 구하기 어렵다는 신호로 읽을 수 있다(제목에서 보이는 경향이고, 원인을 확인한 것은 아니다).</li>
+    <li>병원은 '정신건강전문요원' 자격을 제목에 걸고 뽑는다. 수련이 왜 입장권인지 보여 준다.</li>
+   </ul></div>
+  <div class="note"><h3>바로 가기</h3>
+   <ul>
+    <li>구인 게시판에서 근무지역을 '충북'으로 고르면 위 공고가 최신순으로 나온다.</li>
+    <li>세종 · 대전도 같은 방법으로 볼 수 있다. 통학 · 통근권이면 함께 본다.</li>
+   </ul>
+   <div class="links"><a href="https://kamhsw.or.kr/recruit1?extra_vars11=%EC%B6%A9%EB%B6%81&order_type=desc" target="_blank" rel="noopener">협회 구인 게시판(충북)</a><a href="https://www.cbmind.or.kr" target="_blank" rel="noopener">충북광역정신건강복지센터</a><a href="https://www.ncmh.go.kr" target="_blank" rel="noopener">국립정신건강센터</a></div></div>
+ </div>
+</section>
+
+<section class="sec" id="school">
+ <div class="sec-head" style="--tc:var(--coral)"><span class="tick"></span><h2>아동 · 청소년을 가까이서 보고 싶다고, 학교사회복지사만 바라보지 않아도 됩니다</h2><span class="en">Beyond School</span></div>
+ <div class="note warn"><div class="withart" style="align-items:start;margin:0"><div>
+  <h3>충북에서 "학교사회복지사"로 뽑는 자리는 매우 적습니다</h3>
+  <p style="margin:0">학교사회복지사는 「사회복지사업법」 제11조에 따른 국가자격입니다(별도의 '학교사회복지사법'은 없습니다). 그런데 자격이 있다고 학교에 자리가 생기는 것은 아닙니다. 학교 안 복지 인력은 대부분 교육청의 <b>교육복지우선지원사업 교육복지사</b>로 뽑고, 그 자리도 적습니다.</p>
+  <ul>
+   <li>충북 교육복지사 배치 학교: 479곳 가운데 <b>42곳(8.8%)</b>. 전국 평균은 15.5%입니다(2024년 11월 기준, 충북일보 · 충청매일 2025.10.15 보도).</li>
+   <li>고용은 주로 교육공무직이나 기간제이고, 채용은 결원이 날 때 교육청 공고로 납니다.</li>
+  </ul></div><div class="art" data-scene="school" aria-hidden="true"></div></div>
+ </div>
+ <div class="prof">
+  <span class="ph">Professor's Note · 교수의 부연</span>
+  <h3>"아이를 가까이서 보고 싶다"는 마음과 "학교에서 일하고 싶다"는 다른 말이에요</h3>
+  <p>많은 학생이 아이를 만나는 일을 떠올리면 가장 먼저 학교를 생각합니다. 학교가 우리에게 가장 익숙한 곳이니까요. 그런데 한 가지만 생각해 보세요. 아이가 가장 힘든 순간은 대개 <b>학교가 끝난 뒤</b>에 옵니다. 방과후의 빈 시간, 저녁의 집, 방학, 학교를 그만둔 다음 날 같은 때예요. 그 시간에 아이 곁에 있는 사람은 학교 밖의 사회복지사입니다.</p>
+  <p>학교 자리는 적고 결원이 날 때만 열립니다. 그 한 자리만 기다리다 보면 졸업 뒤 몇 년이 흘러가기 쉬워요. 반대로 지역아동센터, 청소년상담복지센터, 아동보호전문기관에서 아이를 만난 경력은 나중에 교육복지사에 지원할 때 가장 강한 이력이 됩니다. <b>학교는 출발점이 아니라 여러 도착점 가운데 하나</b>라고 생각하면 길이 훨씬 넓어집니다.</p>
+ </div>
+ <h3 class="sub2">한 아이, 여러 개의 문</h3>
+ <p>중학교 2학년 "민지"(가상의 예)를 따라가 볼게요. 같은 아이인데, 상황이 달라질 때마다 다른 기관의 사회복지사가 민지를 만납니다. 기관 이름을 누르면 카드로 갑니다.</p>
+ <ul class="doors">
+  <li><span class="when">학교에서 준비물을 자주 못 챙겨 올 때</span><b><a href="#edu">교육복지사</a></b>학교 안에서 먼저 알아보고 지역 기관으로 잇는다.</li>
+  <li><span class="when">방과후에 갈 곳이 없을 때</span><b><a href="#lcc">지역아동센터</a></b>저녁을 먹고 숙제하고, 몇 년씩 같은 선생님을 만난다.</li>
+  <li><span class="when">집안 형편과 돌봄이 걱정될 때</span><b><a href="#dream">드림스타트</a> · <a href="#civil">사회복지전담공무원</a></b>집으로 찾아가 가족 전체를 돕는다.</li>
+  <li><span class="when">집에서 맞거나 방치될 때</span><b><a href="#apa">아동보호전문기관</a></b>조사는 시 · 군 · 구 전담공무원, 그 뒤 회복은 이 기관이 맡는다.</li>
+  <li><span class="when">마음이 무너질 때</span><b><a href="#ycc">청소년상담복지센터</a> · <a href="#mhc">정신건강복지센터</a></b>상담과 치료 연계, 위기 개입.</li>
+  <li><span class="when">학교를 그만뒀을 때</span><b><a href="#kdream">꿈드림</a></b>검정고시, 진로, 건강검진까지 다음 걸음을 돕는다.</li>
+  <li><span class="when">집을 나왔을 때</span><b><a href="#shelter">청소년쉼터</a></b>오늘 밤 잘 곳부터, 길게는 자립까지.</li>
+  <li><span class="when">법을 어겼을 때</span><b><a href="#probation">보호관찰관</a> · <a href="#rodem">로뎀청소년학교</a></b>처벌이 아니라 다시 배우고 돌아오게 하는 일.</li>
+ </ul>
+ <h3 class='sub2' id='schooljobs'>학교 자리 지도: 어느 지역, 어느 학교에서 났나</h3>
+ <p>한국학교사회복지사협회 구인 게시판에 최근 5년(2021.11.26~2026.11.26) 동안 올라온 공고를 지역별로 놓았습니다. <b>지역을 누르면 그 지역에서 공고를 낸 학교와 기관 이름이 나옵니다.</b> 숫자는 공고 글의 수이고, 이름 옆 ×숫자는 그곳이 올린 글의 수, 작은 숫자는 공고가 난 연도입니다.</p>
+ <style>
+ .kmap{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:16px;align-items:start}
+ @media(max-width:760px){.kmap{grid-template-columns:1fr}}
+ .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+ .tile{font:inherit;aspect-ratio:1/1;border-radius:12px;border:1.5px solid var(--line2);background:var(--card);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:2px;min-width:0}
+ .tile b{font-size:1.1rem;font-variant-numeric:tabular-nums;line-height:1}
+ .tile span{font-size:.74rem;font-weight:600}
+ .tile.z{border-style:dashed;color:var(--mute);background:transparent}
+ .tile.l1{background:var(--accent-soft)}
+ .tile.l3{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+ .tile.cb{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
+ .tile[aria-pressed='true']{outline:3px solid var(--mint);outline-offset:2px}
+ .tile.blank{visibility:hidden}
+ .klegend{font-size:.74rem;color:var(--sub);margin:.6rem 0 0}
+ .kpanel{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card);padding:1rem 1.1rem;min-height:300px}
+ .kpanel h4{font-size:1.08rem}
+ .kpanel .ks{margin:.35rem 0 0;font-size:.86rem;line-height:1.65}
+ .kpanel.cbz{background:var(--warn-soft);border-color:var(--warn)}
+ .kpanel.cbz h4{color:var(--warn)}
+ .kg{margin-top:.85rem}
+ .kg h5{margin:0 0 .4rem;font-size:.78rem;color:var(--mint);letter-spacing:.03em}
+ .kl{display:flex;flex-wrap:wrap;gap:6px}
+ .ki{font-size:.8rem;border:1px solid var(--line2);border-radius:8px;padding:.2rem .55rem;background:var(--off);line-height:1.45}
+ .ki b{color:var(--ink);font-weight:600}
+ .ki small{color:var(--mute);margin-left:.25rem}
+ </style>
+ <div class='kmap'>
+  <div>
+   <div class='tiles' id='kTiles' role='group' aria-label='지역 고르기'></div>
+   <div class='secf' id='kExtra' style='margin-top:10px'></div>
+   <p class='klegend'>진한 칸은 100건 이상, 옅은 칸은 1~9건, 점선 칸은 0건입니다. 실제 지도 모양이 아니라 시 · 도를 대략의 위치에 놓은 그림입니다.</p>
+  </div>
+  <div class='kpanel' id='kPanel' aria-live='polite'></div>
+ </div>
+ <script>
+ (function(){
+ const D={
+  '서울':{n:225,s:`서울은 학교 안 복지 인력을 <b>지역사회교육전문가</b>라고 부릅니다. 공고의 대부분은 자치구마다 있는 교육복지센터(민간 법인 위탁 운영)에서 났고, 학교 공고는 거의 휴직 대체 자리였습니다.`,g:[
+   [`자치구 교육복지센터 · 191건`,`마포|23|21~26;중구|20|22~26;강동|15|21~24, 26;서대문|14|23~26;성북|13|21~26;양천|13|21~26;중랑|11|22~24, 26;동작|11|22~25;종로|11|22, 23, 25;강남|9|22~26;은평|9|22~24;성동|8|22~24;구로|7|22, 24, 26;강북|5|22~25;영등포|5|22;도봉|4|24, 26;관악|4|21, 22, 24;용산|3|22, 25;금천|3|23, 25;강서|2|22, 26;송파|1|26`],
+   [`학교 · 29건 (지역사회교육전문가, 대부분 대체 인력)`,`성일중|3|23;성내중|2|25, 26;서울구로초|2|25, 26;광장중|2|22;서울중랑초|2|22;서울세곡초|1|26;중광초|1|25;서울송례초|1|25;서울대왕초|1|24;서울후암초|1|24;당곡중|1|24;영동중|1|23;서울양강초|1|23;동성중|1|23;서울양목초|1|22;서울묵동초|1|22;보성여중|1|22;서울백산초|1|22;서울거여초|1|22;학교 이름을 밝히지 않은 글|4|22`],
+   [`교육지원청 · 5건 (교육복지조정자 등)`,`중부교육지원청|3|23, 24;남부교육지원청|1|26;강남서초교육지원청|1|24`]]},
+  '경기':{n:115,s:`<b>학교사회복지사</b>라는 이름의 자리는 거의 모두 경기도에서 났습니다. 수원 · 용인 · 안양 · 의왕 · 군포처럼 시가 예산을 대는 사업이고, 성남은 복지상담사, 과천은 학교상담복지사라는 이름을 씁니다. 그 밖의 시는 교육청 소속 교육복지사 공고입니다.`,g:[
+   [`수원 · 33건 (학교사회복지사)`,`영덕초|3|24, 25;칠보초|3|23, 24;숙지초|2|24, 26;이의초|2|23, 24;효정초|2|24;대선초|2|22, 23;영통중|2|22;수원시학교사회복지사업 디렉터|2|25;남창초|1|26;매원중|1|26;매향중|1|26;수일초|1|26;곡반중|1|26;우만초|1|25;인계초|1|24;수원중촌초|1|24;안룡초|1|24;송림초|1|23;서평초|1|22;수원고|1|22;수원북중|1|22;신영초|1|22;송원중(멘토링 봉사자 모집 글)|1|26`],
+   [`용인 · 16건 (학교사회복지사)`,`용천초|4|22, 25;용인성산초|3|22;교동초|2|23, 24;포곡중(교육복지사 대체)|2|22;용인중|1|26;처인초|1|25;한터초|1|24;지석초|1|24;용인강남학교|1|23`],
+   [`성남 · 16건 (복지상담사)`,`성남서중|5|22, 24;백현중|2|24;성남동중|1|24;성남수정초|1|24;상탑초|1|24;청솔초|1|23;성남제일초|1|23;성남은행초|1|22;성남초|1|22;성남화랑초(교육복지사 대체)|1|26;도촌중(느린학습자 지원 파견전문가)|1|26`],
+   [`과천 · 12건 (학교상담복지사)`,`과천시청소년재단|7|23, 24, 26;과천문원초|1|26;갈현초 · 과천중|1|26;과천문원중|1|25;과천율목중|1|24;안양과천 Wee센터(사회복지사 대체)|1|23`],
+   [`김포 · 5건`,`통진중(교육복지사)|5|23, 24`],
+   [`안양 · 4건 (학교사회복지사)`,`해오름초|1|26;안양초|1|24;안양서초|1|24;덕천초|1|22`],
+   [`의왕 · 4건`,`백운중|1|26;의왕부곡초|1|25;갈뫼중(교육복지사)|1|23;군포의왕 Wee센터(사회복지사 대체)|1|23`],
+   [`안산 · 4건 (교육복지사 대체)`,`초당초|1|26;안산부곡중|1|24;상록초|1|23;와동중|1|23`],
+   [`광주 · 4건 (교육복지사 대체)`,`광주중앙고|2|25;탄벌중|1|25;매양중|1|25`],
+   [`부천 · 3건 (교육복지사 대체)`,`원종고|1|24;부천동중|1|23;원미중|1|22`],
+   [`군포 · 파주 · 포천 · 평택 · 각 2건`,`군포중(학교사회복지사)|2|24, 25;파주 운광초|1|25;파주 봉일천중|1|22;포천여중|2|23;평택교육지원청(교육복지조정자)|1|26;평택시 청소년자유공간(학교 밖)|1|25`],
+   [`그 밖의 경기 · 6건`,`구리남양주교육지원청(교육복지사 신규)|1|24;남양주 심석중|1|23;의정부여중|1|23;동두천양주교육지원청(교육복지조정자)|1|25;경기도교육청 북부(의정부 · 동두천양주 · 파주 · 연천 · 포천) 교육복지사|1|24;경기폴리텍고|1|22`]]},
+  '강원':{n:5,s:`강원랜드 사회공헌재단의 학교사회복지사업(하이원 학교사회복지사업) 한 가지입니다. 협회가 맡아 운영하고, 근무지는 정선 고한 · 사북입니다.`,g:[[`협회 지원사업 · 5건`,`강원랜드(하이원) 학교사회복지사업 학교사회복지사|5|22, 24, 26`]]},
+  '인천':{n:5,s:`학교 자리는 교육복지사 3건이고, 나머지 2건은 학교 밖 기관입니다.`,g:[[`학교 · 3건 (교육복지사)`,`인천논현중(대체)|2|23, 26;인천함박초(기간제)|1|24`],[`학교 밖 · 2건`,`학교폭력 피해학생 지원사업 지역센터 운영자|1|25;인천광역시청소년상담복지센터 1388|1|22`]]},
+  '대전':{n:2,s:`충북에서 가장 가까운 광역시지만 5년 동안 두 건뿐입니다.`,g:[[`2건`,`대전 교육복지안전망 센터 기간제 교육복지사|1|22;대전송촌중(경계선지능 아동 지원 파견전문가)|1|26`]]},
+  '경남':{n:2,s:`두 건 모두 창원의 교육복지사 대체 인력입니다.`,g:[[`2건`,`창원 봉림초|1|25;창원 명서중|1|22`]]},
+  '경북':{n:2,s:``,g:[[`2건`,`포항 장흥중(교육복지사 대체)|1|24;경상북도교육청 생명사랑 동북부센터 팀원|1|24`]]},
+  '대구':{n:1,s:``,g:[[`1건`,`대구동부교육지원청 교육복지사(한시적 근로자)|1|23`]]},
+  '충북':{n:0,cb:1,s:`<b>충북에서는 5년 동안 학교사회복지사 공고가 한 건도 없었습니다.</b> 교육복지사 공고도 이 게시판에는 없었습니다. 충북 기관이 올린 글은 충청북도사회서비스원의 정책연구실장 채용(2026년) 한 건이고, 학교 자리가 아닙니다.<br><br>충북에는 경기도처럼 시가 예산을 대는 학교사회복지사업이 이 게시판에 보이지 않습니다. 학교 안 자리는 교육청의 <b>교육복지사</b>뿐이고, 그 공고는 충북교육청 게시판에 납니다. 그것도 5년 동안 네 건이었습니다. <a href='#cbejobs'>아래 표</a>에서 확인하세요.<br><br>그래서 선택지는 둘입니다. 학교사회복지사가 꼭 하고 싶다면 서울 · 경기 칸을 눌러 보세요. 충북에 남고 싶다면 학교 밖에서 아이를 만나는 길을 함께 보세요.`,g:[]},
+  '협회':{n:14,s:`한국학교사회복지사협회 사무국(서울 영등포구)의 직원 채용 공고입니다. 대리 · 팀장 · 사무국장을 뽑았습니다.`,g:[[`14건`,`협회 사무국 직원|14|21~26`]]},
+  '미표기':{n:15,s:`제목에 지역이 없고, 같은 게시판의 다른 글로도 지역을 확인하지 못한 공고입니다.`,g:[[`15건`,`상률초(학교사회복지사)|3|24;수택고(교육복지사 대체)|2|22;양일중(학교사회복지사)|1|24;신풍초(학교사회복지사)|1|23;인덕원초(사회복지사)|1|22;부곡중앙초(교육복지사 대체)|1|24;계산여중(교육복지사 기간제)|1|24;양강중(대체직)|1|22;학교 이름을 밝히지 않은 글|4|22, 23, 25`]]},
+  '그밖':{n:9,s:`학교 복지 자리가 아닌 글입니다. 청소년 기관 채용, 강사 모집, 자격 과정 광고 등이 섞여 있었습니다.`,g:[[`9건`,`푸른나무재단(강사 · 연구원)|3|22, 24;한국청소년재단|1|26;한국재난심리연구소|1|24;시립청소년미디어센터|1|23;토요 역사체험 강사|1|23;자격 과정 광고|2|24`]]}
+ };
+ const GRID=[['인천','서울','경기','강원'],['충남','세종','충북','경북'],['전북','대전','대구','울산'],['전남','광주','경남','부산'],['제주','','','']];
+ const tiles=document.getElementById('kTiles'),extra=document.getElementById('kExtra'),panel=document.getElementById('kPanel');
+ if(!tiles||!panel)return;
+ const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+ function show(k){
+  document.querySelectorAll('#kTiles .tile,#kExtra .pill').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k?'true':'false'));
+  const d=D[k];
+  panel.className='kpanel'+(d&&d.cb?' cbz':'');
+  if(!d){panel.innerHTML=`<h4>${esc(k)} · 0건</h4><p class='ks'>이 게시판에는 5년 동안 이 지역의 공고가 올라오지 않았습니다. 이 지역의 교육복지사 채용은 그 지역 교육청 공고에서 따로 확인해야 합니다.</p>`;return;}
+  const title=k==='협회'?'협회 사무국':k==='미표기'?'지역을 밝히지 않은 글':k==='그밖'?'학교 자리가 아닌 글':k;
+  let h=`<h4>${title} · ${d.n}건</h4>`+(d.s?`<p class='ks'>${d.s}</p>`:'');
+  d.g.forEach(g=>{h+=`<div class='kg'><h5>${esc(g[0])}</h5><div class='kl'>`+g[1].split(';').map(x=>{const p=x.split('|');return `<span class='ki'><b>${esc(p[0])}</b>${p[1]>1?' ×'+p[1]:''}<small>${esc(p[2])}</small></span>`}).join('')+`</div></div>`});
+  panel.innerHTML=h;
+ }
+ GRID.forEach(r=>r.forEach(k=>{const b=document.createElement('button');b.type='button';if(!k){b.className='tile blank';b.disabled=true;b.setAttribute('aria-hidden','true');tiles.appendChild(b);return;}const d=D[k],n=d?d.n:0;b.className='tile '+(d&&d.cb?'cb':n>=100?'l3':n>0?'l1':'z');b.dataset.k=k;b.setAttribute('aria-pressed','false');b.innerHTML=`<span>${k}</span><b>${n}</b>`;b.onclick=()=>show(k);tiles.appendChild(b);}));
+ [['협회','협회 사무국 14'],['미표기','지역 미표기 15'],['그밖','학교 자리 아님 9']].forEach(x=>{const b=document.createElement('button');b.type='button';b.className='pill';b.dataset.k=x[0];b.setAttribute('aria-pressed','false');b.textContent=x[1];b.onclick=()=>show(x[0]);extra.appendChild(b);});
+ show('충북');
+ })();
+ </script>
+ <h3 class='sub2' id='cbejobs'>충북은 어디에 나나: 충청북도교육청 채용 게시판의 교육복지사</h3>
+ <p>충북의 학교 안 복지 자리는 교육청 소속 교육공무직인 <b>교육복지사</b>입니다. 충청북도교육청 채용 게시판(2020년 1월~2026년 11월, 전체 1,163건)에서 제목과 본문에 '교육복지사'가 들어간 글을 모두 찾았더니 <b>9건</b>이었고, 최근 5년으로 좁히면 <b>4건</b>입니다. 모두 군 지역 교육지원청이 낸 공고였고, 청주 · 충주 · 제천의 공고는 이 검색에 잡히지 않았습니다.</p>
+ <div class='tw'><table>
+  <tr><th>등록일</th><th>낸 곳</th><th>공고</th><th>교육복지사</th></tr>
+  <tr><td>2025.06.20</td><td>괴산증평교육지원청 학교지원센터</td><td>교육복지사(기간제) 채용 공고</td><td>기간제</td></tr>
+  <tr><td>2023.08.07</td><td>괴산증평교육지원청</td><td>제4회 교육공무직원 공개경쟁채용(조리실무사 · 교육복지사 · 교무실무사 기간제)</td><td>인원은 첨부 공고문</td></tr>
+  <tr><td>2023.07.20</td><td>음성교육지원청</td><td>제6회 교육공무직원 공개채용 수정 공고</td><td>1명 (조리실무사 9명과 함께)</td></tr>
+  <tr><td>2022.04.08</td><td>괴산증평교육지원청</td><td>제2회 교육공무직원 공개경쟁채용</td><td>대체 1명</td></tr>
+  <tr><td>2021.02.08</td><td>보은교육지원청</td><td>제1회 교육공무직원 공개채용</td><td>1명 (전체 6명 가운데)</td></tr>
+  <tr><td>2021.02.08</td><td>단양교육지원청</td><td>제2회 교육공무직원(교육복지사) 채용 계획 공고</td><td>인원은 첨부 공고문</td></tr>
+  <tr><td>2021.02.03</td><td>영동교육지원청</td><td>제1회 교육공무직원 서류 합격자 발표 · 면접 공고</td><td>합격자 발표 글</td></tr>
+  <tr><td>2021.02.01</td><td>음성교육지원청</td><td>제1회 교육공무직원 공개채용</td><td>1명</td></tr>
+  <tr><td>2021.01.27</td><td>괴산증평교육지원청</td><td>제1회 교육공무직원 공개경쟁채용</td><td>인원은 첨부 공고문</td></tr>
+ </table></div>
+ <div class='two' style='margin-top:14px'>
+  <div class='note'><h3>이 표를 읽을 때</h3>
+   <ul>
+    <li><b>한 번에 한 명입니다.</b> 인원이 본문에 적힌 공고는 모두 교육복지사 1명이었고, 조리실무사 · 돌봄전담사와 같은 공고에 묶여 나옵니다.</li>
+    <li><b>제목에 안 보일 수 있습니다.</b> 9건 가운데 제목에 '교육복지사'가 있는 글은 3건뿐입니다. 제목이 '교육공무직원 공개채용'인 공고(이 게시판에 465건)는 열어서 직종을 확인해야 합니다.</li>
+    <li><b>9건은 최소치입니다.</b> 게시판 검색은 첨부 파일 속 글자를 찾지 못합니다. 직종을 첨부 공고문에만 적은 공고는 여기서 빠졌을 수 있습니다.</li>
+    <li>2022년 공고는 접수 경로로 충청북도교육청 인력풀통합시스템을 안내했습니다. 대체 인력 자리는 그쪽도 함께 봅니다.</li>
+   </ul></div>
+  <div class='note'><h3>충북의 교육복지우선지원사업(2026년)</h3>
+   <ul>
+    <li>지정학교 <b>104교</b>, 예산 56억 7,600만 원. 저소득층 · 취약계층 학생이 대상입니다.</li>
+    <li>지정학교가 104교라고 교육복지사가 104명인 것은 아닙니다. 위에서 본 것처럼 교육복지사가 배치된 학교는 42곳(2024년 11월 기준 보도)입니다.</li>
+    <li>담당은 충청북도교육청 재정복지과(043-290-2580)입니다.</li>
+   </ul>
+   <div class='links'><a href='https://www.cbe.go.kr/cbe/na/ntt/selectNttList.do?mi=11715&bbsId=1797' target='_blank' rel='noopener'>충북교육청 채용 게시판</a><a href='https://www.cbe.go.kr/dept-15/cm/cntnts/cntntsView.do?mi=15983&cntntsId=36430' target='_blank' rel='noopener'>재정복지과 교육복지사업 안내</a><a href='https://baro.cbe.go.kr' target='_blank' rel='noopener'>인력풀통합시스템</a></div></div>
+ </div>
+ <h3 class='sub2'>숫자와 유형으로 다시 보기</h3>
+ <p>한국학교사회복지사협회 구인정보 게시판의 '취업' 글 제목을 2021년 11월 26일부터 2026년 11월 26일까지 모두 읽었습니다. 5년 동안 <b>396건</b>이 올라왔고, 거의 전부가 서울과 경기였습니다.</p>
+ <div class="kpis">
+  <div class="kpi"><b>396건</b><span>5년간 취업 게시글(재공고 포함)</span></div>
+  <div class="kpi"><b>0건</b><span>충북의 학교사회복지사 · 교육복지사 공고</span></div>
+  <div class="kpi"><b>89건</b><span>제목에 대체 · 육아휴직 · 출산휴가가 들어간 공고</span></div>
+  <div class="kpi"><b>107건</b><span>재공고 · 연장 · 긴급 · 2차 이상 공고</span></div>
+ </div>
+ <div class="jobs">
+  <div class="job" style="--tc:var(--accent2)"><span class="en">Seoul · Centers</span><h4>서울의 자치구 교육복지센터</h4><p>성북 · 송파 · 마포 · 구로 · 강동 · 양천 · 서대문 · 도봉 · 중랑 · 중구 · 강남 · 동작 · 종로 · 강서 · 금천 · 용산 · 강북 · 성동 · 관악 · 은평 · 영등포</p><p class="roles">지역사회교육전문가, 팀장, 센터장. 제목에 '교육복지센터'가 들어간 글이 192건으로 가장 많다. 민간 법인이 위탁 운영한다.</p></div>
+  <div class="job" style="--tc:var(--mint)"><span class="en">Seoul · Schools</span><h4>서울의 학교 · 교육지원청</h4><p>성내중, 세곡초, 구로초, 중광초, 송례초, 대왕초, 후암초, 당곡중, 성일중, 영동중, 묵동초, 중랑초, 보성여중, 광장중 등. 중부 · 남부 · 강남서초교육지원청</p><p class="roles">서울에서는 학교 안 복지 인력을 '지역사회교육전문가'라고 부른다(제목 101건). 학교 공고는 대부분 휴직 대체 인력이다. 교육지원청은 교육복지조정자를 뽑는다.</p></div>
+  <div class="job" style="--tc:var(--coral)"><span class="en">Gyeonggi · City programs</span><h4>경기의 시 지원 학교사회복지사업</h4><p><b>수원</b>: 남창초 · 숙지초 · 수일초 · 우만초 · 영덕초 · 인계초 · 이의초 · 중촌초 · 칠보초 · 안룡초 · 효정초 · 송림초 · 대선초 · 신영초 · 서평초 · 매원중 · 매향중 · 곡반중 · 영통중 · 수원북중 · 수원고. <b>용인</b>: 용인중 · 처인초 · 용천초 · 한터초 · 교동초 · 지석초 · 성산초 · 용인강남학교. <b>안양</b>: 해오름초 · 안양초 · 안양서초 · 덕천초 · 인덕원초. <b>의왕</b>: 백운중 · 의왕부곡초. <b>군포</b>: 군포중</p><p class="roles">제목에 '학교사회복지사'가 들어간 글은 74건이고 대부분 여기서 나왔다. 수원은 시 사업을 총괄하는 디렉터도 따로 뽑았다.</p></div>
+  <div class="job" style="--tc:var(--violet)"><span class="en">Gyeonggi · Other titles</span><h4>경기에서 이름이 다른 같은 일</h4><p><b>과천</b> 학교상담복지사(과천시청소년재단): 문원초 · 갈현초 · 과천중 · 문원중 · 율목중. <b>성남</b> 복지상담사(학교청소년복지상담사업): 성남서중 · 백현중 · 성남동중 · 상탑초 · 수정초 · 청솔초 · 성남제일초 · 성남초 · 은행초</p><p class="roles">상담복지사 · 복지상담사 공고 24건. 채용 주체가 시 재단이나 학교여서 교육청 공고에는 나오지 않는다.</p></div>
+  <div class="job" style="--tc:var(--gold)"><span class="en">Gyeonggi · Education office</span><h4>경기의 교육복지사</h4><p>평택 · 동두천양주 · 구리남양주교육지원청, 경기도교육청 북부(의정부 · 파주 · 연천 · 포천). 학교는 김포 통진중, 광주 광주중앙고 · 탄벌중 · 매양중, 안산 초당초 · 상록초 · 와동중 · 부곡중, 부천 원종고 · 원미중 · 부천동중, 파주 운광초 · 봉일천중, 성남 화랑초 등</p><p class="roles">교육공무직 교육복지사와 교육복지조정자. 제목에 '교육복지사'가 들어간 글은 49건이고 대체 인력 공고가 많다.</p></div>
+  <div class="job" style="--tc:var(--gray)"><span class="en">Elsewhere</span><h4>수도권 밖과 협회</h4><p>강원 고한 · 사북(강원랜드 사회공헌재단 학교사회복지사업, 협회 지원사업), 인천(논현중 · 함박초 · 계산여중), 대전(교육복지안전망 센터, 2022년), 경남 창원(봉림초 · 명서중), 경북 포항(장흥중), 대구동부교육지원청</p><p class="roles">모두 합쳐 20건 안팎. 협회 사무국 직원(대리 · 팀장 · 사무국장) 공고도 꾸준히 올라온다.</p></div>
+ </div>
+ <div class="two" style="margin-top:14px">
+  <div class="note"><h3>이 목록에서 읽히는 것</h3>
+   <ul>
+    <li><b>충북은 한 건도 없다.</b> 5년 동안 충북 기관이 올린 글은 충청북도사회서비스원의 정책연구실장 채용 한 건뿐이고, 학교 자리는 아니었다. 충북의 교육복지사 자리는 이 게시판이 아니라 충청북도교육청 공고로 난다.</li>
+    <li><b>이름이 지역마다 다르다.</b> 서울은 지역사회교육전문가, 경기는 학교사회복지사 · 교육복지사, 과천은 학교상담복지사, 성남은 복지상담사. 검색할 때 네 이름을 모두 넣어야 한다.</li>
+    <li><b>휴직 대체 자리가 첫 문이 된다.</b> 396건 가운데 89건이 대체 인력이다. 몇 달에서 1년 남짓한 자리지만 학교 경력이 된다.</li>
+    <li><b>공고는 1~3월에 몰린다.</b> 새 학년 전에 뽑기 때문이다. 12월부터 게시판을 본다.</li>
+    <li>연도별 글 수: 2022년 102건, 2023년 79건, 2024년 96건, 2025년 55건, 2026년 58건(11월 26일까지). 같은 자리의 재공고가 섞여 있어 자리 수와는 다르다.</li>
+   </ul></div>
+  <div class="note"><h3>학교에서 실습 · 봉사를 해 보고 싶다면</h3>
+   <ul>
+    <li><b>학교 실습생 모집</b>: 같은 게시판의 '실습 및 자원봉사' 칸에 서울천왕초 · 서울신은초 · 서울신강초가 학기 단위 교육복지(학교사회복지) 실습생 모집 글을 올렸다. 5년 동안 충북 학교의 실습 모집 글은 없었다.</li>
+    <li><b>협회 인턴</b>: 한국학교사회복지사협회가 해마다 12월~3월에 인턴을 모집한다(2026년 16기).</li>
+    <li><b>멘토링 자원봉사</b>: 수원 · 용인 · 의왕 · 군포 · 부천 · 안양과 서울의 학교 복지실이 대학생 멘토를 자주 찾는다. 서울시학교사회복지사협회의 '느루랑'도 있다.</li>
+    <li>사회복지현장실습으로 인정받으려면 그 학교가 <a href="#practice">선정 실습기관</a>인지 먼저 확인한다.</li>
+   </ul>
+   <div class="links"><a href="https://www.kassw.or.kr/page/s4/s4.php?part=1" target="_blank" rel="noopener">협회 구인정보(취업)</a><a href="https://www.kassw.or.kr/page/s4/s4.php?part=2" target="_blank" rel="noopener">실습 및 자원봉사</a></div></div>
+ </div>
+ <h3 class="sub2">학교 안에서 만나는 것과 학교 밖에서 만나는 것</h3>
+ <div class="tw"><table class="cmp">
+  <tr><th></th><th>학교 안(교육복지사 · Wee)</th><th>학교 밖(센터 · 시설 · 공공)</th></tr>
+  <tr><td>만나는 시간</td><td>수업 사이, 점심, 방과후 잠깐</td><td>방과후부터 저녁, 방학, 주말. 생활시설은 24시간</td></tr>
+  <tr><td>만나는 아이</td><td>그 학교에 다니는 학생</td><td>학교를 그만둔 아이, 집을 나온 아이, 영유아와 자립준비청년까지</td></tr>
+  <tr><td>가족을 만나는 정도</td><td>가정방문은 하지만 학교 일정이 중심</td><td>가정방문 · 부모 상담이 일의 중심인 곳이 많다</td></tr>
+  <tr><td>자리 수(충북)</td><td>교육복지사 배치 학교 42곳</td><td>지역아동센터만 178곳. 여기에 센터 · 시설 · 시군구청이 더해진다</td></tr>
+  <tr><td>들어가는 문</td><td>교육청 공고(결원 때), 교육공무직 · 기간제</td><td>시설 · 법인 수시 채용, 공무원 시험, NGO 공채</td></tr>
+ </table></div>
+ <div class="two" style="margin-top:14px">
+  <div class="note"><h3>학교에서 일하는 사람, 이름이 다릅니다</h3>
+   <ul>
+    <li><b>교육복지사</b>: 교육복지우선지원사업 학교 · 교육지원청. 취약 학생 사례관리와 지역 연계.</li>
+    <li><b>전문상담교사</b>: 교원 자격 + 임용시험. Wee클래스 · Wee센터의 교사.</li>
+    <li><b>전문상담사</b>: 교육공무직. Wee클래스 · Wee센터 상담.</li>
+    <li><b>학교사회복지사</b>: 사회복지사 1급 + 수련 1년으로 받는 자격 이름. 위 자리들에 지원할 때 강점이 됩니다.</li>
+   </ul></div>
+  <div class="note"><h3>그래도 학교가 꿈이라면, 이렇게 준비해요</h3>
+   <ul>
+    <li>사회복지사 1급을 먼저 딴다. 학교사회복지사 수련의 출발점이다.</li>
+    <li>졸업 뒤 아동 · 청소년 기관에서 사례관리 경력을 쌓는다. 교육청 공고는 경력을 본다.</li>
+    <li>충청북도교육청 채용 공고를 알림으로 걸어 둔다. 자리는 결원이 날 때 갑자기 열린다.</li>
+    <li>청소년상담사 · 청소년지도사를 함께 준비하면 지원할 수 있는 문이 늘어난다.</li>
+   </ul></div>
+ </div>
+</section>
+
+
+<section class="sec" id="pay">
+ <div class="sec-head" style="--tc:var(--gold)"><span class="tick"></span><h2>월급은 얼마나 받나요</h2><span class="en">Pay</span></div>
+ <div class="two">
+  <div class="note"><div class="withart" style="margin:0"><div>
+   <span class="ph">2026년 사회복지사 1호봉 기본급(월)</span>
+   <div class="big">2,281,800<small>원</small></div></div><div class="art m" data-scene="pay" aria-hidden="true"></div></div>
+   <p style="margin:6px 0 0;font-size:13.5px">보건복지부 「사회복지시설 종사자 인건비 가이드라인」 기준으로, 전년보다 3.5% 올랐다고 안내됩니다. 이 수치는 가이드라인을 정리한 2차 자료 두 곳에서 일치한 값입니다. 정확한 호봉표는 보건복지부 공지의 원문에서 확인하세요.</p>
+  </div>
+  <div class="note"><h3>읽을 때 주의할 점</h3>
+   <ul>
+    <li>기본급에 <b>명절휴가비(기본급의 60%, 연 2회)</b>, 가족수당, 시간외수당이 더해집니다. 지자체 처우개선수당은 지역마다 다릅니다.</li>
+    <li>가이드라인은 <b>권고 기준</b>입니다. 시설 종류와 지자체에 따라 실제 급여가 다르고, 서울은 따로 기준을 둡니다.</li>
+    <li>어린이집과 일부 재가 · 요양 기관은 적용 대상이 아닙니다.</li>
+    <li>공무원(사회복지직 · 보호직), 교육공무직, 병원, 연구기관은 각자의 보수 기준을 따릅니다.</li>
+   </ul></div>
+ </div>
+</section>
+
+<section class="sec" id="license">
+ <div class="sec-head" style="--tc:var(--violet)"><span class="tick"></span><h2>자격증은 무엇부터 따나요</h2><span class="en">Credentials</span></div>
+ <div class="withart"><p class="sub">사다리처럼 생각하면 쉬워요. 맨 아래 칸이 <b>사회복지사 2급</b>(졸업하면 받음), 그 위가 <b>1급</b>(국가시험), 그 위가 <b>수련 1년</b>으로 받는 정신건강 · 학교 · 의료사회복지사입니다. 세부 요건은 해마다 바뀔 수 있으니 시행 기관 공고를 확인하세요.</p><div class="art " data-scene="ladder" aria-hidden="true"></div></div>
+ <div class="tw"><table>
+  <tr><th>자격</th><th>근거</th><th>어떻게 얻나</th><th>어디에 쓰나</th></tr>
+  <tr><td>사회복지사 2급</td><td>사회복지사업법</td><td>대학에서 지정 과목과 현장실습을 이수하고 졸업</td><td>거의 모든 사회복지시설의 기본 자격, 사회복지직 공무원 응시</td></tr>
+  <tr><td>사회복지사 1급</td><td>사회복지사업법</td><td>2급 요건 + 국가시험 합격</td><td>수련 자격(정신건강 · 학교 · 의료)의 출발점, 승진과 채용 우대</td></tr>
+  <tr><td>정신건강사회복지사 2급</td><td>정신건강복지법(정신건강전문요원)</td><td>사회복지사 1급 + 지정 수련기관에서 1년 수련</td><td>정신건강복지센터, 정신재활시설, 병원 정신건강의학과</td></tr>
+  <tr><td>정신건강사회복지사 1급</td><td>정신건강복지법</td><td>석사 + 3년 수련, 또는 2급 취득 뒤 일정 기간 경력</td><td>팀장 · 수련 지도 · 센터 운영</td></tr>
+  <tr><td>학교 · 의료사회복지사</td><td>사회복지사업법 제11조</td><td>사회복지사 1급 + 지정 기관에서 1년 수련</td><td>교육복지사 · 병원 사회사업팀 지원 때 강점</td></tr>
+  <tr><td>청소년상담사 3급</td><td>청소년기본법</td><td>상담 관련 분야(아동복지학 포함) 학사 + 자격시험 + 연수</td><td>청소년상담복지센터, 꿈드림, 쉼터</td></tr>
+  <tr><td>청소년상담사 2급 · 1급</td><td>청소년기본법</td><td>2급은 석사, 1급은 박사 수준의 응시자격</td><td>센터 팀장 · 수퍼바이저</td></tr>
+  <tr><td>청소년지도사 2급</td><td>청소년기본법</td><td>학사 + 지정 과목 이수 + 면접 · 연수</td><td>청소년수련관, 문화의집, 방과후아카데미</td></tr>
+  <tr><td>보육교사 2급</td><td>영유아보육법</td><td>대학에서 보육 관련 교과목과 실습 이수</td><td>어린이집, 육아종합지원센터</td></tr>
+  <tr><td>전문상담교사 2급</td><td>초 · 중등교육법</td><td>교직과정 또는 교육대학원 + 임용시험</td><td>Wee클래스 · Wee센터의 교사</td></tr>
+  <tr><td>공무원 시험</td><td>국가 · 지방공무원법</td><td>사회복지직 9급(사회복지사 자격 필요), 보호직 9급 · 7급</td><td>시 · 군 · 구청, 소년원 · 보호관찰소</td></tr>
+ </table></div>
+</section>
+
+<section class="sec" id="research">
+ <div class="sec-head" style="--tc:var(--mint)"><span class="tick"></span><h2>대학원에 가면 뭘 하나요</h2><span class="en">Graduate School</span></div>
+ <div class="withart"><p class="sub">한 문장으로 줄이면 이렇습니다. 학부는 <b>이미 밝혀진 것을 배우는 곳</b>, 석사는 <b>연구하는 법을 배우는 곳</b>, 박사는 <b>아직 아무도 모르는 것을 직접 밝히는 곳</b>이에요. 수업을 더 듣는 곳이라기보다 "질문을 만들고 근거로 답하는 훈련"을 하는 곳입니다.</p><div class="art m" data-scene="grad" aria-hidden="true"></div></div>
+ <div class="stairs">
+  <div class="stair" style="--tc:var(--gold)"><span class="en">Bachelor</span><b>학부 · 배우는 사람</b><span class="d">교과서와 수업으로 지식을 익히고, 실습으로 현장을 처음 만난다.</span></div>
+  <div class="stair" style="--tc:var(--accent2)"><span class="en">Master</span><b>석사 · 따라 해 보는 사람</b><span class="d">논문을 읽고, 지도교수와 함께 연구 한 편을 처음부터 끝까지 해 본다.</span></div>
+  <div class="stair" style="--tc:var(--mint)"><span class="en">Doctor</span><b>박사 · 스스로 만드는 사람</b><span class="d">혼자 힘으로 새 질문을 세우고 답해, 학계에 새 지식을 보탠다.</span></div>
+ </div>
+ <div class="two">
+  <div class="note deg" style="--tc:var(--accent2)">
+   <div class="withart"><div><span class="ph">Master's · 석사과정</span><h3>석사: 연구를 "읽고 쓸 줄 아는" 실천가</h3></div><div class="art" data-scene="ms" aria-hidden="true"></div></div>
+   <dl>
+    <div><dt>기간</dt><dd>보통 2년(4학기). 수업을 들으며 마지막 해에 학위논문을 쓴다.</dd></div>
+    <div><dt>배우는 것</dt><dd>연구방법론과 통계(설문 설계, 자료 분석), 이론 세미나, 영어 논문 읽기, 자기 관심 분야의 심화 과목.</dd></div>
+    <div><dt>실제로 하는 일</dt><dd>매주 논문을 읽고 발제한다. 지도교수 연구에 참여해 자료를 모으고 분석해 본다. 학회에서 발표하고, 수업 조교(TA)나 연구 조교(RA)를 한다.</dd></div>
+    <div><dt>졸업 요건</dt><dd>학위논문 한 편. 작은 질문 하나를 정해 자료로 답하는 첫 연구다.</dd></div>
+    <div><dt>졸업하면</dt><dd>현장으로 돌아가면 팀장 · 기획 · 평가 역할에서 강점이 생기고, 정신건강사회복지사 1급 · 청소년상담사 2급 같은 상위 자격의 길이 열린다. 연구원 · 재단 · NGO 연구소의 연구원(위촉 포함)으로 지원할 수 있다.</dd></div>
+    <div><dt>이런 사람에게</dt><dd>현장에서 "왜 이 프로그램은 효과가 있을까"가 궁금한 사람, 상담 · 임상 · 연구 쪽으로 깊이 가고 싶은 사람.</dd></div>
+   </dl>
+  </div>
+  <div class="note deg" style="--tc:var(--mint)">
+   <div class="withart"><div><span class="ph">Ph.D. · 박사과정</span><h3>박사: 새 지식을 만드는 독립 연구자</h3></div><div class="art m" data-scene="phd" aria-hidden="true"></div></div>
+   <dl>
+    <div><dt>기간</dt><dd>수업 2년 안팎, 그 뒤 종합시험과 학위논문. 논문 기간은 사람마다 크게 다르다.</dd></div>
+    <div><dt>배우는 것</dt><dd>고급 통계와 연구 설계(종단 자료, 구조방정식, 질적 연구 등), 이론을 비판하고 새로 세우는 법, 학술지 논문 쓰는 법.</dd></div>
+    <div><dt>실제로 하는 일</dt><dd>자기 연구 주제를 정해 논문을 학술지에 투고하고 심사를 받는다. 연구 과제를 기획하고, 석사 후배를 돕고, 대학에서 강의를 시작한다.</dd></div>
+    <div><dt>졸업 요건</dt><dd>종합시험 통과 + 박사학위논문. 학교에 따라 학술지 게재 실적을 요구한다.</dd></div>
+    <div><dt>졸업하면</dt><dd>대학 교수 · 강사, 국책 · 지방 연구원의 부연구위원 · 연구위원, 재단과 NGO 연구소의 책임 연구자, 정책 자문.</dd></div>
+    <div><dt>이런 사람에게</dt><dd>한 가지 질문을 몇 년씩 붙들 수 있는 사람, 글쓰기와 자료 분석이 싫지 않은 사람.</dd></div>
+   </dl>
+  </div>
+ </div>
+ <div class="two" style="margin-top:14px">
+  <div class="note"><h3>일반대학원과 특수대학원</h3>
+   <ul><li><b>일반대학원</b>: 낮에 수업하고 연구 중심이다. 조교를 하며 전일제로 다니는 경우가 많다. 박사 진학과 연구직을 생각하면 이쪽이다.</li>
+   <li><b>특수대학원(사회복지대학원 · 교육대학원 등)</b>: 주로 야간 수업이고, 현장에서 일하면서 다니는 사람이 많다. 실천 역량과 자격 취득에 초점이 있다.</li></ul></div>
+  <div class="note"><h3>가기 전에 해 볼 것 셋</h3>
+   <ul><li>관심 주제의 학술지 논문을 한 편 끝까지 읽어 본다. 읽을 만하면 신호가 좋다.</li>
+   <li>학과 교수님께 연구실에서 어떤 주제를 다루는지 여쭤본다. 학부생 연구 보조로 미리 경험해 볼 수도 있다.</li>
+   <li>통계 수업(조사방법론 · 자료분석)을 미리 들어 둔다. 대학원에서 가장 많이 쓰는 도구다.</li></ul></div>
+ </div>
+ <h3 class="sub2">연구 · 정책 기관의 자리와 학력</h3>
+ <p>연구원, 복지재단, NGO 연구소는 크게 연구 쪽과 사업 · 행정 쪽으로 나뉩니다. 연구 쪽은 석사가 사실상 최소 요건이에요.</p>
+ <div class="tw"><table>
+  <tr><th>자리</th><th>보통의 학력</th><th>하는 일</th><th>고용 형태</th></tr>
+  <tr><td>행정 · 사업팀</td><td>학부 졸업 가능</td><td>사업 기획과 운영, 교육 · 행사, 예산 · 회계, 기관 네트워크</td><td>정규직 공채와 계약직이 함께 있음</td></tr>
+  <tr><td>위촉연구원 · 연구보조원</td><td>석사 과정 · 석사</td><td>자료 수집, 설문 · 면접 조사, 통계 분석, 보고서 초안</td><td>과제 단위 계약이 많고 주로 1년 안팎</td></tr>
+  <tr><td>전문연구원 · 부연구위원</td><td>석사 + 경력, 박사 수료 · 박사</td><td>연구 과제 수행, 일부 과제 책임</td><td>기관마다 다름(계약직에서 정규직까지)</td></tr>
+  <tr><td>연구위원</td><td>박사</td><td>연구 과제 책임, 정책 자문, 기관의 연구 방향 설정</td><td>정규직 공채가 중심</td></tr>
+ </table></div>
+</section>
+
+
+</div></main>
+<div class="footer-wrap gutter"><footer class="inner">
+ <div class="f-top"><span>AIR Lab @ CBNU · 충북대학교 아동복지학과</span><span class="f-stripe"><span class="a"></span><span class="b"></span><span class="c"></span><span class="b"></span><span class="a"></span></span></div>
+이 지도는 아동복지론 13주차에 다룬 기관 지도를 넓힌 것입니다. 충북의 아동복지시설 이름과 개수는 충청북도 아동복지시설 현황(2024.4.16)과 공공데이터포털(2026.7)을 기준으로 정리했습니다. 청소년쉼터 등 개소 수는 성평등가족부 누리집('23.12 기준)입니다.<br>
+링크는 기관의 공식 누리집으로 바로 갑니다. 공식 주소를 확인하지 못한 충북의 일부 지역 기관만 '검색:' 표시와 함께 네이버 검색으로 연결했습니다. 채용 조건 · 급여 · 자격 요건은 해마다 달라지니, 지원 전에 반드시 기관 공고와 법령 원문을 확인하세요. 정신건강 분야의 기관 이름은 한국정신건강사회복지사협회 구인 · 수련 게시판의 충북 공고 제목(2023.4~2026.11)에서 가져왔고, 세종 · 대전의 수련기관은 확인하지 못해 싣지 않았습니다. 학교 분야의 채용 기관 이름과 건수는 한국학교사회복지사협회 구인정보 게시판의 글 제목(2021.11.26~2026.11.26, 취업 396건)에서 가져왔습니다. 제목만 읽은 것이어서 지역을 밝히지 않은 글은 지역별 묶음에서 빠졌을 수 있고, 건수에는 재공고가 포함됩니다. 충북의 교육복지사 공고는 충청북도교육청 채용 게시판(2020.1~2026.11)을 '교육복지사'로 제목 · 본문 검색한 결과이며 첨부 파일 속 내용은 검색되지 않습니다. 교육복지우선지원사업 지정학교 수와 예산은 충청북도교육청 재정복지과의 2026년 교육복지사업 안내를 따랐습니다. '민지'는 설명을 위한 가상의 예입니다. 공단의 직렬과 응시 자격은 해마다 달라지므로 그해 공고가 기준입니다. NGO 부설 연구소는 이름과 활동을 확인한 곳(굿네이버스 아동권리연구소, 초록우산 아동복지연구소, 세이브더칠드런과 서울대 사회복지연구소의 공동 연구)만 실었습니다. 대학원 설명은 일반적인 과정이며 기간과 졸업 요건은 학교 · 학과마다 다릅니다. 학과 교과과정은 <a href="https://childwelfare.chungbuk.ac.kr/main/sub.html?pageCode=8">아동복지학과 누리집</a>에서 볼 수 있습니다.
+</footer></div>
+
+<script>
+/* ── 미니멀 플랫 그림 엔진: 외곽선 없는 둥근 면, 팔은 윗옷보다 조금 어둡게, 실무자는 파란 이름표 ── */
+const BLUE='#0F62FE',EYE='#2B2B2B',LINE='#C3CBD6',FLOOR='#D5DAE1';
+function shade(h,f){const n=parseInt(h.slice(1),16);const c=[n>>16,(n>>8)&255,n&255].map(v=>Math.round(v*f).toString(16).padStart(2,'0'));return '#'+c.join('');}
+const KIND={
+ worker2:{top:'#9FD6CF',pants:'#56627A',hair:'#3B2C24',style:'perm',badge:1,skin:'#FBE3CF'},
+ worker:{top:'#F5B5AE',pants:'#6E7B8F',hair:'#4A3A32',style:'bun',badge:1,skin:'#F6D9C0'},
+ worker3:{top:'#CFC3EE',pants:'#4F5870',hair:'#2F2A28',style:'long',badge:1,skin:'#FBE3CF'},
+ workerm:{top:'#AFC8F0',pants:'#56627A',hair:'#2F2A28',style:'side',badge:1,skin:'#F3D3BA'},
+ adult:{top:'#B9C7D9',pants:'#5A6272',hair:'#2F2A28',style:'crew',skin:'#F6D9C0'},
+ youth:{top:'#A8D5B0',pants:'#6E7B8F',hair:'#3B2F2A',style:'short',skin:'#FBE3CF'},
+ elder:{top:'#EBD3B5',pants:'#8A8072',hair:'#D6D6D6',style:'part',skin:'#F3D3BA'},
+ family:{top:'#F6D27A',pants:'#7A6A58',hair:'#6B4E3D',style:'bob',skin:'#F6D9C0'},
+ child:{top:'#F6D27A',pants:'#6E7B8F',hair:'#3B2C24',style:'short',skin:'#FBE3CF'},
+ child2:{top:'#F5B5AE',pants:'#56627A',hair:'#4A3A32',style:'bob',skin:'#F6D9C0'},
+ stu:{top:'#A8D5B0',pants:'#56627A',hair:'#3B2C24',style:'perm',skin:'#FBE3CF'},
+ stu2:{top:'#AFC8F0',pants:'#6E7B8F',hair:'#2F2A28',style:'short',skin:'#F6D9C0'},
+ stu3:{top:'#CFC3EE',pants:'#56627A',hair:'#4A3A32',style:'long',skin:'#FBE3CF'}
+};
+// 팔: [왼 팔꿈치, 왼손, 오른 팔꿈치, 오른손, 앞에 그릴 팔('', 'R', 'LR')]
+const P={
+ stand:[[-28,-88],[-27,-66],[28,-88],[27,-66],''],
+ smallwave:[[-28,-88],[-27,-66],[33,-97],[38,-121],''],
+ wave:[[-28,-88],[-27,-66],[36,-118],[42,-147],''],
+ cheer:[[-36,-126],[-42,-156],[36,-126],[42,-156],''],
+ up1:[[-28,-88],[-27,-66],[36,-126],[42,-156],''],
+ think:[[-28,-88],[-27,-66],[31,-90],[13,-123],'R'],
+ hold:[[-28,-90],[-10,-84],[28,-90],[10,-84],'LR'],
+ offer:[[-28,-88],[-27,-66],[36,-98],[54,-103],''],
+ hips:[[-37,-92],[-25,-70],[37,-92],[25,-70],''],
+ shrug:[[-33,-92],[-44,-106],[33,-92],[44,-106],''],
+ listen:[[-27,-90],[-5,-80],[27,-90],[5,-80],'LR']
+};
+const HAIR={
+ crew:c=>['',`<path d="M-25.5 -150 A25.5 25.5 0 0 1 25.5 -150 Q20 -166 0 -167 Q-20 -166 -25.5 -150Z" fill="${c}"/>`],
+ short:c=>['',`<path d="M-26 -147 A26 26 0 0 1 26 -147 Q23 -161 6 -163 Q-12 -160 -26 -147Z" fill="${c}"/>`],
+ side:c=>['',`<path d="M-25.5 -148 A25.5 25.5 0 0 1 25.5 -148 Q22 -162 9 -166 Q-8 -158 -25.5 -148Z" fill="${c}"/>`],
+ part:c=>['',`<path d="M-25.5 -149 A25.5 25.5 0 0 1 25.5 -149 Q17 -160 0 -169 Q-17 -160 -25.5 -149Z" fill="${c}"/>`],
+ bob:c=>[`<path d="M-30 -130 Q-34 -180 0 -180 Q34 -180 30 -130 Q30 -123 23 -125 L-23 -125 Q-30 -123 -30 -130Z" fill="${c}"/>`,`<path d="M-26 -149 A26 26 0 0 1 26 -149 Q22 -163 0 -164 Q-22 -163 -26 -149Z" fill="${c}"/>`],
+ perm:c=>[`<path d="M-31 -134 Q-36 -181 0 -181 Q36 -181 31 -134 Q31 -124 22 -127 L-22 -127 Q-31 -124 -31 -134Z" fill="${c}"/>`,`<path d="M-26 -146 A26 26 0 0 1 26 -146 Q25 -158 14 -165 Q2 -156 -26 -146Z" fill="${c}"/>`],
+ bun:c=>[`<circle cx="0" cy="-181" r="10" fill="${c}"/>`,`<path d="M-25.5 -150 A25.5 25.5 0 0 1 25.5 -150 Q20 -165 0 -166 Q-20 -165 -25.5 -150Z" fill="${c}"/>`],
+ long:c=>[`<path d="M-29 -150 Q-31 -181 0 -181 Q31 -181 29 -150 L28 -108 Q23 -102 18 -109 L18 -150 L-18 -150 L-18 -109 Q-23 -102 -28 -108Z" fill="${c}"/>`,`<path d="M-26 -149 A26 26 0 0 1 26 -149 Q20 -162 2 -166 Q-16 -161 -26 -149Z" fill="${c}"/>`]
+};
+function person(o){
+ const K=KIND[o.kind||'youth'],s=o.s||1,flip=o.flip?-1:1,lk=(o.look||0)*flip,ps=P[o.pose||'stand'],arm=shade(K.top,.86),e=o.expr||'smile';
+ const A=(sx,sy,el,h)=>`<path d="M${sx} ${sy} L${el[0]} ${el[1]} L${h[0]} ${h[1]}" fill="none" stroke="${arm}" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>`;
+ const H=h=>`<circle cx="${h[0]}" cy="${h[1]}" r="6.2" fill="${K.skin}"/>`;
+ const aL=A(-21,-110,ps[0],ps[1]),aR=A(21,-110,ps[2],ps[3]),fr=ps[4];
+ const [hb,hf]=HAIR[K.style](K.hair);
+ let g=`<ellipse cx="0" cy="1" rx="34" ry="5" fill="#20262E" opacity=".08"/>`;
+ g+=`<path d="M-8 -62 L-9 -31 L-10 -4 M8 -62 L9 -31 L10 -4" fill="none" stroke="${K.pants}" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>`;
+ g+=`<ellipse cx="-12" cy="-2" rx="9.5" ry="5" fill="${shade(K.pants,.68)}"/><ellipse cx="12" cy="-2" rx="9.5" ry="5" fill="${shade(K.pants,.68)}"/>`;
+ if(!fr.includes('L'))g+=aL+H(ps[1]); if(!fr.includes('R'))g+=aR+H(ps[3]);
+ g+=`<path d="M-29 -56 Q-31 -122 0 -125 Q31 -122 29 -56 Z" fill="${K.top}"/>`;
+ if(K.badge)g+=`<rect x="7" y="-109" width="13" height="9" rx="2" fill="${BLUE}"/>`;
+ g+=hb;
+ if(o.item)g+=o.item;
+ if(fr.includes('L'))g+=aL+H(ps[1]); if(fr.includes('R'))g+=aR+H(ps[3]);
+ g+=`<circle cx="0" cy="-150" r="25" fill="${K.skin}"/>`+hf;
+ if(o.hat)g+=`<path d="M-30 -178 L0 -189 L30 -178 L0 -167Z" fill="#2F3640"/><path d="M-15 -173 v8 q15 7 30 0 v-8" fill="#2F3640"/><path d="M26 -177 v13" stroke="#F6D27A" stroke-width="2.4" stroke-linecap="round"/><circle cx="26" cy="-162" r="3" fill="#F6D27A"/>`;
+ const ex=3.2*lk,mx=2.6*lk,gap=lk?7.5:8;
+ g+=`<circle cx="${-15+(lk<0?-2:lk>0?2:0)}" cy="-141" r="4" fill="#F7A9A0" opacity=".45"/><circle cx="${15+(lk<0?-2:lk>0?2:0)}" cy="-141" r="4" fill="#F7A9A0" opacity=".45"/>`;
+ g+=`<circle cx="${-gap+ex}" cy="-149" r="2.7" fill="${EYE}"/><circle cx="${gap+ex}" cy="-149" r="2.7" fill="${EYE}"/>`;
+ const M=d=>`<path d="${d}" fill="none" stroke="${EYE}" stroke-width="2" stroke-linecap="round"/>`;
+ if(e==='smile')g+=M(`M${-5+mx} -140 Q${mx} -134.5 ${5+mx} -140`);
+ else if(e==='neutral')g+=M(`M${-4+mx} -138 h8`);
+ else if(e==='talk')g+=`<ellipse cx="${mx}" cy="-138" rx="3" ry="3.6" fill="${EYE}"/>`;
+ else if(e==='worried')g+=M(`M${-5+mx} -137 Q${mx} -141 ${5+mx} -137`)+M(`M${-12+ex} -156 l6 -2.4 M${12+ex} -156 l-6 -2.4`);
+ return `<g transform="translate(${o.x} ${o.y}) scale(${s*flip} ${s})">${g}</g>`;
+}
+/* 소품: 테두리 없이 면으로, 선이 필요하면 연하고 얇게 */
+const PAPER=`<rect x="-13" y="-106" width="26" height="32" rx="3" fill="#fff" stroke="${LINE}" stroke-width="1.6"/><path d="M-7 -97h14M-7 -91h14M-7 -85h8" stroke="#9DBBF7" stroke-width="2" stroke-linecap="round"/>`;
+const BOOK=`<rect x="-15" y="-104" width="30" height="24" rx="3" fill="#F6D27A"/><path d="M0 -104 v24" stroke="#E0B955" stroke-width="2"/>`;
+const LAP=`<rect x="-20" y="-104" width="40" height="26" rx="4" fill="#DDE5F0"/><circle cx="0" cy="-91" r="3.4" fill="#AFC8F0"/>`;
+const heart=(x,y,s)=>`<path transform="translate(${x} ${y}) scale(${s})" d="M0 8 C-13 -1 -8 -11 0 -4 C8 -11 13 -1 0 8Z" fill="#F4867A"/>`;
+const star=(x,y,r,f)=>{let p=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.5:r;p.push((x+rr*Math.cos(a)).toFixed(1)+','+(y+rr*Math.sin(a)).toFixed(1));}return `<polygon points="${p.join(' ')}" fill="${f||'#F6D27A'}" stroke="${f||'#F6D27A'}" stroke-width="2" stroke-linejoin="round"/>`;};
+const floor=(a,b,y)=>`<path d="M${a} ${y} H${b}" stroke="${FLOOR}" stroke-width="3" stroke-linecap="round"/>`;
+const house=(x,y,c)=>`<g transform="translate(${x} ${y})"><path d="M-30 -42 L0 -68 L30 -42Z" fill="${c}" stroke="${c}" stroke-width="6" stroke-linejoin="round"/><rect x="-25" y="-44" width="50" height="44" rx="4" fill="#fff"/><rect x="-7" y="-24" width="14" height="24" rx="3" fill="#EADBC6"/><rect x="10" y="-36" width="10" height="10" rx="2" fill="#DCE8FA"/></g>`;
+const school=(x,y)=>`<g transform="translate(${x} ${y})"><rect x="-38" y="-52" width="76" height="52" rx="5" fill="#fff"/><path d="M-16 -52 L0 -70 L16 -52Z" fill="#F6D27A" stroke="#F6D27A" stroke-width="5" stroke-linejoin="round"/><circle cx="0" cy="-56" r="5" fill="#fff"/><rect x="-8" y="-24" width="16" height="24" rx="3" fill="#AFC8F0"/><rect x="-30" y="-40" width="11" height="11" rx="2" fill="#DCE8FA"/><rect x="19" y="-40" width="11" height="11" rx="2" fill="#DCE8FA"/><rect x="-30" y="-22" width="11" height="11" rx="2" fill="#DCE8FA"/><rect x="19" y="-22" width="11" height="11" rx="2" fill="#DCE8FA"/></g>`;
+const gov=(x,y)=>`<g transform="translate(${x} ${y})"><path d="M-36 -52 L0 -74 L36 -52Z" fill="#AFC8F0" stroke="#AFC8F0" stroke-width="5" stroke-linejoin="round"/><rect x="-36" y="-52" width="72" height="8" rx="2" fill="#DCE8FA"/><path d="M-26 -44 v36 M-9 -44 v36 M9 -44 v36 M26 -44 v36" stroke="#fff" stroke-width="9" stroke-linecap="round"/><rect x="-40" y="-9" width="80" height="9" rx="3" fill="#DCE8FA"/></g>`;
+const globe=(x,y)=>`<g transform="translate(${x} ${y})"><circle r="26" fill="#AFC8F0"/><path d="M-15 -14 q10 -6 15 3 q-1 11 -12 9 q-9 -3 -3 -12z M5 6 q12 -3 14 6 q-6 10 -14 4z" fill="#A8D5B0"/></g>`;
+const bulb=(x,y)=>`<g transform="translate(${x} ${y})"><circle r="13" fill="#F6D27A"/><rect x="-6" y="11" width="12" height="8" rx="3" fill="#C3CBD6"/><path d="M0 -20 v-7 M-15 -14 l-5 -5 M15 -14 l5 -5" stroke="#F6D27A" stroke-width="3" stroke-linecap="round"/></g>`;
+const chart=(x,y)=>`<g transform="translate(${x} ${y})"><rect x="-26" y="-28" width="52" height="52" rx="8" fill="#fff" stroke="${LINE}" stroke-width="1.6"/><rect x="-16" y="2" width="8" height="14" rx="2" fill="#AFC8F0"/><rect x="-4" y="-8" width="8" height="24" rx="2" fill="#9FD6CF"/><rect x="8" y="-17" width="8" height="33" rx="2" fill="#F5B5AE"/></g>`;
+const sign=(x,y)=>`<g transform="translate(${x} ${y})"><rect x="-3" y="-118" width="6" height="118" rx="3" fill="#C9A77A"/><path d="M-2 -114 h34 l10 10 l-10 10 h-34z" fill="#9FD6CF" stroke="#9FD6CF" stroke-width="4" stroke-linejoin="round"/><path d="M2 -84 h-34 l-10 10 l10 10 h34z" fill="#F6D27A" stroke="#F6D27A" stroke-width="4" stroke-linejoin="round"/><path d="M-2 -54 h34 l10 10 l-10 10 h-34z" fill="#AFC8F0" stroke="#AFC8F0" stroke-width="4" stroke-linejoin="round"/></g>`;
+const coin=(x,y,r)=>`<g transform="translate(${x} ${y})"><circle r="${r}" fill="#F6D27A"/><circle r="${r*.66}" fill="#FBE7AE"/><text y="${r*.36}" text-anchor="middle" font-size="${r}" font-weight="700" fill="#B58A2A" font-family="Inter,system-ui,sans-serif">₩</text></g>`;
+const lens=(x,y)=>`<g transform="translate(${x} ${y})"><path d="M14 14 L30 30" stroke="#8E98A5" stroke-width="8" stroke-linecap="round"/><circle r="19" fill="#DCE8FA"/><circle r="13" fill="#fff" opacity=".75"/></g>`;
+const scales=(x,y)=>`<g transform="translate(${x} ${y})"><rect x="-3" y="-92" width="6" height="92" rx="3" fill="#8E98A5"/><rect x="-18" y="-6" width="36" height="6" rx="3" fill="#8E98A5"/><rect x="-34" y="-84" width="68" height="5" rx="2.5" fill="#8E98A5"/><path d="M-44 -58 h24 a12 10 0 0 1 -24 0z M20 -58 h24 a12 10 0 0 1 -24 0z" fill="#CFC3EE"/><path d="M-32 -80 l-9 22 M-32 -80 l9 22 M32 -80 l-9 22 M32 -80 l9 22" stroke="#B5BDC8" stroke-width="1.6"/><circle cy="-92" r="6" fill="#F6D27A"/></g>`;
+const bubble=(x,y,w,blue)=>`<g transform="translate(${x} ${y})"><path d="M${-w/2} -16 h${w} a10 10 0 0 1 10 10 v12 a10 10 0 0 1 -10 10 h${-w/2+4} l-7 9 l-3 -9 h${-(w/2-6)} a10 10 0 0 1 -10 -10 v-12 a10 10 0 0 1 10 -10z" fill="${blue?BLUE:'#fff'}" ${blue?'':'stroke="#8E98A5" stroke-width="2"'}/><circle cx="-10" cy="0" r="2.6" fill="${blue?'#fff':'#8E98A5'}"/><circle cx="0" cy="0" r="2.6" fill="${blue?'#fff':'#8E98A5'}"/><circle cx="10" cy="0" r="2.6" fill="${blue?'#fff':'#8E98A5'}"/></g>`;
+const pin=(x,y,c)=>`<g transform="translate(${x} ${y})"><path d="M0 22 C-19 0 -15 -20 0 -20 C15 -20 19 0 0 22Z" fill="${c}"/><circle cy="-4" r="6" fill="#fff"/></g>`;
+const umbrella=(x,y)=>`<g transform="translate(${x} ${y})"><path d="M-26 0 A26 24 0 0 1 26 0Z" fill="#9FD6CF"/><path d="M0 0 v24 q0 7 -7 7" fill="none" stroke="#8E98A5" stroke-width="3.4" stroke-linecap="round"/></g>`;
+const F=200; // 발 높이
+const SCENE={
+ mohw:()=>floor(16,224,F)+heart(120,62,1.1)+person({x:74,y:F,s:.62,kind:'child2',look:1,pose:'smallwave'})+person({x:164,y:F,s:.9,kind:'worker2',look:-1,flip:1,pose:'smallwave'}),
+ mogef:()=>floor(16,224,F)+bubble(72,22,56,0)+bubble(172,24,56,1)+person({x:76,y:F,s:.76,kind:'youth',look:1,expr:'talk'})+person({x:170,y:F,s:.82,kind:'worker3',look:-1,pose:'listen'}),
+ moe:()=>floor(16,224,F)+school(70,F)+person({x:122,y:F,s:.6,kind:'child',look:1,pose:'hold',item:BOOK})+person({x:184,y:F,s:.88,kind:'workerm',look:-1,flip:1,pose:'smallwave'}),
+ moj:()=>floor(16,224,F)+scales(60,F)+person({x:124,y:F,s:.8,kind:'youth',look:1,expr:'neutral'})+person({x:188,y:F,s:.88,kind:'workerm',look:-1,pose:'hold',item:PAPER}),
+ local:()=>floor(16,224,F)+gov(72,F)+person({x:168,y:F,s:.9,kind:'worker',look:-1,pose:'hold',item:PAPER}),
+ corp:()=>floor(16,224,F)+umbrella(120,50)+person({x:78,y:F,s:.84,kind:'elder',look:1})+person({x:168,y:F,s:.9,kind:'worker2',look:-1,pose:'hold',item:PAPER}),
+ ngo:()=>floor(16,224,F)+globe(56,96)+heart(56,50,1)+person({x:112,y:F,s:.6,kind:'child',look:1,pose:'cheer'})+person({x:176,y:F,s:.9,kind:'worker',look:-1,flip:1,pose:'wave'}),
+ pub:()=>floor(16,224,F)+gov(76,F)+person({x:172,y:F,s:.9,kind:'workerm',look:-1,pose:'hips'}),
+ con:()=>floor(16,224,F)+house(74,F,'#9FD6CF')+heart(128,70,1)+person({x:172,y:F,s:.9,kind:'worker2',look:-1,flip:1,pose:'smallwave'}),
+ pick:()=>floor(16,224,F)+person({x:54,y:F,s:.58,kind:'child2',pose:'cheer'})+person({x:120,y:F,s:.8,kind:'youth',pose:'smallwave'})+person({x:188,y:F,s:.78,kind:'elder',look:-1}),
+ map:()=>floor(16,224,F)+`<path d="M34 176 C70 130 104 190 138 142 S190 104 206 70" fill="none" stroke="#B5BDC8" stroke-width="3" stroke-dasharray="1 9" stroke-linecap="round"/>`+house(64,F,'#AFC8F0')+school(168,F)+pin(34,150,'#F5B5AE')+pin(138,116,'#F6D27A')+pin(206,44,'#9FD6CF'),
+ school:()=>floor(16,224,F)+sign(172,F)+person({x:84,y:F,s:.92,kind:'stu',look:1,pose:'think',expr:'neutral'}),
+ pay:()=>floor(16,224,F)+coin(176,184,16)+coin(176,160,16)+coin(176,136,16)+star(196,96,8)+person({x:92,y:F,s:.92,kind:'worker3',look:1,pose:'up1'}),
+ ladder:()=>`<rect x="20" y="168" width="68" height="32" rx="6" fill="#DCE8FA"/><rect x="86" y="136" width="68" height="64" rx="6" fill="#C9DBF7"/><rect x="152" y="104" width="68" height="96" rx="6" fill="#AFC8F0"/>`+star(186,-2+14,8)+person({x:54,y:168,s:.42,kind:'stu2'})+person({x:120,y:136,s:.42,kind:'stu3',pose:'smallwave'})+person({x:186,y:104,s:.42,kind:'worker2',pose:'cheer'}),
+ research:()=>floor(16,224,F)+chart(176,96)+bulb(176,40)+person({x:88,y:F,s:.92,kind:'workerm',look:1,pose:'hold',item:LAP}),
+ grad:()=>floor(16,224,F)+star(40,60,7)+star(204,44,9)+person({x:76,y:F,s:.74,kind:'stu2',look:1,pose:'smallwave'})+person({x:160,y:F,s:.9,kind:'stu',look:-1,pose:'cheer',hat:1}),
+ ms:()=>floor(16,224,F)+`<g transform="translate(176 ${F})"><rect x="-26" y="-12" width="52" height="12" rx="3" fill="#F5B5AE"/><rect x="-22" y="-24" width="46" height="12" rx="3" fill="#9FD6CF"/><rect x="-25" y="-36" width="48" height="12" rx="3" fill="#F6D27A"/><rect x="-20" y="-48" width="44" height="12" rx="3" fill="#AFC8F0"/></g>`+person({x:88,y:F,s:.92,kind:'stu3',look:1,pose:'hold',item:PAPER}),
+ phd:()=>floor(16,224,F)+bulb(176,50)+chart(176,128)+person({x:88,y:F,s:.92,kind:'stu',look:1,pose:'think',hat:1}),
+ practice:()=>floor(16,224,F)+bubble(170,22,56,1)+person({x:78,y:F,s:.84,kind:'stu',look:1,pose:'hold',item:PAPER})+person({x:170,y:F,s:.86,kind:'worker2',look:-1,flip:1,pose:'offer'}),
+ mh:()=>floor(16,224,F)+heart(124,64,1.1)+person({x:78,y:F,s:.86,kind:'adult',look:1,expr:'neutral'})+person({x:170,y:F,s:.88,kind:'worker3',look:-1,pose:'listen'}),
+ empty:()=>floor(16,224,F)+lens(176,100)+person({x:92,y:F,s:.92,kind:'stu2',look:1,pose:'shrug',expr:'worried'})
+};
+const scene=k=>`<svg viewBox="0 0 240 224" role="img" aria-hidden="true">${(SCENE[k]||SCENE.pick)()}</svg>`;
+function heroArt(){
+ const y=236;
+ return `<svg viewBox="0 0 720 262" aria-hidden="true">${floor(24,696,y)}
+ <path d="M300 122 Q360 168 420 122" fill="none" stroke="#EE7F72" stroke-width="2.4" stroke-linecap="round" opacity=".7"/>${heart(360,150,1.2)}${star(52,48,8)}${star(668,56,9)}${star(360,40,6,'#AFC8F0')}
+ ${person({x:78,y:y,s:.64,kind:'child2',look:1,pose:'cheer'})}
+ ${person({x:166,y:y,s:.92,kind:'youth',look:1,pose:'smallwave'})}
+ ${person({x:266,y:y,s:.9,kind:'elder',look:1})}
+ ${person({x:454,y:y,s:1,kind:'worker2',look:-1,flip:1,pose:'smallwave'})}
+ ${person({x:554,y:y,s:1,kind:'workerm',look:-1,pose:'hold',item:PAPER})}
+ ${person({x:648,y:y,s:.98,kind:'worker3',look:-1,flip:1,pose:'wave'})}
+ </svg>`;
+}
+
+const AUD=[
+ ['infant','영유아','0~6세 · 보육 · 육아'],
+ ['child','아동 보호 · 돌봄','학대 · 위탁 · 시설 · 방과후'],
+ ['youth','청소년','상담 · 쉼터 · 활동 · 학교 밖'],
+ ['school','학교 안','교육복지 · Wee'],
+ ['mind','마음건강','정신건강 · 소아청소년'],
+ ['justice','비행 · 사법','소년원 · 보호관찰'],
+ ['family','가족 · 지역','복지관 · 장애 · 노인 · 가족'],
+ ['gov','공무원 · 공단','시험 · 공채로 들어가는 길'],
+ ['research','정책 · 연구','연구원 · 재단 · 연구소']
+];
+const MIN=[
+ ['mohw','보건복지부','아동복지법 · 사회복지사업법 · 정신건강복지법','Health & Welfare','--accent2'],
+ ['mogef','성평등가족부','청소년기본법 · 청소년복지 지원법','Youth & Family','--mint'],
+ ['moe','교육부 · 교육청','초 · 중등교육법 · 영유아보육법','Education','--gold'],
+ ['moj','법무부','소년법 · 보호소년법','Justice','--violet'],
+ ['local','지자체 · 연구기관','시 · 도 · 시 · 군 · 구, 출연 연구원','Local & Research','--accent'],
+ ['corp','공단 · 공공기관','사회보험과 국가 사업을 맡는 기관','Public Agencies','--gray'],
+ ['ngo','민간 NGO','후원금으로 움직이는 비영리 법인','NGO','--coral']
+];
+const SEC=[
+ ['pub','공공','Public','--accent2','나라가 직접 고용해요','세금 → 공무원 · 공공기관 보수 규정','공무원 시험, 공공기관 공채, 교육청 공고','안정적이고 권한이 크다. 순환 근무와 행정 업무가 많다.'],
+ ['con','민간이 운영, 돈은 나라가','Publicly funded','--mint','법인이 고용하고, 인건비는 보조금으로 나와요','보조금 · 위탁금 → 인건비 가이드라인','시설 · 법인별 수시 채용(복지넷 등 공고)','일자리가 가장 많다. 대상자를 가장 가까이에서 오래 만난다.'],
+ ['ngo','NGO','Non-profit','--coral','후원금으로 움직이는 법인이 고용해요','후원금 + 일부 위탁 사업비 → 법인 자체 기준','법인 공채(신입 · 경력), 인턴','옹호 · 캠페인 · 해외사업 · 연구까지 일이 넓다. 전국 순환이 있을 수 있다.']
+];
+const SX={pub:['nps','nhis','comwel','kfsp','ncrc','dream','kyci','edu','wee','jschool','probation','prison','civil','cri','cjwf','nypi'],ngo:['ngo','ngolab']};
+const secOf=d=>d.id==='assoc'?'assoc':SX.pub.includes(d.id)?'pub':SX.ngo.includes(d.id)?'ngo':'con';
+const secName={pub:'공공',con:'민간 운영 · 공공 재정',ngo:'NGO',assoc:'민간 협회'};
+const TC=Object.fromEntries(MIN.map(m=>[m[0],m[4]]));
+const S=q=>'https://search.naver.com/search.naver?query='+encodeURIComponent(q);
+// m 부처, a 대상, k 사는곳(live)/다니는곳(go), ba 학부 시작 가능
+const D=[
+ {id:'ncrc',one:'아동정책의 본부. 현장을 뒤에서 받치는 곳',m:'mohw',n:'아동권리보장원',law:'아동복지법',a:['child','research','gov'],ba:1,
+  does:'아동정책을 지원하는 중앙 기관. 학대 · 가정위탁 · 입양 · 자립 · 실종 · 드림스타트 사업의 지침, 통계, 종사자 교육을 맡는다.',
+  bach:'사업 운영과 행정, 교육 진행, 통계 관리. 공개채용으로 뽑는다.',grad:'석사 이상은 정책 연구, 지표 · 통계 분석, 사업 평가 쪽에서 강점이 있다.',spec:'사회복지사 자격, 현장 경력이나 문서 · 통계 능력',cb:'전국 기관(서울). 충북 기관들을 지원하고 관리한다.',l:[['아동권리보장원','https://www.ncrc.or.kr']]},
+ {id:'apa',one:'학대받은 아이와 그 가족을 다시 세우는 곳',m:'mohw',n:'아동보호전문기관',law:'아동복지법',a:['child'],k:'go',ba:1,
+  does:'학대 피해 아동과 가족의 사례관리. 2020년 10월부터 현장 조사는 시 · 군 · 구 아동학대전담공무원이 맡고, 이 기관은 그 뒤의 상담 · 치료 · 가족 회복을 맡는다.',
+  bach:'사례관리 상담원. 가정방문, 부모 상담과 교육, 재학대 점검, 기록 작성.',grad:'임상심리 · 치료 인력, 팀장 · 수퍼바이저.',spec:'사회복지사(1급 우대), 운전 가능, 기록 능력. 감정 소모가 큰 일이라 팀 지지가 중요하다.',
+  cb:'<b>충북 4곳</b>: 충청북도(청주) · 충북북부(제천) · 충북중부(진천) · 충북남부(옥천)',l:[['충북아동보호전문기관(청주)','https://cheongju.gcps.or.kr/'],['충북북부(제천)','https://1391sos.kr/'],['충북중부(진천)','https://www.cbjb1391.or.kr/'],['충북남부(옥천)','http://cbnb1391.org/'],['아동권리보장원','https://www.ncrc.or.kr']]},
+ {id:'foster',one:'아이에게 "또 하나의 집"을 찾아 주는 곳',m:'mohw',n:'가정위탁지원센터',law:'아동복지법',a:['child'],k:'go',ba:1,
+  does:'위탁가정을 찾고 교육하며, 위탁 아동과 가정을 사례관리한다.',bach:'위탁부모 발굴과 교육, 가정방문, 아동 자립 준비 지원.',grad:'프로그램 개발, 팀장.',spec:'사회복지사, 가족 상담에 대한 관심',
+  cb:'<b>충북가정위탁지원센터</b> 1곳. 세이브더칠드런이 운영한다. NGO가 정부 사업을 위탁받아 운영하는 예다.',l:[['충북가정위탁지원센터','https://www.sc.or.kr/fcsc/cb/'],['아동권리보장원','https://www.ncrc.or.kr']]},
+ {id:'selfsup',one:'열여덟 어른의 홀로서기를 5년 동안 함께하는 곳',m:'mohw',n:'자립지원전담기관',law:'아동복지법',a:['child','youth'],k:'go',ba:1,
+  does:'시설과 위탁가정에서 보호가 끝난 자립준비청년을 보호종료 뒤 5년 동안 사례관리한다. 주거 · 취업 · 심리 지원을 잇는다.',
+  bach:'자립지원전담인력. 청년을 정기적으로 만나고 주거 · 일자리 · 생활 문제를 함께 푼다.',grad:'사업 기획, 팀장.',spec:'사회복지사, 청년 상담 경험',
+  cb:'<b>충청북도자립지원전담기관</b>(청주 흥덕구)',l:[['충북자립지원전담기관','http://cbjarip.kr/'],['자립정보 ON','https://jaripon.ncrc.or.kr']]},
+ {id:'home',one:'집에서 살 수 없는 아이들이 사는 집',m:'mohw',n:'아동양육시설 · 공동생활가정(그룹홈)',law:'아동복지법',a:['child'],k:'live',ba:1,
+  does:'가정에서 살 수 없는 아이가 먹고 자는 곳. 양육시설은 큰 기숙사, 그룹홈은 5~7명이 사는 집에 가깝다.',
+  bach:'생활지도원(보육사)은 교대로 아이들과 함께 생활한다. 자립지원전담요원은 15세부터 자립 계획을 돕는다.',grad:'임상심리상담원(심리 관련 학위 · 자격), 사무국장.',spec:'사회복지사 · 보육교사. 교대 · 숙직 근무가 있다.',
+  cb:'<b>충북 양육시설 11곳</b>: 충북육아원 · 현양원 · 늘푸른아동원 · 충북혜능보육원(청주), 진여원 · 라파의집(충주), 제천영육아원, 영실애육원(옥천), 음성꽃동네아동복지시설 · 꽃동네천사의집 · 음성향애원. <b>그룹홈 약 25곳</b>(청주 13 등)',l:[['현양원(충북현양복지재단)','https://www.hyunyang.org/web/auxiliary/hyunyangwon.asp?mnum=1&snum=0'],['아동권리보장원','https://www.ncrc.or.kr'],['검색: 충북 아동양육시설',S('충북 아동양육시설')]]},
+ {id:'treat',one:'시설을 막 나온 청년이 숨을 고르는 집',m:'mohw',n:'자립지원시설',law:'아동복지법',a:['child','youth'],k:'live',ba:1,
+  does:'아동양육시설이나 위탁가정을 나온 청년이 취업을 준비하는 동안 머무는 생활시설이다. 주거를 제공하고 취업 · 생활 상담을 한다.',
+  bach:'생활지도, 자립 상담, 취업 연계.',grad:'사업 기획, 시설 운영.',spec:'사회복지사',
+  cb:'<b>현양자립생활관</b>(청주). 충북에 일시보호시설은 없다.',l:[['현양자립생활관','https://www.hyunyang.org/web/auxiliary/hyssc.asp?mnum=1&snum=6'],['자립정보 ON','https://jaripon.ncrc.or.kr']]},
+ {id:'lcc',one:'방과후에 가는 동네 사랑방. 실습으로 가장 많이 만나는 곳',m:'mohw',n:'지역아동센터 · 다함께돌봄센터',law:'아동복지법',a:['child'],k:'go',ba:1,
+  does:'방과후에 아이가 다니는 동네 돌봄 기관. 지역아동센터는 18세 미만 취약계층 중심, 다함께돌봄센터는 소득과 상관없이 초등학생을 돌본다.',
+  bach:'생활복지사 · 돌봄교사. 급식, 학습 지도, 프로그램, 부모 상담, 지역 연계. 몇 년씩 같은 아이를 만난다.',grad:'센터장(경력 요건), 지원단.',spec:'사회복지사 2급으로 시작할 수 있다. 실습지로도 가장 많다.',
+  cb:'<b>충북 지역아동센터 178곳</b>(청주 71 · 충주 35 · 음성 19 등)',l:[['지역아동센터중앙지원단','https://www.icareinfo.go.kr'],['다함께돌봄사업','https://www.dadol.or.kr'],['검색: 청주 지역아동센터',S('청주 지역아동센터')]]},
+ {id:'dream',one:'시청 · 군청 안에서 아이를 지키는 사람들',m:'local',n:'드림스타트 · 아동보호전담요원 · 아동학대전담공무원',law:'아동복지법',a:['child','research','gov'],ba:1,
+  does:'시 · 군 · 구청 안에서 일한다. 드림스타트는 취약 아동과 가족을 찾아가는 예방적 통합사례관리, 아동보호전담요원은 보호조치 아동의 배치와 점검, 아동학대전담공무원은 학대 신고 조사를 맡는다.',
+  bach:'아동통합사례관리사, 아동보호전담요원으로 지원할 수 있다. 가정방문과 서비스 연계가 중심이다.',grad:'슈퍼바이저, 정책 담당.',spec:'사회복지사 · 보육교사 · 간호사 등. 전담공무원은 사회복지직 공무원이고, 사례관리사 · 전담요원은 공무직이나 임기제가 많다.',
+  cb:'청주시 등 충북 11개 시 · 군청',l:[['드림스타트','https://www.dreamstart.go.kr'],['청주시청','https://www.cheongju.go.kr']]},
+ {id:'daycare',one:'0~6세의 하루를 책임지는 곳',m:'moe',n:'어린이집 · 육아종합지원센터',law:'영유아보육법',a:['infant'],k:'go',ba:1,
+  does:'영유아 보육. 2024년 6월부터 어린이집 업무가 보건복지부에서 교육부로 넘어갔다(유보통합 추진). 육아종합지원센터는 부모 상담, 놀이 지원, 보육교직원 교육을 한다.',
+  bach:'보육교사. 육아종합지원센터는 보육전문요원 · 상담 인력을 뽑는다.',grad:'원장(경력 요건), 센터 전문요원, 육아정책 연구.',spec:'보육교사 2급. 센터는 보육 현장 경력을 본다.',
+  cb:'충청북도 · 청주시 육아종합지원센터, 국공립 · 직장 어린이집',l:[['중앙육아종합지원센터','https://central.childcare.go.kr'],['충청북도육아종합지원센터','https://chungbuk.childcare.go.kr']]},
+ {id:'mhc',one:'동네 마음건강 주치의 같은 곳',m:'mohw',n:'정신건강복지센터(광역 · 기초)',law:'정신건강복지법',a:['mind','youth','child'],k:'go',ba:1,
+  does:'지역 주민의 정신건강 상담과 중증 정신질환자 사례관리, 자살예방, 아동 · 청소년 정신건강 사업을 한다. 광역센터는 도 단위 기획과 교육, 기초센터는 시 · 군 · 구에서 직접 서비스를 한다.',
+  bach:'사회복지사로 지원할 수 있지만, 정신건강사회복지사(수련 1년)가 있어야 유리하다. 사례관리, 가정방문, 학교 연계 선별검사와 상담.',grad:'팀장 · 부센터장, 광역센터 기획 · 연구.',spec:'사회복지사 1급 → 정신건강사회복지사 2급. 수련기관 목록은 국립정신건강센터 공고에서 확인.',
+  cb:'<b>충청북도광역정신건강복지센터</b>, 청주시 <b>상당 · 서원 · 흥덕 · 청원</b> 센터, 증평 · 보은 · 진천 · 옥천 · 괴산 등 군 센터. 모두 최근 협회 구인 게시판에 채용 공고를 올린 곳이다.',l:[['충북광역정신건강복지센터','https://www.cbmind.or.kr'],['국립정신건강센터','https://www.ncmh.go.kr'],['한국정신건강사회복지사협회','https://www.kamhsw.or.kr']]},
+ {id:'rehab',one:'회복 중인 사람의 일상 복귀를 돕는 곳',m:'mohw',n:'정신재활시설 · 중독관리통합지원센터 · 도박문제예방치유센터 · 자살예방센터',law:'정신건강복지법',a:['mind'],ba:1,
+  does:'정신재활시설은 회복 중인 당사자의 주거 · 직업 · 일상 훈련을 돕는다. 중독관리통합지원센터는 알코올 등 중독 상담과 가족 지원, 도박문제예방치유센터는 도박 문제 상담과 예방 교육, 자살예방센터는 위기 개입과 유족 지원을 한다.',
+  bach:'재활 프로그램 운영, 사례관리, 직업재활. 정신재활시설에는 생활지도원 · 재활활동요원 같은 자리가 있다.',grad:'시설장 · 팀장, 프로그램 개발.',spec:'사회복지사 1급, 정신건강사회복지사 우대',cb:'정신재활시설 <b>디딤터</b> · <b>해피하우스다솜</b>, <b>청주시중독관리통합지원센터</b>, <b>세종충북도박문제예방치유센터</b>, 우리들정신건강센터 · 청주정신건강센터(구인 게시판에 채용 공고를 올린 곳)',l:[['국가정신건강정보포털','https://www.mentalhealth.go.kr'],['충북광역정신건강복지센터','https://www.cbmind.or.kr']]},
+ {id:'hosp',one:'병원 안에서 환자와 가족의 삶을 챙기는 사회복지사',m:'mohw',n:'대학병원 · 정신의료기관',law:'의료법 · 정신건강복지법',a:['mind','child','youth'],
+  does:'의료사회복지사는 환자와 가족의 심리 · 경제 · 퇴원 문제를 돕는다. 정신건강의학과와 소아청소년정신건강의학과에서는 정신건강사회복지사가 면담, 가족 교육, 지역 연계를 맡는다.',
+  bach:'학부만으로는 문이 좁다. 수련(의료 · 정신건강)을 거쳐 들어가는 경우가 많다.',grad:'석사 학위와 수련을 함께 갖춘 지원자가 많다.',spec:'사회복지사 1급 + 의료사회복지사 또는 정신건강사회복지사 수련',
+  cb:'<b>충북대학교병원</b>(발달장애인 행동발달증진센터 포함). 정신건강 분야는 예사랑병원, 도은병원(진천), 마음편한병원(보은), 혜광의료재단 충북병원, 영동제일병원, 음성소망병원 등이 구인 · 수련 공고를 올려 왔다.',l:[['충북대학교병원','https://www.cbnuh.or.kr'],['대한의료사회복지사협회','https://www.kamsw.or.kr'],['한국사회복지사협회','https://www.welfare.net']]},
+ {id:'swc',one:'동네 복지의 종합선물세트. 가장 흔한 첫 직장',m:'mohw',n:'종합사회복지관',law:'사회복지사업법',a:['family','child'],k:'go',ba:1,
+  does:'동네의 모든 주민이 대상. 사례관리, 서비스 제공, 지역 조직화 세 가지 기능을 한다. 아동 · 청소년 프로그램과 방과후 사업도 많다.',
+  bach:'사례관리, 프로그램 기획, 후원 · 자원봉사 관리. 사회복지사의 가장 전형적인 첫 직장이다.',grad:'과장 · 부장 · 관장(경력 요건), 프로포절과 평가.',spec:'사회복지사 1급 우대, 기획서 작성, 운전',cb:'<b>청주종합사회복지관</b>, <b>청주서부종합사회복지관</b> 등',l:[['청주종합사회복지관','https://cjtsw.org/'],['청주서부종합사회복지관','https://seubu.or.kr/'],['한국사회복지관협회','https://www.kaswc.or.kr'],['복지넷 채용정보','https://www.bokji.net']]},
+ {id:'dis',one:'장애가 있는 아이와 어른, 그 가족을 돕는 곳',m:'mohw',n:'장애인복지관 · 거주시설 · 주간보호 · 보호작업장 · 장애인가족지원센터',law:'장애인복지법 · 발달장애인법',a:['family','child'],ba:1,
+  does:'장애인복지관은 상담 · 재활 · 직업 · 가족 지원을 하는 이용시설이고, 거주시설은 생활시설이다. 주간보호 · 주간이용센터는 낮 동안의 돌봄과 활동을, 보호작업장은 일할 기회를 제공한다. 장애인가족지원센터는 가족 상담과 돌봄 부담을 덜어 주는 사업을 한다. 장애 아동의 조기 개입과 가족 지원도 여기서 이뤄진다.',
+  bach:'사례관리, 직업재활, 주간 프로그램, 생활 지원.',grad:'치료 · 평가 전문 인력, 관리자.',spec:'사회복지사. 직업재활 · 특수교육 관련 자격이 있으면 유리',cb:'<b>충청북도장애인종합복지관</b> 등',l:[['충청북도장애인종합복지관','https://www.cbr.or.kr/'],['한국장애인복지관협회','https://www.hinet.or.kr'],['한국장애인개발원','https://www.koddi.or.kr']]},
+ {id:'old',one:'어르신의 여가 · 건강 · 안전을 돕는 곳',m:'mohw',n:'노인복지관 · 노인보호전문기관 · 시니어클럽 · 노인요양시설',law:'노인복지법',a:['family'],k:'go',ba:1,
+  does:'노인복지관은 여가 · 건강 · 돌봄 · 일자리 사업을 한다. 노인보호전문기관은 노인 학대 신고와 사례관리를 맡는다. 시니어클럽은 노인일자리 사업을 전담한다. 노인요양시설과 재가 · 주간보호센터는 장기요양 등급을 받은 어르신을 돌보며, 사회복지사는 입소 상담, 프로그램, 보호자 상담, 행정을 맡는다.',
+  bach:'프로그램 운영, 사례관리, 노인일자리 사업 담당.',grad:'관리자, 정책 · 평가.',spec:'사회복지사',cb:'청주 등 충북의 노인복지관, <b>충청북도노인보호전문기관</b>',l:[['충청북도노인보호전문기관','http://www.cb1389.or.kr/'],['중앙노인보호전문기관','https://www.noinboho1389.or.kr']]},
+ {id:'kyci',one:'전국 청소년 상담의 본부',m:'mogef',n:'한국청소년상담복지개발원',law:'청소년복지 지원법',a:['youth','research'],
+  does:'청소년 상담 · 복지의 중앙 기관. 상담 프로그램과 지침을 만들고, 전국 청소년상담복지센터 · 꿈드림 · 쉼터 종사자를 교육하며, 청소년상담사 자격 연수를 맡는다.',
+  bach:'행정 · 사업 지원 자리가 있으나 상담 · 연구 자리는 대부분 석사 이상.',grad:'상담 프로그램 개발, 연구, 종사자 교육.',spec:'상담 관련 석사, 청소년상담사 2급 이상',cb:'전국 기관(부산)',l:[['한국청소년상담복지개발원','https://www.kyci.or.kr']]},
+ {id:'ycc',one:'고민 있는 청소년이 제일 먼저 찾는 곳(1388)',m:'mogef',n:'청소년상담복지센터',law:'청소년복지 지원법',a:['youth','mind'],k:'go',ba:1,
+  does:'9~24세 청소년과 부모 상담, 위기 청소년을 찾아 지역 기관과 잇는 청소년안전망, 청소년전화 1388, 찾아가는 청소년동반자 사업을 한다.',
+  bach:'청소년안전망 사례관리, 1388 상담, 집단 프로그램, 청소년동반자(시간제 포함).',grad:'상담 팀장, 수퍼비전. 상담 자리는 석사를 요구하는 공고도 많다.',spec:'청소년상담사 3급 또는 사회복지사. 상담 전공 대학원을 가면 선택지가 넓어진다.',
+  cb:'<b>충청북도청소년상담복지센터</b>, <b>청주시청소년상담복지센터</b>와 각 시 · 군 센터',l:[['충청북도청소년상담복지센터','https://1388.cbyouth.net/www/main'],['청주시청소년상담복지센터','https://www.cj1388.or.kr/'],['청소년상담 1388','https://www.cyber1388.kr'],['한국청소년상담복지개발원','https://www.kyci.or.kr']]},
+ {id:'kdream',one:'학교를 그만둔 청소년의 다음 걸음을 돕는 곳',m:'mogef',n:'학교밖청소년지원센터 꿈드림',law:'학교 밖 청소년 지원에 관한 법률',a:['youth'],k:'go',ba:1,
+  does:'학교를 그만둔 청소년의 상담, 검정고시 등 학업 복귀, 직업 체험과 취업, 건강검진을 돕는다. 대부분 청소년상담복지센터와 함께 운영된다.',
+  bach:'학교 밖 청소년 발굴과 사례관리, 학습 · 진로 프로그램 운영.',grad:'팀장, 프로그램 개발.',spec:'청소년상담사 · 청소년지도사 · 사회복지사',cb:'<b>청주시 꿈드림</b>은 청주시청소년상담복지센터 안에 있다. 충청북도 꿈드림도 도 센터와 함께 운영된다.',l:[['청주시 꿈드림','https://www.cj1388.or.kr/main/sub.html?pageCode=13'],['꿈드림','https://www.kdream.or.kr']]},
+ {id:'shelter',one:'집을 나온 청소년이 안전하게 머무는 곳',m:'mogef',n:'청소년쉼터 · 청소년자립지원관 · 청소년회복지원시설',law:'청소년복지 지원법',a:['youth','justice'],k:'live',ba:1,
+  does:'쉼터는 가정 밖 청소년이 지내는 곳으로 일시(7일 이내) · 단기(3개월 안팎) · 중장기(3년 이내)로 나뉜다. 자립지원관은 쉼터를 나온 뒤의 자립 사례관리, 회복지원시설은 소년법 1호 처분 청소년을 보호한다. 전국에 일시 33 · 단기 66 · 중장기 39 · 자립지원관 13 · 회복지원시설 17곳(2023년 12월).',
+  bach:'보호 · 상담원. 생활 지도, 거리 상담(아웃리치), 사례관리. 교대 · 야간 근무가 있다.',grad:'소장 · 팀장.',spec:'청소년상담사 · 청소년지도사 · 사회복지사',cb:'청주 등 충북의 남자 · 여자 청소년쉼터',l:[['성평등가족부','https://www.mogef.go.kr'],['청소년상담 1388','https://www.cyber1388.kr'],['검색: 청주 청소년쉼터',S('청주 청소년쉼터')]]},
+ {id:'ycenter',one:'청소년이 놀고 배우고 참여하는 활동 공간',m:'mogef',n:'청소년수련관 · 문화의집 · 방과후아카데미',law:'청소년활동 진흥법',a:['youth'],k:'go',ba:1,
+  does:'청소년 활동과 동아리, 참여 기구, 체험 프로그램을 운영한다. 방과후아카데미는 초등 4학년~중학 3학년의 방과후 돌봄과 활동이다.',
+  bach:'청소년지도사로 프로그램 기획과 운영, 동아리 · 봉사 지도.',grad:'관장 · 팀장, 정책 사업.',spec:'청소년지도사 2급',cb:'청주시 청소년수련관, 각 시 · 군 문화의집',l:[['청주시청소년수련관','https://www.cjyouth.co.kr/'],['한국청소년활동진흥원','https://www.kywa.or.kr'],['e청소년','https://www.youth.go.kr']]},
+ {id:'famc',one:'가족 전체를 돕는 곳, 폭력 피해를 한곳에서 돕는 곳',m:'mogef',n:'가족센터 · 해바라기센터 · 성폭력 · 가정폭력 상담소',law:'건강가정기본법 · 다문화가족지원법 · 성폭력방지법',a:['family','child','infant'],k:'go',ba:1,
+  does:'가족센터는 부모 교육, 가족 상담, 다문화가족 지원, 아이돌봄 연계를 한다. 해바라기센터는 성폭력 · 가정폭력 피해 아동과 여성의 상담 · 의료 · 수사 지원을 한곳에서 한다.',
+  bach:'가족센터의 사업 담당, 다문화가족 방문교육 관리, 사례관리.',grad:'해바라기센터 상담 · 임상심리 인력, 가족상담 전문가.',spec:'건강가정사 · 사회복지사. 해바라기센터는 상담 경력과 관련 교육 이수를 본다.',cb:'청주시가족센터, 충북해바라기센터',l:[['충북해바라기센터','http://www.cbonestop.or.kr/'],['가족센터','https://www.familynet.or.kr'],['한국여성인권진흥원','https://www.stop.or.kr']]},
+ {id:'edu',one:'학교 안의 사회복지사',m:'moe',n:'교육복지사(교육복지우선지원사업)',law:'초 · 중등교육법',a:['school','child','youth','gov'],ba:1,
+  does:'취약 학생이 많은 학교와 교육지원청에서 학생을 찾아 사례관리하고, 학습 · 정서 · 문화 프로그램과 지역 기관을 잇는다.',
+  bach:'학교 교육복지실 운영, 가정방문, 지역 자원 연계.',grad:'교육지원청 프로젝트 조정자 등.',spec:'사회복지사 · 청소년지도사 · 평생교육사 등(교육청 공고 기준). 학교사회복지사 자격이 강점. 교육공무직 · 기간제가 많다.',
+  cb:'충북 배치 학교 42곳(2024.11). 군 지역 교육지원청에는 교육복지안전망 인력이 있다.',l:[['충청북도교육청','https://www.cbe.go.kr'],['한국학교사회복지사협회','https://www.kassw.or.kr']]},
+ {id:'wee',one:'학교 상담실에서 교육청까지 이어지는 상담 안전망',m:'moe',n:'Wee클래스 · Wee센터 · Wee스쿨',law:'초 · 중등교육법(Wee 프로젝트)',a:['school','mind','youth'],
+  does:'학교(Wee클래스), 교육지원청(Wee센터), 교육청(Wee스쿨) 3단계의 학생 상담 안전망. 위기 학생 상담, 심리검사, 학교폭력 관련 상담을 한다.',
+  bach:'전문상담사(교육공무직)나 Wee센터 사회복지사로 지원할 수 있다. 자리는 많지 않다.',grad:'전문상담교사는 교직과정이나 교육대학원 + 임용시험. 임상심리사는 심리 전공 석사가 일반적이다.',spec:'전문상담교사 2급, 청소년상담사, 임상심리사, 사회복지사',cb:'충북 각 교육지원청 Wee센터. <b>충청북도교육청 마음건강증진센터</b>는 정신건강사회복지사를 공개채용한 적이 있다(2025년 공고).',l:[['Wee 프로젝트','https://www.wee.go.kr'],['충청북도교육청','https://www.cbe.go.kr']]},
+ {id:'jschool',one:'법을 어긴 청소년이 다시 배우는 학교',m:'moj',n:'소년원 · 청소년꿈키움센터',law:'보호소년 등의 처우에 관한 법률',a:['justice','youth','gov'],
+  does:'소년원은 소년법 8~10호 처분을 받은 소년을 교육하는 학교 형태의 기관이다. 청소년꿈키움센터(청소년비행예방센터)는 비행 초기 청소년의 대안교육, 상담 조사, 보호자 교육을 한다.',
+  bach:'보호직 공무원으로 생활 지도와 교육, 상담을 맡는다. 감호실무관 같은 공무직 채용도 있다.',grad:'심리 · 상담 전문 인력, 연구.',spec:'보호직 9급(형사정책개론 · 사회복지학개론 등) · 7급 공채. 사회복지학 전공과 잘 맞는다.',
+  cb:'<b>청주소년원(미평여자학교)</b>, <b>청주청소년꿈키움센터</b>',l:[['법무부','https://www.moj.go.kr'],['사이버국가고시센터','https://www.gosi.kr']]},
+ {id:'probation',one:'법원 처분을 받은 청소년을 사회 안에서 지도하는 공무원',m:'moj',n:'보호관찰소(준법지원센터) · 보호관찰관',law:'보호관찰 등에 관한 법률',a:['justice','youth','gov'],
+  does:'보호관찰관은 보호관찰(소년법 4호 단기 · 5호 장기 등)을 받는 소년과 성인을 정기적으로 만나 지도 · 감독한다. 사회봉사와 수강명령을 집행하고, 재판 전에 소년의 환경을 조사해 법원에 내는 조사서를 쓴다. 학교 · 가정 · 지역 기관과 잇는 일이 많아 사회복지 실천과 닮았다.',
+  bach:'보호직 공무원 공채(9급 · 7급)로 들어간다. 면담, 가정 · 학교 방문, 프로그램 진행, 기록 작성.',grad:'조사 · 평가, 프로그램 개발.',spec:'보호직 공무원 시험. 상담과 기록 능력',cb:'<b>청주준법지원센터</b>(청주보호관찰소)와 충주 · 제천 · 영동 지소',l:[['법무부 범죄예방정책국','https://www.moj.go.kr/cppb/index.do'],['사이버국가고시센터','https://www.gosi.kr']]},
+ {id:'kjpa',one:'소년원을 나온 청소년의 자립을 돕는 민간 기관',m:'moj',n:'한국소년보호협회',law:'법무부 산하 재단법인',a:['justice','youth'],ba:1,
+  does:'소년원을 나온 청소년과 위기 청소년의 자립을 돕는 민간 기관. 청소년자립생활관 운영, 직업훈련, 장학 · 멘토링 사업을 한다.',
+  bach:'생활관 생활 지도, 자립 상담, 사업 운영.',grad:'사업 기획 · 평가.',spec:'사회복지사 · 청소년상담사 · 청소년지도사',cb:'전국 단위 기관. 생활관 위치는 누리집에서 확인',l:[['한국소년보호협회','https://www.kjpa.or.kr']]},
+ {id:'prison',one:'담장 안의 교화와 담장 밖의 새 출발을 돕는 일',m:'moj',n:'교정시설 · 법무보호복지공단',law:'형집행법 · 보호관찰 등에 관한 법률',a:['justice','gov'],
+  does:'교도소 · 구치소의 교정직 공무원은 수용자 관리와 교육 · 교화를 맡는다. 한국법무보호복지공단은 출소자의 숙식 · 취업 · 가족 지원을 한다. 수용자 자녀 지원도 교정복지의 한 영역이다.',
+  bach:'교정직 9급 공채, 공단 직원 공채.',grad:'교정 상담 · 심리 전문 인력, 연구.',spec:'교정직 공무원 시험. 공단은 사회복지사 · 직업상담사 우대',cb:'청주교도소 · 청주여자교도소, 법무보호복지공단 충북지부',l:[['교정본부','https://www.corrections.go.kr'],['한국법무보호복지공단','https://www.koreha.or.kr'],['사이버국가고시센터','https://www.gosi.kr']]},
+ {id:'civil',one:'주민센터와 시청의 복지 담당 공무원',m:'local',n:'사회복지전담공무원(사회복지직 공무원)',law:'사회보장급여법 제43조 · 지방공무원법',a:['research','family','child','gov'],ba:1,
+  does:'시 · 군 · 구청과 읍 · 면 · 동 행정복지센터에서 일하는 복지 담당 공무원. 기초생활보장 같은 복지급여의 신청 · 조사 · 결정, 위기 가구 발굴과 통합사례관리, 아동 · 노인 · 장애인 업무를 맡는다. 아동학대전담공무원과 아동보호 업무 담당도 여기서 나온다.',
+  bach:'9급 사회복지직 공채로 시작한다. 사회복지사 자격이 응시 요건이고, 필기는 국어 · 영어 · 한국사 · 사회복지학개론 · 행정법총론이다. 첫 발령은 대개 행정복지센터다.',grad:'학위가 필수는 아니지만 정책 부서에서 쓰인다.',spec:'사회복지사 2급 이상 + 지방공무원 임용시험. 시험 과목과 일정은 해마다 공고로 확인.',cb:'충청북도 · 청주시 등 지방공무원 임용시험',l:[['지방공무원 원서접수','https://local.gosi.go.kr'],['충청북도청','https://www.chungbuk.go.kr'],['청주시청','https://www.cheongju.go.kr']]},
+ {id:'cri',one:'충북의 정책을 연구하고 돌봄의 질을 관리하는 곳',m:'local',n:'충북연구원 · 충청북도사회서비스원',law:'지방자치단체 출연기관',a:['research'],
+  does:'충북연구원은 도의 정책 연구기관으로 복지 · 인구 · 지역 연구를 한다. 사회서비스원은 돌봄 서비스의 공공 운영과 품질 관리, 종사자 지원을 맡는다.',
+  bach:'사회서비스원의 사업 · 행정 직원은 학부 졸업으로 지원할 수 있다.',grad:'연구원의 위촉연구원은 석사부터. 연구위원은 박사.',spec:'통계(SPSS · R) · 보고서 작성 능력. 위촉연구원은 주로 1년 단위 계약이다.',cb:'청주 소재',l:[['충북연구원','https://www.cri.re.kr'],['충청북도사회서비스원','https://cb.pass.or.kr/']]},
+ {id:'cjwf',one:'우리 시의 복지를 연구하고 현장을 돕는 곳',m:'local',n:'청주복지재단 등 지역 복지재단',law:'지방자치단체 출연기관',a:['research','family'],ba:1,
+  does:'시의 복지 정책 연구, 복지 현장 지원, 종사자 교육, 민관 협력 사업을 한다. 조직은 크게 연구팀과 사업 · 행정팀으로 나뉜다.',
+  bach:'사업팀 · 행정팀은 학부 졸업으로 지원할 수 있다.',grad:'연구팀은 최소 석사. 위촉연구원은 과제 단위 계약(주로 1년)이 많다.',spec:'사회복지사, 기획 · 문서 능력. 연구팀은 조사 · 분석 경험',cb:'<b>청주복지재단</b>',l:[['청주복지재단','https://www.cjwf.or.kr/home/main.php']]},
+ {id:'nypi',one:'나라의 아동 · 청소년 정책을 연구하는 곳',m:'local',n:'한국청소년정책연구원 · 한국보건사회연구원 · 육아정책연구소',law:'정부출연연구기관',a:['research','youth','child','infant'],
+  does:'국가 단위 정책 연구기관. 청소년정책연구원은 청소년, 보건사회연구원은 복지 · 보건 · 인구, 육아정책연구소는 영유아 정책을 연구한다. 패널조사와 실태조사를 맡는다.',
+  bach:'연구 자리는 없다고 보는 편이 맞다. 행정직 공채는 따로 있다.',grad:'석사는 위촉연구원 · 전문연구원, 박사는 부연구위원 · 연구위원.',spec:'석사 이상, 통계 분석과 논문 실적',cb:'세종시(국책연구단지) 등. 충북에서 통근하는 사람도 있다.',l:[['한국청소년정책연구원','https://www.nypi.re.kr'],['한국보건사회연구원','https://www.kihasa.re.kr'],['육아정책연구소','https://www.kicce.re.kr']]}
+ ,{id:'ngo',one:'후원금으로 아이 편에 서는 단체',m:'ngo',n:'아동 NGO: 초록우산 · 굿네이버스 · 세이브더칠드런 · 월드비전 · 홀트아동복지회 등',law:'비영리 법인(사회복지법인 · 사단법인 등)',a:['child','youth','family','infant'],ba:1,
+  does:'후원금을 모아 국내외 아동을 돕는다. 일은 크게 넷이다. ① 국내 사업: 위기 가정 지원, 결연, 아동권리 교육 ② 옹호: 법과 제도를 바꾸자는 캠페인과 정책 제안 ③ 해외 사업: 국제개발 · 긴급구호 ④ 모금과 홍보. 여기에 더해 아동보호전문기관 · 가정위탁지원센터 · 복지관 같은 시설을 정부에서 위탁받아 운영하는 법인도 많다. 홀트아동복지회는 입양 · 위탁 · 한부모 · 장애인 복지로 알려진 기관이다.',
+  bach:'법인 공채로 들어가 지역본부 · 지부에서 사업 담당, 사례 지원, 후원자 관리, 캠페인 진행을 맡는다. 법인이 운영하는 시설로 발령받기도 한다.',grad:'연구소, 정책 · 옹호 부서, 사업 평가, 국제개발 쪽에서 석사 이상이 강점이 된다.',spec:'사회복지사, 기획서와 글쓰기, 봉사 · 인턴 경험. 해외 사업은 외국어.',
+  cb:'주요 NGO는 권역별 지역본부 · 지부를 둔다. 충북 담당 사무소의 위치와 채용은 각 누리집에서 확인.',l:[['초록우산','https://www.chorogusan.or.kr'],['굿네이버스','https://www.goodneighbors.kr'],['세이브더칠드런','https://www.sc.or.kr'],['월드비전','https://www.worldvision.or.kr'],['홀트아동복지회','https://www.holt.or.kr']]},
+ {id:'ngolab',one:'현장의 목소리를 숫자와 논문으로 바꾸는 곳',m:'ngo',n:'NGO 부설 연구소: 굿네이버스 아동권리연구소 · 초록우산 아동복지연구소 등',law:'비영리 법인 부설 연구 조직',a:['research','child'],
+  does:'NGO가 현장에서 본 문제를 조사와 연구로 정리해 정책을 바꾸는 근거로 만든다. 굿네이버스 아동권리연구소는 「대한민국 아동권리지수」를 조사해 발표한다. 초록우산 아동복지연구소는 아동 실태 연구와 연구지원사업을 하고 학술지 「동광」(한국연구재단 등재후보지)을 펴낸다. 세이브더칠드런은 서울대학교 사회복지연구소와 「한국 아동 삶의 질」 연구를 이어 왔다.',
+  bach:'연구 자리는 거의 없다. 조사 보조 · 행정 지원은 가끔 있다.',grad:'석사는 연구원으로 설문 조사, 통계 분석, 보고서 작성을 맡는다. 박사는 연구 책임과 학술지 운영, 정책 제안을 맡는다.',spec:'석사 이상, 조사방법과 통계(SPSS · R · Stata), 보고서와 논문 작성 경험',
+  cb:'연구소는 대부분 서울 본부에 있다.',l:[['초록우산 아동복지연구소','https://www.chorogusan.or.kr/institute/activity.do'],['굿네이버스','https://www.goodneighbors.kr'],['세이브더칠드런','https://www.sc.or.kr']]}
+ ,{id:'rodem',one:'법원이 맡긴 아이들이 살면서 다시 배우는 곳',m:'mohw',n:'아동보호치료시설: 로뎀청소년학교(제천)',law:'아동복지법 · 소년법 6호 처분',a:['justice','youth','child'],k:'live',ba:1,
+  does:'아동보호치료시설은 치료와 선도가 필요한 아동이 생활하는 아동복지시설이다. 소년법 6호 처분(아동복지시설 등에 감호 위탁)을 받은 소년이 법원 결정으로 온다. 소년원은 법무부 기관이고, 이곳은 보건복지부 소관의 복지시설이라는 점이 다르다. 생활 지도와 함께 학업, 상담, 치료 프로그램을 한다.',
+  bach:'생활지도원, 프로그램 담당, 상담 보조. 아이들과 함께 생활하므로 교대 근무가 있다.',grad:'임상심리 · 상담 · 치료 인력, 사무국장.',spec:'사회복지사, 청소년상담사 · 청소년지도사. 비행 청소년 상담에 대한 관심',
+  cb:'<b>로뎀청소년학교</b>(제천). 충북의 아동보호치료시설이다.',l:[['로뎀청소년학교','http://www.rothemschool.kr/']]},
+ {id:'nps',one:'국민의 노후 연금과 장애 심사를 맡는 공단',m:'corp',n:'국민연금공단',law:'국민연금법 · 보건복지부 산하',a:['gov','family'],ba:1,
+  does:'국민연금 가입과 보험료, 노령 · 장애 · 유족연금 지급을 맡는다. 연금 외에도 장애인 등록을 위한 장애 정도 심사, 장애인 활동지원 등 복지서비스 조사, 노후준비 상담을 한다. 본부는 전주에 있고 전국에 지사가 있다.',
+  bach:'공채로 들어가 지사에서 가입 · 급여 상담과 조사 업무를 한다. 필기는 직업기초능력(NCS) 중심이다.',grad:'국민연금연구원의 연구직은 석사 이상.',spec:'전공 제한 없는 공채가 중심. 사회복지 전공은 장애 · 복지서비스 업무에서 쓰임이 크다. 자격 우대와 직렬은 해마다 공고로 확인.',
+  cb:'청주 등 충북의 지사',l:[['국민연금공단','https://www.nps.or.kr']]},
+ {id:'nhis',one:'건강보험과 어르신 장기요양을 맡는 공단',m:'corp',n:'국민건강보험공단',law:'국민건강보험법 · 노인장기요양보험법 · 보건복지부 산하',a:['gov','family'],ba:1,
+  does:'건강보험 자격과 보험료, 건강검진을 맡고, 노인장기요양보험을 운영한다. 장기요양 쪽에서는 어르신 집을 방문해 상태를 조사하고 등급을 판정하며, 요양기관을 관리한다. 본부는 원주에 있다.',
+  bach:'행정직 공채 외에 장기요양 업무를 하는 요양직이 있다. 요양직은 사회복지사 · 간호사 등 자격을 가진 사람을 대상으로 뽑아 왔다.',grad:'건강보험연구원의 연구직은 석사 이상.',spec:'요양직의 자격 · 경력 요건은 공고마다 다르므로 반드시 그해 공고를 확인.',
+  cb:'청주 등 충북의 지사, 장기요양 운영센터',l:[['국민건강보험공단','https://www.nhis.or.kr']]},
+ {id:'comwel',one:'일하다 다친 사람의 보상과 재활을 맡는 공단',m:'corp',n:'근로복지공단',law:'산업재해보상보험법 · 고용노동부 산하',a:['gov','family'],ba:1,
+  does:'산재보험과 고용보험 적용 · 징수, 산재 보상을 맡는다. 다친 노동자가 일터와 사회로 돌아가도록 재활 · 심리상담 · 직업복귀 지원을 하고, 공단 병원을 운영한다. 본부는 울산에 있다. 복지부가 아니라 고용노동부 산하라는 점이 다르다.',
+  bach:'행정직 공채로 지사에서 보상 · 재활 지원 업무를 한다. 공단 병원에는 의료사회복지사 자리가 있다.',grad:'근로복지연구원의 연구직은 석사 이상.',spec:'공채는 직업기초능력(NCS) 중심. 재활 업무와 병원 직군의 자격 요건은 공고로 확인.',
+  cb:'청주 등 충북의 지사',l:[['근로복지공단','https://www.comwel.or.kr']]},
+ {id:'kfsp',one:'나라의 자살예방 사업을 이끄는 공공기관',m:'corp',n:'한국생명존중희망재단',law:'자살예방법 · 보건복지부 산하',a:['gov','mind','research'],ba:1,
+  does:'자살예방 정책을 지원하는 중앙 기관이다. 생명지킴이 교육, 자살 유족 지원, 심리부검, 자살 통계와 연구, 지역 자살예방센터 지원을 맡는다. 현장에서 직접 상담하는 곳은 지역의 정신건강복지센터와 자살예방센터이고, 재단은 그 뒤에서 기준을 만들고 교육한다.',
+  bach:'사업 운영과 행정, 교육 진행. 채용 공고가 수시로 난다.',grad:'통계 · 연구, 심리부검 면담은 석사 이상이나 정신건강전문요원을 요구하는 경우가 많다.',spec:'사회복지사 · 정신건강사회복지사, 사업 기획과 문서 능력',
+  cb:'전국 기관(서울). 충북에서는 충북광역정신건강복지센터가 자살예방 사업을 함께 맡는다.',l:[['한국생명존중희망재단','https://www.kfsp.or.kr'],['충북광역정신건강복지센터','https://www.cbmind.or.kr']]},
+ {id:'assoc',one:'이름은 크지만 사무국은 아주 작은 회원 단체',m:'ngo',n:'민간 협회 · 직능단체: 한국자살예방협회 · 한국사회복지사협회 등',law:'사단법인(회원 단체)',a:['mind','research'],
+  does:'같은 분야의 전문가나 기관이 회원으로 모여 만든 단체다. 학술대회와 교육, 자격 관리, 정책 제안을 한다. 공공기관도 아니고 대형 NGO도 아니어서, 사무국 직원이 몇 명에 그치는 곳이 많다. 한국자살예방협회가 이런 민간 협회이고, 공공기관인 한국생명존중희망재단과는 성격이 다르다.',
+  bach:'사무국의 행정 · 교육 담당 자리가 가끔 난다. 채용 규모가 매우 작아 첫 직장으로 계획하기는 어렵다.',grad:'학술 · 정책 사업에서 석사 이상이 쓰인다.',spec:'행정 · 문서 능력. 자격증을 관리하는 협회(사회복지사 · 학교사회복지사 등)는 나중에 회원으로 만나게 된다.',
+  cb:'대부분 서울에 사무국이 있다. 충청북도사회복지사협회처럼 지역 협회도 있다.',l:[['한국자살예방협회','https://www.suicideprevention.or.kr'],['한국사회복지사협회','https://www.welfare.net']]}
+ ,{id:'jahwal',one:'일할 수 있도록 돕는, 가난에서 나오는 사다리',m:'mohw',n:'지역자활센터',law:'국민기초생활보장법',a:['family'],k:'go',ba:1,
+  does:'기초생활수급자와 차상위 주민이 일을 통해 자립하도록 돕는다. 자활근로 사업단을 운영하고, 사례관리와 직업 교육, 자산형성 지원, 자활기업 창업을 지원한다.',
+  bach:'자활 사례관리, 사업단 운영과 참여 주민 상담, 행정.',grad:'센터장 · 실장, 사업 기획.',spec:'사회복지사. 직업상담사가 있으면 강점',
+  cb:'충북청주 · 괴산 · 단양 · 영동 · 음성 등 시 · 군마다 지역자활센터가 있다.',l:[['한국자활복지개발원','https://www.kdissw.or.kr']]},
+ {id:'homeless',one:'거리와 시설에서 다시 일어서도록 돕는 곳',m:'mohw',n:'노숙인시설(재활 · 요양 · 자활)',law:'노숙인복지법',a:['family'],k:'live',ba:1,
+  does:'집이 없는 사람에게 잠자리와 식사, 의료 연계, 재활과 자활 프로그램을 제공하는 생활시설이다. 재활시설, 요양시설, 자활시설로 나뉜다.',
+  bach:'생활 지원, 사례관리, 프로그램 운영. 교대 근무가 있다.',grad:'시설장 · 사무국장.',spec:'사회복지사',
+  cb:'음성꽃동네 노숙인재활원 · 노숙인요양원 등',l:[]},
+ {id:'council',one:'지역의 복지 기관들을 잇고 나눔을 모으는 곳',m:'mohw',n:'사회복지협의회 · 자원봉사센터',law:'사회복지사업법 제33조 · 자원봉사활동 기본법',a:['family','research'],ba:1,
+  does:'사회복지협의회는 지역 복지 기관들의 협의 · 조정 기구로 좋은이웃들(복지 사각지대 발굴), 푸드뱅크, 자원봉사 인증 관리, 종사자 교육을 한다. 자원봉사센터는 봉사자를 모집 · 교육해 필요한 곳에 잇는다.',
+  bach:'사업 담당, 자원 연계, 행정.',grad:'사무국장, 조사 · 정책 사업.',spec:'사회복지사, 문서와 네트워크 능력',
+  cb:'청주시 · 제천시 · 음성군 · 영동군 사회복지협의회 등',l:[['한국사회복지협의회','https://www.bokji.net']]}
+];
+
+/* ── 실습처: 한국사회복지사협회 현장실습센터의 충북 선정 실습기관 명단(교수 제공 엑셀, '정상' 상태만, 중복 제거). 대표자 · 지도자 이름은 싣지 않는다. ── */
+const PR=[["(A+)동행노인복지센터","청주시","care",20,3,"2028-12","old"],["(A+)동행요양원","청주시","care",20,3,"2028-06","old"],["(사)충북여성인권부설상담소늘봄","청주시","fam",10,2,"2027-06","famc"],["(주)보듬","청주시","etc",15,2,"2029-06",""],["SM하나요양원","청주시","care",20,3,"2028-06","old"],["가경지역아동센터","청주시","lcc",20,2,"2028-06","lcc"],["강내지역아동센터","청주시","lcc",15,2,"2028-12","lcc"],["경희지역아동센터","청주시","lcc",20,3,"2027-12","lcc"],["고려요양협동조합","청주시","care",20,3,"2027-06","old"],["골든청주요양원","청주시","care",20,2,"2028-06","old"],["광성지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["굿네이버스충북지부","청주시","etc",7,3,"2026-12","ngo"],["나누리장애인주간이용센터","청주시","dis",15,3,"2028-12","dis"],["남이지역아동센터","청주시","lcc",20,2,"2028-06","lcc"],["남청주노인요양원","청주시","care",20,4,"2029-06","old"],["남청주비전하우스","청주시","etc",15,2,"2028-12",""],["누리노인재가복지센터","청주시","care",10,2,"2028-06","old"],["늘봄노인복지센터","청주시","care",15,2,"2028-06","old"],["늘푸른아동원","청주시","home",10,3,"2028-12","home"],["늘푸른지역아동센터","청주시","lcc",20,2,"2027-12","lcc"],["다니엘지역아동센터","청주시","lcc",20,3,"2027-06","lcc"],["다솜노인요양원","청주시","care",10,2,"2029-06","old"],["다솜의집","청주시","etc",10,2,"2028-12",""],["다솜지역아동센터","청주시","lcc",20,2,"2029-06","lcc"],["다온빌","청주시","etc",10,2,"2028-12",""],["대명행복한홈스쿨","청주시","lcc",20,2,"2028-12","lcc"],["대성지역아동센터","청주시","lcc",20,2,"2028-06","lcc"],["더공생주간보호센터","청주시","care",15,2,"2027-06","old"],["동산지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["두드림재가복지센터","청주시","care",10,2,"2027-06","old"],["디딤돌재가복지센터","청주시","care",10,2,"2028-06","old"],["라우렌시오빌","청주시","etc",8,3,"2028-12",""],["로뎀지역아동센터","청주시","lcc",15,2,"2029-06","lcc"],["마음꽃뇌병변장애인주간보호센터","청주시","dis",10.5,2,"2028-06","dis"],["목령종합사회복지관","청주시","swc",10,3,"2028-12","swc"],["무지개도서관","청주시","etc",10,2,"2027-06",""],["미라클지역아동센터","청주시","lcc",15,2,"2027-06","lcc"],["민들레","청주시","etc",10,2,"2027-06",""],["민들레팜&기프트","청주시","etc",15,3,"2027-12",""],["반짝이는지역아동센터","청주시","lcc",20,3,"2028-06","lcc"],["방주지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["백세노인복지센터","청주시","care",10,2,"2029-06","old"],["베다니주간센터미소둥지","청주시","etc",16,3,"2028-12",""],["보금자리주간보호방문요양센터","청주시","care",10,2,"2027-06","old"],["보듬의집","청주시","etc",15,2,"2027-06",""],["복대카리타스노인요양원","청주시","care",17.8,2,"2028-12","old"],["봄봄요양원","청주시","care",15,2,"2029-06","old"],["북부종합사회복지관","청주시","swc",19,7,"2028-12","swc"],["비추리지역아동센터","청주시","lcc",20,2,"2029-06","lcc"],["뿌리노인복지센터","청주시","care",20,2,"2029-06","old"],["사)청주여성의전화부설청주성폭력상담소","청주시","fam",10,2,"2027-06","famc"],["사랑나눔지역아동센터","청주시","lcc",18,2,"2028-06","lcc"],["사랑으로노인복지센터","청주시","care",20,3,"2027-12","old"],["사랑의울타리지역아동센터","청주시","lcc",15,3,"2027-06","lcc"],["사회복지법인천주교청주교구사회복지회","청주시","etc",10,2,"2028-12",""],["사회복지법인천주교청주교구사회복지회 프란치스코의집","청주시","etc",10,3,"2028-06",""],["사회복지법인충북혜능보육원","청주시","home",10,3,"2028-12","home"],["사회적협동조합일하는사람들가로수마을지역아동센터","청주시","lcc",15,2,"2027-06","lcc"],["사회적협동조합휴먼케어","청주시","etc",20,2,"2026-12",""],["산남종합사회복지관","청주시","swc",10,5,"2028-12","swc"],["산새노인요양원","청주시","care",20,3,"2028-12","old"],["상록원","청주시","etc",15,2,"2029-06",""],["새늘청주요양원","청주시","care",20,2,"2027-12","old"],["서부종합사회복지관","청주시","swc",10,5,"2028-12","swc"],["서원경","청주시","etc",20,2,"2027-06",""],["서원지역아동센터","청주시","lcc",20,2,"2028-06","lcc"],["서청주노인요양원","청주시","care",10,3,"2028-12","old"],["서청주새마을금고요양원","청주시","care",20,2,"2029-06","old"],["성덕원","청주시","etc",10,4,"2028-12",""],["세현지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["소나무지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["소망원","청주시","etc",10,2,"2028-12",""],["시온요양원","청주시","care",10,2,"2029-06","old"],["실버들요양원","청주시","care",20,2,"2028-06","old"],["실버메디컬복지센터노인요양원","청주시","care",20,3,"2028-12","old"],["아이엠재활병원","청주시","hosp",15,2,"2027-06","hosp"],["어린이재단청주사회복지관","청주시","swc",10,3,"2029-06","swc"],["에덴지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["영운지역아동센터","청주시","lcc",20,3,"2028-12","lcc"],["예심하우스보호작업장","청주시","dis",10,4,"2028-12","dis"],["오송종합사회복지관","청주시","swc",15,6,"2028-12","swc"],["온유주간보호센터","청주시","care",10,2,"2026-12","old"],["용암종합사회복지관","청주시","swc",15,4,"2029-06","swc"],["용암지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["우리들정신건강센터","청주시","mind",12,3,"2028-12","rehab"],["월곡지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["즐거운요양원","청주시","care",10,2,"2029-06","old"],["지역아동센터어깨동무공부방","청주시","lcc",20,2,"2028-06","lcc"],["직지드림플러스보호작업장","청주시","dis",10,2,"2028-06","dis"],["참좋은집","청주시","etc",20,2,"2029-06",""],["청목아카데미","청주시","etc",10,2,"2029-06",""],["청북지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["청애원","청주시","etc",14,3,"2029-06",""],["청주YWCA여성종합상담소","청주시","fam",15,2,"2029-06","famc"],["청주가경노인복지관","청주시","old",10,5,"2028-12","old"],["청주나누리장애인보호작업장","청주시","dis",20,4,"2029-06","dis"],["청주내덕노인복지관","청주시","old",10,5,"2027-06","old"],["청주상당노인복지관","청주시","old",10,6,"2028-12","old"],["청주서원노인복지관","청주시","old",20,8,"2028-12","old"],["청주소망의집","청주시","etc",16,2,"2028-06",""],["청주시가족센터","청주시","fam",10,4,"2029-06","famc"],["청주시남이다함께돌봄센터","청주시","lcc",15,2,"2027-06","lcc"],["청주시남자단기청소년쉼터","청주시","youth",20,2,"2029-06","shelter"],["청주시노인종합복지관","청주시","old",10,2,"2028-12","old"],["청주시립요양병원","청주시","hosp",10,2,"2029-06","hosp"],["청주시사회복지협의회","청주시","etc",15,3,"2028-12","council"],["청주시신장장애인주간보호센터","청주시","dis",15,2,"2029-06","dis"],["청주시일시청소년쉼터(이동형)","청주시","youth",10,3,"2029-06","shelter"],["청주시장애인단기돌봄센터","청주시","dis",16,4,"2028-12","dis"],["청주시장애인종합복지관","청주시","dis",10,9,"2028-12","dis"],["청주시장애인주간보호센터","청주시","dis",10,5,"2028-12","dis"],["청주시중독관리통합지원센터","청주시","mind",10,2,"2029-06","rehab"],["청주시청원정신건강복지센터","청주시","mind",10,3,"2028-12","mhc"],["청주에덴원","청주시","etc",10,2,"2029-06",""],["청주우암시니어클럽","청주시","old",10,3,"2029-06","old"],["청주정신건강센터","청주시","mind",13,3,"2028-12","rehab"],["청주종합사회복지관","청주시","swc",10,3,"2028-12","swc"],["청주청남시니어클럽","청주시","old",10,3,"2028-06","old"],["청주푸른학교지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["청주해오름마을","청주시","etc",10,3,"2028-12",""],["청주흥덕노인통합지원센터","청주시","old",10,2,"2027-06","old"],["청주흥덕시니어클럽","청주시","old",10,3,"2028-12","old"],["초정노인복지센터","청주시","care",10,3,"2028-12","old"],["충북복지연합요양원","청주시","care",10,2,"2026-12","old"],["충북육아원","청주시","home",20,4,"2029-06","home"],["충북재활원 요셉의집","청주시","etc",18.5,2,"2028-12",""],["충북재활원보호작업장","청주시","dis",15,4,"2028-06","dis"],["충북청주지역자활센터","청주시","jahwal",15,3,"2026-12","jahwal"],["충청북도곰두리체육관","청주시","dis",10,4,"2028-12","dis"],["충청북도노인보호전문기관","청주시","old",10,6,"2028-12","old"],["충청북도노인종합복지관","청주시","old",10,11,"2028-12","old"],["충청북도사회복지사협회","청주시","etc",10,2,"2029-06","assoc"],["충청북도아동보호전문기관","청주시","child",10,3,"2028-12","apa"],["친절한방문주간보호재활센터","청주시","care",20,2,"2028-06","old"],["튜울립지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["파랑새지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["푸른나무오송요양원","청주시","care",10,2,"2028-12","old"],["한빛교실지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["해뜨는집","청주시","etc",10,2,"2029-06",""],["해오름집","청주시","etc",10,2,"2026-12",""],["행복센터","청주시","etc",10,2,"2028-06",""],["행복의집소망노인요양원","청주시","care",10,2,"2028-12","old"],["행복한요양원","청주시","care",20,3,"2028-12","old"],["행복한지역아동센터","청주시","lcc",20,2,"2028-12","lcc"],["현양원","청주시","home",10,2,"2028-12","home"],["현양자립생활관","청주시","child",15,3,"2027-06","treat"],["혜민지역아동센터","청주시","lcc",10,2,"2027-06","lcc"],["혜원장애인종합복지관","청주시","dis",18,2,"2028-12","dis"],["휴먼케어요양원","청주시","care",20,2,"2028-12","old"],["흥덕실비노인요양원","청주시","care",10,2,"2028-12","old"],["괴산군노인복지관","괴산군","old",10,3,"2029-06","old"],["괴산군장애인복지관","괴산군","dis",10,3,"2028-12","dis"],["괴산장연지역아동센터","괴산군","lcc",20,2,"2027-12","lcc"],["괴산제일요양원","괴산군","care",10,2,"2029-06","old"],["괴산지역자활센터","괴산군","jahwal",10,2,"2029-06","jahwal"],["선한이웃의집","괴산군","etc",20,2,"2029-06",""],["이화령지역아동센터","괴산군","lcc",10,2,"2028-06","lcc"],["진성노인전문요양원","괴산군","care",10,2,"2028-12","old"],["청천재활원","괴산군","etc",10,2,"2028-12",""],["햇살재가복지센터","괴산군","care",20,2,"2029-06","old"],["다래동산","단양군","etc",20,3,"2028-12",""],["단성지역아동센터","단양군","lcc",20,2,"2028-12","lcc"],["단양노인복지관","단양군","old",0,2,"2028-12","old"],["단양다사랑노인요양원","단양군","care",20,3,"2028-12","old"],["단양장애인복지관","단양군","dis",10,4,"2028-12","dis"],["단양지역자활센터","단양군","jahwal",20,2,"2029-06","jahwal"],["별방지역아동센터","단양군","lcc",20,2,"2026-12","lcc"],["제일지역아동센터","단양군","lcc",20,2,"2027-12","lcc"],["충주댐노인복지관","단양군","old",10,2,"2029-06","old"],["한가족그룹홈","단양군","home",15,2,"2027-06","home"],["도깨비지역아동센터","보은군","lcc",20,2,"2027-12","lcc"],["보은군노인장애인복지관","보은군","old",10,2,"2029-06","old"],["보은군수어통역센터","보은군","dis",10,2,"2028-12","dis"],["보은군실버복지관","보은군","old",10,2,"2028-06","old"],["보은군정신건강복지센터","보은군","mind",15,2,"2029-06","mhc"],["보은의집","보은군","etc",20,2,"2028-06",""],["성암안식원","보은군","etc",20,2,"2028-06",""],["예닮노인복지센터","보은군","care",10,2,"2027-06","old"],["파랑새지역아동센터","보은군","lcc",20,2,"2029-06","lcc"],["수가성재가노인복지센터","영동군","care",20,4,"2028-12","old"],["영동군노인복지관","영동군","old",10,2,"2027-06","old"],["영동군사회복지협의회","영동군","etc",20,3,"2028-06","council"],["영동군장애인복지관","영동군","dis",10,2,"2028-12","dis"],["영동수가성요양원","영동군","care",20,2,"2028-12","old"],["영동요양원","영동군","care",20,3,"2026-12","old"],["영동제일병원","영동군","hosp",10,2,"2027-06","hosp"],["행복한꿈터공부방지역아동센터","영동군","lcc",10,2,"2029-06","lcc"],["가온통합재가복지센터","옥천군","care",10,2,"2027-06","old"],["부활원","옥천군","etc",10,2,"2028-12",""],["영생원","옥천군","etc",15,12,"2028-12",""],["영실애육원","옥천군","home",20,2,"2028-12","home"],["옥천군가족센터","옥천군","fam",10,3,"2028-06","famc"],["옥천군노인복지관","옥천군","old",10,7,"2028-12","old"],["옥천군립치매전담요양원","옥천군","care",20,2,"2029-06","old"],["옥천군장애인가족지원센터","옥천군","dis",10,2,"2029-06","dis"],["옥천군장애인복지관","옥천군","dis",12,9,"2028-06","dis"],["옥천꽃동네성모노인요양원","옥천군","care",17,2,"2027-06","old"],["옥천시니어클럽","옥천군","old",10,2,"2029-06","old"],["청산원","옥천군","etc",10,8,"2029-06",""],["충북지적발달장애인복지협회 옥천군지부","옥천군","dis",10,2,"2029-06","dis"],["(주)음성노인복지센터","음성군","care",20,4,"2028-12","old"],["꽃동네천사의집","음성군","home",10,2,"2028-12","home"],["높은뜻마중학교지역아동센터","음성군","lcc",15,2,"2028-12","lcc"],["대소지역아동센터","음성군","lcc",15,2,"2029-06","lcc"],["무극비전지역아동센터","음성군","lcc",15,2,"2028-06","lcc"],["사랑의손길요양원","음성군","care",20,2,"2028-12","old"],["새생명장애인의집","음성군","dis",20,2,"2028-12","dis"],["새순지역아동센터","음성군","lcc",10,2,"2026-12","lcc"],["오미들지역아동센터","음성군","lcc",15,2,"2028-12","lcc"],["음성군노인복지관","음성군","old",15,6,"2028-12","old"],["음성군사회복지협의회","음성군","etc",20,3,"2029-06","council"],["음성군장애인가족지원센터","음성군","dis",10,2,"2029-06","dis"],["음성군장애인복지관","음성군","dis",15,9,"2028-12","dis"],["음성꽃동네노숙인요양원","음성군","jahwal",10,4,"2028-12","homeless"],["음성꽃동네노숙인재활원","음성군","jahwal",10,2,"2028-12","homeless"],["음성꽃동네심신장애인요양시설","음성군","dis",17,3,"2028-12","dis"],["음성꽃동네아동복지시설","음성군","home",13,2,"2028-12","home"],["음성꽃동네정신요양원","음성군","mind",17,2,"2028-12","rehab"],["음성나누리장애인보호작업장","음성군","dis",20,3,"2028-12","dis"],["음성시니어클럽","음성군","old",10,2,"2026-12","old"],["음성향애원","음성군","home",15,3,"2028-12","home"],["임마누엘지역아동센터","음성군","lcc",15,2,"2028-12","lcc"],["충북음성가정성폭력통합상담소","음성군","fam",10,3,"2028-12","famc"],["충북음성지역자활센터","음성군","jahwal",20,2,"2028-12","jahwal"],["함께하는사랑밭문화지역아동센터","음성군","lcc",10,2,"2027-06","lcc"],["행복모아사회적협동조합(복된해피스쿨지역아동센터)","음성군","lcc",20,2,"2027-06","lcc"],["행복모아사회적협동조합(새미실지역아동센터)","음성군","lcc",15,2,"2027-12","lcc"],["다하주간이용센터","제천시","etc",10,2,"2028-12",""],["동행하는집","제천시","etc",15,2,"2026-12",""],["들꽃피는노인요양원","제천시","care",10,3,"2027-06","old"],["로뎀청소년학교","제천시","youth",18,5,"2029-06","rodem"],["명락노인종합복지관","제천시","old",10,4,"2028-12","old"],["사랑의교실지역아동센터","제천시","lcc",10,2,"2029-06","lcc"],["사하의집","제천시","etc",10,2,"2029-06",""],["살레시오의집","제천시","etc",10,2,"2028-12",""],["살림터","제천시","etc",15,2,"2028-12",""],["세하단기보호센터","제천시","etc",10,2,"2027-06",""],["세하의집","제천시","etc",20,2,"2028-12",""],["신백아동복지관","제천시","child",10,3,"2028-12",""],["옹달샘그룹홈","제천시","home",10,2,"2027-12","home"],["이포봉양지역아동센터","제천시","lcc",10,2,"2029-06","lcc"],["이하의집","제천시","etc",20,2,"2028-12",""],["제천시노인종합복지관","제천시","old",10,3,"2028-12","old"],["제천시니어클럽","제천시","old",15,4,"2028-12","old"],["제천시립치매전담요양원","제천시","care",16,2,"2029-06","old"],["제천시사회복지협의회","제천시","etc",20,5,"2028-12","council"],["제천시실버복지관","제천시","old",10,2,"2027-12","old"],["제천시장애인가족지원센터","제천시","dis",12,2,"2026-12","dis"],["제천시장애청소년직업적응훈련시설","제천시","dis",10,2,"2028-06","dis"],["제천실버홈","제천시","care",20,2,"2028-12","old"],["제천장애인종합복지관","제천시","dis",10,4,"2028-12","dis"],["제천종합사회복지관","제천시","swc",10,4,"2028-12","swc"],["제천푸른지역아동센터","제천시","lcc",10,2,"2029-06","lcc"],["주원요양원","제천시","care",10,2,"2029-06","old"],["주원주야간보호센터","제천시","care",10,2,"2029-06","old"],["충북북부아동보호전문기관","제천시","child",10,2,"2029-06","apa"],["큰나무주간활동센터","제천시","etc",10,2,"2028-12",""],["하소아동복지관","제천시","child",10,3,"2028-12",""],["홍광실버타운","제천시","care",20,2,"2028-12","old"],["사평지역아동센터","증평군","lcc",15,2,"2027-12","lcc"],["송산주간보호센터","증평군","care",15,2,"2029-06","old"],["증평군노인복지관","증평군","old",18,2,"2028-12","old"],["증평군장애인복지관","증평군","dis",10,6,"2029-06","dis"],["증평군정신건강복지센터","증평군","mind",10,2,"2027-06","mhc"],["증평들꽃마을","증평군","etc",15,3,"2028-12",""],["증평삼보사회복지관","증평군","swc",15,6,"2028-12","swc"],["행복이가득한지역아동센터","증평군","lcc",15,2,"2029-06","lcc"],["본정노인요양원","진천군","care",10,2,"2028-06","old"],["사과나무지역아동센터","진천군","lcc",20,2,"2029-06","lcc"],["사랑나눔지역아동센터","진천군","lcc",20,3,"2027-06","lcc"],["사석노인요양원","진천군","care",20,3,"2028-12","old"],["의료법인노은의료재단","진천군","etc",10,3,"2029-06",""],["진천군노인복지관","진천군","old",10,5,"2028-12","old"],["진천군립치매전담요양원","진천군","care",20,2,"2027-06","old"],["진천군자원봉사센터","진천군","etc",15,3,"2028-06","council"],["진천군장애인가족지원센터","진천군","dis",10,2,"2029-06","dis"],["진천군장애인복지관","진천군","dis",10,4,"2028-12","dis"],["진천시민지역아동센터","진천군","lcc",20,2,"2026-12","lcc"],["진천원광은혜의집","진천군","etc",10,3,"2029-06",""],["진천지역아동센터","진천군","lcc",20,3,"2029-06","lcc"],["충북중부아동보호전문기관","진천군","child",0,3,"2028-12","apa"],["행복한노인요양원","진천군","care",20,2,"2029-06","old"],["(사)충북장애인부모연대충주시지회","충주시","dis",15,2,"2028-06","dis"],["LH행복꿈터하버드지역아동센터","충주시","lcc",20,2,"2028-12","lcc"],["금릉지역아동센터","충주시","lcc",20,2,"2029-06","lcc"],["꿈꾸는사회적협동조합(꿈이열리는지역아동센터)","충주시","lcc",20,2,"2028-06","lcc"],["꿈꾸는사회적협동조합(목행지역아동센터)","충주시","lcc",20,2,"2027-06","lcc"],["나눔의집","충주시","etc",10,4,"2028-12",""],["늘푸른지역아동센터","충주시","lcc",20,2,"2028-12","lcc"],["로뎀나무요양원","충주시","care",20,2,"2027-12","old"],["모시래지역아동센터","충주시","lcc",20,2,"2029-06","lcc"],["법성원","충주시","etc",10,2,"2026-12",""],["성심농아재활원","충주시","dis",10,2,"2027-06","dis"],["성지실버홈","충주시","care",20,2,"2028-06","old"],["수안보아모르요양원","충주시","care",20,2,"2028-06","old"],["수안보지역아동센터","충주시","lcc",20,3,"2028-12","lcc"],["숭덕꿈터","충주시","etc",10,2,"2026-12",""],["아름다운지역아동센터","충주시","lcc",20,2,"2028-12","lcc"],["아이들세상지역아동센터","충주시","lcc",15,2,"2028-06","lcc"],["안심주간보호센터","충주시","care",20,3,"2027-06","old"],["온누리요양원","충주시","care",10,2,"2029-06","old"],["용산지역아동센터","충주시","lcc",20,2,"2028-12","lcc"],["좋은지역아동센터","충주시","lcc",20,3,"2028-12","lcc"],["진여원","충주시","home",15,4,"2028-12","home"],["충주문화시니어클럽","충주시","old",10,2,"2028-06","old"],["충주성산지역아동센터","충주시","lcc",20,2,"2028-12","lcc"],["충주성심맹아원","충주시","dis",10,3,"2028-12","dis"],["충주시가족센터","충주시","fam",10,3,"2028-12","famc"],["충주시노인복지관","충주시","old",10,5,"2028-12","old"],["충주시니어클럽","충주시","old",10,5,"2028-12","old"],["충주시다함께돌봄센터아이꿈터","충주시","lcc",20,2,"2028-06","lcc"],["충주시여자중장기청소년쉼터","충주시","youth",15,2,"2029-06","shelter"],["충주시장애인가족지원센터","충주시","dis",10,2,"2028-12","dis"],["충주시장애인다누리주간보호센터","충주시","dis",10,2,"2027-06","dis"],["충주시장애인협의회","충주시","dis",15,2,"2029-06","dis"],["충주어울림센터","충주시","etc",10,2,"2028-12",""],["충주장애인자립생활센터","충주시","dis",10,3,"2026-12","dis"],["충주종합사회복지관","충주시","swc",15,2,"2028-12","swc"],["충주한가족지역아동센터","충주시","lcc",15,2,"2028-12","lcc"],["충주행복한돌봄사회적협동조합앙성지역아동센터","충주시","lcc",20,2,"2029-06","lcc"],["충주행복한돌봄사회적협동조합엄정지역아동센터","충주시","lcc",20,2,"2028-12","lcc"],["충주행복한돌봄사회적협동조합충주지역아동센터","충주시","lcc",20,2,"2028-06","lcc"],["충주행복한돌봄사회적협동조합행복을꿈꾸는지역아동센터","충주시","lcc",20,3,"2029-06","lcc"],["충청북도발달장애인긴급돌봄센터","충주시","dis",15,2,"2029-06","dis"],["충청북도장애인종합복지관","충주시","dis",10,4,"2028-12","dis"],["푸른풀밭지역아동센터","충주시","lcc",10,2,"2028-12","lcc"],["한터","충주시","etc",15,2,"2029-06",""],["해피하우스다솜","충주시","etc",15,2,"2028-12",""],["희망지역아동센터","충주시","lcc",20,2,"2028-12","lcc"]];
+const PCAT=[["lcc", "지역아동센터 · 돌봄"], ["home", "아동양육 · 그룹홈"], ["child", "아동보호 · 자립 · 아동복지관"], ["youth", "청소년"], ["swc", "종합사회복지관"], ["old", "노인복지관 · 시니어클럽"], ["care", "노인요양 · 재가"], ["dis", "장애인"], ["mind", "정신건강 · 중독"], ["fam", "가족 · 여성 · 상담"], ["jahwal", "자활 · 노숙인"], ["hosp", "병원"], ["etc", "협의회 · 기타"]];
+const pcName=Object.fromEntries(PCAT);
+const PCNT=PR.reduce((m,r)=>{if(r[6])m[r[6]]=(m[r[6]]||0)+1;return m},{});
+let pr={city:'',cat:'',card:'',q:'',n:30};
+function pmatch(r){return(!pr.city||r[1]===pr.city)&&(!pr.cat||r[2]===pr.cat)&&(!pr.card||r[6]===pr.card)&&(!pr.q||r[0].toLowerCase().includes(pr.q.toLowerCase()));}
+function renderPr(){
+  const cities=[...new Set(PR.map(r=>r[1]))];
+  $('prCity').innerHTML='<option value="">충북 전체</option>'+cities.map(c=>`<option value="${c}" ${pr.city===c?'selected':''}>${c} (${PR.filter(r=>r[1]===c).length})</option>`).join('');
+  $('prCat').innerHTML=[['','전체']].concat(PCAT).map(c=>`<button class="pill" type="button" data-c="${c[0]}" aria-pressed="${pr.cat===c[0]&&!pr.card}">${c[1]}${c[0]?` <span class="n">${PR.filter(r=>r[2]===c[0]&&(!pr.city||r[1]===pr.city)).length}</span>`:''}</button>`).join('');
+  const list=PR.filter(pmatch),cd=pr.card&&D.find(d=>d.id===pr.card);
+  $('prCount').innerHTML=(cd?`<b>${cd.n.split(':')[0]}</b> 카드와 연결된 기관 · `:'')+`${list.length}곳`+(cd?' <button class="pill" type="button" id="prClear">조건 지우기</button>':'');
+  $('prBody').innerHTML=list.length?list.slice(0,pr.n).map(r=>`<tr><td>★ ${r[0]}</td><td>${r[1]}</td><td>${pcName[r[2]]}</td><td class="num">${r[3]?r[3]+'만 원':'공고 확인'}</td><td class="num">${r[4]}명</td><td class="num">${r[5].replace('-','.')}</td></tr>`).join(''):'<tr><td colspan="6">조건에 맞는 선정 실습기관이 없습니다.</td></tr>';
+  $('prMore').hidden=list.length<=pr.n; $('prMore').textContent=`더 보기 (${Math.max(0,list.length-pr.n)}곳 남음)`;
+}
+const AGRP=[['만나는 사람으로 고르기',['infant','child','youth','family']],['일터 · 분야로 고르기',['school','mind','justice','gov','research']]];
+const W='fill="#fff"',WS='fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+const AIC={
+ infant:['#F2A49B',`<circle cx="12" cy="13" r="7" ${W}/><path d="M12 6 q-3 -3 0 -4 q2 1 0 4" ${W}/><circle cx="9.6" cy="12.4" r="1" fill="#F2A49B"/><circle cx="14.4" cy="12.4" r="1" fill="#F2A49B"/><path d="M10 15.4 q2 1.6 4 0" fill="none" stroke="#F2A49B" stroke-width="1.4" stroke-linecap="round"/>`],
+ child:['#E9B949',`<path d="M4 11.5 L12 5 L20 11.5" ${WS}/><path d="M6.5 11 v8 h11 v-8 L12 6.6Z" ${W}/><path d="M12 17.2 c-3.6 -2.6 -2.2 -5 0 -3.2 c2.2 -1.8 3.6 .6 0 3.2z" fill="#E9B949"/>`],
+ youth:['#7DBF8E',`<rect x="6.5" y="8" width="11" height="12" rx="3.5" ${W}/><path d="M9 8 v-1 a3 3 0 0 1 6 0 v1" ${WS}/><rect x="9" y="13.4" width="6" height="4" rx="1.2" fill="#7DBF8E"/>`],
+ family:['#E3A46C',`<circle cx="8" cy="8" r="3" ${W}/><circle cx="16.4" cy="9" r="2.5" ${W}/><path d="M2.8 19.5 a5.2 5.2 0 0 1 10.4 0z" ${W}/><path d="M12.6 19.5 a4 4 0 0 1 8 0z" ${W}/>`],
+ school:['#6FA3E0',`<path d="M12 4 L21 9 L12 14 L3 9Z" ${W}/><path d="M7 12.4 v4.2 q5 3.4 10 0 v-4.2" ${WS}/><path d="M20.4 9.4 v5" ${WS}/>`],
+ mind:['#A592DA',`<path d="M12 20 C3 13.4 6 6 12 10 C18 6 21 13.4 12 20Z" ${W}/><path d="M7.4 12.8 h2.4 l1.3 -2.4 l1.9 4.6 l1.2 -2.2 h2.4" fill="none" stroke="#A592DA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>`],
+ justice:['#8E98A5',`<path d="M12 4.5 v15 M7.5 19.5 h9 M5 7.5 h14" ${WS}/><path d="M2.6 13 L5 7.6 L7.4 13 a2.4 2.4 0 0 1 -4.8 0z M16.6 13 L19 7.6 L21.4 13 a2.4 2.4 0 0 1 -4.8 0z" ${W}/>`],
+ gov:['#5F8FCB',`<path d="M3.5 9 L12 4 L20.5 9Z" ${W}/><path d="M6 11.5 v5.5 M10 11.5 v5.5 M14 11.5 v5.5 M18 11.5 v5.5" ${WS}/><rect x="3.5" y="18.4" width="17" height="2.2" rx="1" ${W}/>`],
+ research:['#4FAFA4',`<rect x="5" y="12" width="3.4" height="7.5" rx="1" ${W}/><rect x="10.3" y="8" width="3.4" height="11.5" rx="1" ${W}/><rect x="15.6" y="4.5" width="3.4" height="15" rx="1" ${W}/>`]
+};
+let st={aud:[],q:'',ba:false,sec:''};
+try{const r=localStorage.getItem('career-map');if(r)st=Object.assign(st,JSON.parse(r));}catch(e){}
+if(!Array.isArray(st.aud))st.aud=st.aud?[st.aud]:[];
+const save=()=>{try{localStorage.setItem('career-map',JSON.stringify(st));}catch(e){}};
+const $=id=>document.getElementById(id);
+const audName=Object.fromEntries(AUD.map(a=>[a[0],a[1]]));
+function match(d){
+  if(st.aud.length&&!st.aud.some(a=>d.a.includes(a)))return false;
+  if(st.ba&&!d.ba)return false;
+  if(st.sec&&secOf(d)!==st.sec)return false;
+  if(st.q){const t=(d.n+d.law+d.does+d.bach+d.grad+d.spec+d.cb).toLowerCase();if(!t.includes(st.q.toLowerCase()))return false;}
+  return true;
+}
+function render(){
+  const chipHtml=a=>{const on=st.aud.includes(a[0]);return `<button class="chip" type="button" data-a="${a[0]}" aria-pressed="${on}" style="--ic:${AIC[a[0]][0]}"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24">${AIC[a[0]][1]}</svg></span><span class="tx">${a[1]}<small>${a[2]}</small></span>${on?'<span class="ck" aria-hidden="true">✓</span>':''}</button>`;};
+  $('chips').innerHTML=AGRP.map(g=>`<div class="cgrp"><span class="glab">${g[0]}</span><div class="crow n${g[1].length}">${AUD.filter(a=>g[1].includes(a[0])).map(chipHtml).join('')}</div></div>`).join('')+(st.aud.length?`<button class="chip clear" type="button" data-a="">선택 지우기<small>${st.aud.length}개 고름</small></button>`:'');
+  const F=st.aud.length||st.q||st.ba||st.sec;
+  $('secf').innerHTML=[['','전체'],['pub','공공'],['con','민간 운영 · 공공 재정'],['ngo','NGO'],['assoc','민간 협회']].map(x=>`<button class="pill" type="button" data-s="${x[0]}" aria-pressed="${st.sec===x[0]}">${x[1]}</button>`).join('');
+  $('secBox').innerHTML=SEC.map(c=>`<div class="sx" style="--tc:var(${c[3]})"><div class="sx-top"><div class="art" aria-hidden="true">${scene(c[0])}</div><div><span class="en">${c[2]}</span><h3>${c[1]}</h3></div></div><p class="say">${c[4]}</p><dl><div><dt>월급의 출처</dt><dd>${c[5]}</dd></div><div><dt>들어가는 문</dt><dd>${c[6]}</dd></div><div><dt>특징</dt><dd>${c[7]}</dd></div></dl><div class="mbody">${D.filter(d=>secOf(d)===c[0]).map(d=>`<a class="node ${match(d)?(F?'hit':''):'dim'}" href="#${d.id}">${d.n.split(':')[0]}</a>`).join('')}</div></div>`).join('');
+  $('mapBox').innerHTML=MIN.map(m=>`<div class="mrow" style="--tc:var(${m[4]})"><div class="mhead"><b>${m[1]}</b><span>${m[2]}</span></div><div class="mbody">${
+    D.filter(d=>d.m===m[0]).map(d=>`<a class="node ${match(d)?(F?'hit':''):'dim'}" href="#${d.id}">${d.n}</a>`).join('')}</div></div>`).join('');
+  const shown=D.filter(match);
+  $('count').textContent=`${shown.length} / ${D.length}곳 표시`;
+  const names=st.aud.map(a=>audName[a]).join(' · ');
+  $('result').innerHTML=st.aud.length?`<span><b>${names}</b> 을(를) 만나는 기관 <b>${shown.length}곳</b>을 찾았어요.</span><a class="gobtn" href="#cards">기관 카드 보기</a><a class="gobtn ghost" href="#map">지도에서 보기</a>`:`<span>아직 고르지 않았어요. 고르지 않고 아래로 내려가면 전체 ${D.length}개 기관이 보입니다.</span>`;
+  $('picked').innerHTML=st.aud.length?`지금 고른 대상: <b>${names}</b> <a href="#pick">바꾸기</a>`:'';
+  $('cardBox').innerHTML=shown.length?MIN.map(m=>{
+    const list=shown.filter(d=>d.m===m[0]); if(!list.length)return '';
+    return `<div class="group" style="--tc:var(${m[4]})"><div class="ghead"><div class="art" aria-hidden="true">${scene(m[0])}</div><div><span class="en">${m[3]}</span><h3>${m[1]}</h3><p>${m[2]} · ${list.length}곳</p></div></div><div class="grid">${list.map(card).join('')}</div></div>`;
+  }).join(''):'<div class="empty"><div class="art" aria-hidden="true">'+scene('empty')+'</div>조건에 맞는 기관이 없습니다. 검색어를 지우거나 대상을 다시 골라 보세요.</div>';
+}
+function card(d){
+  const tags=[d.k==='live'?'<span class="tag live">사는 곳</span>':'',d.k==='go'?'<span class="tag go">다니는 곳</span>':'',d.ba?'<span class="tag ba">학부</span>':'',PCNT[d.id]?`<span class="tag star">★ 실습 ${PCNT[d.id]}곳</span>`:'',`<span class="tag ${secOf(d)}">${secName[secOf(d)]}</span>`,...d.a.map(a=>`<span class="tag">${audName[a]}</span>`)].join('');
+  return `<article class="card" id="${d.id}" style="--tc:var(${TC[d.m]})"><h4>${d.n}</h4><div class="law">${d.law}</div><p class="one">${d.one}</p><div class="tags">${tags}</div>
+  <dl><div><dt>하는 일</dt><dd>${d.does}</dd></div><div><dt>학부 졸업하면</dt><dd>${d.bach}</dd></div><div><dt>대학원을 나오면</dt><dd>${d.grad}</dd></div><div><dt>자격 · 스펙</dt><dd>${d.spec}</dd></div></dl>
+  <div class="cb"><dt>충북에서는</dt>${d.cb}<div class="links">${d.l.map(x=>`<a class="${x[0].startsWith('검색')?'s':''}" href="${x[1]}" target="_blank" rel="noopener">${x[0]}</a>`).join('')}</div>${PCNT[d.id]?`<button class="prac" type="button" data-card="${d.id}">★ 공식 실습기관 ${PCNT[d.id]}곳 보기</button>`:''}</div></article>`;
+}
+$('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const a=b.dataset.a;st.aud=!a?[]:st.aud.includes(a)?st.aud.filter(x=>x!==a):st.aud.concat(a);save();render();});
+$('cardBox').addEventListener('click',e=>{const b=e.target.closest('.prac');if(!b)return;pr={city:'',cat:'',card:b.dataset.card,q:'',n:30};$('prQ').value='';renderPr();$('practice').scrollIntoView({behavior:'smooth'});});
+$('prCat').addEventListener('click',e=>{const b=e.target.closest('.pill');if(!b)return;pr.cat=b.dataset.c;pr.card='';pr.n=30;renderPr();});
+$('prCity').addEventListener('change',e=>{pr.city=e.target.value;pr.n=30;renderPr();});
+$('prQ').addEventListener('input',e=>{pr.q=e.target.value.trim();pr.n=30;renderPr();});
+$('prMore').addEventListener('click',()=>{pr.n+=60;renderPr();});
+$('prCount').addEventListener('click',e=>{if(e.target.id==='prClear'){pr.card='';renderPr();}});
+$('secf').addEventListener('click',e=>{const b=e.target.closest('.pill');if(!b)return;st.sec=b.dataset.s;save();render();});
+$('q').addEventListener('input',e=>{st.q=e.target.value.trim();save();render();});
+$('baOnly').addEventListener('change',e=>{st.ba=e.target.checked;save();render();});
+$('q').value=st.q;$('baOnly').checked=st.ba;render();renderPr();
+document.querySelectorAll('[data-scene]').forEach(e=>e.innerHTML=scene(e.dataset.scene));
+$('headArt').innerHTML=heroArt();
+$('headStats').textContent=`기관 유형 ${D.length}개 · 충북 선정 실습기관 ${PR.length}곳 · 학부 졸업으로 시작할 수 있는 곳 ${D.filter(d=>d.ba).length}개`;
+
+</script>
+
+</body></html>
